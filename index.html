@@ -412,7 +412,7 @@
 <div class="wrap">
   <div class="brand">
     <h1>Tap, Quiz,<br><span>Learn.</span></h1>
-    <div class="tag">SHS ASSESSMENT<br>MATH · SCIENCE · ENGLISH</div>
+    <div class="tag">STRENGTHENED SHS ASSESSMENT<br>GEN. MATH · GEN. SCIENCE · COMMUNICATION</div>
   </div>
   <div id="app" class="card"></div>
   <footer class="credit">web-based quiz application &middot; research instrument</footer>
@@ -494,9 +494,9 @@ const BANK = {
 };
 
 const SUBJECT_META = {
-  math:    {label:"Math",    color:"var(--math)",    soft:"var(--math-soft)"},
-  science: {label:"Science", color:"var(--science)", soft:"var(--science-soft)"},
-  english: {label:"English", color:"var(--english)", soft:"var(--english-soft)"}
+  math:    {label:"General Mathematics",    color:"var(--math)",    soft:"var(--math-soft)"},
+  science: {label:"General Science", color:"var(--science)", soft:"var(--science-soft)"},
+  english: {label:"Effective Communication", color:"var(--english)", soft:"var(--english-soft)"}
 };
 const ORDER = ["math","science","english"];
 const TIME_PER_Q = 20;
@@ -535,9 +535,9 @@ function renderStart(){
   app.innerHTML = `
     <div class="fade-in">
       <div class="subject-strip">
-        <div class="subject-chip math">MATH</div>
-        <div class="subject-chip science">SCIENCE</div>
-        <div class="subject-chip english">ENGLISH</div>
+        <div class="subject-chip math">GEN. MATH</div>
+        <div class="subject-chip science">GEN. SCIENCE</div>
+        <div class="subject-chip english">COMMUNICATION</div>
       </div>
       <p class="field-label">Student name</p>
       <input type="text" id="nameInput" placeholder="Juan Dela Cruz" value="${state.studentName}">
@@ -824,7 +824,7 @@ async function renderClassResults(){
       ${rows.length === 0 ? `<p class="empty-note">No results saved yet. Once students tap "Save My Result," their scores will appear here for everyone using this app.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
-            <thead><tr><th>Name</th><th>Test</th><th>Math</th><th>Sci</th><th>Eng</th><th>Total</th><th>%</th><th>Date</th></tr></thead>
+            <thead><tr><th>Name</th><th>Test</th><th>Gen. Math</th><th>Gen. Sci</th><th>Comm.</th><th>Total</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
         </div>
