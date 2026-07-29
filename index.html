@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap, Quiz, Learn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<!-- Firebase (compat build works with plain <script> tags, no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+  :root{
+    --paper:#F3F1FB;
+    --surface:#FFFFFF;
+    --ink:#211C4E;
+    --ink-soft:#5A5480;
+    --border:#DDD7F2;
+    --math:#F0A202;
+    --math-soft:#FCEACB;
+    --science:#1B998B;
+    --science-soft:#D6EFEA;
+    --english:#E4572E;
+    --english-soft:#FBE1D9;
+    --accent:var(--ink);
+    --accent-soft:#E7E3F8;
+    --good:#1B998B;
+    --bad:#E4572E;
+    --radius:18px;
+    --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%),
+      radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%),
+      var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+    padding:28px 16px 60px;
+    transition:background 0.6s ease;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:560px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:22px;
+    gap:10px;
+  }
+  .brand h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(22px,5.5vw,28px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    margin:0;
+    line-height:1.05;
+  }
+  .brand h1 span{ color:var(--accent); }
+  .brand .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:0.04em;
+    text-align:right;
+    line-height:1.4;
+  }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px;
+  }
+
+  /* ---------- START SCREEN ---------- */
+  .subject-strip{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+  }
+  .subject-chip{
+    flex:1;
+    padding:10px 8px;
+    border-radius:12px;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.03em;
+  }
+  .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
+  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
+  .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
+
+  .field-label{
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    margin:0 0 8px 2px;
+  }
+
+  input[type="text"]{
+    width:100%;
+    padding:13px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    background:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    outline:none;
+    margin-bottom:18px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input[type="text"]:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+
+  .mode-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .mode-btn{
+    cursor:pointer;
+    border:1.5px solid var(--border);
+    background:var(--paper);
+    border-radius:14px;
+    padding:16px 10px;
+    text-align:left;
+    font-family:'IBM Plex Sans', sans-serif;
+    transition:all .15s ease;
+  }
+  .mode-btn:hover{ border-color:var(--accent); }
+  .mode-btn.active{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  .mode-btn .mtitle{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    display:block;
+    margin-bottom:4px;
+  }
+  .mode-btn .msub{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.35;
+    display:block;
+  }
+
+  .primary-btn{
+    width:100%;
+    border:none;
+    cursor:pointer;
+    background:var(--ink);
+    color:#fff;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.01em;
+    padding:15px 18px;
+    border-radius:14px;
+    transition:transform .12s ease, opacity .15s ease;
+  }
+  .primary-btn:active{ transform:scale(0.98); }
+  .primary-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  .primary-btn.ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid var(--border);
+  }
+
+  .fine-print{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:14px;
+    line-height:1.5;
+  }
+  .link-btn{
+    background:none;
+    border:none;
+    color:var(--ink);
+    text-decoration:underline;
+    cursor:pointer;
+    font:inherit;
+    padding:0;
+  }
+
+  /* ---------- QUIZ SCREEN ---------- */
+  .quiz-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+    gap:10px;
+  }
+  .subj-pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    padding:7px 12px;
+    border-radius:100px;
+    color:#fff;
+    transition:background .3s ease;
+  }
+  .score-chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    background:var(--ink);
+    color:#fff;
+    padding:7px 12px;
+    border-radius:100px;
+  }
+
+  .track{
+    display:flex;
+    gap:4px;
+    margin-bottom:20px;
+  }
+  .track-seg{
+    flex:1;
+    height:6px;
+    border-radius:4px;
+    background:var(--border);
+    overflow:hidden;
+  }
+  .track-seg i{
+    display:block;
+    height:100%;
+    width:0%;
+    border-radius:4px;
+    transition:width .35s ease;
+  }
+
+  .qhead{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .qcount{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .timer-ring{ position:relative; width:40px; height:40px; }
+  .timer-ring svg{ transform:rotate(-90deg); }
+  .timer-ring .tnum{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; font-weight:600;
+  }
+
+  .qtext{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:19px;
+    font-weight:600;
+    line-height:1.35;
+    margin:4px 0 20px;
+    min-height:52px;
+  }
+
+  .choices{ display:flex; flex-direction:column; gap:10px; }
+  .choice{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    padding:13px 14px;
+    border-radius:13px;
+    border:1.5px solid var(--border);
+    background:var(--paper);
+    cursor:pointer;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    transition:all .12s ease;
+  }
+  .choice:hover{ border-color:var(--accent); }
+  .choice .klabel{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:12px;
+    width:22px; height:22px;
+    border-radius:7px;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .choice.correct{
+    background:#E4F5F1; border-color:var(--good); color:#0E5C52;
+  }
+  .choice.correct .klabel{ background:var(--good); border-color:var(--good); color:#fff; }
+  .choice.wrong{
+    background:#FCE7E1; border-color:var(--bad); color:#8E2E15;
+  }
+  .choice.wrong .klabel{ background:var(--bad); border-color:var(--bad); color:#fff; }
+  .choice.disabled{ pointer-events:none; }
+  .choice.dim{ opacity:0.45; }
+
+  /* ---------- RESULTS SCREEN ---------- */
+  .result-hero{ text-align:center; padding:6px 0 22px; }
+  .result-hero .pct{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:56px;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1;
+  }
+  .result-hero .frac{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .result-hero .msg{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    margin-top:10px;
+  }
+
+  .breakdown{ display:flex; flex-direction:column; gap:14px; margin:18px 0 22px; }
+  .brow{ }
+  .brow .blabel{
+    display:flex; justify-content:space-between;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink-soft);
+  }
+  .bbar{
+    height:10px; border-radius:6px; background:var(--border); overflow:hidden;
+  }
+  .bbar i{ display:block; height:100%; border-radius:6px; width:0%; transition:width .8s cubic-bezier(.2,.8,.2,1); }
+
+  .btn-row{ display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+
+  /* ---------- CLASS RESULTS ---------- */
+  table.results-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  table.results-table th, table.results-table td{
+    text-align:left; padding:9px 8px; border-bottom:1px solid var(--border);
+  }
+  table.results-table th{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft);
+  }
+  .tag-pre{ background:var(--math-soft); color:#7A5300; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
+  .tag-post{ background:var(--science-soft); color:#0E5C52; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
+
+  .empty-note{
+    text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px;
+  }
+
+  .float-pt{
+    position:fixed; pointer-events:none;
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px;
+    animation:floatUp .8s ease forwards;
+    z-index:50;
+  }
+  @keyframes floatUp{
+    0%{ opacity:1; transform:translateY(0);}
+    100%{ opacity:0; transform:translateY(-38px);}
+  }
+
+  .fade-in{ animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .shake{ animation:shake .35s ease; }
+  @keyframes shake{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-4px); }
+    75%{ transform:translateX(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  footer.credit{
+    text-align:center; font-size:10.5px; color:var(--ink-soft);
+    margin-top:18px; font-family:'IBM Plex Mono', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <h1>Tap, Quiz,<br><span>Learn.</span></h1>
+    <div class="tag">SHS ASSESSMENT<br>MATH · SCIENCE · ENGLISH</div>
+  </div>
+  <div id="app" class="card"></div>
+  <footer class="credit">web-based quiz application &middot; research instrument</footer>
+</div>
+
+<script>
+/* ============================================================
+   FIREBASE SETUP — shared storage for save / class results
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBfU_gAw9MF-Aba-Brabcd9zYX8I9YdAuo",
+  authDomain: "tap-quiz-59ff0.firebaseapp.com",
+  projectId: "tap-quiz-59ff0",
+  storageBucket: "tap-quiz-59ff0.firebasestorage.app",
+  messagingSenderId: "462283657590",
+  appId: "1:462283657590:web:9f115c8995f3745a856a57"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const RESULTS_COLLECTION = "results";
+
+/* ============================================================
+   QUESTION BANKS — two parallel forms (pre-test / post-test)
+   6 items per subject per form, 18 per test.
+   ============================================================ */
+const BANK = {
+  pretest: {
+    math: [
+      {q:"Simplify: 3(x + 4) − 2x", c:["x + 12","5x + 12","x + 4","x + 7"], a:0},
+      {q:"Solve for x: 2x − 5 = 11", c:["x = 6","x = 3","x = 8","x = 16"], a:2},
+      {q:"What is 5² − 3²?", c:["16","4","2","34"], a:0},
+      {q:"A rectangle is 12 cm long and 7 cm wide. What is its area?", c:["19 cm²","84 cm²","38 cm²","70 cm²"], a:1},
+      {q:"What is 25% of 240?", c:["50","48","60","65"], a:2},
+      {q:"Find the slope of the line through (2, 3) and (4, 7).", c:["1","4","2","0.5"], a:2}
+    ],
+    science: [
+      {q:"What is the powerhouse of the cell?", c:["Nucleus","Mitochondria","Ribosome","Cytoplasm"], a:1},
+      {q:"Which gas do plants absorb for photosynthesis?", c:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], a:2},
+      {q:"What force pulls objects toward the Earth?", c:["Friction","Magnetism","Gravity","Tension"], a:2},
+      {q:"What is the chemical symbol for water?", c:["H₂O","HO₂","O₂H","H₂O₂"], a:0},
+      {q:"Which planet is known as the Red Planet?", c:["Venus","Mars","Jupiter","Mercury"], a:1},
+      {q:"What organ pumps blood throughout the human body?", c:["Lungs","Liver","Heart","Kidney"], a:2}
+    ],
+    english: [
+      {q:"Which sentence is correctly punctuated?", c:["\"I bought apples, bread, and milk.\"","\"I bought apples bread, and milk.\"","\"I bought, apples bread and milk.\"","\"I bought apples, bread and, milk.\""], a:0},
+      {q:"Choose the synonym of \"abundant.\"", c:["Scarce","Plentiful","Empty","Faint"], a:1},
+      {q:"Choose the correct verb form: \"She ___ to school every day.\"", c:["go","going","goes","gone"], a:2},
+      {q:"What is the plural form of \"child\"?", c:["childs","children","childes","child's"], a:1},
+      {q:"Identify the figure of speech: \"The wind whispered through the trees.\"", c:["Simile","Hyperbole","Personification","Irony"], a:2},
+      {q:"Choose the antonym of \"generous.\"", c:["Kind","Giving","Stingy","Warm"], a:2}
+    ]
+  },
+  posttest: {
+    math: [
+      {q:"Simplify: 4(x − 3) + 2x", c:["6x − 12","6x − 3","2x − 12","4x − 7"], a:0},
+      {q:"Solve for x: 3x + 7 = 22", c:["x = 4","x = 5","x = 6","x = 15"], a:1},
+      {q:"What is 4² + 2³?", c:["24","20","18","32"], a:0},
+      {q:"A triangle has a base of 10 cm and a height of 6 cm. What is its area?", c:["60 cm²","16 cm²","30 cm²","32 cm²"], a:2},
+      {q:"What is 40% of 150?", c:["50","60","45","65"], a:1},
+      {q:"Find the slope of the line through (1, 2) and (3, 10).", c:["2","8","4","6"], a:2}
+    ],
+    science: [
+      {q:"What is the basic unit of life?", c:["Tissue","Organ","Cell","Molecule"], a:2},
+      {q:"Which gas do living things need for respiration?", c:["Carbon dioxide","Oxygen","Nitrogen","Helium"], a:1},
+      {q:"What force keeps planets in orbit around the sun?", c:["Magnetism","Gravity","Friction","Inertia"], a:1},
+      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl₂"], a:0},
+      {q:"Which planet is closest to the sun?", c:["Venus","Earth","Mercury","Mars"], a:2},
+      {q:"Which organ is mainly responsible for filtering blood in the human body?", c:["Liver","Kidney","Stomach","Spleen"], a:1}
+    ],
+    english: [
+      {q:"Which sentence is correctly punctuated?", c:["\"My favorite subjects are Math, Science, and English.\"","\"My favorite subjects are Math Science, and English.\"","\"My favorite subjects are, Math, Science and English.\"","\"My favorite subjects are Math, Science and, English.\""], a:0},
+      {q:"Choose the synonym of \"swift.\"", c:["Slow","Fast","Quiet","Heavy"], a:1},
+      {q:"Choose the correct verb form: \"They ___ their homework every night.\"", c:["does","doing","do","did doing"], a:2},
+      {q:"What is the plural form of \"mouse\"?", c:["mouses","mices","mice","mouse's"], a:2},
+      {q:"Identify the figure of speech: \"Time is a thief.\"", c:["Metaphor","Simile","Alliteration","Onomatopoeia"], a:0},
+      {q:"Choose the antonym of \"ancient.\"", c:["Old","Modern","Historic","Classic"], a:1}
+    ]
+  }
+};
+
+const SUBJECT_META = {
+  math:    {label:"Math",    color:"var(--math)",    soft:"var(--math-soft)"},
+  science: {label:"Science", color:"var(--science)", soft:"var(--science-soft)"},
+  english: {label:"English", color:"var(--english)", soft:"var(--english-soft)"}
+};
+const ORDER = ["math","science","english"];
+const TIME_PER_Q = 20;
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = {
+  screen: "start",       // start | quiz | results | class
+  testType: null,        // pretest | posttest
+  studentName: "",
+  qIndex: 0,              // 0..17 across all subjects
+  answers: [],            // {subject, correct}
+  timeLeft: TIME_PER_Q,
+  timerId: null,
+  locked: false,
+  saved: false
+};
+
+function flatQueue(testType){
+  const bank = BANK[testType];
+  let list = [];
+  ORDER.forEach(subj => {
+    bank[subj].forEach(item => list.push({subject:subj, ...item}));
+  });
+  return list;
+}
+
+const app = document.getElementById("app");
+
+/* ============================================================
+   RENDER: START SCREEN
+   ============================================================ */
+function renderStart(){
+  clearInterval(state.timerId);
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="subject-strip">
+        <div class="subject-chip math">MATH</div>
+        <div class="subject-chip science">SCIENCE</div>
+        <div class="subject-chip english">ENGLISH</div>
+      </div>
+      <p class="field-label">Student name</p>
+      <input type="text" id="nameInput" placeholder="Juan Dela Cruz" value="${state.studentName}">
+      <p class="field-label">Choose assessment</p>
+      <div class="mode-grid">
+        <div class="mode-btn ${state.testType==='pretest'?'active':''}" data-mode="pretest">
+          <span class="mtitle">Pre-Test</span>
+          <span class="msub">Baseline check before using the app</span>
+        </div>
+        <div class="mode-btn ${state.testType==='posttest'?'active':''}" data-mode="posttest">
+          <span class="mtitle">Post-Test</span>
+          <span class="msub">Taken after using the app</span>
+        </div>
+      </div>
+      <button class="primary-btn" id="beginBtn" ${(!state.testType || !state.studentName.trim())?'disabled':''}>Begin Assessment →</button>
+      <p class="fine-print">18 items · 6 per subject · 20 seconds each<br>
+        <button class="link-btn" id="classLink">View class results</button>
+      </p>
+    </div>
+  `;
+
+  document.getElementById("nameInput").addEventListener("input", e=>{
+    state.studentName = e.target.value;
+    document.getElementById("beginBtn").disabled = !state.testType || !state.studentName.trim();
+  });
+
+  document.querySelectorAll(".mode-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      state.testType = btn.dataset.mode;
+      renderStart();
+    });
+  });
+
+  document.getElementById("beginBtn").addEventListener("click", startQuiz);
+  document.getElementById("classLink").addEventListener("click", ()=>{ state.screen="class"; renderClassResults(); });
+}
+
+function startQuiz(){
+  state.queue = flatQueue(state.testType);
+  state.qIndex = 0;
+  state.answers = [];
+  state.saved = false;
+  state.screen = "quiz";
+  renderQuestion();
+}
+
+/* ============================================================
+   RENDER: QUIZ SCREEN
+   ============================================================ */
+function renderQuestion(){
+  clearInterval(state.timerId);
+  state.locked = false;
+  state.timeLeft = TIME_PER_Q;
+
+  const item = state.queue[state.qIndex];
+  const meta = SUBJECT_META[item.subject];
+  document.body.style.background =
+    `radial-gradient(circle at 12% -10%, ${meta.soft} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+
+  const score = state.answers.filter(a=>a.correct).length;
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="quiz-top">
+        <div class="subj-pill" style="background:${meta.color}">${meta.label.toUpperCase()}</div>
+        <div class="score-chip">SCORE ${String(score).padStart(2,'0')}</div>
+      </div>
+      <div class="track">
+        ${ORDER.map(s=>{
+          const segAnswers = state.answers.filter(a=>a.subject===s).length;
+          const total = BANK[state.testType][s].length;
+          const filled = segAnswers/total*100;
+          return `<div class="track-seg"><i style="width:${filled}%;background:${SUBJECT_META[s].color}"></i></div>`;
+        }).join("")}
+      </div>
+      <div class="qhead">
+        <span class="qcount">Q${state.qIndex+1} / ${state.queue.length}</span>
+        <div class="timer-ring">
+          <svg width="40" height="40">
+            <circle cx="20" cy="20" r="16" stroke="var(--border)" stroke-width="4" fill="none"/>
+            <circle id="ringProgress" cx="20" cy="20" r="16" stroke="${meta.color}" stroke-width="4" fill="none"
+              stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round"/>
+          </svg>
+          <div class="tnum" id="tnum">${TIME_PER_Q}</div>
+        </div>
+      </div>
+      <div class="qtext">${item.q}</div>
+      <div class="choices" id="choices">
+        ${item.c.map((choice,i)=>`
+          <button class="choice" data-i="${i}">
+            <span class="klabel">${String.fromCharCode(65+i)}</span>
+            <span>${choice}</span>
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll(".choice").forEach(btn=>{
+    btn.addEventListener("click", ()=> lockAnswer(parseInt(btn.dataset.i)));
+  });
+
+  runTimer();
+}
+
+function runTimer(){
+  const ring = document.getElementById("ringProgress");
+  const tnum = document.getElementById("tnum");
+  const circumference = 100.5;
+  state.timerId = setInterval(()=>{
+    state.timeLeft -= 0.25;
+    if(tnum) tnum.textContent = Math.max(0, Math.ceil(state.timeLeft));
+    if(ring) ring.style.strokeDashoffset = circumference * (1 - state.timeLeft/TIME_PER_Q);
+    if(state.timeLeft <= 0){
+      clearInterval(state.timerId);
+      if(!state.locked) lockAnswer(-1);
+    }
+  }, 250);
+}
+
+function lockAnswer(choiceIndex){
+  if(state.locked) return;
+  state.locked = true;
+  clearInterval(state.timerId);
+
+  const item = state.queue[state.qIndex];
+  const isCorrect = choiceIndex === item.a;
+  state.answers.push({subject:item.subject, correct:isCorrect});
+
+  const buttons = document.querySelectorAll(".choice");
+  buttons.forEach((btn,i)=>{
+    btn.classList.add("disabled");
+    if(i === item.a) btn.classList.add("correct");
+    if(i === choiceIndex && !isCorrect) btn.classList.add("wrong");
+    if(i !== item.a && i !== choiceIndex) btn.classList.add("dim");
+  });
+
+  if(isCorrect){
+    spawnFloatingPoint("+1", "var(--good)");
+  } else if(choiceIndex >= 0){
+    document.querySelector(".qtext").parentElement.classList.add("shake");
+  }
+
+  setTimeout(()=>{
+    if(state.qIndex < state.queue.length - 1){
+      state.qIndex++;
+      renderQuestion();
+    } else {
+      state.screen = "results";
+      renderResults();
+    }
+  }, 850);
+}
+
+function spawnFloatingPoint(text, color){
+  const el = document.createElement("div");
+  el.className = "float-pt";
+  el.textContent = text;
+  el.style.color = color;
+  const rect = app.getBoundingClientRect();
+  el.style.left = (rect.right - 70) + "px";
+  el.style.top = (rect.top + 20) + "px";
+  document.body.appendChild(el);
+  setTimeout(()=> el.remove(), 800);
+}
+
+/* ============================================================
+   RENDER: RESULTS SCREEN
+   ============================================================ */
+function renderResults(){
+  clearInterval(state.timerId);
+  document.body.style.background =
+    `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+
+  const total = state.answers.length;
+  const correct = state.answers.filter(a=>a.correct).length;
+  const pct = Math.round((correct/total)*100);
+
+  let msg = "Keep going!";
+  if(pct >= 85) msg = "Outstanding work!";
+  else if(pct >= 70) msg = "Great job!";
+  else if(pct >= 50) msg = "Good effort!";
+
+  const subjRows = ORDER.map(s=>{
+    const meta = SUBJECT_META[s];
+    const subTotal = BANK[state.testType][s].length;
+    const subCorrect = state.answers.filter(a=>a.subject===s && a.correct).length;
+    const p = Math.round((subCorrect/subTotal)*100);
+    return `
+      <div class="brow">
+        <div class="blabel"><span>${meta.label}</span><span>${subCorrect}/${subTotal}</span></div>
+        <div class="bbar"><i style="width:${p}%;background:${meta.color}"></i></div>
+      </div>
+    `;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="result-hero">
+        <div class="pct">${pct}%</div>
+        <div class="frac">${correct} OUT OF ${total} CORRECT &middot; ${state.testType.toUpperCase()}</div>
+        <div class="msg">${msg}</div>
+      </div>
+      <div class="breakdown">${subjRows}</div>
+      <div class="btn-row">
+        <button class="primary-btn" id="saveBtn" ${state.saved?'disabled':''}>${state.saved?'Saved ✓':'Save My Result'}</button>
+        <button class="primary-btn ghost" id="classBtn">View Class Results</button>
+        <button class="primary-btn ghost" id="retakeBtn">Take Another Assessment</button>
+      </div>
+      <p class="fine-print" id="saveNote">Saved results are visible to your teacher in Class Results, along with everyone else's.</p>
+    </div>
+  `;
+
+  document.getElementById("saveBtn").addEventListener("click", async ()=>{
+    const btn = document.getElementById("saveBtn");
+    btn.textContent = "Saving...";
+    try{
+      const payload = {
+        name: state.studentName.trim(),
+        testType: state.testType,
+        correct, total, pct,
+        subjects: ORDER.map(s=>({
+          subject:s,
+          correct: state.answers.filter(a=>a.subject===s && a.correct).length,
+          total: BANK[state.testType][s].length
+        })),
+        timestamp: Date.now()
+      };
+      await db.collection(RESULTS_COLLECTION).add(payload);
+      state.saved = true;
+      btn.textContent = "Saved ✓";
+      btn.disabled = true;
+    } catch(err){
+      btn.textContent = "Save failed — try again";
+      console.error(err);
+    }
+  });
+
+  document.getElementById("classBtn").addEventListener("click", ()=>{ state.screen="class"; renderClassResults(); });
+  document.getElementById("retakeBtn").addEventListener("click", ()=>{
+    state.testType = null;
+    state.screen = "start";
+    renderStart();
+  });
+}
+
+/* ============================================================
+   RENDER: CLASS RESULTS (teacher / researcher view)
+   ============================================================ */
+async function renderClassResults(){
+  clearInterval(state.timerId);
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading class results…</p></div>`;
+
+  let rows = [];
+  try{
+    const snap = await db.collection(RESULTS_COLLECTION).orderBy("timestamp", "desc").get();
+    snap.forEach(doc => rows.push(doc.data()));
+  }catch(e){ console.error(e); }
+
+  const tableRows = rows.map(r=>{
+    const bySubj = Object.fromEntries((r.subjects||[]).map(s=>[s.subject, `${s.correct}/${s.total}`]));
+    const tag = r.testType === "pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
+    const d = new Date(r.timestamp);
+    return `<tr>
+      <td>${escapeHtml(r.name)}</td>
+      <td>${tag}</td>
+      <td>${bySubj.math||"–"}</td>
+      <td>${bySubj.science||"–"}</td>
+      <td>${bySubj.english||"–"}</td>
+      <td>${r.correct}/${r.total}</td>
+      <td>${r.pct}%</td>
+      <td>${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</td>
+    </tr>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="quiz-top">
+        <div class="subj-pill" style="background:var(--ink)">CLASS RESULTS</div>
+        <div class="score-chip">${rows.length} SAVED</div>
+      </div>
+      ${rows.length === 0 ? `<p class="empty-note">No results saved yet. Once students tap "Save My Result," their scores will appear here for everyone using this app.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="results-table">
+            <thead><tr><th>Name</th><th>Test</th><th>Math</th><th>Sci</th><th>Eng</th><th>Total</th><th>%</th><th>Date</th></tr></thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+      `}
+      <div class="btn-row" style="margin-top:20px;">
+        <button class="primary-btn ghost" id="refreshBtn">Refresh</button>
+        <button class="primary-btn" id="backBtn">Back to Start</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("refreshBtn").addEventListener("click", renderClassResults);
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="start"; renderStart(); });
+}
+
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderStart();
+</script>
+</body>
+</html>
