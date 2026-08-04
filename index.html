@@ -6,8 +6,8 @@
 <title>Tap-Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<!-- Firebase-->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
   :root{
@@ -29,7 +29,6 @@
     --radius:18px;
     --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
   }
-
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
@@ -45,367 +44,138 @@
     padding:28px 16px 60px;
     transition:background 0.6s ease;
   }
-
-  .wrap{
-    width:100%;
-    max-width:560px;
-  }
-
-  .brand{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom:22px;
-    gap:10px;
-  }
-  .brand h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:clamp(22px,5.5vw,28px);
-    font-weight:700;
-    letter-spacing:-0.02em;
-    margin:0;
-    line-height:1.05;
-  }
+  .wrap{ width:100%; max-width:560px; }
+  .brand{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:10px; }
+  .brand h1{ font-family:'Space Grotesk', sans-serif; font-size:clamp(22px,5.5vw,28px); font-weight:700; letter-spacing:-0.02em; margin:0; line-height:1.05; }
   .brand h1 span{ color:var(--accent); }
-  .brand .tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    letter-spacing:0.04em;
-    text-align:right;
-    line-height:1.4;
-  }
+  .brand .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.04em; text-align:right; line-height:1.4; }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px; }
 
-  .card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    padding:26px;
+  .navbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap; }
+  .navbar .who{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); }
+  .navbar .who b{ color:var(--ink); }
+  .nav-actions{ display:flex; gap:8px; }
+  .pill-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
+    background:var(--accent-soft); color:var(--ink); border:none; border-radius:100px;
+    padding:8px 12px; cursor:pointer;
   }
+  .pill-btn.outline{ background:transparent; border:1.5px solid var(--border); }
 
-  /* ---------- START SCREEN ---------- */
-  .subject-strip{
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-  }
-  .subject-chip{
-    flex:1;
-    padding:10px 8px;
-    border-radius:12px;
-    text-align:center;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.03em;
-  }
+  .subject-strip{ display:flex; gap:8px; margin-bottom:20px; }
+  .subject-chip{ flex:1; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; }
   .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
   .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
   .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
 
-  .field-label{
-    font-size:12px;
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:var(--ink-soft);
-    margin:0 0 8px 2px;
-  }
+  .field-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin:0 0 8px 2px; }
 
-  input[type="text"]{
-    width:100%;
-    padding:13px 14px;
-    border-radius:12px;
-    border:1.5px solid var(--border);
-    background:var(--paper);
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:15px;
-    color:var(--ink);
-    outline:none;
-    margin-bottom:18px;
-    transition:border-color .15s ease, box-shadow .15s ease;
+  input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="url"], input[type="datetime-local"], select, textarea{
+    width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--border);
+    background:var(--paper); font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink);
+    outline:none; margin-bottom:16px; transition:border-color .15s ease, box-shadow .15s ease;
   }
-  input[type="text"]:focus{
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px var(--accent-soft);
-  }
+  textarea{ min-height:90px; resize:vertical; font-family:'IBM Plex Sans', sans-serif; }
+  input:focus, select:focus, textarea:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
 
-  .mode-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:22px;
+  .radio-group{ display:flex; gap:10px; margin-bottom:16px; }
+  .radio-opt{
+    flex:1; border:1.5px solid var(--border); border-radius:12px; padding:12px; text-align:center;
+    font-size:14px; font-weight:600; cursor:pointer; background:var(--paper);
   }
-  .mode-btn{
-    cursor:pointer;
-    border:1.5px solid var(--border);
-    background:var(--paper);
-    border-radius:14px;
-    padding:16px 10px;
-    text-align:left;
-    font-family:'IBM Plex Sans', sans-serif;
-    transition:all .15s ease;
-  }
+  .radio-opt.active{ border-color:var(--accent); background:var(--accent-soft); }
+
+  .mode-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
+  .mode-btn{ cursor:pointer; border:1.5px solid var(--border); background:var(--paper); border-radius:14px; padding:16px 10px; text-align:left; transition:all .15s ease; }
   .mode-btn:hover{ border-color:var(--accent); }
-  .mode-btn.active{
-    border-color:var(--accent);
-    background:var(--accent-soft);
-    box-shadow:0 0 0 3px var(--accent-soft);
-  }
-  .mode-btn .mtitle{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:15px;
-    display:block;
-    margin-bottom:4px;
-  }
-  .mode-btn .msub{
-    font-size:11.5px;
-    color:var(--ink-soft);
-    line-height:1.35;
-    display:block;
-  }
+  .mode-btn.active{ border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 3px var(--accent-soft); }
+  .mode-btn .mtitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; display:block; margin-bottom:4px; }
+  .mode-btn .msub{ font-size:11.5px; color:var(--ink-soft); line-height:1.35; display:block; }
+  .mode-btn:disabled, .mode-btn.locked{ opacity:0.45; cursor:not-allowed; }
 
   .primary-btn{
-    width:100%;
-    border:none;
-    cursor:pointer;
-    background:var(--ink);
-    color:#fff;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    letter-spacing:0.01em;
-    padding:15px 18px;
-    border-radius:14px;
-    transition:transform .12s ease, opacity .15s ease;
+    width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em;
+    padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease;
   }
   .primary-btn:active{ transform:scale(0.98); }
   .primary-btn:disabled{ opacity:0.4; cursor:not-allowed; }
-  .primary-btn.ghost{
-    background:transparent;
-    color:var(--ink);
-    border:1.5px solid var(--border);
+  .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
+  .primary-btn.danger{ background:var(--bad); }
+
+  .fine-print{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5; }
+  .link-btn{ background:none; border:none; color:var(--ink); text-decoration:underline; cursor:pointer; font:inherit; padding:0; }
+  .error-note{ font-size:12.5px; color:var(--bad); margin:-8px 0 14px; }
+
+  .hero{ text-align:center; padding:10px 4px 24px; }
+  .hero .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:10px; }
+  .hero h2{ font-family:'Space Grotesk', sans-serif; font-size:24px; font-weight:700; line-height:1.25; margin:0 0 12px; }
+  .hero p{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin:0 0 22px; }
+  .feature-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:24px; text-align:left; }
+  .feature-item{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--ink-soft); }
+  .feature-item b{ color:var(--ink); }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:6px; flex-shrink:0; }
+
+  .class-card{
+    border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer;
+    background:var(--paper); transition:border-color .15s ease;
+  }
+  .class-card:hover{ border-color:var(--accent); }
+  .class-card .ctitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
+  .class-card .cmeta{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
+
+  .code-display{
+    font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:600; letter-spacing:0.15em;
+    background:var(--accent-soft); border-radius:12px; padding:14px; text-align:center; margin-bottom:16px;
   }
 
-  .fine-print{
-    font-size:11.5px;
-    color:var(--ink-soft);
-    text-align:center;
-    margin-top:14px;
-    line-height:1.5;
-  }
-  .link-btn{
-    background:none;
-    border:none;
-    color:var(--ink);
-    text-decoration:underline;
-    cursor:pointer;
-    font:inherit;
-    padding:0;
-  }
-
-  /* ---------- QUIZ SCREEN ---------- */
-  .quiz-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-    gap:10px;
-  }
-  .subj-pill{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:0.04em;
-    padding:7px 12px;
-    border-radius:100px;
-    color:#fff;
-    transition:background .3s ease;
-  }
-  .score-chip{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:0.03em;
-    background:var(--ink);
-    color:#fff;
-    padding:7px 12px;
-    border-radius:100px;
-  }
-
-  .track{
-    display:flex;
-    gap:4px;
-    margin-bottom:20px;
-  }
-  .track-seg{
-    flex:1;
-    height:6px;
-    border-radius:4px;
-    background:var(--border);
-    overflow:hidden;
-  }
-  .track-seg i{
-    display:block;
-    height:100%;
-    width:0%;
-    border-radius:4px;
-    transition:width .35s ease;
-  }
-
-  .qhead{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-  }
-  .qcount{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--ink-soft);
-  }
+  .quiz-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; }
+  .subj-pill{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.04em; padding:7px 12px; border-radius:100px; color:#fff; }
+  .score-chip{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.03em; background:var(--ink); color:#fff; padding:7px 12px; border-radius:100px; }
+  .track{ display:flex; gap:4px; margin-bottom:20px; }
+  .track-seg{ flex:1; height:6px; border-radius:4px; background:var(--border); overflow:hidden; }
+  .track-seg i{ display:block; height:100%; border-radius:4px; }
+  .qhead{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .qcount{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft); }
   .timer-ring{ position:relative; width:40px; height:40px; }
   .timer-ring svg{ transform:rotate(-90deg); }
-  .timer-ring .tnum{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px; font-weight:600;
-  }
-
-  .qtext{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:19px;
-    font-weight:600;
-    line-height:1.35;
-    margin:4px 0 20px;
-    min-height:52px;
-  }
-
+  .timer-ring .tnum{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600; }
+  .qtext{ font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:600; line-height:1.35; margin:4px 0 20px; min-height:52px; }
   .choices{ display:flex; flex-direction:column; gap:10px; }
-  .choice{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-align:left;
-    padding:13px 14px;
-    border-radius:13px;
-    border:1.5px solid var(--border);
-    background:var(--paper);
-    cursor:pointer;
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14.5px;
-    color:var(--ink);
-    transition:all .12s ease;
-  }
+  .choice{ display:flex; align-items:center; gap:12px; text-align:left; padding:13px 14px; border-radius:13px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; font-size:14.5px; color:var(--ink); transition:all .12s ease; }
   .choice:hover{ border-color:var(--accent); }
-  .choice .klabel{
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:600;
-    font-size:12px;
-    width:22px; height:22px;
-    border-radius:7px;
-    background:var(--surface);
-    border:1.5px solid var(--border);
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
-  }
-  .choice.correct{
-    background:#E4F5F1; border-color:var(--good); color:#0E5C52;
-  }
+  .choice .klabel{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:12px; width:22px; height:22px; border-radius:7px; background:var(--surface); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .choice.correct{ background:#E4F5F1; border-color:var(--good); color:#0E5C52; }
   .choice.correct .klabel{ background:var(--good); border-color:var(--good); color:#fff; }
-  .choice.wrong{
-    background:#FCE7E1; border-color:var(--bad); color:#8E2E15;
-  }
+  .choice.wrong{ background:#FCE7E1; border-color:var(--bad); color:#8E2E15; }
   .choice.wrong .klabel{ background:var(--bad); border-color:var(--bad); color:#fff; }
   .choice.disabled{ pointer-events:none; }
   .choice.dim{ opacity:0.45; }
 
-  /* ---------- RESULTS SCREEN ---------- */
   .result-hero{ text-align:center; padding:6px 0 22px; }
-  .result-hero .pct{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:56px;
-    font-weight:700;
-    letter-spacing:-0.02em;
-    line-height:1;
-  }
-  .result-hero .frac{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    color:var(--ink-soft);
-    margin-top:8px;
-  }
-  .result-hero .msg{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:15px;
-    font-weight:600;
-    margin-top:10px;
-  }
-
-  .breakdown{ display:flex; flex-direction:column; gap:14px; margin:18px 0 22px; }
-  .brow{ }
-  .brow .blabel{
-    display:flex; justify-content:space-between;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px; font-weight:600;
-    margin-bottom:6px;
-    color:var(--ink-soft);
-  }
-  .bbar{
-    height:10px; border-radius:6px; background:var(--border); overflow:hidden;
-  }
-  .bbar i{ display:block; height:100%; border-radius:6px; width:0%; transition:width .8s cubic-bezier(.2,.8,.2,1); }
-
+  .result-hero .pct{ font-family:'Space Grotesk', sans-serif; font-size:56px; font-weight:700; letter-spacing:-0.02em; line-height:1; }
+  .result-hero .frac{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink-soft); margin-top:8px; }
+  .result-hero .msg{ font-family:'Space Grotesk', sans-serif; font-size:15px; font-weight:600; margin-top:10px; }
   .btn-row{ display:flex; flex-direction:column; gap:10px; margin-top:6px; }
 
-  /* ---------- CLASS RESULTS ---------- */
   table.results-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
-  table.results-table th, table.results-table td{
-    text-align:left; padding:9px 8px; border-bottom:1px solid var(--border);
-  }
-  table.results-table th{
-    font-family:'IBM Plex Mono', monospace; font-size:10.5px;
-    text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft);
-  }
+  table.results-table th, table.results-table td{ text-align:left; padding:9px 8px; border-bottom:1px solid var(--border); }
+  table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft); }
   .tag-pre{ background:var(--math-soft); color:#7A5300; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
   .tag-post{ background:var(--science-soft); color:#0E5C52; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
 
-  .empty-note{
-    text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px;
-  }
+  .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
+  .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:14px; line-height:1.6; }
 
-  .float-pt{
-    position:fixed; pointer-events:none;
-    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px;
-    animation:floatUp .8s ease forwards;
-    z-index:50;
-  }
-  @keyframes floatUp{
-    0%{ opacity:1; transform:translateY(0);}
-    100%{ opacity:0; transform:translateY(-38px);}
-  }
-
+  .float-pt{ position:fixed; pointer-events:none; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; animation:floatUp .8s ease forwards; z-index:50; }
+  @keyframes floatUp{ 0%{ opacity:1; transform:translateY(0);} 100%{ opacity:0; transform:translateY(-38px);} }
   .fade-in{ animation:fadeIn .35s ease; }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-
   .shake{ animation:shake .35s ease; }
-  @keyframes shake{
-    0%,100%{ transform:translateX(0); }
-    25%{ transform:translateX(-4px); }
-    75%{ transform:translateX(4px); }
-  }
+  @keyframes shake{ 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-4px); } 75%{ transform:translateX(4px); } }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 
-  @media (prefers-reduced-motion: reduce){
-    *{ animation:none !important; transition:none !important; }
-  }
-
-  footer.credit{
-    text-align:center; font-size:10.5px; color:var(--ink-soft);
-    margin-top:18px; font-family:'IBM Plex Mono', monospace;
-  }
+  footer.credit{ text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; font-family:'IBM Plex Mono', monospace; }
 </style>
 </head>
 <body>
@@ -431,204 +201,856 @@ const firebaseConfig = {
   appId: "1:462283657590:web:9f115c8995f3745a856a57"
 };
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const db = firebase.firestore();
-const RESULTS_COLLECTION = "results";
 
 /* ============================================================
-   QUESTION BANKS
+   SUBJECT META
+   ============================================================ */
+const SUBJECT_META = {
+  math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
+  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)"},
+  english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
+};
+const ORDER = ["math","science","english"];
+const MAX_PICKABLE = 20;
+const POOL_SIZE = 30;
+const PRETEST_ATTEMPT_LIMIT = 2;
+
+const DEFAULT_REVIEWER = {
+  math: "GENERAL MATHEMATICS — QUICK REVIEWER\n\n• A function assigns exactly one output to each input; check with the vertical line test.\n• To evaluate f(x) at a value, substitute that value everywhere x appears.\n• Slope = (y2-y1)/(x2-x1); it measures steepness/rate of change.\n• Percent problems: part = percent × whole (convert % to decimal first).\n• Quadratic form: f(x) = ax² + bx + c; the graph is a parabola.\n• Exponent rules: a^m × a^n = a^(m+n); a^m ÷ a^n = a^(m-n).\n• Logarithms undo exponents: log_b(x) = y means b^y = x.",
+  science: "GENERAL SCIENCE — QUICK REVIEWER\n\n• The cell is the basic unit of life; mitochondria produce energy (ATP).\n• Photosynthesis: plants use CO2 + water + light to produce glucose and oxygen.\n• Newton's laws describe how forces affect motion; gravity pulls objects toward Earth.\n• Matter exists as solid, liquid, or gas; changes of state involve energy transfer.\n• The periodic table organizes elements by atomic number and properties.\n• Ecosystems involve energy flow through producers, consumers, and decomposers.",
+  english: "EFFECTIVE COMMUNICATION — QUICK REVIEWER\n\n• Effective communication involves a sender, message, channel, receiver, and feedback.\n• Subject-verb agreement: singular subjects take singular verbs, plural subjects take plural verbs.\n• Active voice (subject does the action) is usually clearer than passive voice.\n• Common figures of speech: simile (like/as), metaphor (is), personification (human traits to objects).\n• Good paragraphs have one main idea supported by clear, relevant details.\n• Non-verbal cues (tone, posture, eye contact) affect how a message is received."
+};
+
+/* ============================================================
+   QUESTION BANKS — 30 items per subject per test type
    ============================================================ */
 const BANK = {
   pretest: {
     math: [
-      {q:"Simplify: 3(x + 4) − 2x", c:["x + 12","5x + 12","x + 4","x + 7"], a:0},
-      {q:"Solve for x: 2x − 5 = 11", c:["x = 6","x = 3","x = 8","x = 16"], a:2},
-      {q:"What is 5² − 3²?", c:["16","4","2","34"], a:0},
-      {q:"A rectangle is 12 cm long and 7 cm wide. What is its area?", c:["19 cm²","84 cm²","38 cm²","70 cm²"], a:1},
-      {q:"What is 25% of 240?", c:["50","48","60","65"], a:2},
-      {q:"Find the slope of the line through (2, 3) and (4, 7).", c:["1","4","2","0.5"], a:2}
+      {q:"Evaluate f(x) = 2x + 3 at x = 4.", c:["9","11","14","8"], a:1},
+      {q:"Which relation below represents a function?", c:["{(1,2),(1,3)}","{(2,4),(3,6),(4,8)}","{(0,1),(0,2)}","{(5,5),(5,6)}"], a:1},
+      {q:"What is the domain restriction of f(x) = 1/(x - 2)?", c:["x is not 0","x is not 2","x is not -2","x is not 1"], a:1},
+      {q:"Simplify (x^2 - 9)/(x - 3).", c:["x - 3","x + 3","x^2 + 3","x - 9"], a:1},
+      {q:"Solve for x: 3(x + 2) = 21", c:["x = 5","x = 7","x = 3","x = 9"], a:0},
+      {q:"What is the y-intercept of y = 3x - 6?", c:["3","6","-6","0"], a:2},
+      {q:"Find the slope of the line through (1, 2) and (3, 10).", c:["2","4","8","6"], a:1},
+      {q:"Convert 3/4 to a percent.", c:["34%","43%","75%","57%"], a:2},
+      {q:"What is 6^2 - 4^2?", c:["4","16","20","36"], a:2},
+      {q:"Simplify log base 2 of 8.", c:["2","3","4","8"], a:1},
+      {q:"Solve for x: 2^x = 16", c:["x = 2","x = 3","x = 4","x = 8"], a:2},
+      {q:"What is the inverse of f(x) = x + 5?", c:["f-inverse(x) = x - 5","f-inverse(x) = x + 5","f-inverse(x) = 5 - x","f-inverse(x) = 5x"], a:0},
+      {q:"A rational function has a vertical asymptote where the:", c:["numerator = 0","denominator = 0","exponent = 0","constant = 0"], a:1},
+      {q:"Find the sum of 2 + 4 + 6 + 8 + 10.", c:["24","28","30","32"], a:2},
+      {q:"Evaluate the absolute value of -7 plus the absolute value of 3.", c:["4","-10","10","-4"], a:2},
+      {q:"Simplify (2x)(3x^2).", c:["5x^3","6x^2","6x^3","5x^2"], a:2},
+      {q:"Solve the inequality x + 3 > 7.", c:["x > 4","x < 4","x > 10","x < 10"], a:0},
+      {q:"What is 15% of 200?", c:["15","20","25","30"], a:3},
+      {q:"A circle has radius 5. What is its area?", c:["10 pi","15 pi","20 pi","25 pi"], a:3},
+      {q:"Solve the system: x + y = 10, x - y = 2. What is x?", c:["4","5","6","8"], a:2},
+      {q:"Find the midpoint of (2, 3) and (6, 7).", c:["(3,4)","(4,5)","(5,4)","(8,10)"], a:1},
+      {q:"Simplify the square root of 50.", c:["5 root 2","2 root 5","10 root 5","25 root 2"], a:0},
+      {q:"If f(x) = x + 1 and g(x) = 2x, what is f(g(x))?", c:["2x + 1","x + 2","2x + 2","x^2 + 1"], a:0},
+      {q:"What is the general form of a quadratic function?", c:["f(x) = ax + b","f(x) = ax^2 + bx + c","f(x) = a/x","f(x) = a^x"], a:1},
+      {q:"Solve x^2 = 49.", c:["x = 7 only","x = -7 only","x = 7 or x = -7","x = 0"], a:2},
+      {q:"What is the reciprocal of 3/5?", c:["3/5","5/3","-3/5","1"], a:1},
+      {q:"Convert 0.25 to a fraction.", c:["1/2","1/4","1/5","2/5"], a:1},
+      {q:"A function where the graph is broken into pieces by intervals is called a:", c:["linear function","piecewise function","rational function","constant function"], a:1},
+      {q:"Find the range of f(x) = x^2.", c:["all real numbers","y >= 0","y <= 0","x >= 0"], a:1},
+      {q:"Simplify: (4x^3)/(2x).", c:["2x","2x^2","4x^2","2x^3"], a:1}
     ],
     science: [
-      {q:"What is the powerhouse of the cell?", c:["Nucleus","Mitochondria","Ribosome","Cytoplasm"], a:1},
+      {q:"What is the basic unit of life?", c:["Tissue","Organ","Cell","Molecule"], a:2},
+      {q:"Which organelle is known as the powerhouse of the cell?", c:["Nucleus","Mitochondria","Ribosome","Golgi body"], a:1},
       {q:"Which gas do plants absorb for photosynthesis?", c:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], a:2},
       {q:"What force pulls objects toward the Earth?", c:["Friction","Magnetism","Gravity","Tension"], a:2},
-      {q:"What is the chemical symbol for water?", c:["H₂O","HO₂","O₂H","H₂O₂"], a:0},
+      {q:"What is the chemical symbol for water?", c:["H2O","HO2","O2H","H2O2"], a:0},
       {q:"Which planet is known as the Red Planet?", c:["Venus","Mars","Jupiter","Mercury"], a:1},
-      {q:"What organ pumps blood throughout the human body?", c:["Lungs","Liver","Heart","Kidney"], a:2}
+      {q:"What organ pumps blood throughout the human body?", c:["Lungs","Liver","Heart","Kidney"], a:2},
+      {q:"Which state of matter has a fixed shape and volume?", c:["Gas","Liquid","Solid","Plasma"], a:2},
+      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl2"], a:0},
+      {q:"Which of these is a producer in an ecosystem?", c:["Lion","Mushroom","Grass","Wolf"], a:2},
+      {q:"What process do plants use to release energy from glucose?", c:["Photosynthesis","Respiration","Transpiration","Digestion"], a:1},
+      {q:"Which particle in an atom has a negative charge?", c:["Proton","Neutron","Electron","Nucleus"], a:2},
+      {q:"What is the boiling point of water at sea level in Celsius?", c:["0 C","50 C","100 C","212 C"], a:2},
+      {q:"Which law states that an object in motion stays in motion unless acted on by a force?", c:["Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Gravity"], a:0},
+      {q:"What is the main function of red blood cells?", c:["Fight infection","Carry oxygen","Clot blood","Digest food"], a:1},
+      {q:"Which of these is a renewable energy source?", c:["Coal","Natural gas","Solar power","Petroleum"], a:2},
+      {q:"What do we call a substance that speeds up a chemical reaction without being consumed?", c:["Catalyst","Reactant","Product","Solvent"], a:0},
+      {q:"Which layer of the Earth do we live on?", c:["Core","Mantle","Crust","Atmosphere"], a:2},
+      {q:"What is the smallest unit of an element that retains its properties?", c:["Molecule","Atom","Cell","Compound"], a:1},
+      {q:"Which system in the body is responsible for breathing?", c:["Circulatory system","Digestive system","Respiratory system","Nervous system"], a:2},
+      {q:"What type of energy is stored in food?", c:["Kinetic energy","Chemical energy","Nuclear energy","Sound energy"], a:1},
+      {q:"Which of these best describes an ecosystem?", c:["Only plants in an area","Living things and their environment interacting","Only animals in an area","A single organism"], a:1},
+      {q:"What causes the seasons on Earth?", c:["Distance from the sun changing daily","The tilt of Earth's axis","The moon's gravity","Ocean currents"], a:1},
+      {q:"Which of these is NOT a state of matter?", c:["Solid","Liquid","Gas","Energy"], a:3},
+      {q:"What is the process by which water changes from liquid to gas called?", c:["Condensation","Evaporation","Precipitation","Freezing"], a:1},
+      {q:"Which vitamin is produced when skin is exposed to sunlight?", c:["Vitamin A","Vitamin C","Vitamin D","Vitamin K"], a:2},
+      {q:"What is the pH of a neutral solution?", c:["0","7","14","10"], a:1},
+      {q:"Which of these organs is part of the digestive system?", c:["Heart","Stomach","Lungs","Brain"], a:1},
+      {q:"What is the term for animals that only eat plants?", c:["Carnivores","Herbivores","Omnivores","Decomposers"], a:1},
+      {q:"Which force keeps planets in orbit around the sun?", c:["Magnetism","Gravity","Friction","Inertia"], a:1}
     ],
     english: [
-      {q:"Which sentence is correctly punctuated?", c:["\"I bought apples, bread, and milk.\"","\"I bought apples bread, and milk.\"","\"I bought, apples bread and milk.\"","\"I bought apples, bread and, milk.\""], a:0},
+      {q:"Which sentence is correctly punctuated?", c:["I bought apples, bread, and milk.","I bought apples bread, and milk.","I bought, apples bread and milk.","I bought apples, bread and, milk."], a:0},
       {q:"Choose the synonym of \"abundant.\"", c:["Scarce","Plentiful","Empty","Faint"], a:1},
       {q:"Choose the correct verb form: \"She ___ to school every day.\"", c:["go","going","goes","gone"], a:2},
       {q:"What is the plural form of \"child\"?", c:["childs","children","childes","child's"], a:1},
       {q:"Identify the figure of speech: \"The wind whispered through the trees.\"", c:["Simile","Hyperbole","Personification","Irony"], a:2},
-      {q:"Choose the antonym of \"generous.\"", c:["Kind","Giving","Stingy","Warm"], a:2}
+      {q:"Choose the antonym of \"generous.\"", c:["Kind","Giving","Stingy","Warm"], a:2},
+      {q:"Which of these best defines effective communication?", c:["Speaking loudly","Sending a message that is clearly understood as intended","Using complex vocabulary","Writing long paragraphs"], a:1},
+      {q:"Which of the following is an example of non-verbal communication?", c:["A written letter","A phone call","Eye contact and posture","An email"], a:2},
+      {q:"Choose the sentence with correct subject-verb agreement.", c:["The team are winning.","The team is winning.","The team were winning.","The team be winning."], a:1},
+      {q:"What is the main purpose of a topic sentence in a paragraph?", c:["To end the paragraph","To state the main idea","To give an example","To ask a question"], a:1},
+      {q:"Which word is a synonym of \"concise\"?", c:["Wordy","Brief","Confusing","Detailed"], a:1},
+      {q:"Identify the correctly spelled word.", c:["Recieve","Receive","Receeve","Receve"], a:1},
+      {q:"Which sentence uses active voice?", c:["The ball was thrown by John.","John threw the ball.","The ball is being thrown.","The ball had been thrown."], a:1},
+      {q:"What do we call words that sound the same but have different meanings?", c:["Synonyms","Antonyms","Homophones","Acronyms"], a:2},
+      {q:"Which is the best feedback response in communication?", c:["Ignoring the speaker","Interrupting constantly","Listening and responding appropriately","Changing the subject"], a:2},
+      {q:"Choose the correctly capitalized sentence.", c:["we visited manila last june.","We visited Manila last June.","We Visited manila last june.","we Visited Manila Last June."], a:1},
+      {q:"What is the antonym of \"clarity\"?", c:["Confusion","Precision","Understanding","Focus"], a:0},
+      {q:"Which sentence is grammatically correct?", c:["He don't like coffee.","He doesn't likes coffee.","He doesn't like coffee.","He not like coffee."], a:2},
+      {q:"What is the term for the person receiving a message in communication?", c:["Sender","Channel","Receiver","Feedback"], a:2},
+      {q:"Choose the correct pronoun: \"___ and I went to the market.\"", c:["Him","Her","She","Me"], a:2},
+      {q:"Which of these is an example of a formal communication channel?", c:["Text message to a friend","Office memo","Casual chat","Social media post"], a:1},
+      {q:"What figure of speech compares two things using \"like\" or \"as\"?", c:["Metaphor","Simile","Hyperbole","Alliteration"], a:1},
+      {q:"Choose the word that best completes: \"Please ___ the door before leaving.\"", c:["close","closed","closing","closes"], a:0},
+      {q:"What is the correct plural of \"analysis\"?", c:["Analysises","Analyses","Analysis's","Analysi"], a:1},
+      {q:"Which of these shows correct use of a semicolon?", c:["I like tea; she likes coffee.","I like tea, she likes coffee;","I like tea; she likes coffee,","I like; tea she likes coffee."], a:0},
+      {q:"What barrier to communication involves loud background noise?", c:["Physical barrier","Language barrier","Emotional barrier","Cultural barrier"], a:0},
+      {q:"Choose the correct comparative form of \"good.\"", c:["Gooder","More good","Better","Best"], a:2},
+      {q:"Which sentence demonstrates a clear main idea with supporting details?", c:["A random list of facts","A single unrelated sentence","A topic sentence followed by relevant examples","A list of questions"], a:2},
+      {q:"What is the term for adjusting your message based on your audience?", c:["Feedback","Audience awareness","Redundancy","Jargon"], a:1},
+      {q:"Choose the antonym of \"formal.\"", c:["Casual","Polite","Structured","Official"], a:0}
     ]
   },
   posttest: {
     math: [
-      {q:"Simplify: 4(x − 3) + 2x", c:["6x − 12","6x − 3","2x − 12","4x − 7"], a:0},
-      {q:"Solve for x: 3x + 7 = 22", c:["x = 4","x = 5","x = 6","x = 15"], a:1},
-      {q:"What is 4² + 2³?", c:["24","20","18","32"], a:0},
-      {q:"A triangle has a base of 10 cm and a height of 6 cm. What is its area?", c:["60 cm²","16 cm²","30 cm²","32 cm²"], a:2},
-      {q:"What is 40% of 150?", c:["50","60","45","65"], a:1},
-      {q:"Find the slope of the line through (1, 2) and (3, 10).", c:["2","8","4","6"], a:2}
+      {q:"Evaluate f(x) = 3x - 2 at x = 5.", c:["10","11","13","15"], a:2},
+      {q:"Which relation below represents a function?", c:["{(2,3),(2,5)}","{(1,2),(2,4),(3,6)}","{(4,1),(4,2)}","{(0,0),(0,1)}"], a:1},
+      {q:"What is the domain restriction of f(x) = 1/(x + 3)?", c:["x is not 3","x is not -3","x is not 0","x is not 1"], a:1},
+      {q:"Simplify (x^2 - 16)/(x - 4).", c:["x - 4","x + 4","x^2 + 4","x - 16"], a:1},
+      {q:"Solve for x: 4(x - 1) = 16", c:["x = 4","x = 5","x = 6","x = 3"], a:1},
+      {q:"What is the y-intercept of y = -2x + 8?", c:["-2","8","0","4"], a:1},
+      {q:"Find the slope of the line through (2, 1) and (4, 9).", c:["2","4","8","6"], a:1},
+      {q:"Convert 2/5 to a percent.", c:["25%","40%","20%","45%"], a:1},
+      {q:"What is 7^2 - 3^2?", c:["30","40","46","58"], a:1},
+      {q:"Simplify log base 3 of 9.", c:["1","2","3","9"], a:1},
+      {q:"Solve for x: 3^x = 27", c:["x = 2","x = 3","x = 9","x = 27"], a:1},
+      {q:"What is the inverse of f(x) = x - 4?", c:["f-inverse(x) = x + 4","f-inverse(x) = x - 4","f-inverse(x) = 4 - x","f-inverse(x) = 4x"], a:0},
+      {q:"A rational function is undefined where the:", c:["numerator = 0","denominator = 0","coefficient = 0","exponent = 1"], a:1},
+      {q:"Find the sum of 3 + 6 + 9 + 12 + 15.", c:["40","42","45","48"], a:2},
+      {q:"Evaluate the absolute value of -9 plus the absolute value of 4.", c:["5","-5","13","-13"], a:2},
+      {q:"Simplify (3x)(2x^3).", c:["5x^4","6x^3","6x^4","5x^3"], a:2},
+      {q:"Solve the inequality x - 2 < 5.", c:["x < 7","x > 7","x < 3","x > 3"], a:0},
+      {q:"What is 25% of 160?", c:["30","35","40","45"], a:2},
+      {q:"A circle has radius 4. What is its area?", c:["8 pi","12 pi","16 pi","20 pi"], a:2},
+      {q:"Solve the system: x + y = 12, x - y = 4. What is x?", c:["6","7","8","10"], a:2},
+      {q:"Find the midpoint of (1, 4) and (5, 8).", c:["(2,5)","(3,6)","(6,4)","(3,12)"], a:1},
+      {q:"Simplify the square root of 72.", c:["6 root 2","2 root 6","6 root 6","36 root 2"], a:0},
+      {q:"If f(x) = x - 2 and g(x) = 3x, what is f(g(x))?", c:["3x - 2","x - 6","3x + 2","x - 5"], a:0},
+      {q:"What is the vertex form pattern of a quadratic function?", c:["f(x) = a(x - h)^2 + k","f(x) = ax + b","f(x) = a/x","f(x) = a^x"], a:0},
+      {q:"Solve x^2 = 81.", c:["x = 9 only","x = -9 only","x = 9 or x = -9","x = 0"], a:2},
+      {q:"What is the reciprocal of 4/7?", c:["4/7","7/4","-4/7","1"], a:1},
+      {q:"Convert 0.75 to a fraction.", c:["3/4","1/4","2/3","4/5"], a:0},
+      {q:"A function whose graph is a straight line is called a:", c:["quadratic function","linear function","rational function","exponential function"], a:1},
+      {q:"Find the range of f(x) = -x^2.", c:["all real numbers","y >= 0","y <= 0","x >= 0"], a:2},
+      {q:"Simplify: (6x^4)/(2x).", c:["3x^3","3x^4","6x^3","3x^2"], a:0}
     ],
     science: [
-      {q:"What is the basic unit of life?", c:["Tissue","Organ","Cell","Molecule"], a:2},
+      {q:"What is the basic building block of living organisms?", c:["Organ","Tissue","Cell","Atom"], a:2},
+      {q:"Which organelle stores genetic material in a cell?", c:["Mitochondria","Nucleus","Ribosome","Vacuole"], a:1},
       {q:"Which gas do living things need for respiration?", c:["Carbon dioxide","Oxygen","Nitrogen","Helium"], a:1},
       {q:"What force keeps planets in orbit around the sun?", c:["Magnetism","Gravity","Friction","Inertia"], a:1},
-      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl₂"], a:0},
+      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl2"], a:0},
       {q:"Which planet is closest to the sun?", c:["Venus","Earth","Mercury","Mars"], a:2},
-      {q:"Which organ is mainly responsible for filtering blood in the human body?", c:["Liver","Kidney","Stomach","Spleen"], a:1}
+      {q:"Which organ is mainly responsible for filtering blood in the human body?", c:["Liver","Kidney","Stomach","Spleen"], a:1},
+      {q:"Which state of matter has no fixed shape or volume?", c:["Solid","Liquid","Gas","Plasma only"], a:2},
+      {q:"What is the chemical formula for carbon dioxide?", c:["CO","CO2","C2O","CO3"], a:1},
+      {q:"Which of these is a consumer in an ecosystem?", c:["Grass","Tree","Deer","Mushroom"], a:2},
+      {q:"What process do plants use to make their own food?", c:["Respiration","Photosynthesis","Transpiration","Fermentation"], a:1},
+      {q:"Which particle in an atom has a positive charge?", c:["Electron","Neutron","Proton","Photon"], a:2},
+      {q:"What is the freezing point of water at sea level in Celsius?", c:["0 C","32 C","100 C","-10 C"], a:0},
+      {q:"Which law states that for every action there is an equal and opposite reaction?", c:["Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Gravity"], a:2},
+      {q:"What is the main function of white blood cells?", c:["Carry oxygen","Fight infection","Clot blood","Digest food"], a:1},
+      {q:"Which of these is a non-renewable energy source?", c:["Solar power","Wind power","Coal","Hydropower"], a:2},
+      {q:"What do we call a substance that is dissolved in a solvent?", c:["Solute","Catalyst","Mixture","Precipitate"], a:0},
+      {q:"Which layer of the Earth is the hottest?", c:["Crust","Mantle","Outer core","Inner core"], a:3},
+      {q:"What is a group of atoms bonded together called?", c:["Cell","Molecule","Tissue","Nucleus"], a:1},
+      {q:"Which system in the body transports blood?", c:["Respiratory system","Digestive system","Circulatory system","Nervous system"], a:2},
+      {q:"What type of energy is associated with motion?", c:["Potential energy","Kinetic energy","Chemical energy","Thermal energy"], a:1},
+      {q:"Which of these best describes a food chain?", c:["A single organism","The transfer of energy from one organism to another","Only plants in an area","A type of habitat"], a:1},
+      {q:"What causes day and night on Earth?", c:["Earth's revolution around the sun","Earth's rotation on its axis","The moon's orbit","Ocean currents"], a:1},
+      {q:"Which of these is an example of a physical change?", c:["Burning wood","Rusting iron","Melting ice","Baking a cake"], a:2},
+      {q:"What is the process by which water vapor turns into liquid called?", c:["Evaporation","Condensation","Sublimation","Precipitation"], a:1},
+      {q:"Which mineral is important for strong bones and teeth?", c:["Iron","Calcium","Potassium","Zinc"], a:1},
+      {q:"What is the pH of a strongly acidic solution?", c:["Close to 0","Close to 7","Close to 14","Exactly 7"], a:0},
+      {q:"Which of these organs is part of the respiratory system?", c:["Stomach","Lungs","Liver","Kidney"], a:1},
+      {q:"What is the term for animals that eat both plants and animals?", c:["Carnivores","Herbivores","Omnivores","Producers"], a:2},
+      {q:"What force pulls a thrown ball back down to the ground?", c:["Friction","Magnetism","Gravity","Tension"], a:2}
     ],
     english: [
-      {q:"Which sentence is correctly punctuated?", c:["\"My favorite subjects are Math, Science, and English.\"","\"My favorite subjects are Math Science, and English.\"","\"My favorite subjects are, Math, Science and English.\"","\"My favorite subjects are Math, Science and, English.\""], a:0},
+      {q:"Which sentence is correctly punctuated?", c:["My favorite subjects are Math, Science, and English.","My favorite subjects are Math Science, and English.","My favorite subjects are, Math, Science and English.","My favorite subjects are Math, Science and, English."], a:0},
       {q:"Choose the synonym of \"swift.\"", c:["Slow","Fast","Quiet","Heavy"], a:1},
       {q:"Choose the correct verb form: \"They ___ their homework every night.\"", c:["does","doing","do","did doing"], a:2},
       {q:"What is the plural form of \"mouse\"?", c:["mouses","mices","mice","mouse's"], a:2},
       {q:"Identify the figure of speech: \"Time is a thief.\"", c:["Metaphor","Simile","Alliteration","Onomatopoeia"], a:0},
-      {q:"Choose the antonym of \"ancient.\"", c:["Old","Modern","Historic","Classic"], a:1}
+      {q:"Choose the antonym of \"ancient.\"", c:["Old","Modern","Historic","Classic"], a:1},
+      {q:"Which of these best defines the \"channel\" in communication?", c:["The person sending the message","The medium used to deliver the message","The response to a message","The topic of a message"], a:1},
+      {q:"Which of the following is an example of non-verbal communication?", c:["A phone call","A written report","Facial expression","A voice message"], a:2},
+      {q:"Choose the sentence with correct subject-verb agreement.", c:["The group of students are studying.","The group of students is studying.","The group of students were studying.","The group of students be studying."], a:1},
+      {q:"What is the main purpose of a concluding sentence in a paragraph?", c:["To introduce a new topic","To summarize or wrap up the main idea","To ask a question","To give random facts"], a:1},
+      {q:"Which word is a synonym of \"clear\"?", c:["Vague","Distinct","Confusing","Complicated"], a:1},
+      {q:"Identify the correctly spelled word.", c:["Definately","Definitely","Definitly","Definetly"], a:1},
+      {q:"Which sentence uses active voice?", c:["The report was written by Maria.","Maria wrote the report.","The report is being written.","The report had been written."], a:1},
+      {q:"What do we call words with the same or similar meaning?", c:["Antonyms","Synonyms","Homophones","Acronyms"], a:1},
+      {q:"Which is the best practice for active listening?", c:["Thinking about your reply while the other speaks","Making eye contact and focusing on the speaker","Checking your phone occasionally","Interrupting to add your opinion"], a:1},
+      {q:"Choose the correctly capitalized sentence.", c:["we went to baguio last december.","We went to Baguio last December.","We Went to baguio last december.","we Went to Baguio Last December."], a:1},
+      {q:"What is the antonym of \"clarity\"?", c:["Ambiguity","Precision","Understanding","Focus"], a:0},
+      {q:"Which sentence is grammatically correct?", c:["She don't have a pen.","She doesn't has a pen.","She doesn't have a pen.","She not have a pen."], a:2},
+      {q:"What is the term for the person who starts a message in communication?", c:["Sender","Channel","Receiver","Feedback"], a:0},
+      {q:"Choose the correct pronoun: \"___ and Maria went to the store.\"", c:["Him","Her","He","Me"], a:2},
+      {q:"Which of these is an example of an informal communication channel?", c:["Business email","Casual text to a friend","Official memo","Company report"], a:1},
+      {q:"What figure of speech gives human traits to non-human things?", c:["Metaphor","Simile","Personification","Hyperbole"], a:2},
+      {q:"Choose the word that best completes: \"Please ___ the window; it's cold.\"", c:["close","closed","closing","closes"], a:0},
+      {q:"What is the correct plural of \"criterion\"?", c:["Criterions","Criteria","Criterion's","Criteries"], a:1},
+      {q:"Which of these shows correct use of a comma before a coordinating conjunction?", c:["I wanted to go, but it rained.","I wanted to go but, it rained.","I wanted to go but it, rained.","I wanted, to go but it rained."], a:0},
+      {q:"What barrier to communication involves differing native languages?", c:["Physical barrier","Language barrier","Emotional barrier","Technical barrier"], a:1},
+      {q:"Choose the correct comparative form of \"bad.\"", c:["Badder","More bad","Worse","Worst"], a:2},
+      {q:"Which of these demonstrates good paragraph coherence?", c:["Ideas that jump randomly between topics","Sentences that logically connect to support one main idea","A paragraph with no topic sentence","A single long run-on sentence"], a:1},
+      {q:"What is the term for unnecessary repetition in a message?", c:["Feedback","Redundancy","Clarity","Emphasis"], a:1},
+      {q:"Choose the antonym of \"formal.\"", c:["Informal","Polite","Structured","Official"], a:0}
     ]
   }
 };
 
-const SUBJECT_META = {
-  math:    {label:"General Mathematics",    color:"var(--math)",    soft:"var(--math-soft)"},
-  science: {label:"General Science", color:"var(--science)", soft:"var(--science-soft)"},
-  english: {label:"Effective Communication", color:"var(--english)", soft:"var(--english-soft)"}
-};
-const ORDER = ["math","science","english"];
-const TIME_PER_Q = 20;
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function genJoinCode(){
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for(let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+function buildQuizQueue(subject, testType, numQuestions){
+  const pool = BANK[testType][subject];
+  const picked = shuffle(pool).slice(0, Math.min(numQuestions, pool.length));
+  return picked.map(item => {
+    const correctText = item.c[item.a];
+    const shuffledChoices = shuffle(item.c);
+    const newA = shuffledChoices.indexOf(correctText);
+    return {subject, q:item.q, c:shuffledChoices, a:newA};
+  });
+}
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str || "";
+  return d.innerHTML;
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
 
 /* ============================================================
    STATE
    ============================================================ */
 let state = {
-  screen: "start",       // start | quiz | results | class
-  testType: null,        // pretest | posttest
-  studentName: "",
-  qIndex: 0,              // 0..17 across all subjects
-  answers: [],            // {subject, correct}
-  timeLeft: TIME_PER_Q,
+  screen: "landing",
+  authUser: null,
+  authMode: "login",
+  authError: "",
+  classes: [],
+  activeClassId: null,
+  activeClass: null,
+  quizQueue: [],
+  qIndex: 0,
+  answers: [],
+  timeLeft: 20,
   timerId: null,
   locked: false,
-  saved: false
+  saved: false,
+  testType: null,
+  pretestAttempts: 0,
+  pendingRole: "teacher"
 };
-
-function flatQueue(testType){
-  const bank = BANK[testType];
-  let list = [];
-  ORDER.forEach(subj => {
-    bank[subj].forEach(item => list.push({subject:subj, ...item}));
-  });
-  return list;
-}
 
 const app = document.getElementById("app");
 
 /* ============================================================
-   START SCREEN
+   AUTH OBSERVER
    ============================================================ */
-function renderStart(){
+auth.onAuthStateChanged(async (user) => {
+  if(user){
+    try{
+      const doc = await db.collection("users").doc(user.uid).get();
+      if(doc.exists){
+        state.authUser = {uid:user.uid, email:user.email, ...doc.data()};
+        state.screen = state.authUser.role === "teacher" ? "teacherHome" : "studentHome";
+        route();
+      } else {
+        state.screen = "signup";
+        route();
+      }
+    }catch(e){
+      console.error(e);
+      state.screen = "landing";
+      route();
+    }
+  } else {
+    state.authUser = null;
+    if(["teacherHome","classEditor","teacherResults","studentHome","studentClass","review","quiz","results"].includes(state.screen)){
+      state.screen = "landing";
+    }
+    route();
+  }
+});
+
+function route(){
   clearInterval(state.timerId);
+  if(state.screen === "landing") return renderLanding();
+  if(state.screen === "login") return renderAuth("login");
+  if(state.screen === "signup") return renderAuth("signup");
+  if(state.screen === "teacherHome") return renderTeacherHome();
+  if(state.screen === "classEditor") return renderClassEditor();
+  if(state.screen === "teacherResults") return renderTeacherResults();
+  if(state.screen === "studentHome") return renderStudentHome();
+  if(state.screen === "studentClass") return renderStudentClass();
+  if(state.screen === "review") return renderReview();
+  if(state.screen === "quiz") return renderQuestion();
+  if(state.screen === "results") return renderResults();
+}
+
+/* ============================================================
+   LANDING PAGE
+   ============================================================ */
+function renderLanding(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
   app.innerHTML = `
     <div class="fade-in">
-      <div class="subject-strip">
-        <div class="subject-chip math">GEN. MATH</div>
-        <div class="subject-chip science">GEN. SCIENCE</div>
-        <div class="subject-chip english">EFFECTIVE COMMUNICATION</div>
+      <div class="hero">
+        <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11</div>
+        <h2>Assessment made simple for General Math, General Science &amp; Effective Communication.</h2>
+        <p>Teachers create a class, pick a subject, and set up a pre-test and post-test in minutes. Students join with a class code, take randomized assessments, and review right away.</p>
       </div>
-      <p class="field-label">Student name</p>
-      <input type="text" id="nameInput" placeholder="Juan Dela Cruz" value="${state.studentName}">
-      <p class="field-label">Choose assessment</p>
-      <div class="mode-grid">
-        <div class="mode-btn ${state.testType==='pretest'?'active':''}" data-mode="pretest">
-          <span class="mtitle">Pre-Test</span>
-          <span class="msub">Baseline check before using the app</span>
-        </div>
-        <div class="mode-btn ${state.testType==='posttest'?'active':''}" data-mode="posttest">
-          <span class="mtitle">Post-Test</span>
-          <span class="msub">Taken after using the app</span>
-        </div>
+      <div class="feature-list">
+        <div class="feature-item"><span class="dot"></span><span><b>For teachers:</b> create classes, choose question count and timer, schedule tests, and track every student's score.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>For students:</b> join with a class code, take timed randomized quizzes, and review right after.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Anti-cheating:</b> question order and choice order are shuffled for every attempt.</span></div>
       </div>
-      <button class="primary-btn" id="beginBtn" ${(!state.testType || !state.studentName.trim())?'disabled':''}>Begin Assessment →</button>
-      <p class="fine-print">18 items · 6 per subject · 20 seconds each<br>
-        <button class="link-btn" id="classLink">View class results</button>
+      <div class="btn-row">
+        <button class="primary-btn" id="goLogin">Log In</button>
+        <button class="primary-btn ghost" id="goSignup">Create an Account</button>
+      </div>
+    </div>
+  `;
+  document.getElementById("goLogin").addEventListener("click", ()=>{ state.screen="login"; state.authError=""; route(); });
+  document.getElementById("goSignup").addEventListener("click", ()=>{ state.screen="signup"; state.authError=""; route(); });
+}
+
+/* ============================================================
+   AUTH SCREENS
+   ============================================================ */
+function renderAuth(mode){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  const isSignup = mode === "signup";
+  app.innerHTML = `
+    <div class="fade-in">
+      <p class="field-label">${isSignup ? "Create Account" : "Log In"}</p>
+      ${isSignup ? `
+        <p class="field-label">I am a</p>
+        <div class="radio-group">
+          <div class="radio-opt ${state.pendingRole==='teacher'?'active':''}" data-role="teacher">Teacher</div>
+          <div class="radio-opt ${state.pendingRole==='student'?'active':''}" data-role="student">Student</div>
+        </div>
+        <input type="text" id="nameInput" placeholder="Full name">
+      ` : ``}
+      <input type="email" id="emailInput" placeholder="Email address">
+      <input type="password" id="passInput" placeholder="Password">
+      ${state.authError ? `<p class="error-note">${escapeHtml(state.authError)}</p>` : ``}
+      <button class="primary-btn" id="submitAuth">${isSignup ? "Create Account" : "Log In"}</button>
+      <p class="fine-print">
+        ${isSignup ? `Already have an account? <button class="link-btn" id="switchMode">Log in</button>`
+                   : `New here? <button class="link-btn" id="switchMode">Create an account</button>`}
+        <br><button class="link-btn" id="backHome">Back to home</button>
       </p>
     </div>
   `;
 
-  document.getElementById("nameInput").addEventListener("input", e=>{
-    state.studentName = e.target.value;
-    document.getElementById("beginBtn").disabled = !state.testType || !state.studentName.trim();
-  });
-
-  document.querySelectorAll(".mode-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      state.testType = btn.dataset.mode;
-      renderStart();
+  if(isSignup){
+    document.querySelectorAll(".radio-opt").forEach(el=>{
+      el.addEventListener("click", ()=>{ state.pendingRole = el.dataset.role; renderAuth("signup"); });
     });
-  });
+  }
 
-  document.getElementById("beginBtn").addEventListener("click", startQuiz);
-  document.getElementById("classLink").addEventListener("click", ()=>{ state.screen="class"; renderClassResults(); });
+  document.getElementById("switchMode").addEventListener("click", ()=>{
+    state.screen = isSignup ? "login" : "signup";
+    state.authError = "";
+    route();
+  });
+  document.getElementById("backHome").addEventListener("click", ()=>{ state.screen="landing"; route(); });
+
+  document.getElementById("submitAuth").addEventListener("click", async ()=>{
+    const email = document.getElementById("emailInput").value.trim();
+    const pass = document.getElementById("passInput").value;
+    const btn = document.getElementById("submitAuth");
+    state.authError = "";
+    if(!email || !pass){ state.authError = "Please fill in all fields."; renderAuth(mode); return; }
+    btn.disabled = true;
+    btn.textContent = "Please wait...";
+    try{
+      if(isSignup){
+        const name = document.getElementById("nameInput").value.trim();
+        if(!name){ state.authError = "Please enter your name."; renderAuth("signup"); return; }
+        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+        await db.collection("users").doc(cred.user.uid).set({
+          role: state.pendingRole, name, email, createdAt: Date.now()
+        });
+      } else {
+        await auth.signInWithEmailAndPassword(email, pass);
+      }
+    }catch(err){
+      state.authError = err.message.replace("Firebase: ", "");
+      renderAuth(mode);
+    }
+  });
 }
 
-function startQuiz(){
-  state.queue = flatQueue(state.testType);
+/* ============================================================
+   TEACHER: HOME (class list)
+   ============================================================ */
+async function renderTeacherHome(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your classes...</p></div>`;
+
+  let classes = [];
+  try{
+    const snap = await db.collection("classes").where("teacherUid","==",state.authUser.uid).get();
+    snap.forEach(doc => classes.push({id:doc.id, ...doc.data()}));
+    classes.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+  }catch(e){ console.error(e); }
+  state.classes = classes;
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <div class="who">Teacher &middot; <b>${escapeHtml(state.authUser.name)}</b></div>
+        <div class="nav-actions"><button class="pill-btn outline" id="logoutBtn">Log out</button></div>
+      </div>
+      <p class="field-label">Your Classes</p>
+      ${classes.length === 0 ? `<p class="empty-note">No classes yet. Create one to get started.</p>` : classes.map(c=>`
+        <div class="class-card" data-id="${c.id}">
+          <div class="ctitle">${escapeHtml(c.className)}</div>
+          <div class="cmeta">${SUBJECT_META[c.subject].label.toUpperCase()} &middot; CODE ${c.joinCode}</div>
+        </div>
+      `).join("")}
+      <button class="primary-btn" id="createClassBtn" style="margin-top:8px;">+ Create Class</button>
+    </div>
+  `;
+
+  document.getElementById("logoutBtn").addEventListener("click", ()=> auth.signOut());
+  document.getElementById("createClassBtn").addEventListener("click", ()=>{
+    state.activeClassId = null;
+    state.activeClass = null;
+    state.classError = "";
+    state.screen = "classEditor";
+    route();
+  });
+  document.querySelectorAll(".class-card").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      state.activeClassId = el.dataset.id;
+      state.activeClass = classes.find(c=>c.id === el.dataset.id);
+      state.classError = "";
+      state.screen = "classEditor";
+      route();
+    });
+  });
+}
+
+/* ============================================================
+   TEACHER: CLASS EDITOR
+   ============================================================ */
+function renderClassEditor(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  const c = state.activeClass || {};
+  const isNew = !state.activeClassId;
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">${isNew ? "New Class" : "Edit Class"}</div>
+      </div>
+      ${!isNew ? `<div class="code-display">${c.joinCode}</div><p class="fine-print" style="margin-top:-10px;">Share this join code with your students.</p>` : ``}
+
+      <p class="field-label">Class name</p>
+      <input type="text" id="classNameInput" placeholder="e.g. 11 - Vanguard" value="${escapeHtml(c.className||"")}">
+
+      <p class="field-label">Subject</p>
+      <select id="subjectSelect">
+        ${ORDER.map(s=>`<option value="${s}" ${c.subject===s?'selected':''}>${SUBJECT_META[s].label}</option>`).join("")}
+      </select>
+
+      <p class="field-label">Number of questions per test (max ${MAX_PICKABLE}, pool of ${POOL_SIZE})</p>
+      <input type="number" id="numQInput" min="1" max="${MAX_PICKABLE}" value="${c.numQuestions||10}">
+
+      <p class="field-label">Timer per question (seconds)</p>
+      <select id="timerSelect">
+        ${[15,20,30,45,60].map(t=>`<option value="${t}" ${c.timerSeconds===t?'selected':''}>${t} seconds</option>`).join("")}
+      </select>
+
+      <p class="field-label">Schedule (optional, leave blank for always open)</p>
+      <input type="datetime-local" id="startInput" value="${c.scheduleStart||""}">
+      <input type="datetime-local" id="endInput" value="${c.scheduleEnd||""}">
+
+      <p class="field-label">Reviewer notes (optional)</p>
+      <textarea id="reviewerTextInput" placeholder="Type reviewer notes for your students...">${escapeHtml(c.reviewerText||"")}</textarea>
+
+      <p class="field-label">Reviewer link (optional)</p>
+      <input type="url" id="reviewerLinkInput" placeholder="https://docs.google.com/..." value="${escapeHtml(c.reviewerLink||"")}">
+
+      ${state.classError ? `<p class="error-note">${escapeHtml(state.classError)}</p>` : ``}
+
+      <button class="primary-btn" id="saveClassBtn">${isNew ? "Create Class" : "Save Changes"}</button>
+      ${!isNew ? `
+        <div class="btn-row">
+          <button class="primary-btn ghost" id="viewResultsBtn">View Results</button>
+          <button class="primary-btn danger" id="deleteClassBtn">Delete Class</button>
+        </div>
+      ` : ``}
+    </div>
+  `;
+
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="teacherHome"; route(); });
+
+  document.getElementById("saveClassBtn").addEventListener("click", async ()=>{
+    const className = document.getElementById("classNameInput").value.trim();
+    const subject = document.getElementById("subjectSelect").value;
+    let numQuestions = parseInt(document.getElementById("numQInput").value, 10);
+    const timerSeconds = parseInt(document.getElementById("timerSelect").value, 10);
+    const scheduleStart = document.getElementById("startInput").value;
+    const scheduleEnd = document.getElementById("endInput").value;
+    const reviewerText = document.getElementById("reviewerTextInput").value.trim();
+    const reviewerLink = document.getElementById("reviewerLinkInput").value.trim();
+
+    if(!className){ state.classError = "Please enter a class name."; renderClassEditor(); return; }
+    if(!numQuestions || numQuestions < 1) numQuestions = 1;
+    if(numQuestions > MAX_PICKABLE) numQuestions = MAX_PICKABLE;
+    state.classError = "";
+
+    const btn = document.getElementById("saveClassBtn");
+    btn.disabled = true; btn.textContent = "Saving...";
+
+    try{
+      const payload = { teacherUid: state.authUser.uid, teacherName: state.authUser.name,
+        className, subject, numQuestions, timerSeconds, scheduleStart, scheduleEnd, reviewerText, reviewerLink };
+      if(isNew){
+        payload.joinCode = genJoinCode();
+        payload.createdAt = Date.now();
+        await db.collection("classes").add(payload);
+      } else {
+        await db.collection("classes").doc(state.activeClassId).update(payload);
+      }
+      state.screen = "teacherHome";
+      route();
+    }catch(err){
+      state.classError = err.message;
+      renderClassEditor();
+    }
+  });
+
+  if(!isNew){
+    document.getElementById("viewResultsBtn").addEventListener("click", ()=>{ state.screen="teacherResults"; route(); });
+    document.getElementById("deleteClassBtn").addEventListener("click", async ()=>{
+      if(!confirm("Delete this class? This cannot be undone.")) return;
+      try{
+        await db.collection("classes").doc(state.activeClassId).delete();
+        state.screen = "teacherHome";
+        route();
+      }catch(err){ alert("Couldn't delete: " + err.message); }
+    });
+  }
+}
+
+/* ============================================================
+   TEACHER: CLASS RESULTS
+   ============================================================ */
+async function renderTeacherResults(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading results...</p></div>`;
+
+  let rows = [];
+  try{
+    const snap = await db.collection("attempts").where("classId","==",state.activeClassId).get();
+    snap.forEach(doc => rows.push(doc.data()));
+    rows.sort((a,b)=> b.timestamp - a.timestamp);
+  }catch(e){ console.error(e); }
+
+  const tableRows = rows.map(r=>{
+    const tag = r.testType === "pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
+    return `<tr>
+      <td>${escapeHtml(r.studentName)}</td>
+      <td>${tag}</td>
+      <td>${r.correct}/${r.total}</td>
+      <td>${r.pct}%</td>
+      <td>${fmtDate(r.timestamp)}</td>
+    </tr>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">${escapeHtml(state.activeClass.className)}</div>
+      </div>
+      ${rows.length === 0 ? `<p class="empty-note">No attempts saved yet for this class.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="results-table">
+            <thead><tr><th>Name</th><th>Test</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+      `}
+      <button class="primary-btn ghost" id="refreshBtn" style="margin-top:16px;">Refresh</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classEditor"; route(); });
+  document.getElementById("refreshBtn").addEventListener("click", renderTeacherResults);
+}
+
+/* ============================================================
+   STUDENT: HOME
+   ============================================================ */
+async function renderStudentHome(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your classes...</p></div>`;
+
+  let classes = [];
+  try{
+    const enrollSnap = await db.collection("enrollments").where("studentUid","==",state.authUser.uid).get();
+    const classIds = [];
+    enrollSnap.forEach(doc => classIds.push(doc.data().classId));
+    for(const cid of classIds){
+      const cdoc = await db.collection("classes").doc(cid).get();
+      if(cdoc.exists) classes.push({id:cdoc.id, ...cdoc.data()});
+    }
+  }catch(e){ console.error(e); }
+  state.classes = classes;
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <div class="who">Student &middot; <b>${escapeHtml(state.authUser.name)}</b></div>
+        <div class="nav-actions"><button class="pill-btn outline" id="logoutBtn">Log out</button></div>
+      </div>
+      <p class="field-label">Your Classes</p>
+      ${classes.length === 0 ? `<p class="empty-note">You haven't joined a class yet.</p>` : classes.map(c=>`
+        <div class="class-card" data-id="${c.id}">
+          <div class="ctitle">${escapeHtml(c.className)}</div>
+          <div class="cmeta">${SUBJECT_META[c.subject].label.toUpperCase()} &middot; ${escapeHtml(c.teacherName||"")}</div>
+        </div>
+      `).join("")}
+      <p class="field-label" style="margin-top:14px;">Join a class</p>
+      <input type="text" id="joinCodeInput" placeholder="Enter class code">
+      ${state.joinError ? `<p class="error-note">${escapeHtml(state.joinError)}</p>` : ``}
+      <button class="primary-btn" id="joinBtn">Join Class</button>
+    </div>
+  `;
+
+  document.getElementById("logoutBtn").addEventListener("click", ()=> auth.signOut());
+  document.querySelectorAll(".class-card").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      state.activeClassId = el.dataset.id;
+      state.activeClass = classes.find(c=>c.id === el.dataset.id);
+      state.screen = "studentClass";
+      route();
+    });
+  });
+  document.getElementById("joinBtn").addEventListener("click", async ()=>{
+    const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
+    state.joinError = "";
+    if(!code){ state.joinError = "Please enter a class code."; renderStudentHome(); return; }
+    const btn = document.getElementById("joinBtn");
+    btn.disabled = true; btn.textContent = "Joining...";
+    try{
+      const snap = await db.collection("classes").where("joinCode","==",code).limit(1).get();
+      if(snap.empty){ state.joinError = "No class found with that code."; renderStudentHome(); return; }
+      const classDoc = snap.docs[0];
+      const already = classes.find(c => c.id === classDoc.id);
+      if(already){ state.joinError = "You're already in this class."; renderStudentHome(); return; }
+      await db.collection("enrollments").add({
+        studentUid: state.authUser.uid, studentName: state.authUser.name,
+        classId: classDoc.id, joinedAt: Date.now()
+      });
+      renderStudentHome();
+    }catch(err){
+      state.joinError = err.message;
+      renderStudentHome();
+    }
+  });
+}
+
+/* ============================================================
+   STUDENT: CLASS VIEW
+   ============================================================ */
+async function renderStudentClass(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading...</p></div>`;
+
+  const c = state.activeClass;
+  const meta = SUBJECT_META[c.subject];
+
+  let pretestCount = 0;
+  try{
+    const snap = await db.collection("attempts")
+      .where("classId","==",state.activeClassId)
+      .where("studentUid","==",state.authUser.uid)
+      .where("testType","==","pretest").get();
+    pretestCount = snap.size;
+  }catch(e){ console.error(e); }
+  state.pretestAttempts = pretestCount;
+
+  const now = new Date();
+  let scheduleNote = "Open anytime";
+  let scheduleLocked = false;
+  if(c.scheduleStart){
+    const start = new Date(c.scheduleStart);
+    if(now < start){ scheduleNote = "Opens " + start.toLocaleString(); scheduleLocked = true; }
+  }
+  if(!scheduleLocked && c.scheduleEnd){
+    const end = new Date(c.scheduleEnd);
+    if(now > end){ scheduleNote = "Closed since " + end.toLocaleString(); scheduleLocked = true; }
+  }
+
+  const pretestLocked = scheduleLocked || pretestCount >= PRETEST_ATTEMPT_LIMIT;
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">${escapeHtml(c.teacherName||"")}</div>
+      </div>
+      <div class="subject-strip"><div class="subject-chip ${c.subject}">${meta.label.toUpperCase()}</div></div>
+      <p class="field-label">${escapeHtml(c.className)}</p>
+      <p class="fine-print" style="margin-top:-6px;">${scheduleNote}</p>
+
+      <div class="mode-grid">
+        <div class="mode-btn ${pretestLocked?'locked':''}" id="pretestBtn">
+          <span class="mtitle">Pre-Test</span>
+          <span class="msub">${pretestCount}/${PRETEST_ATTEMPT_LIMIT} attempts used</span>
+        </div>
+        <div class="mode-btn ${scheduleLocked?'locked':''}" id="posttestBtn">
+          <span class="mtitle">Post-Test</span>
+          <span class="msub">Unlimited attempts</span>
+        </div>
+      </div>
+
+      <button class="primary-btn ghost" id="reviewBtn">Review Materials</button>
+    </div>
+  `;
+
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="studentHome"; route(); });
+  document.getElementById("reviewBtn").addEventListener("click", ()=>{ state.screen="review"; route(); });
+
+  document.getElementById("pretestBtn").addEventListener("click", ()=>{
+    if(pretestLocked) return;
+    startQuiz("pretest");
+  });
+  document.getElementById("posttestBtn").addEventListener("click", ()=>{
+    if(scheduleLocked) return;
+    startQuiz("posttest");
+  });
+}
+
+/* ============================================================
+   REVIEW SCREEN
+   ============================================================ */
+function renderReview(){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  const c = state.activeClass;
+  const hasTeacherContent = (c.reviewerText && c.reviewerText.trim()) || (c.reviewerLink && c.reviewerLink.trim());
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Review &middot; ${SUBJECT_META[c.subject].label}</div>
+      </div>
+      ${hasTeacherContent ? `
+        ${c.reviewerText ? `<div class="reviewer-box">${escapeHtml(c.reviewerText)}</div>` : ``}
+        ${c.reviewerLink ? `<a href="${escapeHtml(c.reviewerLink)}" target="_blank" rel="noopener"><button class="primary-btn ghost" style="margin-bottom:10px;">Open Teacher's Reviewer Link</button></a>` : ``}
+      ` : `
+        <p class="fine-print" style="margin-bottom:10px;">Your teacher hasn't added a reviewer yet, here's a general study guide for this subject.</p>
+        <div class="reviewer-box">${escapeHtml(DEFAULT_REVIEWER[c.subject])}</div>
+      `}
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{
+    state.screen = (state.testType ? "results" : "studentClass");
+    route();
+  });
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+function startQuiz(testType){
+  const c = state.activeClass;
+  state.testType = testType;
+  state.quizQueue = buildQuizQueue(c.subject, testType, c.numQuestions);
   state.qIndex = 0;
   state.answers = [];
   state.saved = false;
   state.screen = "quiz";
-  renderQuestion();
+  route();
 }
 
-/* ============================================================
-   QUIZ SCREEN
-   ============================================================ */
 function renderQuestion(){
   clearInterval(state.timerId);
   state.locked = false;
-  state.timeLeft = TIME_PER_Q;
+  const c = state.activeClass;
+  state.timeLeft = c.timerSeconds || 20;
 
-  const item = state.queue[state.qIndex];
+  const item = state.quizQueue[state.qIndex];
   const meta = SUBJECT_META[item.subject];
-  document.body.style.background =
-    `radial-gradient(circle at 12% -10%, ${meta.soft} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  document.body.style.background = `radial-gradient(circle at 12% -10%, ${meta.soft} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
 
   const score = state.answers.filter(a=>a.correct).length;
 
   app.innerHTML = `
     <div class="fade-in">
       <div class="quiz-top">
-        <div class="subj-pill" style="background:${meta.color}">${meta.label.toUpperCase()}</div>
+        <div class="subj-pill" style="background:${meta.color}">${state.testType.toUpperCase()}</div>
         <div class="score-chip">SCORE ${String(score).padStart(2,'0')}</div>
       </div>
-      <div class="track">
-        ${ORDER.map(s=>{
-          const segAnswers = state.answers.filter(a=>a.subject===s).length;
-          const total = BANK[state.testType][s].length;
-          const filled = segAnswers/total*100;
-          return `<div class="track-seg"><i style="width:${filled}%;background:${SUBJECT_META[s].color}"></i></div>`;
-        }).join("")}
-      </div>
+      <div class="track"><div class="track-seg"><i style="width:${(state.qIndex/state.quizQueue.length*100)}%;background:${meta.color}"></i></div></div>
       <div class="qhead">
-        <span class="qcount">Q${state.qIndex+1} / ${state.queue.length}</span>
+        <span class="qcount">Q${state.qIndex+1} / ${state.quizQueue.length}</span>
         <div class="timer-ring">
           <svg width="40" height="40">
             <circle cx="20" cy="20" r="16" stroke="var(--border)" stroke-width="4" fill="none"/>
             <circle id="ringProgress" cx="20" cy="20" r="16" stroke="${meta.color}" stroke-width="4" fill="none"
               stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round"/>
           </svg>
-          <div class="tnum" id="tnum">${TIME_PER_Q}</div>
+          <div class="tnum" id="tnum">${state.timeLeft}</div>
         </div>
       </div>
-      <div class="qtext">${item.q}</div>
+      <div class="qtext">${escapeHtml(item.q)}</div>
       <div class="choices" id="choices">
         ${item.c.map((choice,i)=>`
           <button class="choice" data-i="${i}">
             <span class="klabel">${String.fromCharCode(65+i)}</span>
-            <span>${choice}</span>
+            <span>${escapeHtml(choice)}</span>
           </button>
         `).join("")}
       </div>
@@ -645,11 +1067,12 @@ function renderQuestion(){
 function runTimer(){
   const ring = document.getElementById("ringProgress");
   const tnum = document.getElementById("tnum");
+  const totalTime = state.activeClass.timerSeconds || 20;
   const circumference = 100.5;
   state.timerId = setInterval(()=>{
     state.timeLeft -= 0.25;
     if(tnum) tnum.textContent = Math.max(0, Math.ceil(state.timeLeft));
-    if(ring) ring.style.strokeDashoffset = circumference * (1 - state.timeLeft/TIME_PER_Q);
+    if(ring) ring.style.strokeDashoffset = circumference * (1 - state.timeLeft/totalTime);
     if(state.timeLeft <= 0){
       clearInterval(state.timerId);
       if(!state.locked) lockAnswer(-1);
@@ -662,7 +1085,7 @@ function lockAnswer(choiceIndex){
   state.locked = true;
   clearInterval(state.timerId);
 
-  const item = state.queue[state.qIndex];
+  const item = state.quizQueue[state.qIndex];
   const isCorrect = choiceIndex === item.a;
   state.answers.push({subject:item.subject, correct:isCorrect});
 
@@ -681,12 +1104,12 @@ function lockAnswer(choiceIndex){
   }
 
   setTimeout(()=>{
-    if(state.qIndex < state.queue.length - 1){
+    if(state.qIndex < state.quizQueue.length - 1){
       state.qIndex++;
       renderQuestion();
     } else {
       state.screen = "results";
-      renderResults();
+      route();
     }
   }, 850);
 }
@@ -708,8 +1131,7 @@ function spawnFloatingPoint(text, color){
    ============================================================ */
 function renderResults(){
   clearInterval(state.timerId);
-  document.body.style.background =
-    `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
 
   const total = state.answers.length;
   const correct = state.answers.filter(a=>a.correct).length;
@@ -720,19 +1142,6 @@ function renderResults(){
   else if(pct >= 70) msg = "Great job!";
   else if(pct >= 50) msg = "Good effort!";
 
-  const subjRows = ORDER.map(s=>{
-    const meta = SUBJECT_META[s];
-    const subTotal = BANK[state.testType][s].length;
-    const subCorrect = state.answers.filter(a=>a.subject===s && a.correct).length;
-    const p = Math.round((subCorrect/subTotal)*100);
-    return `
-      <div class="brow">
-        <div class="blabel"><span>${meta.label}</span><span>${subCorrect}/${subTotal}</span></div>
-        <div class="bbar"><i style="width:${p}%;background:${meta.color}"></i></div>
-      </div>
-    `;
-  }).join("");
-
   app.innerHTML = `
     <div class="fade-in">
       <div class="result-hero">
@@ -740,115 +1149,46 @@ function renderResults(){
         <div class="frac">${correct} OUT OF ${total} CORRECT &middot; ${state.testType.toUpperCase()}</div>
         <div class="msg">${msg}</div>
       </div>
-      <div class="breakdown">${subjRows}</div>
+      <p class="fine-print" id="saveNote">Saving your result...</p>
       <div class="btn-row">
-        <button class="primary-btn" id="saveBtn" ${state.saved?'disabled':''}>${state.saved?'Saved ✓':'Save My Result'}</button>
-        <button class="primary-btn ghost" id="classBtn">View Class Results</button>
-        <button class="primary-btn ghost" id="retakeBtn">Take Another Assessment</button>
+        <button class="primary-btn ghost" id="reviewBtn">Review Materials</button>
+        <button class="primary-btn ghost" id="backBtn">Back to Class</button>
       </div>
-      <p class="fine-print" id="saveNote">Saved results are visible to your teacher in Class Results, along with everyone else's.</p>
     </div>
   `;
 
-  document.getElementById("saveBtn").addEventListener("click", async ()=>{
-    const btn = document.getElementById("saveBtn");
-    btn.textContent = "Saving...";
-    try{
-      const payload = {
-        name: state.studentName.trim(),
-        testType: state.testType,
-        correct, total, pct,
-        subjects: ORDER.map(s=>({
-          subject:s,
-          correct: state.answers.filter(a=>a.subject===s && a.correct).length,
-          total: BANK[state.testType][s].length
-        })),
-        timestamp: Date.now()
-      };
-      await db.collection(RESULTS_COLLECTION).add(payload);
-      state.saved = true;
-      btn.textContent = "Saved ✓";
-      btn.disabled = true;
-    } catch(err){
-      btn.textContent = "Save failed — try again";
-      console.error(err);
-    }
-  });
+  autoSaveResult({testType: state.testType, correct, total, pct});
 
-  document.getElementById("classBtn").addEventListener("click", ()=>{ state.screen="class"; renderClassResults(); });
-  document.getElementById("retakeBtn").addEventListener("click", ()=>{
-    state.testType = null;
-    state.screen = "start";
-    renderStart();
-  });
+  document.getElementById("reviewBtn").addEventListener("click", ()=>{ state.screen="review"; route(); });
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.testType=null; state.screen="studentClass"; route(); });
 }
 
-/* ============================================================
-   CLASS RESULTS
-   ============================================================ */
-async function renderClassResults(){
-  clearInterval(state.timerId);
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
-
-  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading class results…</p></div>`;
-
-  let rows = [];
+async function autoSaveResult({testType, correct, total, pct}){
+  const note = document.getElementById("saveNote");
+  if(state.saved){
+    if(note) note.textContent = "Result saved, visible to your teacher.";
+    return;
+  }
   try{
-    const snap = await db.collection(RESULTS_COLLECTION).orderBy("timestamp", "desc").get();
-    snap.forEach(doc => rows.push(doc.data()));
-  }catch(e){ console.error(e); }
-
-  const tableRows = rows.map(r=>{
-    const bySubj = Object.fromEntries((r.subjects||[]).map(s=>[s.subject, `${s.correct}/${s.total}`]));
-    const tag = r.testType === "pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
-    const d = new Date(r.timestamp);
-    return `<tr>
-      <td>${escapeHtml(r.name)}</td>
-      <td>${tag}</td>
-      <td>${bySubj.math||"–"}</td>
-      <td>${bySubj.science||"–"}</td>
-      <td>${bySubj.english||"–"}</td>
-      <td>${r.correct}/${r.total}</td>
-      <td>${r.pct}%</td>
-      <td>${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</td>
-    </tr>`;
-  }).join("");
-
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="quiz-top">
-        <div class="subj-pill" style="background:var(--ink)">CLASS RESULTS</div>
-        <div class="score-chip">${rows.length} SAVED</div>
-      </div>
-      ${rows.length === 0 ? `<p class="empty-note">No results saved yet. Once students tap "Save My Result," their scores will appear here for everyone using this app.</p>` : `
-        <div style="overflow-x:auto;">
-          <table class="results-table">
-            <thead><tr><th>Name</th><th>Test</th><th>Gen. Math</th><th>Gen. Sci</th><th>Comm.</th><th>Total</th><th>%</th><th>Date</th></tr></thead>
-            <tbody>${tableRows}</tbody>
-          </table>
-        </div>
-      `}
-      <div class="btn-row" style="margin-top:20px;">
-        <button class="primary-btn ghost" id="refreshBtn">Refresh</button>
-        <button class="primary-btn" id="backBtn">Back to Start</button>
-      </div>
-    </div>
-  `;
-
-  document.getElementById("refreshBtn").addEventListener("click", renderClassResults);
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="start"; renderStart(); });
-}
-
-function escapeHtml(str){
-  const d = document.createElement("div");
-  d.textContent = str;
-  return d.innerHTML;
+    await db.collection("attempts").add({
+      studentUid: state.authUser.uid,
+      studentName: state.authUser.name,
+      classId: state.activeClassId,
+      testType, correct, total, pct,
+      timestamp: Date.now()
+    });
+    state.saved = true;
+    if(note) note.textContent = "Result saved, visible to your teacher.";
+  }catch(err){
+    if(note) note.textContent = "Couldn't save automatically, check your connection.";
+    console.error(err);
+  }
 }
 
 /* ============================================================
    INIT
    ============================================================ */
-renderStart();
+route();
 </script>
 </body>
 </html>
