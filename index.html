@@ -11,38 +11,18 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
   :root{
-    --paper:#F3F1FB;
-    --surface:#FFFFFF;
-    --ink:#211C4E;
-    --ink-soft:#5A5480;
-    --border:#DDD7F2;
-    --math:#F0A202;
-    --math-soft:#FCEACB;
-    --science:#1B998B;
-    --science-soft:#D6EFEA;
-    --english:#E4572E;
-    --english-soft:#FBE1D9;
-    --accent:var(--ink);
-    --accent-soft:#E7E3F8;
-    --good:#1B998B;
-    --bad:#E4572E;
-    --radius:18px;
-    --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+    --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
+    --math:#F0A202; --math-soft:#FCEACB; --science:#1B998B; --science-soft:#D6EFEA;
+    --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
+    --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     min-height:100vh;
-    background:
-      radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%),
-      radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%),
-      var(--paper);
-    font-family:'IBM Plex Sans', sans-serif;
-    color:var(--ink);
-    display:flex;
-    justify-content:center;
-    padding:28px 16px 60px;
-    transition:background 0.6s ease;
+    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper);
+    font-family:'IBM Plex Sans', sans-serif; color:var(--ink);
+    display:flex; justify-content:center; padding:28px 16px 60px; transition:background 0.6s ease;
   }
   .wrap{ width:100%; max-width:560px; }
   .brand{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px; gap:10px; }
@@ -54,23 +34,19 @@
   .navbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap; }
   .navbar .who{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); }
   .navbar .who b{ color:var(--ink); }
-  .nav-actions{ display:flex; gap:8px; }
-  .pill-btn{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
-    background:var(--accent-soft); color:var(--ink); border:none; border-radius:100px;
-    padding:8px 12px; cursor:pointer;
-  }
+  .nav-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill-btn{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; background:var(--accent-soft); color:var(--ink); border:none; border-radius:100px; padding:8px 12px; cursor:pointer; }
   .pill-btn.outline{ background:transparent; border:1.5px solid var(--border); }
 
-  .subject-strip{ display:flex; gap:8px; margin-bottom:20px; }
-  .subject-chip{ flex:1; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; }
+  .subject-strip{ display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .subject-chip{ flex:1; min-width:90px; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; }
   .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
   .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
   .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
 
   .field-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin:0 0 8px 2px; }
 
-  input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="url"], input[type="datetime-local"], select, textarea{
+  input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="datetime-local"], select, textarea{
     width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--border);
     background:var(--paper); font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink);
     outline:none; margin-bottom:16px; transition:border-color .15s ease, box-shadow .15s ease;
@@ -78,34 +54,29 @@
   textarea{ min-height:90px; resize:vertical; font-family:'IBM Plex Sans', sans-serif; }
   input:focus, select:focus, textarea:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
 
-  .radio-group{ display:flex; gap:10px; margin-bottom:16px; }
-  .radio-opt{
-    flex:1; border:1.5px solid var(--border); border-radius:12px; padding:12px; text-align:center;
-    font-size:14px; font-weight:600; cursor:pointer; background:var(--paper);
-  }
-  .radio-opt.active{ border-color:var(--accent); background:var(--accent-soft); }
+  .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+  .checkbox-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
+  .checkbox-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
+  .checkbox-item input{ width:auto; margin:0; }
 
-  .mode-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
+  .mode-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
   .mode-btn{ cursor:pointer; border:1.5px solid var(--border); background:var(--paper); border-radius:14px; padding:16px 10px; text-align:left; transition:all .15s ease; }
   .mode-btn:hover{ border-color:var(--accent); }
-  .mode-btn.active{ border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 3px var(--accent-soft); }
   .mode-btn .mtitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; display:block; margin-bottom:4px; }
   .mode-btn .msub{ font-size:11.5px; color:var(--ink-soft); line-height:1.35; display:block; }
-  .mode-btn:disabled, .mode-btn.locked{ opacity:0.45; cursor:not-allowed; }
+  .mode-btn.locked{ opacity:0.45; cursor:not-allowed; }
 
-  .primary-btn{
-    width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff;
-    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em;
-    padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease;
-  }
+  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; margin-bottom:0; }
   .primary-btn:active{ transform:scale(0.98); }
   .primary-btn:disabled{ opacity:0.4; cursor:not-allowed; }
   .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
   .primary-btn.danger{ background:var(--bad); }
+  .primary-btn.blitz{ background:linear-gradient(135deg, var(--math), var(--english)); }
 
   .fine-print{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5; }
   .link-btn{ background:none; border:none; color:var(--ink); text-decoration:underline; cursor:pointer; font:inherit; padding:0; }
   .error-note{ font-size:12.5px; color:var(--bad); margin:-8px 0 14px; }
+  .success-note{ font-size:13px; color:var(--good); margin:-8px 0 14px; text-align:center; }
 
   .hero{ text-align:center; padding:10px 4px 24px; }
   .hero .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:10px; }
@@ -116,18 +87,18 @@
   .feature-item b{ color:var(--ink); }
   .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:6px; flex-shrink:0; }
 
-  .class-card{
-    border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer;
-    background:var(--paper); transition:border-color .15s ease;
-  }
+  .portal-grid{ display:flex; flex-direction:column; gap:12px; margin-bottom:8px; }
+  .portal-card{ border:1.5px solid var(--border); border-radius:16px; padding:20px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; }
+  .portal-card:hover{ border-color:var(--accent); }
+  .portal-card .ptitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:17px; margin-bottom:4px; }
+  .portal-card .psub{ font-size:12.5px; color:var(--ink-soft); }
+
+  .class-card{ border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; }
   .class-card:hover{ border-color:var(--accent); }
   .class-card .ctitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
   .class-card .cmeta{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
 
-  .code-display{
-    font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:600; letter-spacing:0.15em;
-    background:var(--accent-soft); border-radius:12px; padding:14px; text-align:center; margin-bottom:16px;
-  }
+  .code-display{ font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:600; letter-spacing:0.15em; background:var(--accent-soft); border-radius:12px; padding:14px; text-align:center; margin-bottom:16px; }
 
   .quiz-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; }
   .subj-pill{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.04em; padding:7px 12px; border-radius:100px; color:#fff; }
@@ -158,14 +129,31 @@
   .result-hero .msg{ font-family:'Space Grotesk', sans-serif; font-size:15px; font-weight:600; margin-top:10px; }
   .btn-row{ display:flex; flex-direction:column; gap:10px; margin-top:6px; }
 
-  table.results-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
-  table.results-table th, table.results-table td{ text-align:left; padding:9px 8px; border-bottom:1px solid var(--border); }
-  table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft); }
+  table.results-table{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.results-table th, table.results-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--border); }
+  table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
   .tag-pre{ background:var(--math-soft); color:#7A5300; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
   .tag-post{ background:var(--science-soft); color:#0E5C52; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
+  .tag-blitz{ background:var(--english-soft); color:#8E2E15; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
   .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:14px; line-height:1.6; }
+
+  .tab-row{ display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; }
+  .tab-btn{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; padding:8px 12px; border-radius:100px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; color:var(--ink-soft); }
+  .tab-btn.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--ink); }
+
+  .qbank-item{ border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:10px; font-size:13px; }
+  .qbank-item .qb-q{ font-weight:600; margin-bottom:6px; }
+  .qbank-item .qb-c{ color:var(--ink-soft); font-size:12px; margin-bottom:2px; }
+  .qbank-item .qb-c.correct{ color:var(--good); font-weight:600; }
+  .qbank-item .qb-del{ margin-top:8px; }
+
+  .review-item{ border:1.5px solid var(--border); border-radius:12px; padding:14px; margin-bottom:12px; }
+  .review-item .ri-q{ font-weight:600; font-size:14px; margin-bottom:10px; }
+  .review-item .ri-c{ padding:9px 12px; border-radius:10px; font-size:13px; margin-bottom:6px; background:var(--paper); }
+  .review-item .ri-c.correct{ background:#E4F5F1; color:#0E5C52; font-weight:600; }
+  .review-item .ri-c.wrong{ background:#FCE7E1; color:#8E2E15; font-weight:600; }
 
   .float-pt{ position:fixed; pointer-events:none; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; animation:floatUp .8s ease forwards; z-index:50; }
   @keyframes floatUp{ 0%{ opacity:1; transform:translateY(0);} 100%{ opacity:0; transform:translateY(-38px);} }
@@ -181,8 +169,8 @@
 <body>
 <div class="wrap">
   <div class="brand">
-    <h1>Tap-Quiz</h1>
-    <div class="tag">STRENGTHENED SHS ASSESSMENT<br>GEN. MATH · GEN. SCIENCE · EFFECTIVE COMMUNICATION</div>
+    <h1>Tap<span>-Quiz</span></h1>
+    <div class="tag">STRENGTHENED SHS ASSESSMENT<br>GEN. MATH · GEN. SCIENCE · COMMUNICATION</div>
   </div>
   <div id="app" class="card"></div>
   <footer class="credit">web-based quiz application &middot; research instrument</footer>
@@ -203,9 +191,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const actionCodeSettings = { url: window.location.origin + window.location.pathname, handleCodeInApp: true };
 
 /* ============================================================
-   SUBJECT META
+   SUBJECT META / CONSTANTS
    ============================================================ */
 const SUBJECT_META = {
   math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
@@ -215,7 +204,9 @@ const SUBJECT_META = {
 const ORDER = ["math","science","english"];
 const MAX_PICKABLE = 20;
 const POOL_SIZE = 30;
-const PRETEST_ATTEMPT_LIMIT = 2;
+const BLITZ_QUESTIONS = 20;
+const BLITZ_TIMER = 25;
+const DEFAULT_ATTEMPT_LIMIT = 1;
 
 const DEFAULT_REVIEWER = {
   math: "GENERAL MATHEMATICS — QUICK REVIEWER\n\n• A function assigns exactly one output to each input; check with the vertical line test.\n• To evaluate f(x) at a value, substitute that value everywhere x appears.\n• Slope = (y2-y1)/(x2-x1); it measures steepness/rate of change.\n• Percent problems: part = percent × whole (convert % to decimal first).\n• Quadratic form: f(x) = ax² + bx + c; the graph is a parabola.\n• Exponent rules: a^m × a^n = a^(m+n); a^m ÷ a^n = a^(m-n).\n• Logarithms undo exponents: log_b(x) = y means b^y = x.",
@@ -442,16 +433,6 @@ function genJoinCode(){
   for(let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
   return code;
 }
-function buildQuizQueue(subject, testType, numQuestions){
-  const pool = BANK[testType][subject];
-  const picked = shuffle(pool).slice(0, Math.min(numQuestions, pool.length));
-  return picked.map(item => {
-    const correctText = item.c[item.a];
-    const shuffledChoices = shuffle(item.c);
-    const newA = shuffledChoices.indexOf(correctText);
-    return {subject, q:item.q, c:shuffledChoices, a:newA};
-  });
-}
 function escapeHtml(str){
   const d = document.createElement("div");
   d.textContent = str || "";
@@ -461,6 +442,48 @@ function fmtDate(ts){
   const d = new Date(ts);
   return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 }
+function distributeCount(total, n){
+  const base = Math.floor(total / n);
+  let rem = total - base * n;
+  const arr = [];
+  for(let i = 0; i < n; i++) arr.push(base + (i < rem ? 1 : 0));
+  return shuffle(arr);
+}
+function subjectLabels(subjArr){
+  return (subjArr||[]).map(s=>SUBJECT_META[s] ? SUBJECT_META[s].label : s).join(", ");
+}
+
+/* Build a shuffled quiz queue across one or more subjects.
+   ctx = {subjects:[...], testType:'pretest'|'posttest'|'blitz', numQuestions, classId (nullable), customPools (map subject->array or null)} */
+async function buildQuizQueue(ctx){
+  const subjects = ctx.subjects;
+  const counts = distributeCount(ctx.numQuestions, subjects.length);
+  let queue = [];
+  for(let i = 0; i < subjects.length; i++){
+    const subj = subjects[i];
+    const count = counts[i];
+    let pool;
+    if(ctx.classId){
+      let custom = [];
+      try{
+        const snap = await db.collection("customQuestions").where("classId","==",ctx.classId).where("subject","==",subj).get();
+        snap.forEach(d => custom.push(d.data()));
+      }catch(e){ console.error(e); }
+      pool = custom.length > 0 ? custom : BANK[ctx.testType][subj];
+    } else {
+      // Blitz Round: combine pretest + posttest banks for a bigger pool
+      pool = BANK.pretest[subj].concat(BANK.posttest[subj]);
+    }
+    const picked = shuffle(pool).slice(0, Math.min(count, pool.length));
+    picked.forEach(item=>{
+      const correctText = item.c[item.a];
+      const shuffledChoices = shuffle(item.c);
+      const newA = shuffledChoices.indexOf(correctText);
+      queue.push({subject:subj, q:item.q, c:shuffledChoices, a:newA});
+    });
+  }
+  return shuffle(queue);
+}
 
 /* ============================================================
    STATE
@@ -468,8 +491,9 @@ function fmtDate(ts){
 let state = {
   screen: "landing",
   authUser: null,
-  authMode: "login",
   authError: "",
+  authSent: false,
+  portalRole: null,
   classes: [],
   activeClassId: null,
   activeClass: null,
@@ -481,11 +505,37 @@ let state = {
   locked: false,
   saved: false,
   testType: null,
-  pretestAttempts: 0,
-  pendingRole: "teacher"
+  reviewerType: "default",
+  blitzSubjects: [],
+  qbankSubject: null
 };
 
 const app = document.getElementById("app");
+
+/* ============================================================
+   MAGIC LINK COMPLETION (runs once at load)
+   ============================================================ */
+(function completeMagicLinkIfPresent(){
+  if(auth.isSignInWithEmailLink(window.location.href)){
+    let email = window.localStorage.getItem("tq_email");
+    if(!email){ email = window.prompt("Please confirm your email to finish signing in:"); }
+    if(email){
+      auth.signInWithEmailLink(email, window.location.href).then(async (result)=>{
+        const uid = result.user.uid;
+        const doc = await db.collection("users").doc(uid).get();
+        if(!doc.exists){
+          const name = window.localStorage.getItem("tq_name") || "User";
+          const role = window.localStorage.getItem("tq_role") || "student";
+          await db.collection("users").doc(uid).set({role, name, email, createdAt: Date.now()});
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }).catch(err=>{
+        console.error(err);
+        alert("Sign-in link error: " + err.message);
+      });
+    }
+  }
+})();
 
 /* ============================================================
    AUTH OBSERVER
@@ -498,141 +548,120 @@ auth.onAuthStateChanged(async (user) => {
         state.authUser = {uid:user.uid, email:user.email, ...doc.data()};
         state.screen = state.authUser.role === "teacher" ? "teacherHome" : "studentHome";
         route();
-      } else {
-        state.screen = "signup";
-        route();
       }
-    }catch(e){
-      console.error(e);
-      state.screen = "landing";
-      route();
-    }
+    }catch(e){ console.error(e); }
   } else {
     state.authUser = null;
-    if(["teacherHome","classEditor","teacherResults","studentHome","studentClass","review","quiz","results"].includes(state.screen)){
-      state.screen = "landing";
-    }
+    const protectedScreens = ["teacherHome","classEditor","teacherResults","teacherActivity","manageQuestions",
+      "studentHome","studentClass","review","blitzSetup","quiz","results","answerReview","myProgress"];
+    if(protectedScreens.includes(state.screen)) state.screen = "landing";
     route();
   }
 });
 
 function route(){
   clearInterval(state.timerId);
-  if(state.screen === "landing") return renderLanding();
-  if(state.screen === "login") return renderAuth("login");
-  if(state.screen === "signup") return renderAuth("signup");
-  if(state.screen === "teacherHome") return renderTeacherHome();
-  if(state.screen === "classEditor") return renderClassEditor();
-  if(state.screen === "teacherResults") return renderTeacherResults();
-  if(state.screen === "studentHome") return renderStudentHome();
-  if(state.screen === "studentClass") return renderStudentClass();
-  if(state.screen === "review") return renderReview();
-  if(state.screen === "quiz") return renderQuestion();
-  if(state.screen === "results") return renderResults();
+  const r = {
+    landing: renderLanding, portalAuth: renderPortalAuth,
+    teacherHome: renderTeacherHome, classEditor: renderClassEditor, teacherResults: renderTeacherResults,
+    teacherActivity: renderTeacherActivity, manageQuestions: renderManageQuestions,
+    studentHome: renderStudentHome, studentClass: renderStudentClass, review: renderReview,
+    blitzSetup: renderBlitzSetup, quiz: renderQuestion, results: renderResults, answerReview: renderAnswerReview,
+    myProgress: renderMyProgress
+  };
+  (r[state.screen] || renderLanding)();
+}
+function bg(soft){
+  document.body.style.background = `radial-gradient(circle at 12% -10%, ${soft||'var(--accent-soft)'} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
 }
 
 /* ============================================================
    LANDING PAGE
    ============================================================ */
 function renderLanding(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   app.innerHTML = `
     <div class="fade-in">
       <div class="hero">
         <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11</div>
         <h2>Assessment made simple for General Math, General Science &amp; Effective Communication.</h2>
-        <p>Teachers create a class, pick a subject, and set up a pre-test and post-test in minutes. Students join with a class code, take randomized assessments, and review right away.</p>
+        <p>Teachers create a class, pick subjects, and set up a pre-test and post-test in minutes. Students join with a class code, take randomized assessments, and jump into Blitz Round anytime for extra practice.</p>
       </div>
       <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>For teachers:</b> create classes, choose question count and timer, schedule tests, and track every student's score.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>For students:</b> join with a class code, take timed randomized quizzes, and review right after.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Anti-cheating:</b> question order and choice order are shuffled for every attempt.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>For teachers:</b> create classes, write your own questions or use our presets, schedule tests, and track every student's activity and scores.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>For students:</b> join with a class code, take timed randomized quizzes, review your answers after, and track your growth over time.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>No schedule yet?</b> Jump into Blitz Round, a quick practice quiz across any subject, anytime.</span></div>
       </div>
-      <div class="btn-row">
-        <button class="primary-btn" id="goLogin">Log In</button>
-        <button class="primary-btn ghost" id="goSignup">Create an Account</button>
+      <p class="field-label">Choose your portal</p>
+      <div class="portal-grid">
+        <div class="portal-card" id="teacherPortal">
+          <div class="ptitle">Teacher Portal</div>
+          <div class="psub">Create classes, questions, and view results</div>
+        </div>
+        <div class="portal-card" id="studentPortal">
+          <div class="ptitle">Student Portal</div>
+          <div class="psub">Join a class, take tests, review, and practice</div>
+        </div>
       </div>
     </div>
   `;
-  document.getElementById("goLogin").addEventListener("click", ()=>{ state.screen="login"; state.authError=""; route(); });
-  document.getElementById("goSignup").addEventListener("click", ()=>{ state.screen="signup"; state.authError=""; route(); });
+  document.getElementById("teacherPortal").addEventListener("click", ()=>{ state.portalRole="teacher"; state.authSent=false; state.authError=""; state.screen="portalAuth"; route(); });
+  document.getElementById("studentPortal").addEventListener("click", ()=>{ state.portalRole="student"; state.authSent=false; state.authError=""; state.screen="portalAuth"; route(); });
 }
 
 /* ============================================================
-   AUTH SCREENS
+   PORTAL AUTH (email-link, no password)
    ============================================================ */
-function renderAuth(mode){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
-  const isSignup = mode === "signup";
+function renderPortalAuth(){
+  bg();
+  const roleLabel = state.portalRole === "teacher" ? "Teacher" : "Student";
   app.innerHTML = `
     <div class="fade-in">
-      <p class="field-label">${isSignup ? "Create Account" : "Log In"}</p>
-      ${isSignup ? `
-        <p class="field-label">I am a</p>
-        <div class="radio-group">
-          <div class="radio-opt ${state.pendingRole==='teacher'?'active':''}" data-role="teacher">Teacher</div>
-          <div class="radio-opt ${state.pendingRole==='student'?'active':''}" data-role="student">Student</div>
-        </div>
+      <p class="field-label">${roleLabel} Portal</p>
+      ${state.authSent ? `
+        <p class="success-note">Magic link sent! Check your email and tap the link to finish signing in.</p>
+        <p class="fine-print">You can close this tab. The link will bring you right back here, signed in.</p>
+      ` : `
         <input type="text" id="nameInput" placeholder="Full name">
-      ` : ``}
-      <input type="email" id="emailInput" placeholder="Email address">
-      <input type="password" id="passInput" placeholder="Password">
-      ${state.authError ? `<p class="error-note">${escapeHtml(state.authError)}</p>` : ``}
-      <button class="primary-btn" id="submitAuth">${isSignup ? "Create Account" : "Log In"}</button>
-      <p class="fine-print">
-        ${isSignup ? `Already have an account? <button class="link-btn" id="switchMode">Log in</button>`
-                   : `New here? <button class="link-btn" id="switchMode">Create an account</button>`}
-        <br><button class="link-btn" id="backHome">Back to home</button>
-      </p>
+        <input type="email" id="emailInput" placeholder="Email address">
+        ${state.authError ? `<p class="error-note">${escapeHtml(state.authError)}</p>` : ``}
+        <button class="primary-btn" id="sendLinkBtn">Send Sign-In Link</button>
+        <p class="fine-print">No password needed — we'll email you a secure sign-in link.</p>
+      `}
+      <p class="fine-print"><button class="link-btn" id="backHome">Back to home</button></p>
     </div>
   `;
-
-  if(isSignup){
-    document.querySelectorAll(".radio-opt").forEach(el=>{
-      el.addEventListener("click", ()=>{ state.pendingRole = el.dataset.role; renderAuth("signup"); });
-    });
-  }
-
-  document.getElementById("switchMode").addEventListener("click", ()=>{
-    state.screen = isSignup ? "login" : "signup";
-    state.authError = "";
-    route();
-  });
   document.getElementById("backHome").addEventListener("click", ()=>{ state.screen="landing"; route(); });
 
-  document.getElementById("submitAuth").addEventListener("click", async ()=>{
-    const email = document.getElementById("emailInput").value.trim();
-    const pass = document.getElementById("passInput").value;
-    const btn = document.getElementById("submitAuth");
-    state.authError = "";
-    if(!email || !pass){ state.authError = "Please fill in all fields."; renderAuth(mode); return; }
-    btn.disabled = true;
-    btn.textContent = "Please wait...";
-    try{
-      if(isSignup){
-        const name = document.getElementById("nameInput").value.trim();
-        if(!name){ state.authError = "Please enter your name."; renderAuth("signup"); return; }
-        const cred = await auth.createUserWithEmailAndPassword(email, pass);
-        await db.collection("users").doc(cred.user.uid).set({
-          role: state.pendingRole, name, email, createdAt: Date.now()
-        });
-      } else {
-        await auth.signInWithEmailAndPassword(email, pass);
+  if(!state.authSent){
+    document.getElementById("sendLinkBtn").addEventListener("click", async ()=>{
+      const name = document.getElementById("nameInput").value.trim();
+      const email = document.getElementById("emailInput").value.trim();
+      state.authError = "";
+      if(!name || !email){ state.authError = "Please fill in both fields."; renderPortalAuth(); return; }
+      const btn = document.getElementById("sendLinkBtn");
+      btn.disabled = true; btn.textContent = "Sending...";
+      try{
+        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        window.localStorage.setItem("tq_email", email);
+        window.localStorage.setItem("tq_name", name);
+        window.localStorage.setItem("tq_role", state.portalRole);
+        state.authSent = true;
+        renderPortalAuth();
+      }catch(err){
+        state.authError = err.message.replace("Firebase: ", "");
+        renderPortalAuth();
       }
-    }catch(err){
-      state.authError = err.message.replace("Firebase: ", "");
-      renderAuth(mode);
-    }
-  });
+    });
+  }
 }
 
 /* ============================================================
-   TEACHER: HOME (class list)
+   TEACHER: HOME
    ============================================================ */
 async function renderTeacherHome(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your classes...</p></div>`;
-
   let classes = [];
   try{
     const snap = await db.collection("classes").where("teacherUid","==",state.authUser.uid).get();
@@ -651,28 +680,23 @@ async function renderTeacherHome(){
       ${classes.length === 0 ? `<p class="empty-note">No classes yet. Create one to get started.</p>` : classes.map(c=>`
         <div class="class-card" data-id="${c.id}">
           <div class="ctitle">${escapeHtml(c.className)}</div>
-          <div class="cmeta">${SUBJECT_META[c.subject].label.toUpperCase()} &middot; CODE ${c.joinCode}</div>
+          <div class="cmeta">${subjectLabels(c.subjects).toUpperCase()} &middot; CODE ${c.joinCode}</div>
         </div>
       `).join("")}
       <button class="primary-btn" id="createClassBtn" style="margin-top:8px;">+ Create Class</button>
     </div>
   `;
-
   document.getElementById("logoutBtn").addEventListener("click", ()=> auth.signOut());
   document.getElementById("createClassBtn").addEventListener("click", ()=>{
-    state.activeClassId = null;
-    state.activeClass = null;
-    state.classError = "";
-    state.screen = "classEditor";
-    route();
+    state.activeClassId = null; state.activeClass = null; state.classError = "";
+    state.screen = "classEditor"; route();
   });
   document.querySelectorAll(".class-card").forEach(el=>{
     el.addEventListener("click", ()=>{
       state.activeClassId = el.dataset.id;
       state.activeClass = classes.find(c=>c.id === el.dataset.id);
       state.classError = "";
-      state.screen = "classEditor";
-      route();
+      state.screen = "classEditor"; route();
     });
   });
 }
@@ -681,9 +705,10 @@ async function renderTeacherHome(){
    TEACHER: CLASS EDITOR
    ============================================================ */
 function renderClassEditor(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   const c = state.activeClass || {};
   const isNew = !state.activeClassId;
+  const selectedSubjects = c.subjects || [];
 
   app.innerHTML = `
     <div class="fade-in">
@@ -696,18 +721,29 @@ function renderClassEditor(){
       <p class="field-label">Class name</p>
       <input type="text" id="classNameInput" placeholder="e.g. 11 - Vanguard" value="${escapeHtml(c.className||"")}">
 
-      <p class="field-label">Subject</p>
-      <select id="subjectSelect">
-        ${ORDER.map(s=>`<option value="${s}" ${c.subject===s?'selected':''}>${SUBJECT_META[s].label}</option>`).join("")}
-      </select>
+      <p class="field-label">Subjects covered (pick one or more)</p>
+      <div class="checkbox-row" id="subjectChecks">
+        ${ORDER.map(s=>`
+          <label class="checkbox-item ${selectedSubjects.includes(s)?'checked':''}" data-subj="${s}">
+            <input type="checkbox" value="${s}" ${selectedSubjects.includes(s)?'checked':''}>
+            <span>${SUBJECT_META[s].label}</span>
+          </label>
+        `).join("")}
+      </div>
 
-      <p class="field-label">Number of questions per test (max ${MAX_PICKABLE}, pool of ${POOL_SIZE})</p>
+      <p class="field-label">Total number of questions per test (max ${MAX_PICKABLE}, split across chosen subjects)</p>
       <input type="number" id="numQInput" min="1" max="${MAX_PICKABLE}" value="${c.numQuestions||10}">
 
       <p class="field-label">Timer per question (seconds)</p>
       <select id="timerSelect">
         ${[15,20,30,45,60].map(t=>`<option value="${t}" ${c.timerSeconds===t?'selected':''}>${t} seconds</option>`).join("")}
       </select>
+
+      <p class="field-label">Pre-Test attempt limit (default ${DEFAULT_ATTEMPT_LIMIT} if left blank)</p>
+      <input type="number" id="preLimitInput" min="1" value="${c.pretestAttemptLimit||''}" placeholder="${DEFAULT_ATTEMPT_LIMIT}">
+
+      <p class="field-label">Post-Test attempt limit (default ${DEFAULT_ATTEMPT_LIMIT} if left blank)</p>
+      <input type="number" id="postLimitInput" min="1" value="${c.posttestAttemptLimit||''}" placeholder="${DEFAULT_ATTEMPT_LIMIT}">
 
       <p class="field-label">Schedule (optional, leave blank for always open)</p>
       <input type="datetime-local" id="startInput" value="${c.scheduleStart||""}">
@@ -724,7 +760,9 @@ function renderClassEditor(){
       <button class="primary-btn" id="saveClassBtn">${isNew ? "Create Class" : "Save Changes"}</button>
       ${!isNew ? `
         <div class="btn-row">
+          <button class="primary-btn ghost" id="questionsBtn">Manage Questions</button>
           <button class="primary-btn ghost" id="viewResultsBtn">View Results</button>
+          <button class="primary-btn ghost" id="activityBtn">View Activity</button>
           <button class="primary-btn danger" id="deleteClassBtn">Delete Class</button>
         </div>
       ` : ``}
@@ -732,28 +770,41 @@ function renderClassEditor(){
   `;
 
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="teacherHome"; route(); });
+  document.querySelectorAll("#subjectChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", (e)=>{
+      e.preventDefault();
+      const cb = el.querySelector("input");
+      cb.checked = !cb.checked;
+      el.classList.toggle("checked", cb.checked);
+    });
+  });
 
   document.getElementById("saveClassBtn").addEventListener("click", async ()=>{
     const className = document.getElementById("classNameInput").value.trim();
-    const subject = document.getElementById("subjectSelect").value;
+    const subjects = Array.from(document.querySelectorAll("#subjectChecks input:checked")).map(i=>i.value);
     let numQuestions = parseInt(document.getElementById("numQInput").value, 10);
     const timerSeconds = parseInt(document.getElementById("timerSelect").value, 10);
+    const preLimitRaw = document.getElementById("preLimitInput").value;
+    const postLimitRaw = document.getElementById("postLimitInput").value;
+    const pretestAttemptLimit = preLimitRaw ? parseInt(preLimitRaw,10) : DEFAULT_ATTEMPT_LIMIT;
+    const posttestAttemptLimit = postLimitRaw ? parseInt(postLimitRaw,10) : DEFAULT_ATTEMPT_LIMIT;
     const scheduleStart = document.getElementById("startInput").value;
     const scheduleEnd = document.getElementById("endInput").value;
     const reviewerText = document.getElementById("reviewerTextInput").value.trim();
     const reviewerLink = document.getElementById("reviewerLinkInput").value.trim();
 
     if(!className){ state.classError = "Please enter a class name."; renderClassEditor(); return; }
+    if(subjects.length === 0){ state.classError = "Please select at least one subject."; renderClassEditor(); return; }
     if(!numQuestions || numQuestions < 1) numQuestions = 1;
     if(numQuestions > MAX_PICKABLE) numQuestions = MAX_PICKABLE;
     state.classError = "";
 
     const btn = document.getElementById("saveClassBtn");
     btn.disabled = true; btn.textContent = "Saving...";
-
     try{
       const payload = { teacherUid: state.authUser.uid, teacherName: state.authUser.name,
-        className, subject, numQuestions, timerSeconds, scheduleStart, scheduleEnd, reviewerText, reviewerLink };
+        className, subjects, numQuestions, timerSeconds, pretestAttemptLimit, posttestAttemptLimit,
+        scheduleStart, scheduleEnd, reviewerText, reviewerLink };
       if(isNew){
         payload.joinCode = genJoinCode();
         payload.createdAt = Date.now();
@@ -761,34 +812,125 @@ function renderClassEditor(){
       } else {
         await db.collection("classes").doc(state.activeClassId).update(payload);
       }
-      state.screen = "teacherHome";
-      route();
+      state.screen = "teacherHome"; route();
     }catch(err){
-      state.classError = err.message;
-      renderClassEditor();
+      state.classError = err.message; renderClassEditor();
     }
   });
 
   if(!isNew){
+    document.getElementById("questionsBtn").addEventListener("click", ()=>{
+      state.qbankSubject = (c.subjects && c.subjects[0]) || "math";
+      state.screen = "manageQuestions"; route();
+    });
     document.getElementById("viewResultsBtn").addEventListener("click", ()=>{ state.screen="teacherResults"; route(); });
+    document.getElementById("activityBtn").addEventListener("click", ()=>{ state.screen="teacherActivity"; route(); });
     document.getElementById("deleteClassBtn").addEventListener("click", async ()=>{
       if(!confirm("Delete this class? This cannot be undone.")) return;
       try{
         await db.collection("classes").doc(state.activeClassId).delete();
-        state.screen = "teacherHome";
-        route();
+        state.screen = "teacherHome"; route();
       }catch(err){ alert("Couldn't delete: " + err.message); }
     });
   }
 }
 
 /* ============================================================
+   TEACHER: MANAGE QUESTIONS (custom vs preset)
+   ============================================================ */
+async function renderManageQuestions(){
+  bg();
+  const c = state.activeClass;
+  const subj = state.qbankSubject;
+
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading questions...</p></div>`;
+  let custom = [];
+  try{
+    const snap = await db.collection("customQuestions").where("classId","==",state.activeClassId).where("subject","==",subj).get();
+    snap.forEach(d => custom.push({id:d.id, ...d.data()}));
+  }catch(e){ console.error(e); }
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Manage Questions</div>
+      </div>
+      <div class="tab-row">
+        ${c.subjects.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
+      </div>
+      <p class="fine-print" style="margin-top:-8px;">${custom.length > 0 ? `Using ${custom.length} of your own questions for this subject (replaces the preset bank for both Pre-Test and Post-Test).` : `Currently using our preset ${POOL_SIZE}-question bank for this subject. Add a question below to switch to your own.`}</p>
+
+      <p class="field-label">Add a question</p>
+      <input type="text" id="qTextInput" placeholder="Question text">
+      <input type="text" id="c0Input" placeholder="Choice A">
+      <input type="text" id="c1Input" placeholder="Choice B">
+      <input type="text" id="c2Input" placeholder="Choice C">
+      <input type="text" id="c3Input" placeholder="Choice D">
+      <p class="field-label">Correct answer</p>
+      <select id="correctSelect">
+        <option value="0">Choice A</option>
+        <option value="1">Choice B</option>
+        <option value="2">Choice C</option>
+        <option value="3">Choice D</option>
+      </select>
+      ${state.qbankError ? `<p class="error-note">${escapeHtml(state.qbankError)}</p>` : ``}
+      <button class="primary-btn" id="addQBtn">Add Question</button>
+
+      <p class="field-label" style="margin-top:18px;">Your questions (${custom.length})</p>
+      ${custom.length === 0 ? `<p class="empty-note">No custom questions yet for this subject.</p>` : custom.map(q=>`
+        <div class="qbank-item">
+          <div class="qb-q">${escapeHtml(q.q)}</div>
+          ${q.c.map((ch,i)=>`<div class="qb-c ${i===q.a?'correct':''}">${String.fromCharCode(65+i)}. ${escapeHtml(ch)}</div>`).join("")}
+          <button class="primary-btn ghost qb-del" data-id="${q.id}">Delete</button>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classEditor"; route(); });
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ state.qbankSubject = btn.dataset.subj; state.qbankError=""; renderManageQuestions(); });
+  });
+
+  document.getElementById("addQBtn").addEventListener("click", async ()=>{
+    const q = document.getElementById("qTextInput").value.trim();
+    const choices = [
+      document.getElementById("c0Input").value.trim(),
+      document.getElementById("c1Input").value.trim(),
+      document.getElementById("c2Input").value.trim(),
+      document.getElementById("c3Input").value.trim()
+    ];
+    const correctIdx = parseInt(document.getElementById("correctSelect").value, 10);
+    if(!q || choices.some(c=>!c)){ state.qbankError = "Please fill in the question and all four choices."; renderManageQuestions(); return; }
+    state.qbankError = "";
+    const btn = document.getElementById("addQBtn");
+    btn.disabled = true; btn.textContent = "Adding...";
+    try{
+      await db.collection("customQuestions").add({
+        classId: state.activeClassId, subject: subj, q, c: choices, a: correctIdx, createdAt: Date.now()
+      });
+      renderManageQuestions();
+    }catch(err){ state.qbankError = err.message; renderManageQuestions(); }
+  });
+
+  document.querySelectorAll(".qb-del").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      if(!confirm("Delete this question?")) return;
+      try{
+        await db.collection("customQuestions").doc(btn.dataset.id).delete();
+        renderManageQuestions();
+      }catch(err){ alert("Couldn't delete: " + err.message); }
+    });
+  });
+}
+
+/* ============================================================
    TEACHER: CLASS RESULTS
    ============================================================ */
 async function renderTeacherResults(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading results...</p></div>`;
-
   let rows = [];
   try{
     const snap = await db.collection("attempts").where("classId","==",state.activeClassId).get();
@@ -801,6 +943,7 @@ async function renderTeacherResults(){
     return `<tr>
       <td>${escapeHtml(r.studentName)}</td>
       <td>${tag}</td>
+      <td>${subjectLabels(r.subjects)}</td>
       <td>${r.correct}/${r.total}</td>
       <td>${r.pct}%</td>
       <td>${fmtDate(r.timestamp)}</td>
@@ -816,7 +959,7 @@ async function renderTeacherResults(){
       ${rows.length === 0 ? `<p class="empty-note">No attempts saved yet for this class.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
-            <thead><tr><th>Name</th><th>Test</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <thead><tr><th>Name</th><th>Test</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
         </div>
@@ -829,12 +972,58 @@ async function renderTeacherResults(){
 }
 
 /* ============================================================
+   TEACHER: ACTIVITY (class opens + reviewer opens)
+   ============================================================ */
+async function renderTeacherActivity(){
+  bg();
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading activity...</p></div>`;
+  let views = [], reviewerViews = [];
+  try{
+    const vSnap = await db.collection("classViews").where("classId","==",state.activeClassId).get();
+    vSnap.forEach(d => views.push(d.data()));
+    views.sort((a,b)=> b.timestamp - a.timestamp);
+    const rSnap = await db.collection("reviewerViews").where("classId","==",state.activeClassId).get();
+    rSnap.forEach(d => reviewerViews.push(d.data()));
+    reviewerViews.sort((a,b)=> b.timestamp - a.timestamp);
+  }catch(e){ console.error(e); }
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Activity</div>
+      </div>
+      <p class="field-label">Class Opens (${views.length})</p>
+      ${views.length === 0 ? `<p class="empty-note">No one has opened this class yet.</p>` : `
+        <div style="overflow-x:auto; margin-bottom:20px;">
+          <table class="results-table">
+            <thead><tr><th>Name</th><th>Opened</th></tr></thead>
+            <tbody>${views.slice(0,50).map(v=>`<tr><td>${escapeHtml(v.studentName)}</td><td>${fmtDate(v.timestamp)}</td></tr>`).join("")}</tbody>
+          </table>
+        </div>
+      `}
+      <p class="field-label">Reviewer Opens (${reviewerViews.length})</p>
+      ${reviewerViews.length === 0 ? `<p class="empty-note">No one has opened a reviewer yet.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="results-table">
+            <thead><tr><th>Name</th><th>Reviewer</th><th>Opened</th></tr></thead>
+            <tbody>${reviewerViews.slice(0,50).map(v=>`<tr><td>${escapeHtml(v.studentName)}</td><td>${v.reviewerType==='teacher'?'Teacher\\'s':'Our'}</td><td>${fmtDate(v.timestamp)}</td></tr>`).join("")}</tbody>
+          </table>
+        </div>
+      `}
+      <button class="primary-btn ghost" id="refreshBtn" style="margin-top:16px;">Refresh</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classEditor"; route(); });
+  document.getElementById("refreshBtn").addEventListener("click", renderTeacherActivity);
+}
+
+/* ============================================================
    STUDENT: HOME
    ============================================================ */
 async function renderStudentHome(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your classes...</p></div>`;
-
   let classes = [];
   try{
     const enrollSnap = await db.collection("enrollments").where("studentUid","==",state.authUser.uid).get();
@@ -853,27 +1042,33 @@ async function renderStudentHome(){
         <div class="who">Student &middot; <b>${escapeHtml(state.authUser.name)}</b></div>
         <div class="nav-actions"><button class="pill-btn outline" id="logoutBtn">Log out</button></div>
       </div>
+
+      <button class="primary-btn blitz" id="blitzBtn" style="margin-bottom:20px;">⚡ Play Blitz Round</button>
+
       <p class="field-label">Your Classes</p>
       ${classes.length === 0 ? `<p class="empty-note">You haven't joined a class yet.</p>` : classes.map(c=>`
         <div class="class-card" data-id="${c.id}">
           <div class="ctitle">${escapeHtml(c.className)}</div>
-          <div class="cmeta">${SUBJECT_META[c.subject].label.toUpperCase()} &middot; ${escapeHtml(c.teacherName||"")}</div>
+          <div class="cmeta">${subjectLabels(c.subjects).toUpperCase()} &middot; ${escapeHtml(c.teacherName||"")}</div>
         </div>
       `).join("")}
       <p class="field-label" style="margin-top:14px;">Join a class</p>
       <input type="text" id="joinCodeInput" placeholder="Enter class code">
       ${state.joinError ? `<p class="error-note">${escapeHtml(state.joinError)}</p>` : ``}
       <button class="primary-btn" id="joinBtn">Join Class</button>
+
+      <button class="primary-btn ghost" id="progressBtn" style="margin-top:16px;">📈 My Progress</button>
     </div>
   `;
 
   document.getElementById("logoutBtn").addEventListener("click", ()=> auth.signOut());
+  document.getElementById("blitzBtn").addEventListener("click", ()=>{ state.screen="blitzSetup"; route(); });
+  document.getElementById("progressBtn").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
   document.querySelectorAll(".class-card").forEach(el=>{
     el.addEventListener("click", ()=>{
       state.activeClassId = el.dataset.id;
       state.activeClass = classes.find(c=>c.id === el.dataset.id);
-      state.screen = "studentClass";
-      route();
+      state.screen = "studentClass"; route();
     });
   });
   document.getElementById("joinBtn").addEventListener("click", async ()=>{
@@ -893,10 +1088,7 @@ async function renderStudentHome(){
         classId: classDoc.id, joinedAt: Date.now()
       });
       renderStudentHome();
-    }catch(err){
-      state.joinError = err.message;
-      renderStudentHome();
-    }
+    }catch(err){ state.joinError = err.message; renderStudentHome(); }
   });
 }
 
@@ -904,21 +1096,25 @@ async function renderStudentHome(){
    STUDENT: CLASS VIEW
    ============================================================ */
 async function renderStudentClass(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading...</p></div>`;
-
   const c = state.activeClass;
-  const meta = SUBJECT_META[c.subject];
 
-  let pretestCount = 0;
+  db.collection("classViews").add({
+    studentUid: state.authUser.uid, studentName: state.authUser.name,
+    classId: state.activeClassId, timestamp: Date.now()
+  }).catch(e=>console.error(e));
+
+  const preLimit = c.pretestAttemptLimit || DEFAULT_ATTEMPT_LIMIT;
+  const postLimit = c.posttestAttemptLimit || DEFAULT_ATTEMPT_LIMIT;
+
+  let preCount = 0, postCount = 0;
   try{
-    const snap = await db.collection("attempts")
-      .where("classId","==",state.activeClassId)
-      .where("studentUid","==",state.authUser.uid)
-      .where("testType","==","pretest").get();
-    pretestCount = snap.size;
+    const preSnap = await db.collection("attempts").where("classId","==",state.activeClassId).where("studentUid","==",state.authUser.uid).where("testType","==","pretest").get();
+    preCount = preSnap.size;
+    const postSnap = await db.collection("attempts").where("classId","==",state.activeClassId).where("studentUid","==",state.authUser.uid).where("testType","==","posttest").get();
+    postCount = postSnap.size;
   }catch(e){ console.error(e); }
-  state.pretestAttempts = pretestCount;
 
   const now = new Date();
   let scheduleNote = "Open anytime";
@@ -931,8 +1127,9 @@ async function renderStudentClass(){
     const end = new Date(c.scheduleEnd);
     if(now > end){ scheduleNote = "Closed since " + end.toLocaleString(); scheduleLocked = true; }
   }
-
-  const pretestLocked = scheduleLocked || pretestCount >= PRETEST_ATTEMPT_LIMIT;
+  const preLocked = scheduleLocked || preCount >= preLimit;
+  const postLocked = scheduleLocked || postCount >= postLimit;
+  const hasTeacherReviewer = (c.reviewerText && c.reviewerText.trim()) || (c.reviewerLink && c.reviewerLink.trim());
 
   app.innerHTML = `
     <div class="fade-in">
@@ -940,58 +1137,66 @@ async function renderStudentClass(){
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${escapeHtml(c.teacherName||"")}</div>
       </div>
-      <div class="subject-strip"><div class="subject-chip ${c.subject}">${meta.label.toUpperCase()}</div></div>
+      <div class="subject-strip">${c.subjects.map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <p class="fine-print" style="margin-top:-6px;">${scheduleNote}</p>
 
       <div class="mode-grid">
-        <div class="mode-btn ${pretestLocked?'locked':''}" id="pretestBtn">
+        <div class="mode-btn ${preLocked?'locked':''}" id="pretestBtn">
           <span class="mtitle">Pre-Test</span>
-          <span class="msub">${pretestCount}/${PRETEST_ATTEMPT_LIMIT} attempts used</span>
+          <span class="msub">${preCount}/${preLimit} attempts used</span>
         </div>
-        <div class="mode-btn ${scheduleLocked?'locked':''}" id="posttestBtn">
+        <div class="mode-btn ${postLocked?'locked':''}" id="posttestBtn">
           <span class="mtitle">Post-Test</span>
-          <span class="msub">Unlimited attempts</span>
+          <span class="msub">${postCount}/${postLimit} attempts used</span>
         </div>
       </div>
 
-      <button class="primary-btn ghost" id="reviewBtn">Review Materials</button>
+      <div class="btn-row">
+        <button class="primary-btn ghost" id="ourReviewBtn">📖 Our Reviewer</button>
+        <button class="primary-btn ghost" id="teacherReviewBtn" ${!hasTeacherReviewer?'disabled':''}>🧑‍🏫 Teacher's Reviewer${!hasTeacherReviewer?' (not added yet)':''}</button>
+      </div>
     </div>
   `;
 
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="studentHome"; route(); });
-  document.getElementById("reviewBtn").addEventListener("click", ()=>{ state.screen="review"; route(); });
+  document.getElementById("ourReviewBtn").addEventListener("click", ()=>{ openReviewer("default"); });
+  document.getElementById("teacherReviewBtn").addEventListener("click", ()=>{ if(hasTeacherReviewer) openReviewer("teacher"); });
+  document.getElementById("pretestBtn").addEventListener("click", ()=>{ if(!preLocked) startClassQuiz("pretest"); });
+  document.getElementById("posttestBtn").addEventListener("click", ()=>{ if(!postLocked) startClassQuiz("posttest"); });
+}
 
-  document.getElementById("pretestBtn").addEventListener("click", ()=>{
-    if(pretestLocked) return;
-    startQuiz("pretest");
-  });
-  document.getElementById("posttestBtn").addEventListener("click", ()=>{
-    if(scheduleLocked) return;
-    startQuiz("posttest");
-  });
+function openReviewer(type){
+  state.reviewerType = type;
+  db.collection("reviewerViews").add({
+    studentUid: state.authUser.uid, studentName: state.authUser.name,
+    classId: state.activeClassId, reviewerType: type, timestamp: Date.now()
+  }).catch(e=>console.error(e));
+  state.screen = "review"; route();
 }
 
 /* ============================================================
    REVIEW SCREEN
    ============================================================ */
 function renderReview(){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg();
   const c = state.activeClass;
-  const hasTeacherContent = (c.reviewerText && c.reviewerText.trim()) || (c.reviewerLink && c.reviewerLink.trim());
+  const type = state.reviewerType;
 
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Review &middot; ${SUBJECT_META[c.subject].label}</div>
+        <div class="who">${type==='teacher' ? "Teacher's Reviewer" : "Our Reviewer"}</div>
       </div>
-      ${hasTeacherContent ? `
+      ${type === "teacher" ? `
         ${c.reviewerText ? `<div class="reviewer-box">${escapeHtml(c.reviewerText)}</div>` : ``}
         ${c.reviewerLink ? `<a href="${escapeHtml(c.reviewerLink)}" target="_blank" rel="noopener"><button class="primary-btn ghost" style="margin-bottom:10px;">Open Teacher's Reviewer Link</button></a>` : ``}
       ` : `
-        <p class="fine-print" style="margin-bottom:10px;">Your teacher hasn't added a reviewer yet, here's a general study guide for this subject.</p>
-        <div class="reviewer-box">${escapeHtml(DEFAULT_REVIEWER[c.subject])}</div>
+        <div class="tab-row">
+          ${c.subjects.map(s=>`<span class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}
+        </div>
+        ${c.subjects.map(s=>`<div class="reviewer-box">${escapeHtml(DEFAULT_REVIEWER[s])}</div>`).join("")}
       `}
     </div>
   `;
@@ -1002,28 +1207,76 @@ function renderReview(){
 }
 
 /* ============================================================
-   QUIZ ENGINE
+   STUDENT: BLITZ ROUND SETUP
    ============================================================ */
-function startQuiz(testType){
+function renderBlitzSetup(){
+  bg();
+  const sel = state.blitzSubjects;
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">⚡ Blitz Round</div>
+      </div>
+      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">A quick ${BLITZ_QUESTIONS}-question practice round, ${BLITZ_TIMER} seconds per question. Pick your subject(s):</p>
+      <div class="checkbox-row" id="blitzChecks">
+        ${ORDER.map(s=>`
+          <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
+            <input type="checkbox" value="${s}" ${sel.includes(s)?'checked':''}>
+            <span>${SUBJECT_META[s].label}</span>
+          </label>
+        `).join("")}
+      </div>
+      ${state.blitzError ? `<p class="error-note">${escapeHtml(state.blitzError)}</p>` : ``}
+      <button class="primary-btn blitz" id="startBlitzBtn">Start Blitz Round</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="studentHome"; route(); });
+  document.querySelectorAll("#blitzChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", (e)=>{
+      e.preventDefault();
+      const v = el.dataset.subj;
+      const idx = state.blitzSubjects.indexOf(v);
+      if(idx >= 0) state.blitzSubjects.splice(idx,1); else state.blitzSubjects.push(v);
+      renderBlitzSetup();
+    });
+  });
+  document.getElementById("startBlitzBtn").addEventListener("click", ()=>{
+    if(state.blitzSubjects.length === 0){ state.blitzError = "Pick at least one subject."; renderBlitzSetup(); return; }
+    state.blitzError = "";
+    startBlitzQuiz();
+  });
+}
+
+/* ============================================================
+   QUIZ ENGINE (shared by class tests + Blitz Round)
+   ============================================================ */
+async function startClassQuiz(testType){
   const c = state.activeClass;
   state.testType = testType;
-  state.quizQueue = buildQuizQueue(c.subject, testType, c.numQuestions);
-  state.qIndex = 0;
-  state.answers = [];
-  state.saved = false;
-  state.screen = "quiz";
-  route();
+  state.timerSecondsForQuiz = c.timerSeconds || 20;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Preparing your test...</p></div>`;
+  state.quizQueue = await buildQuizQueue({subjects:c.subjects, testType, numQuestions:c.numQuestions, classId:state.activeClassId});
+  state.qIndex = 0; state.answers = []; state.saved = false;
+  state.screen = "quiz"; route();
+}
+async function startBlitzQuiz(){
+  state.testType = "blitz";
+  state.timerSecondsForQuiz = BLITZ_TIMER;
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Shuffling questions...</p></div>`;
+  state.quizQueue = await buildQuizQueue({subjects:state.blitzSubjects, testType:"blitz", numQuestions:BLITZ_QUESTIONS, classId:null});
+  state.qIndex = 0; state.answers = []; state.saved = false;
+  state.screen = "quiz"; route();
 }
 
 function renderQuestion(){
   clearInterval(state.timerId);
   state.locked = false;
-  const c = state.activeClass;
-  state.timeLeft = c.timerSeconds || 20;
+  state.timeLeft = state.timerSecondsForQuiz;
 
   const item = state.quizQueue[state.qIndex];
   const meta = SUBJECT_META[item.subject];
-  document.body.style.background = `radial-gradient(circle at 12% -10%, ${meta.soft} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  bg(meta.soft);
 
   const score = state.answers.filter(a=>a.correct).length;
 
@@ -1035,7 +1288,7 @@ function renderQuestion(){
       </div>
       <div class="track"><div class="track-seg"><i style="width:${(state.qIndex/state.quizQueue.length*100)}%;background:${meta.color}"></i></div></div>
       <div class="qhead">
-        <span class="qcount">Q${state.qIndex+1} / ${state.quizQueue.length}</span>
+        <span class="qcount">Q${state.qIndex+1} / ${state.quizQueue.length} &middot; ${meta.label}</span>
         <div class="timer-ring">
           <svg width="40" height="40">
             <circle cx="20" cy="20" r="16" stroke="var(--border)" stroke-width="4" fill="none"/>
@@ -1060,14 +1313,13 @@ function renderQuestion(){
   document.querySelectorAll(".choice").forEach(btn=>{
     btn.addEventListener("click", ()=> lockAnswer(parseInt(btn.dataset.i)));
   });
-
   runTimer();
 }
 
 function runTimer(){
   const ring = document.getElementById("ringProgress");
   const tnum = document.getElementById("tnum");
-  const totalTime = state.activeClass.timerSeconds || 20;
+  const totalTime = state.timerSecondsForQuiz;
   const circumference = 100.5;
   state.timerId = setInterval(()=>{
     state.timeLeft -= 0.25;
@@ -1087,7 +1339,10 @@ function lockAnswer(choiceIndex){
 
   const item = state.quizQueue[state.qIndex];
   const isCorrect = choiceIndex === item.a;
-  state.answers.push({subject:item.subject, correct:isCorrect});
+  state.answers.push({
+    subject:item.subject, q:item.q, choices:item.c,
+    correctIndex:item.a, selectedIndex:choiceIndex, correct:isCorrect
+  });
 
   const buttons = document.querySelectorAll(".choice");
   buttons.forEach((btn,i)=>{
@@ -1097,31 +1352,23 @@ function lockAnswer(choiceIndex){
     if(i !== item.a && i !== choiceIndex) btn.classList.add("dim");
   });
 
-  if(isCorrect){
-    spawnFloatingPoint("+1", "var(--good)");
-  } else if(choiceIndex >= 0){
-    document.querySelector(".qtext").parentElement.classList.add("shake");
-  }
+  if(isCorrect){ spawnFloatingPoint("+1", "var(--good)"); }
+  else if(choiceIndex >= 0){ document.querySelector(".qtext").parentElement.classList.add("shake"); }
 
   setTimeout(()=>{
     if(state.qIndex < state.quizQueue.length - 1){
-      state.qIndex++;
-      renderQuestion();
+      state.qIndex++; renderQuestion();
     } else {
-      state.screen = "results";
-      route();
+      state.screen = "results"; route();
     }
   }, 850);
 }
 
 function spawnFloatingPoint(text, color){
   const el = document.createElement("div");
-  el.className = "float-pt";
-  el.textContent = text;
-  el.style.color = color;
+  el.className = "float-pt"; el.textContent = text; el.style.color = color;
   const rect = app.getBoundingClientRect();
-  el.style.left = (rect.right - 70) + "px";
-  el.style.top = (rect.top + 20) + "px";
+  el.style.left = (rect.right - 70) + "px"; el.style.top = (rect.top + 20) + "px";
   document.body.appendChild(el);
   setTimeout(()=> el.remove(), 800);
 }
@@ -1131,11 +1378,12 @@ function spawnFloatingPoint(text, color){
    ============================================================ */
 function renderResults(){
   clearInterval(state.timerId);
-  document.body.style.background = `radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
-
+  bg();
   const total = state.answers.length;
   const correct = state.answers.filter(a=>a.correct).length;
   const pct = Math.round((correct/total)*100);
+  const isClassTest = state.testType === "pretest" || state.testType === "posttest";
+  const hasTeacherReviewer = isClassTest && state.activeClass && ((state.activeClass.reviewerText && state.activeClass.reviewerText.trim()) || (state.activeClass.reviewerLink && state.activeClass.reviewerLink.trim()));
 
   let msg = "Keep going!";
   if(pct >= 85) msg = "Outstanding work!";
@@ -1151,38 +1399,117 @@ function renderResults(){
       </div>
       <p class="fine-print" id="saveNote">Saving your result...</p>
       <div class="btn-row">
-        <button class="primary-btn ghost" id="reviewBtn">Review Materials</button>
-        <button class="primary-btn ghost" id="backBtn">Back to Class</button>
+        <button class="primary-btn ghost" id="answersBtn">📝 View My Answers</button>
+        ${isClassTest ? `<button class="primary-btn ghost" id="ourReviewBtn">📖 Our Reviewer</button>` : ``}
+        ${isClassTest ? `<button class="primary-btn ghost" id="teacherReviewBtn" ${!hasTeacherReviewer?'disabled':''}>🧑‍🏫 Teacher's Reviewer${!hasTeacherReviewer?' (not added yet)':''}</button>` : ``}
+        <button class="primary-btn ghost" id="backBtn">${isClassTest ? "Back to Class" : "Back to Home"}</button>
       </div>
     </div>
   `;
 
   autoSaveResult({testType: state.testType, correct, total, pct});
 
-  document.getElementById("reviewBtn").addEventListener("click", ()=>{ state.screen="review"; route(); });
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.testType=null; state.screen="studentClass"; route(); });
+  document.getElementById("answersBtn").addEventListener("click", ()=>{ state.screen="answerReview"; route(); });
+  if(isClassTest){
+    document.getElementById("ourReviewBtn").addEventListener("click", ()=>{ openReviewer("default"); });
+    document.getElementById("teacherReviewBtn").addEventListener("click", ()=>{ if(hasTeacherReviewer) openReviewer("teacher"); });
+  }
+  document.getElementById("backBtn").addEventListener("click", ()=>{
+    if(isClassTest){ state.testType=null; state.screen="studentClass"; }
+    else { state.testType=null; state.blitzSubjects=[]; state.screen="studentHome"; }
+    route();
+  });
 }
 
 async function autoSaveResult({testType, correct, total, pct}){
   const note = document.getElementById("saveNote");
-  if(state.saved){
-    if(note) note.textContent = "Result saved, visible to your teacher.";
-    return;
-  }
+  if(state.saved){ if(note) note.textContent = "Result saved."; return; }
   try{
+    const subjectsCovered = [...new Set(state.answers.map(a=>a.subject))];
+    const subjectBreakdown = subjectsCovered.map(s=>({
+      subject:s,
+      correct: state.answers.filter(a=>a.subject===s && a.correct).length,
+      total: state.answers.filter(a=>a.subject===s).length
+    }));
     await db.collection("attempts").add({
-      studentUid: state.authUser.uid,
-      studentName: state.authUser.name,
-      classId: state.activeClassId,
-      testType, correct, total, pct,
-      timestamp: Date.now()
+      studentUid: state.authUser.uid, studentName: state.authUser.name,
+      classId: state.activeClassId || null,
+      testType, subjects: subjectsCovered, subjectBreakdown,
+      correct, total, pct, timestamp: Date.now()
     });
     state.saved = true;
-    if(note) note.textContent = "Result saved, visible to your teacher.";
+    if(note) note.textContent = testType==="pretest"||testType==="posttest" ? "Result saved, visible to your teacher." : "Result saved to your progress history.";
   }catch(err){
     if(note) note.textContent = "Couldn't save automatically, check your connection.";
     console.error(err);
   }
+}
+
+/* ============================================================
+   ANSWER REVIEW (after taking a test)
+   ============================================================ */
+function renderAnswerReview(){
+  bg();
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Your Answers</div>
+      </div>
+      ${state.answers.map((a,i)=>`
+        <div class="review-item">
+          <div class="ri-q">Q${i+1}. ${escapeHtml(a.q)}</div>
+          ${a.choices.map((ch,ci)=>{
+            let cls = "";
+            if(ci === a.correctIndex) cls = "correct";
+            else if(ci === a.selectedIndex) cls = "wrong";
+            return `<div class="ri-c ${cls}">${String.fromCharCode(65+ci)}. ${escapeHtml(ch)}${ci===a.correctIndex?' ✓':''}${ci===a.selectedIndex && ci!==a.correctIndex?' ✗ (your answer)':''}</div>`;
+          }).join("")}
+        </div>
+      `).join("")}
+      <button class="primary-btn ghost" id="backBtn2" style="margin-top:6px;">Back to Results</button>
+    </div>
+  `;
+  const goBack = ()=>{ state.screen="results"; route(); };
+  document.getElementById("backBtn").addEventListener("click", goBack);
+  document.getElementById("backBtn2").addEventListener("click", goBack);
+}
+
+/* ============================================================
+   STUDENT: MY PROGRESS
+   ============================================================ */
+async function renderMyProgress(){
+  bg();
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your history...</p></div>`;
+  let rows = [];
+  try{
+    const snap = await db.collection("attempts").where("studentUid","==",state.authUser.uid).get();
+    snap.forEach(d => rows.push(d.data()));
+    rows.sort((a,b)=> b.timestamp - a.timestamp);
+  }catch(e){ console.error(e); }
+
+  const tableRows = rows.map(r=>{
+    const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : r.testType==="posttest" ? `<span class="tag-post">POST</span>` : `<span class="tag-blitz">BLITZ</span>`;
+    return `<tr><td>${tag}</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">My Progress</div>
+      </div>
+      ${rows.length === 0 ? `<p class="empty-note">No attempts yet, take a test or try Blitz Round.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="results-table">
+            <thead><tr><th>Test</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+      `}
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="studentHome"; route(); });
 }
 
 /* ============================================================
