@@ -1007,7 +1007,7 @@ async function renderTeacherActivity(){
         <div style="overflow-x:auto;">
           <table class="results-table">
             <thead><tr><th>Name</th><th>Reviewer</th><th>Opened</th></tr></thead>
-            <tbody>${reviewerViews.slice(0,50).map(v=>`<tr><td>${escapeHtml(v.studentName)}</td><td>${v.reviewerType==='teacher'?'Teacher\\'s':'Our'}</td><td>${fmtDate(v.timestamp)}</td></tr>`).join("")}</tbody>
+            <tbody>${reviewerViews.slice(0,50).map(v=>`<tr><td>${escapeHtml(v.studentName)}</td><td>${v.reviewerType==='teacher'?"Teacher's":"Our"}</td><td>${fmtDate(v.timestamp)}</td></tr>`).join("")}</tbody>
           </table>
         </div>
       `}
