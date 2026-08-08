@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap-Quiz for Teachers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+  :root{
+    --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
+    --math:#F0A202; --math-soft:#FCEACB; --science:#1B998B; --science-soft:#D6EFEA;
+    --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
+    --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper);
+    font-family:'IBM Plex Sans', sans-serif; color:var(--ink);
+    display:flex; justify-content:center; padding:28px 16px 60px;
+  }
+  .wrap{ width:100%; max-width:560px; }
+  .brand{ display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; gap:12px; }
+  .brand .logo-row{ display:flex; align-items:center; gap:10px; }
+  .brand .logo{ width:46px; height:46px; border-radius:12px; box-shadow:var(--shadow); flex-shrink:0; object-fit:cover; }
+  .brand h1{ font-family:'Space Grotesk', sans-serif; font-size:clamp(19px,5vw,24px); font-weight:700; letter-spacing:-0.02em; margin:0; line-height:1.05; }
+  .brand h1 span{ color:var(--english); }
+  .brand .tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.03em; text-align:right; line-height:1.4; }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px; min-height:120px; }
+
+  .navbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap; }
+  .navbar .who{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); }
+  .navbar .who b{ color:var(--ink); }
+  .pill-btn{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; background:var(--accent-soft); color:var(--ink); border:none; border-radius:100px; padding:8px 12px; cursor:pointer; }
+  .pill-btn.outline{ background:transparent; border:1.5px solid var(--border); }
+
+  .field-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin:0 0 8px 2px; }
+
+  input[type="text"], input[type="email"]{
+    width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--border);
+    background:var(--paper); font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink);
+    outline:none; margin-bottom:16px; transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+
+  .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+  .checkbox-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
+  .checkbox-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
+  .checkbox-item input{ width:auto; margin:0; }
+
+  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; }
+  .primary-btn:active{ transform:scale(0.98); }
+  .primary-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+  .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
+
+  .fine-print{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5; }
+  .error-note{ font-size:12.5px; color:var(--bad); margin:-8px 0 14px; }
+
+  .hero{ text-align:center; padding:6px 4px 20px; }
+  .hero .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:10px; }
+  .hero h2{ font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:700; line-height:1.25; margin:0 0 12px; }
+  .hero p{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin:0 0 20px; }
+  .feature-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; text-align:left; }
+  .feature-item{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--ink-soft); }
+  .feature-item b{ color:var(--ink); }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:6px; flex-shrink:0; }
+
+  .home-grid{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+  .home-card{ border:1.5px solid var(--border); border-radius:16px; padding:18px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; display:flex; align-items:center; gap:14px; }
+  .home-card:hover{ border-color:var(--accent); }
+  .home-card .hicon{ font-size:22px; }
+  .home-card .htitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:2px; }
+  .home-card .hsub{ font-size:12px; color:var(--ink-soft); }
+
+  .subject-chip{ display:inline-block; padding:4px 10px; border-radius:100px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; margin:0 6px 6px 0; }
+  .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
+  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
+  .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
+
+  .class-card{ border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; }
+  .class-card:hover{ border-color:var(--accent); }
+  .class-card .ctitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:6px; }
+  .class-card .cmeta{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); margin-top:6px; }
+
+  .code-box{ text-align:center; padding:22px 10px; border-radius:16px; background:var(--accent-soft); margin-bottom:18px; }
+  .code-box .clabel{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:8px; }
+  .code-box .ccode{ font-family:'Space Grotesk', sans-serif; font-size:34px; font-weight:700; letter-spacing:0.08em; }
+
+  table.roster-table{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.roster-table th, table.roster-table td{ text-align:left; padding:9px 6px; border-bottom:1px solid var(--border); }
+  table.roster-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
+
+  .skeleton{ border-radius:10px; background:linear-gradient(90deg, var(--border) 25%, var(--paper) 50%, var(--border) 75%); background-size:200% 100%; animation:shimmer 1.3s infinite; }
+  @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+  .skeleton-row{ height:38px; margin-bottom:8px; }
+
+  .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
+  .fade-in{ animation:fadeIn .3s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+
+  footer.credit{ text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; font-family:'IBM Plex Mono', monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo-row">
+      <img class="logo" src="data:image/jpeg;base64,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D4YDItnPa3LO3MESDam44XPf5cfjntXzdp7XUV5G9m7xzocqynBWujOp+M3XjVrjHs4H9KilRqVI3XMzrr4NRl7nKlbqj3XPh430R2agbYKTIoI3Fs/KB6DHJOeT6VNL/wAInF8xfVHUMRhtqjHrzjr/AEr58mk8VTjEup3jD/r4b+lVX0fVrg/vpJJP95mb+dW8HXeyl95nHCRXxSj93/BPerzXfANo0jXOpTR8jYnnpwMc5xk9eOO1YOs/ED4eW8L/AGF9Zu5tp2BIwEDY4yW7Z/SvKIfC983RWH+7HV628F3smNySn8hTWAxF73t6yRp7LCRXvtP5WNLU/iVduCunadFCOzzNvP5DArlNV1vWNYbbe3s869o14Qf8BHFdfZ+A5ODIiD/eOa3LLwZbRAebJ+CjFb/VL/xKi+Wv+REcVg8P/DjqeXW2mXcxHybAfXr+VdJofhG4ndWMRP8AtOOB+FekWei6fagbIFJ9TV9VCjCgAe1awVCjrCN33f8Akc1bNpz0grGPoegW2ngOwEkvqa2aKKmc5Td5M8qc5Td5BRRRUEhRRRQAUUUUAFIyqwwwBHvS0UAcfe+EoBrct1AoWO4kDMo/h4GfzOTXTwWNrFEsawphRjpVmitPaPlUeiNqledRJSexCLW2H/LCP8qcIIR0iQfhUlFRdmV2IEUdFA/CloopCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9k=" alt="Tap-Quiz logo">
+      <h1>Tap<span>-Quiz</span></h1>
+    </div>
+    <div class="tag">FOR TEACHERS<br>CLASSES &middot; RESULTS &middot; ROSTERS</div>
+  </div>
+  <div id="app" class="card"></div>
+  <footer class="credit">web-based teacher companion &middot; research instrument</footer>
+</div>
+
+<script>
+/* ============================================================
+   FIREBASE SETUP — same project as Tap-Quiz for Students, so
+   classes created here show up when students enter the join code.
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBfU_gAw9MF-Aba-Brabcd9zYX8I9YdAuo",
+  authDomain: "tap-quiz-59ff0.firebaseapp.com",
+  projectId: "tap-quiz-59ff0",
+  storageBucket: "tap-quiz-59ff0.firebasestorage.app",
+  messagingSenderId: "462283657590",
+  appId: "1:462283657590:web:9f115c8995f3745a856a57"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const SUBJECT_META = {
+  math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)",    cls:"math"},
+  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)", cls:"science"},
+  english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)", cls:"english"}
+};
+const ORDER = ["math","science","english"];
+
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str || "";
+  return d.innerHTML;
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+function genJoinCode(){
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no O/0/I/1 to avoid mix-ups
+  let code = "";
+  for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
+  return code;
+}
+
+/* ============================================================
+   IDENTITY — name + email only, stored locally. No password,
+   no confirmation link, no separate auth round trip.
+   ============================================================ */
+function getTeacher(){
+  try{
+    const raw = window.localStorage.getItem("tq_teacher");
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function setTeacher(t){ window.localStorage.setItem("tq_teacher", JSON.stringify(t)); }
+
+/* ============================================================
+   STATE — simple in-memory cache per class so re-opening a
+   class you already viewed this session doesn't re-hit Firestore.
+   ============================================================ */
+let state = {
+  screen: "intro",
+  teacher: getTeacher(),
+  myClasses: null,        // cached list, null = not loaded yet
+  classCache: {},         // classId -> {classDoc, roster}
+  activeClassId: null,
+  newClassName: "",
+  newClassSubjects: [],
+  createError: "",
+  getStartedError: ""
+};
+
+const app = document.getElementById("app");
+
+function route(){
+  const r = {
+    intro: renderIntro, getStarted: renderGetStarted, home: renderHome,
+    createClass: renderCreateClass, myClasses: renderMyClasses,
+    classDetail: renderClassDetail
+  };
+  (r[state.screen] || renderIntro)();
+}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+function renderIntro(){
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="hero">
+        <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11</div>
+        <h2>Welcome to Tap-Quiz for Teachers.</h2>
+        <p>A quick tour before you dive in — here's what you can do:</p>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item"><span class="dot"></span><span><b>Create a class:</b> pick a name and the subjects it covers, and get a join code students can enter from their own app.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Track your roster:</b> see who has joined and how their Pre-Test and Post-Test attempts are going.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Shared with students:</b> this runs on the same class codes as Tap-Quiz for Students, so nothing extra to set up.</span></div>
+      </div>
+      <button class="primary-btn" id="continueBtn">Continue</button>
+    </div>
+  `;
+  document.getElementById("continueBtn").addEventListener("click", ()=>{
+    state.screen = state.teacher ? "home" : "getStarted";
+    route();
+  });
+}
+
+/* ============================================================
+   GET STARTED — name + email only.
+   ============================================================ */
+function renderGetStarted(){
+  app.innerHTML = `
+    <div class="fade-in">
+      <p class="field-label">Let's get you set up</p>
+      <input type="text" id="nameInput" placeholder="Full name">
+      <input type="email" id="emailInput" placeholder="Email address">
+      ${state.getStartedError ? `<p class="error-note">${escapeHtml(state.getStartedError)}</p>` : ``}
+      <button class="primary-btn" id="goBtn">Start Using Tap-Quiz</button>
+      <p class="fine-print">Just your name and email, no password, no confirmation link. This is how your classes are labeled and saved.</p>
+    </div>
+  `;
+  document.getElementById("goBtn").addEventListener("click", ()=>{
+    const name = document.getElementById("nameInput").value.trim();
+    const email = document.getElementById("emailInput").value.trim();
+    if(!name || !email || !email.includes("@")){
+      state.getStartedError = "Please enter your name and a valid email.";
+      renderGetStarted();
+      return;
+    }
+    state.getStartedError = "";
+    const teacher = {name, email: email.toLowerCase()};
+    setTeacher(teacher);
+    state.teacher = teacher;
+    state.screen = "home";
+    route();
+  });
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+function renderHome(){
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <div class="who">Hi, <b>${escapeHtml(state.teacher.name.split(" ")[0])}</b></div>
+        <button class="pill-btn outline" id="switchBtn">Switch account</button>
+      </div>
+      <div class="home-grid">
+        <div class="home-card" id="createCard">
+          <div class="hicon">➕</div>
+          <div><div class="htitle">Create a Class</div><div class="hsub">Pick a name and subjects, get a join code</div></div>
+        </div>
+        <div class="home-card" id="classesCard">
+          <div class="hicon">🏫</div>
+          <div><div class="htitle">My Classes</div><div class="hsub">View rosters and student results</div></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById("switchBtn").addEventListener("click", ()=>{
+    window.localStorage.removeItem("tq_teacher");
+    state.teacher = null; state.myClasses = null; state.classCache = {};
+    state.screen = "getStarted"; route();
+  });
+  document.getElementById("createCard").addEventListener("click", ()=>{
+    state.newClassName=""; state.newClassSubjects=[]; state.createError="";
+    state.screen="createClass"; route();
+  });
+  document.getElementById("classesCard").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
+}
+
+/* ============================================================
+   CREATE CLASS
+   ============================================================ */
+function renderCreateClass(){
+  const sel = state.newClassSubjects;
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Create a Class</div>
+      </div>
+      <p class="field-label">Class name</p>
+      <input type="text" id="classNameInput" placeholder="e.g. Grade 11 - Newton" value="${escapeHtml(state.newClassName)}">
+      <p class="field-label">Subjects covered</p>
+      <div class="checkbox-row" id="subjChecks">
+        ${ORDER.map(s=>`
+          <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
+            <input type="checkbox" value="${s}" ${sel.includes(s)?'checked':''}>
+            <span>${SUBJECT_META[s].label}</span>
+          </label>
+        `).join("")}
+      </div>
+      ${state.createError ? `<p class="error-note">${escapeHtml(state.createError)}</p>` : ``}
+      <button class="primary-btn" id="createBtn">Create Class</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+  document.querySelectorAll("#subjChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", (e)=>{
+      e.preventDefault();
+      const v = el.dataset.subj;
+      const idx = state.newClassSubjects.indexOf(v);
+      if(idx >= 0) state.newClassSubjects.splice(idx,1); else state.newClassSubjects.push(v);
+      state.newClassName = document.getElementById("classNameInput").value;
+      renderCreateClass();
+    });
+  });
+  document.getElementById("createBtn").addEventListener("click", async ()=>{
+    const className = document.getElementById("classNameInput").value.trim();
+    if(!className){ state.createError = "Please name your class."; renderCreateClass(); return; }
+    if(state.newClassSubjects.length === 0){ state.createError = "Pick at least one subject."; renderCreateClass(); return; }
+    state.createError = "";
+    const btn = document.getElementById("createBtn");
+    btn.disabled = true; btn.textContent = "Creating...";
+    try{
+      const joinCode = genJoinCode();
+      const docRef = await db.collection("classes").add({
+        className, subjects: state.newClassSubjects,
+        joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email,
+        createdAt: Date.now()
+      });
+      state.myClasses = null; // invalidate cache
+      state.activeClassId = docRef.id;
+      state.classCache[docRef.id] = {
+        classDoc: {id: docRef.id, className, subjects: state.newClassSubjects, joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email},
+        roster: null
+      };
+      state.screen = "classDetail";
+      route();
+    }catch(err){
+      state.createError = "Couldn't create the class, check your connection.";
+      console.error(err);
+      renderCreateClass();
+    }
+  });
+}
+
+/* ============================================================
+   MY CLASSES — cached after first load.
+   ============================================================ */
+async function renderMyClasses(){
+  if(state.myClasses === null){
+    app.innerHTML = `
+      <div class="fade-in">
+        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">My Classes</div></div>
+        <div class="skeleton skeleton-row"></div>
+        <div class="skeleton skeleton-row"></div>
+        <div class="skeleton skeleton-row"></div>
+      </div>
+    `;
+    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+    try{
+      const snap = await db.collection("classes").where("teacherEmail","==",state.teacher.email).get();
+      const list = [];
+      snap.forEach(d=> list.push({id:d.id, ...d.data()}));
+      list.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+      state.myClasses = list;
+    }catch(e){
+      console.error(e);
+      state.myClasses = [];
+    }
+  }
+  const list = state.myClasses;
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">My Classes</div>
+      </div>
+      ${list.length === 0 ? `<p class="empty-note">No classes yet, create one to get a join code for your students.</p>` : list.map(c=>`
+        <div class="class-card" data-id="${c.id}">
+          <div class="ctitle">${escapeHtml(c.className)}</div>
+          <div>${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
+          <div class="cmeta">CODE: ${escapeHtml(c.joinCode)}</div>
+        </div>
+      `).join("")}
+      <button class="primary-btn ghost" id="newBtn" style="margin-top:6px;">➕ Create Another Class</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+  document.getElementById("newBtn").addEventListener("click", ()=>{
+    state.newClassName=""; state.newClassSubjects=[]; state.createError="";
+    state.screen="createClass"; route();
+  });
+  document.querySelectorAll(".class-card").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const id = el.dataset.id;
+      const c = list.find(x=>x.id===id);
+      state.activeClassId = id;
+      if(!state.classCache[id]) state.classCache[id] = {classDoc: c, roster: null};
+      state.screen = "classDetail";
+      route();
+    });
+  });
+}
+
+/* ============================================================
+   CLASS DETAIL — join code + roster. Roster and attempts are
+   fetched in parallel (not one-student-at-a-time) and cached
+   per class so re-opening it later in the session is instant.
+   ============================================================ */
+async function renderClassDetail(){
+  const id = state.activeClassId;
+  const cached = state.classCache[id];
+  const c = cached.classDoc;
+
+  if(cached.roster === null){
+    app.innerHTML = `
+      <div class="fade-in">
+        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">${escapeHtml(c.className)}</div></div>
+        <div class="code-box">
+          <div class="clabel">JOIN CODE</div>
+          <div class="ccode">${escapeHtml(c.joinCode)}</div>
+        </div>
+        <div class="skeleton skeleton-row"></div>
+        <div class="skeleton skeleton-row"></div>
+        <div class="skeleton skeleton-row"></div>
+      </div>
+    `;
+    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
+    try{
+      const [enrollSnap, attemptSnap] = await Promise.all([
+        db.collection("enrollments").where("classId","==",id).get(),
+        db.collection("attempts").where("classId","==",id).get()
+      ]);
+      const students = new Map();
+      enrollSnap.forEach(d=>{
+        const v = d.data();
+        if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
+      });
+      attemptSnap.forEach(d=>{
+        const v = d.data();
+        if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
+        const s = students.get(v.studentEmail);
+        if(v.testType === "pretest") s.pre++; else if(v.testType === "posttest") s.post++;
+        if(typeof v.pct === "number") s.scores.push(v.pct);
+      });
+      cached.roster = Array.from(students.values()).sort((a,b)=> a.name.localeCompare(b.name));
+    }catch(e){
+      console.error(e);
+      cached.roster = [];
+    }
+  }
+
+  const roster = cached.roster;
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">${escapeHtml(c.className)}</div>
+      </div>
+      <div class="code-box">
+        <div class="clabel">JOIN CODE &middot; SHARE WITH STUDENTS</div>
+        <div class="ccode">${escapeHtml(c.joinCode)}</div>
+      </div>
+      <div style="margin-bottom:14px;">${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
+      ${roster.length === 0 ? `<p class="empty-note">No students yet. Share the join code above — once someone joins, they'll show up here.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="roster-table">
+            <thead><tr><th>Student</th><th>Pre</th><th>Post</th><th>Avg %</th></tr></thead>
+            <tbody>
+              ${roster.map(s=>{
+                const avg = s.scores.length ? Math.round(s.scores.reduce((a,b)=>a+b,0)/s.scores.length) : "—";
+                return `<tr><td>${escapeHtml(s.name)}</td><td>${s.pre}</td><td>${s.post}</td><td>${avg}${s.scores.length?'%':''}</td></tr>`;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `}
+      <button class="pill-btn outline" id="refreshBtn" style="margin-top:14px;">Refresh roster</button>
+    </div>
+  `;
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
+  document.getElementById("refreshBtn").addEventListener("click", ()=>{
+    cached.roster = null;
+    renderClassDetail();
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+route();
+</script>
+</body>
+</html>
