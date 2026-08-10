@@ -150,6 +150,12 @@
   .review-item .ri-c.correct{ background:#E4F5F1; color:#0E5C52; font-weight:600; }
   .review-item .ri-c.wrong{ background:#FCE7E1; color:#8E2E15; font-weight:600; }
 
+  .assign-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .assign-box .al-row{ display:flex; justify-content:space-between; font-size:12.5px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .assign-box .al-row:last-child{ border-bottom:none; }
+  .assign-box .al-label{ color:var(--ink-soft); }
+  .assign-box .al-value{ font-weight:600; }
+
   .float-pt{ position:fixed; pointer-events:none; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; animation:floatUp .8s ease forwards; z-index:50; }
   @keyframes floatUp{ 0%{ opacity:1; transform:translateY(0);} 100%{ opacity:0; transform:translateY(-38px);} }
   .fade-in{ animation:fadeIn .3s ease; }
@@ -165,7 +171,7 @@
 <div class="wrap">
   <div class="brand">
     <div class="logo-row">
-      <img class="logo" src="data:image/jpeg;base64,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D4YDItnPa3LO3MESDam44XPf5cfjntXzdp7XUV5G9m7xzocqynBWujOp+M3XjVrjHs4H9KilRqVI3XMzrr4NRl7nKlbqj3XPh430R2agbYKTIoI3Fs/KB6DHJOeT6VNL/wAInF8xfVHUMRhtqjHrzjr/AEr58mk8VTjEup3jD/r4b+lVX0fVrg/vpJJP95mb+dW8HXeyl95nHCRXxSj93/BPerzXfANo0jXOpTR8jYnnpwMc5xk9eOO1YOs/ED4eW8L/AGF9Zu5tp2BIwEDY4yW7Z/SvKIfC983RWH+7HV628F3smNySn8hTWAxF73t6yRp7LCRXvtP5WNLU/iVduCunadFCOzzNvP5DArlNV1vWNYbbe3s869o14Qf8BHFdfZ+A5ODIiD/eOa3LLwZbRAebJ+CjFb/VL/xKi+Wv+REcVg8P/DjqeXW2mXcxHybAfXr+VdJofhG4ndWMRP8AtOOB+FekWei6fagbIFJ9TV9VCjCgAe1awVCjrCN33f8Akc1bNpz0grGPoegW2ngOwEkvqa2aKKmc5Td5M8qc5Td5BRRRUEhRRRQAUUUUAFIyqwwwBHvS0UAcfe+EoBrct1AoWO4kDMo/h4GfzOTXTwWNrFEsawphRjpVmitPaPlUeiNqledRJSexCLW2H/LCP8qcIIR0iQfhUlFRdmV2IEUdFA/CloopCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9k=" alt="Tap-Quiz logo">
+      <img class="logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCADIAMgDASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAUGAwQHAgEI/8QARRAAAQMDAgMEBgYGBwkAAAAAAQACAwQFEQYhEjFBBxNRYRQiMnGBkRUjQqGxwRZSYnKS0RclM0OC4fA1U1Rzk6Ky0vH/xAAbAQEAAgMBAQAAAAAAAAAAAAAAAwQBAgUGB//EADQRAAICAQIEAwcCBQUAAAAAAAABAgMRBCEFEjFRQWGBEyIycZGhsRRCBhUkwdEzYnLh8f/aAAwDAQACEQMRAD8AsyIi+tnxIIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIvoBPIE/BAfEXiWeGIZlmijH7bw38VpTXyzQ/wBrdqFvvnb/ADWG0jaMJS6IkEUNJqvTbPavNJ8HE/gFhOstMA4+loj7mPP5LHPHuSLTXP8AY/oyfXmWRkTC+Rwa0YyT5nH5qCGs9ME/7Wj+Mb/5KtdoWrqOptrLfZ6oTGVwfLKwEBoachoz1JAPw81rK2KWcktOiusmouLXodFXxVnSGqaa8Uw9ImihqQAHsc8DJ8RnoVZm+sMt3HiN1ImnuiC2qVUnGS3CIiEYREQBERAEREAREQBEWrdbjRWukNVX1DIIhsC7m4+AHMn3I3gzGLk8LqbSx1NRBSxGapmjhjHN8jg0fMrm1/7RauYuis0Apo+XfSgOkPuHJv3qlV1bV10xmramWokP2pHl3/xV5ahLodajhFk97Hj8nWrlrzT1JlsU8tY8dIGZH8RwFXa7tLqXZFDa4Yx0dNIXn5DAVFgp55z9WwuHj0+alKKxSykcRc4+DB+a3qq1N+8Ft38C+tBpKfj3+Zt1muNSVGcV4gaekMTW/fuVGTXK9Vx+trq+fPjK4j8cK2WzSEr8EU7Webhkqw0ekImgd9JnyU/6GMf9Wz6bmktbpafgijlrbbWSnLoxnxe7dbMNiqXfaaP3WkrrtPp63xf3YcfNbsVvpIx6sDPksqnSR8G/m/8ABBPjD/ajkEWmah3WY+5mFsx6SndvwVB+X8l11sMTfZjaPgq/qekuD6qmudirozV04LDRvlHdztJ3GM7O/l0wtv6ddK19yJcUtm8Zwc/ZpsSV8lAwT+kRxCRwzyaTgdFEXm1VlqnEdVGQ13sPxsf812Jltkgu9be4+GWslo2RCkDgGhzd8cXmds4CiLhpsXC1VJulbFNdahzHOIkAZDg7RsbnYAEjPM5UF0K7I+7HD8ianiclNc72OaW62Oq8Oky1p9kAZJU7T6euFOBJS1tbTnoW5H4EK46csDIax7pWeow4YMdFahHGBjgbj3KxKnT1JRUcvvlmmo4pLmxHoc2pqrWFHgR3nv2j7NTHxfeQT96lqPVd9iwK+yw1Ler6SYB38LlcXU8LvaiafgsElto384WrTkq8Mr1z+SpLVVz+OC/H4wR9Dqi0VDmxzSy0Mp/u6yMxfIn1T81NggtDgQQdwRyKjH2iHhLWOPCfsncfJKK3GhdmnaI29WxnDT/h5fcscvZlafsnvHYk0WvVVbKWPvZ45GxD2pGtLg33gbgeeFkpp4KmBs9NNHNE7k+Nwc0/ELXJHyvGfAyIiIahERARupbzTWO1vraj1j7MUYODI/oP5nwXFr3dq68VrquumL3nZrRs1g8GjoFY+1mvfUakbRcR7qkiaAP2nDiJ+WB8FThucBUbpuUsHqOGaWNdSsfV/g+xsdI8MY0uceQCnbTY3zPbxMMrz9kch/NbmmbM+aRrGtzI723eHkum2e009BCAGAv6ldSnS16aKlasy7diPW8QVfuxK/Z9Keq19TgDo0Kz0dtpKVoEcTduuFtoll87OrODZfOx7sAY2AVn0xoa+ahtLLpRy2+Cnle9sQnleHvDXFvFgNOxIOFWVZuxnTVDW9oEd1FFC36LgMpkDN+8fljB8u8PwC5XE7rKdPKyEuXHlnPl6sv8Hop1GqVVsObPnjHn9CU/oq1N/wAZZ/8Aqy/+igta6UuWk7Oy53KttckclTFTRxwyyGSR8jg0BoLPefcCupdtuoJdO9nFyqKR/DX1bW0NF499MeBpH7oJd/hX5h1Za7dZdI1E9BSQsrIYmxQ1HDmQOJDOLP6xBO/muZwjUa3Wr2k5pRTx0W/f5Hb4vouHaKUaYVtyl/ue3Yt9gs2rtVWyuu2mrPRVtrpp3Uze+qjDLWObs8w5HDwg7ZcRkg45KvVGhL3ZatjabsyuNJdjM2npKhp7+nEz9mu42uPqgHPEQBsRzX6v0haKWwaYttmoqdtPBR0zImxtHLAGfiTkk+JW1d21zrXVttb4I68wvFM6cExiTB4S4DfhzjK5z/iW/wBo+WK5c7ZydWH8NaaNaWXnxw+vofl3Utjslh1Lb7FYoBU11hpXOvlzZvLX1Urc9ySTg49rB9nLRtutOw6CF4pKe/DQd0jkqCKhpfA9/ESeIOBBwQef5LZpNPV1t1lRaKGpbXqGuubnvr56FjuOlme8F7pXZIcXAvd0I4OQGF+gu068O0f2aXGstUD/AEinphT0EUTC4iR2GR4AB5Eg+4Lo38SlpY1VU+/Kfi8+L6+rzjyKEOF/rLrrLswjHCXLjol0+mDjUOn7/IzvI9PXchxO/oTxn5haEsckU0kE0UkM0TiySORha5jvAg7g7j5rv+gYblbNA2xupLjNVV8dKJayoqSOMOOXO4jgeyDj4L8709zmv9dctSTl/wDW9bJVQsd9iHZkQ/gY0/FT8M4ldrLZxklyx8Vk5vGOD0aCiFkZPml4PH9jOiIu2ebCIiAEZGFTdSWGuopn3bTsz6aq9qSOPZk3vbyz+KuSEAjBRpNYZLTdKqWV/wClJ0trynrJG0d4Yykqc8IlG0bz4HPsn7ldgQRkLkfalao7ffmVMLQ2OsYXkDkHg4d89ipDs61VLFKy0V8hfGdoHuO7f2fd4KCux83JI6eo0MbKlfR07HTEXxrg5ocDkFFOcc5F2qUklPquSocDwVUTJGH3DhI+Y+9Vy2tD66Jp5cWV2XWlhjv1pMOQyoiJfA89D1B8iuOSw1NsuPd1ETo5ones0/63CquPs7VN9MnqeH6hXUci+JLB17RdEyGhExHrO6qwqF0dVRVVmifE4EYU0r98nKxs83e37R5CIiiIgt2z37UtiZUMsV1paNlRL3sneUDZnEhoaBxFw2AHLzK0kUdtMLo8tiyifT6i3Tz56pYZ6vlfqHUVfSVWpL6+vZROMlNTR07IIWSEFveFoyXOwSASds7LSvNtpbtbpKCsa8wyYJ4HcJBByCD71trzM57Y3GOMySco2D7bycNb8SQPildcKY8sEkkZt1F2os55ybke9M9o+uNAPjpa2o/S2xtAxFM/FdAz9l25eB55+C1dQ6o1Frh8lRfL/WW61Tvc6GzUhMIbGT6rZnt9Z7sYyM4yv0ZpDT9t0jp1sYbCyVkXeV1WQOKV4GXvc7njngcgAAFBdjGsbzri23K819FSUtu9K4LaIg7vDHjOZCTgnBYdgNyR0Xkf5jp1OeoqoWI43zjr02x1+R7/APl+qlTDT26hqT7Lt556HKOyq46R0jfnV1RDJBT00BZAyjopJi6V+zieBpOQwY9b9dWDXXahcLtf7UzRVZcKCkpYppqyept72Mle4BkcfBIBxAZc7byVt1lZbXqftXtNqkpGPbR2+WsukjSWGWNx7unic5pBI4xI8f8AL8Cc0vtmsdltF703pzStujp7tcah0j3iaRxbEPq2gguI3kkb8GFTV36TWaqFlsXzNdNnFLf16b+pXnptbotJOqma5U+u/M28emc7EFqK/a11FbJLVd9UP+j5xw1ENHQsp3TM6sLwSQ09QMZC3tKaPvl/o5ZbNS0TKSleKcGecxguDQSGgMdsAQM+OR0Vz7SNJ6L0f2dXO8/QwqKqlpeCnL6iUumndhkecP3JeRy81koOzfRundAsuWqLeKiroqD0m5VBqZW8cjWcUhwHgcwQPgt3xeiuj+mjy5eOi377ZXkRLgeouvzrZ86S7tY+3zOZ19PUUF9uFmqu4dVUD2MmMEhkYHPYHgZLRuARkea8Yd+qfkt7scobXc2U9sqez+WvrquV1ZW1bbi5kVIyR2WNcOLiGGcIAOXOIPTcdI1xYeyzR1nNyvdtbG1zuCCGOaZ01Q/oyNgflzj8hzOAr1nGFRYqJwbn5Y39M+JzF/D36iLvpmlDzzt643OUnbmF8WtQOklNVUvoRbo6ipfLBR94ZDTxHAawuJOXYGT0yStldqLbSbWDzdkVCbinnHiERaF+u9HZbe+srH4aNmMB9aR36o/1sstpLLMRi5NRityg9slSx9xoKRpBfFC57vLiIx/4qiwvdHMyRpw5rgQfMLZvNwqLrc56+pI7yZ2SByaOgHkBssVFEZqljB45PuVDeyz3erPY6ar2FCg/A7VpKtdV21vEcuaEWpoSJzKFzyCATsi6uoSVjSPI3pKxpFkUFqjTdHeoD3jA2UD1XjYhTqKI1rslXLmi8M5laG3jSFeWvhfV0Dz64YPWb5gfkuh2u4UlypRU0czZYzzxzafAjmD5FZaininbwyMDlHx2iOnqfSKcBsnVw2JHgT1+KyoxxtsWLr43+9JYl37kqiwyzSxM4zTySgcxHguHwOM/Ba0F6tc03cCtijmHOKY92/8AhdgrRtIrKEmspG+iDcZG48VI2GmtlVUyMulxNDEGDheGcRLi4Dl4AEk+5YnNQi5P/JmuDnJRX32/JHLPbqo2+60NxFM2q9DqWVHcOdwiThztnoc4I6ZAzspz6M0xwl36QSEFhIHdAFu+2fE4zttzG6wW+3WKejpX1d8FLO/JmbwcQYMnblzADfI5Pgqs9RXODUk8Pbo/H0yW69PbVZGUXHK3W68GvPBfKvtM0bf6eXT90o71TUtwYaWeSeldHE1sg4TxStdho3xxA4Geam5LjpvQWhZm2SBlVTW2B0jKOmqmOlk6uOXu3PMnJ6bdAuOR/ojJdam1/pVGaiGBkj4/R+RcSMeBwOEkeBX2HS2iZroYXOoe4bEHumdTRDvHl24aeHGzd/M7BefnwjTSWK5SUVu008P8Hq4cd1MN7q48z6NSS2f1LDoLtFprZU3u+6ntlf8ASt4q2yAUEPpMcVOyMNhi4gQct9Yk4wS4kc15qNaaKq+0mLV0ti1ZJPT0YjbM+D6ppBcGtbDniJxI8l3IHHM8o+G06eaeB1+j4CQGFrMcDcA5x47EcPu3WO0W2yVcEhqrz6LMXO7tjmjZgI3ccYyRnYHp1yrb4fo+aVi5llY2z0xjt0wiiuM67Ea2oPfO7XVPPfGTf172gWrVGoNMQi13wWO21xuVw46Eh0j4m/URtaTlw4zxH90L12rdodu1dpqLTVtob/BT11ZC25TPoSwx0jXccnDk7uPCGgeZWobTp2Mxuk1AC17Q7AYM9djjONx8ljdbbA6SYsvZbG2Pjj+r4i9xBIbjyxg58dkhw/RxcGub3emz65+XX/BtPjOuakmoe95rt/y6Fr072maFsFsZbrVYtQwQNJcf6seXPcebnOJy5x6kqh9od00tfa6e/WyDWNTqKRzIqU10XBTU0ZeOMAEYY0N4jtuTzJW7XQ6OpQ4z6qp6RrXuAdMRkjJDTjbwztv6w8FSNQ610jb5+C33Oa5N7triYoeTiN255be/xW2l0Glru9pGUlLz8fnt4mL+J666n2bri49Nt/7+BPHGTjl0Xl7msYXvcGtaMlxOAPiua3TtJqn5ZbbfHCOj53cZ+QwPxVRu97ut2dm4V00zejCcMHuaNl15aiK6bnJp4RdP49kdK1Hr2129robfivqeWWnETT5u6+4fNcyvV1r7vWGqr5zK/k0cmsHg0dAtWKKWU4jjc73BSVHZppXDvCR+y3crEKr9S/dW32OvTpqNIsrr38SNhikmeGRtLnFWrTNkfLK1jW8TifXdj7lL2HS0sgGY+6j6+JV5tlup6GIMiaM9SujTTXpN880/sijrOIrHLAyW6lZSUrIWjkN0WwigbbeWcFvLywiIsGAiIgBGRgqPulqp6+IxzxRTN/VlYHD7+SkEWU8G0ZOLyikVWlpKVxfbamuoD09Hndw/wlaMk+sqE/VXoVDR0qIRn54P4roq8SQxSDD42n4Jit9V9Ni3HWy/elL5rJzsau1fT7TW+iqAOrWn8nLHN2j3SNjo5LTTxTFp4SXP9U+ODzV8mtFDL7ULVF3TSVvrIHRlvPl4j3LEqoNe7Jr5k8NTpZP36/ockguVbDczcmzvNSXl7nk+0Tzz71doO0t0cDWPtAe8DBPpGAf+1VersNRR3uagnBLYcOLgPaafZ+f5FWuzaVNXTh5ijY3ploWmn0tkq3Jy5Vk6mrlpZJSsWTFJ2m1R/s7RAP3p3H8AFqT9pF6ftFTUEX+BzvxKnv0KbnlF/AF7bosDrGPc0KT9L3t+xTVugXSH5KfUa51NNkNrmxA/7qFo/IqOqbvfq3InuFwmB6d47HyGy6PHo6Mc5Me5bEekqYe1ISn6Sr91jfp/2brX6WHwwX0OSijrJHZMLyT1d/ms0dpq38w1vxyuvRaZt7Ny3K3IbPQRYxA1ZWn0se7MS4x2RyOm07PIRnvHeTW4U1QaQmeQRTfF+66bHTQR+xE0fBZQAOQUsZ01/BWvXf8AJVs4pbLoU+g0gGgGd4A8Ap+hs1FSAcEQJHUqRRJ6iyfVlGd9k+rDQGjAAAREUBCEREAREQBERAEREAREQBERAR11tcFY8ylg7whocfEDOPxK3qeJsMLY2jAAXtFtzPHKbOTawwiItTUIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiA/9k=" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
     <div class="tag">FOR STUDENTS<br>GEN. MATH · GEN. SCIENCE · COMMUNICATION</div>
@@ -175,9 +181,6 @@
 </div>
 
 <script>
-/* ============================================================
-   FIREBASE SETUP (Firestore only — no Auth SDK, no magic link)
-   ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyBfU_gAw9MF-Aba-Brabcd9zYX8I9YdAuo",
   authDomain: "tap-quiz-59ff0.firebaseapp.com",
@@ -189,24 +192,17 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* ============================================================
-   SUBJECT META / CONSTANTS
-   ============================================================ */
 const SUBJECT_META = {
   math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
   science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)"},
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
 };
 const ORDER = ["math","science","english"];
-const PRACTICE_TOTAL = 20;     // total questions per Pre-Test / Post-Test practice run
-const PRACTICE_TIMER = 20;     // seconds per question
-const TRANSITION_MS = 500;     // pause between questions so the change isn't jarring
+const PRACTICE_TOTAL = 20;
+const PRACTICE_TIMER = 20;
+const TRANSITION_MS = 500;
+const MAX_QUESTIONS = 20;
 
-/* ============================================================
-   REVIEWER CONTENT — grounded in the DepEd Strengthened SHS
-   Grade 11 curriculum guides (General Mathematics, General
-   Science, Effective Communication).
-   ============================================================ */
 const REVIEWER = {
   math: `GENERAL MATHEMATICS — QUICK REVIEWER
 
@@ -288,10 +284,7 @@ REFLECTION & GROWTH
 • Effective communicators reflect on their own strengths and areas for growth, and use feedback constructively.`
 };
 
-/* ============================================================
-   QUESTION BANKS — curriculum-aligned items plus scenario-type
-   questions grounded in the DepEd guides for each subject.
-   ============================================================ */
+/* Preset question banks (same content as before, unchanged) */
 const BANK = {
   pretest: {
     math: [
@@ -521,9 +514,6 @@ const BANK = {
   }
 };
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
 function shuffle(arr){
   const a = arr.slice();
   for(let i = a.length - 1; i > 0; i--){
@@ -567,11 +557,32 @@ function buildPracticeQueue(subjects, testType){
   });
   return shuffle(queue);
 }
+function buildAssignedQueue(assignment, testType){
+  const subjects = (assignment.subjects && assignment.subjects.length) ? assignment.subjects : ORDER;
+  const total = Math.min(Math.max(assignment.numQuestions || 20, 1), MAX_QUESTIONS);
+  const counts = distributeCount(total, subjects.length);
+  let queue = [];
+  subjects.forEach((subj, i)=>{
+    let pool;
+    if(assignment.questionSource === "custom"){
+      pool = (assignment.customQuestions && assignment.customQuestions[testType] && assignment.customQuestions[testType][subj]) || [];
+    } else {
+      pool = BANK[testType][subj];
+    }
+    const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
+    picked.forEach(item=>{
+      const correctText = item.c[item.a];
+      const shuffledChoices = shuffle(item.c);
+      const newA = shuffledChoices.indexOf(correctText);
+      const rawQ = item.q || "";
+      const isScenario = item.isScenario || rawQ.startsWith("SCENARIO:");
+      const qtext = rawQ.startsWith("SCENARIO:") ? rawQ.replace("SCENARIO: ","") : rawQ;
+      queue.push({subject:subj, q:qtext, isScenario, c:shuffledChoices, a:newA});
+    });
+  });
+  return shuffle(queue);
+}
 
-/* ============================================================
-   IDENTITY — simple name + email, stored locally.
-   No password, no magic link, no Firebase Auth round trip.
-   ============================================================ */
 function getStudent(){
   try{
     const raw = window.localStorage.getItem("tq_student");
@@ -582,9 +593,6 @@ function setStudent(student){
   window.localStorage.setItem("tq_student", JSON.stringify(student));
 }
 
-/* ============================================================
-   STATE
-   ============================================================ */
 let state = {
   screen: "intro",
   student: getStudent(),
@@ -594,6 +602,7 @@ let state = {
   qIndex: 0,
   answers: [],
   timeLeft: PRACTICE_TIMER,
+  currentTimerSeconds: PRACTICE_TIMER,
   timerId: null,
   locked: false,
   saved: false,
@@ -601,6 +610,7 @@ let state = {
   reviewerReturnScreen: "home",
   activeClassId: null,
   activeClass: null,
+  activeAssignment: null,
   joinError: "",
   classError: ""
 };
@@ -622,10 +632,6 @@ function bg(soft){
   document.body.style.background = `radial-gradient(circle at 12% -10%, ${soft||'var(--accent-soft)'} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
 }
 
-/* ============================================================
-   INTRO SCREEN — shown before anything else so it isn't just
-   a quiz right away.
-   ============================================================ */
 function renderIntro(){
   bg();
   app.innerHTML = `
@@ -640,6 +646,7 @@ function renderIntro(){
         <div class="feature-item"><span class="dot"></span><span><b>Reviewers with real formulas:</b> tabbed by subject, so you can study exactly what you need before a test.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Scenario questions:</b> not just facts, real situations that ask you to apply what you know.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Track your progress:</b> every attempt is saved so you can see how you're improving over time.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Join a class:</b> enter your teacher's code to get the exact test they've set up for you.</span></div>
       </div>
       <button class="primary-btn" id="continueBtn">Continue</button>
     </div>
@@ -650,9 +657,6 @@ function renderIntro(){
   });
 }
 
-/* ============================================================
-   GET STARTED — name + email only, no verification link.
-   ============================================================ */
 function renderGetStarted(){
   bg();
   app.innerHTML = `
@@ -682,9 +686,6 @@ function renderGetStarted(){
   });
 }
 
-/* ============================================================
-   HOME
-   ============================================================ */
 function renderHome(){
   bg();
   app.innerHTML = `
@@ -723,16 +724,13 @@ function renderHome(){
     state.screen = "getStarted";
     route();
   });
-  document.getElementById("preCard").addEventListener("click", ()=>{ state.practiceType="pretest"; state.practiceSubjects=[]; state.screen="practiceSetup"; route(); });
-  document.getElementById("postCard").addEventListener("click", ()=>{ state.practiceType="posttest"; state.practiceSubjects=[]; state.screen="practiceSetup"; route(); });
-  document.getElementById("reviewCard").addEventListener("click", ()=>{ state.reviewerReturnScreen="home"; state.screen="reviewer"; route(); });
+  document.getElementById("preCard").addEventListener("click", ()=>{ state.practiceType="pretest"; state.practiceSubjects=[]; state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
+  document.getElementById("postCard").addEventListener("click", ()=>{ state.practiceType="posttest"; state.practiceSubjects=[]; state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
+  document.getElementById("reviewCard").addEventListener("click", ()=>{ goToReviewer("home"); });
   document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
   document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError=""; state.screen="joinClass"; route(); });
 }
 
-/* ============================================================
-   PRACTICE SETUP (pick subjects for Pre-Test / Post-Test)
-   ============================================================ */
 function renderPracticeSetup(){
   bg();
   const sel = state.practiceSubjects;
@@ -769,19 +767,32 @@ function renderPracticeSetup(){
   document.getElementById("startBtn").addEventListener("click", ()=>{
     if(state.practiceSubjects.length === 0){ state.practiceError = "Pick at least one subject."; renderPracticeSetup(); return; }
     state.practiceError = "";
+    state.currentTimerSeconds = PRACTICE_TIMER;
     state.quizQueue = buildPracticeQueue(state.practiceSubjects, state.practiceType);
     state.qIndex = 0; state.answers = []; state.saved = false;
     state.screen = "quiz"; route();
   });
 }
 
-/* ============================================================
-   REVIEWER — tabbed by subject, real curriculum content.
-   Reachable from the menu and from the results screen.
-   ============================================================ */
+function goToReviewer(returnScreen){
+  state.reviewerReturnScreen = returnScreen;
+  if(state.activeClassId){
+    db.collection("reviewerViews").add({
+      studentEmail: state.student.email, studentName: state.student.name,
+      classId: state.activeClassId, subject: state.reviewerSubject, timestamp: Date.now()
+    }).catch(e=>console.error(e));
+  }
+  state.screen = "reviewer";
+  route();
+}
+
 function renderReviewer(){
   bg();
   const subj = state.reviewerSubject;
+  let content = REVIEWER[subj];
+  if(state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer && state.activeAssignment.customReviewer[subj]){
+    content = state.activeAssignment.customReviewer[subj];
+  }
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -791,7 +802,7 @@ function renderReviewer(){
       <div class="tab-row">
         ${ORDER.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
       </div>
-      <div class="reviewer-box">${escapeHtml(REVIEWER[subj])}</div>
+      <div class="reviewer-box">${escapeHtml(content)}</div>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen = state.reviewerReturnScreen; route(); });
@@ -800,13 +811,10 @@ function renderReviewer(){
   });
 }
 
-/* ============================================================
-   QUIZ ENGINE
-   ============================================================ */
 function renderQuestion(){
   clearInterval(state.timerId);
   state.locked = false;
-  state.timeLeft = PRACTICE_TIMER;
+  state.timeLeft = state.currentTimerSeconds || PRACTICE_TIMER;
 
   const item = state.quizQueue[state.qIndex];
   const meta = SUBJECT_META[item.subject];
@@ -853,11 +861,12 @@ function renderQuestion(){
 function runTimer(){
   const ring = document.getElementById("ringProgress");
   const tnum = document.getElementById("tnum");
+  const total = state.currentTimerSeconds || PRACTICE_TIMER;
   const circumference = 100.5;
   state.timerId = setInterval(()=>{
     state.timeLeft -= 0.25;
     if(tnum) tnum.textContent = Math.max(0, Math.ceil(state.timeLeft));
-    if(ring) ring.style.strokeDashoffset = circumference * (1 - state.timeLeft/PRACTICE_TIMER);
+    if(ring) ring.style.strokeDashoffset = circumference * (1 - state.timeLeft/total);
     if(state.timeLeft <= 0){
       clearInterval(state.timerId);
       if(!state.locked) lockAnswer(-1);
@@ -897,8 +906,6 @@ function lockAnswer(choiceIndex){
   }, 850);
 }
 
-/* A brief cushion screen between questions so the content
-   change doesn't feel abrupt. */
 function renderTransition(){
   clearInterval(state.timerId);
   const nextItem = state.quizQueue[state.qIndex + 1];
@@ -927,9 +934,6 @@ function spawnFloatingPoint(text, color){
   setTimeout(()=> el.remove(), 800);
 }
 
-/* ============================================================
-   RESULTS
-   ============================================================ */
 function renderResults(){
   clearInterval(state.timerId);
   bg();
@@ -961,9 +965,9 @@ function renderResults(){
   autoSaveResult({testType: state.practiceType, correct, total, pct});
 
   document.getElementById("answersBtn").addEventListener("click", ()=>{ state.screen="answerReview"; route(); });
-  document.getElementById("reviewBtn").addEventListener("click", ()=>{ state.reviewerReturnScreen="results"; state.screen="reviewer"; route(); });
+  document.getElementById("reviewBtn").addEventListener("click", ()=>{ goToReviewer("results"); });
   document.getElementById("backBtn").addEventListener("click", ()=>{
-    state.practiceType=null; state.practiceSubjects=[]; state.screen="home"; route();
+    state.practiceType=null; state.practiceSubjects=[]; state.activeAssignment=null; state.screen="home"; route();
   });
 }
 
@@ -991,9 +995,6 @@ async function autoSaveResult({testType, correct, total, pct}){
   }
 }
 
-/* ============================================================
-   ANSWER REVIEW
-   ============================================================ */
 function renderAnswerReview(){
   bg();
   app.innerHTML = `
@@ -1021,9 +1022,6 @@ function renderAnswerReview(){
   document.getElementById("backBtn2").addEventListener("click", goBack);
 }
 
-/* ============================================================
-   MY PROGRESS
-   ============================================================ */
 async function renderMyProgress(){
   bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading your history...</p></div>`;
@@ -1058,9 +1056,6 @@ async function renderMyProgress(){
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
 }
 
-/* ============================================================
-   JOIN A CLASS (optional — works if a teacher has created one)
-   ============================================================ */
 function renderJoinClass(){
   bg();
   app.innerHTML = `
@@ -1088,6 +1083,7 @@ function renderJoinClass(){
       const classDoc = snap.docs[0];
       state.activeClassId = classDoc.id;
       state.activeClass = {id: classDoc.id, ...classDoc.data()};
+      state.activeAssignment = null;
       db.collection("enrollments").add({
         studentEmail: state.student.email, studentName: state.student.name,
         classId: classDoc.id, joinedAt: Date.now()
@@ -1097,11 +1093,6 @@ function renderJoinClass(){
   });
 }
 
-/* ============================================================
-   STUDENT CLASS VIEW — kept minimal for now; loads its two
-   attempt counts in parallel and doesn't block on the view log,
-   so it opens quickly even before the Teacher app exists.
-   ============================================================ */
 async function renderStudentClass(){
   bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading class...</p></div>`;
@@ -1112,14 +1103,52 @@ async function renderStudentClass(){
     classId: state.activeClassId, timestamp: Date.now()
   }).catch(e=>console.error(e));
 
-  let preCount = 0, postCount = 0;
+  let assignment = null;
+  let preUsed = 0, postUsed = 0;
   try{
-    const [preSnap, postSnap] = await Promise.all([
+    const [assignDoc, preSnap, postSnap] = await Promise.all([
+      db.collection("assignments").doc(state.activeClassId).get(),
       db.collection("attempts").where("classId","==",state.activeClassId).where("studentEmail","==",state.student.email).where("testType","==","pretest").get(),
       db.collection("attempts").where("classId","==",state.activeClassId).where("studentEmail","==",state.student.email).where("testType","==","posttest").get()
     ]);
-    preCount = preSnap.size; postCount = postSnap.size;
+    if(assignDoc.exists) assignment = assignDoc.data();
+    preUsed = preSnap.size; postUsed = postSnap.size;
   }catch(e){ console.error(e); }
+
+  state.activeAssignment = assignment;
+
+  if(!assignment){
+    app.innerHTML = `
+      <div class="fade-in">
+        <div class="navbar">
+          <button class="pill-btn outline" id="backBtn">Back</button>
+          <div class="who">${escapeHtml(c.teacherName||"")}</div>
+        </div>
+        <div class="subject-strip">${(c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
+        <p class="field-label">${escapeHtml(c.className)}</p>
+        <p class="fine-print" style="margin-top:-6px;">Your teacher hasn't set up a test for this class yet. Check back later, or use the reviewer in the meantime.</p>
+        <button class="primary-btn ghost" id="reviewCardBtn">📖 Open Reviewer</button>
+      </div>
+    `;
+    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+    document.getElementById("reviewCardBtn").addEventListener("click", ()=>{ goToReviewer("studentClass"); });
+    return;
+  }
+
+  const now = Date.now();
+  const notYetOpen = assignment.scheduleStart && now < assignment.scheduleStart;
+  const alreadyClosed = assignment.scheduleEnd && now > assignment.scheduleEnd;
+  const withinWindow = !notYetOpen && !alreadyClosed;
+
+  function windowText(){
+    if(!assignment.scheduleStart && !assignment.scheduleEnd) return "Open anytime";
+    const startTxt = assignment.scheduleStart ? fmtDate(assignment.scheduleStart) : "now";
+    const endTxt = assignment.scheduleEnd ? fmtDate(assignment.scheduleEnd) : "no end date";
+    return `${startTxt} — ${endTxt}`;
+  }
+
+  const preLeft = Math.max(0, (assignment.maxAttempts||1) - preUsed);
+  const postLeft = Math.max(0, (assignment.maxAttempts||1) - postUsed);
 
   app.innerHTML = `
     <div class="fade-in">
@@ -1127,19 +1156,39 @@ async function renderStudentClass(){
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${escapeHtml(c.teacherName||"")}</div>
       </div>
-      <div class="subject-strip">${(c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
+      <div class="subject-strip">${(assignment.subjects||c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
       <p class="field-label">${escapeHtml(c.className)}</p>
-      <p class="fine-print" style="margin-top:-6px;">Class assessments open here once your teacher has the full Tap-Quiz for Teachers app set up. For now, you've taken ${preCount} pre-test and ${postCount} post-test attempts for this class.</p>
-      <button class="primary-btn ghost" id="reviewCardBtn">📖 Open Reviewer</button>
+      <div class="assign-box">
+        <div class="al-row"><span class="al-label">Questions</span><span class="al-value">${assignment.numQuestions||20}</span></div>
+        <div class="al-row"><span class="al-label">Timer per question</span><span class="al-value">${assignment.timerSeconds||20}s</span></div>
+        <div class="al-row"><span class="al-label">Attempts allowed</span><span class="al-value">${assignment.maxAttempts||1}</span></div>
+        <div class="al-row"><span class="al-label">Available</span><span class="al-value">${windowText()}</span></div>
+      </div>
+      ${notYetOpen ? `<p class="error-note">This test isn't open yet.</p>` : ``}
+      ${alreadyClosed ? `<p class="error-note">This test window has closed.</p>` : ``}
+      <button class="primary-btn" id="startPreBtn" ${(!withinWindow || preLeft<=0) ? 'disabled':''}>📝 Start Pre-Test (${preLeft} left)</button>
+      <button class="primary-btn" id="startPostBtn" style="margin-top:10px;" ${(!withinWindow || postLeft<=0) ? 'disabled':''}>✅ Start Post-Test (${postLeft} left)</button>
+      <button class="primary-btn ghost" id="reviewCardBtn" style="margin-top:10px;">📖 Open Reviewer</button>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
-  document.getElementById("reviewCardBtn").addEventListener("click", ()=>{ state.reviewerReturnScreen="studentClass"; state.screen="reviewer"; route(); });
+  document.getElementById("reviewCardBtn").addEventListener("click", ()=>{ goToReviewer("studentClass"); });
+
+  const startBtn = (id, testType) => {
+    const btn = document.getElementById(id);
+    if(btn) btn.addEventListener("click", ()=>{
+      state.practiceType = testType;
+      state.practiceSubjects = assignment.subjects || c.subjects || [];
+      state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
+      state.quizQueue = buildAssignedQueue(assignment, testType);
+      state.qIndex = 0; state.answers = []; state.saved = false;
+      state.screen = "quiz"; route();
+    });
+  };
+  startBtn("startPreBtn", "pretest");
+  startBtn("startPostBtn", "posttest");
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
 route();
 </script>
 </body>
