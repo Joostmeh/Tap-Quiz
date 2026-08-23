@@ -40,19 +40,17 @@
 
   .field-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin:0 0 8px 2px; }
 
-  input[type="text"], input[type="email"], input[type="number"], input[type="datetime-local"], textarea, select{
+  input[type="text"], input[type="email"]{
     width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--border);
     background:var(--paper); font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink);
     outline:none; margin-bottom:16px; transition:border-color .15s ease, box-shadow .15s ease;
   }
-  input:focus, textarea:focus, select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
-  textarea{ min-height:110px; resize:vertical; font-family:'IBM Plex Mono', monospace; font-size:12.5px; line-height:1.5; }
+  input:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
 
   .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
-  .checkbox-item, .radio-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
-  .checkbox-item.checked, .radio-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
-  .checkbox-item input, .radio-item input{ width:auto; margin:0; }
-  .radio-item.disabled{ opacity:0.6; cursor:not-allowed; }
+  .checkbox-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
+  .checkbox-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
+  .checkbox-item input{ width:auto; margin:0; }
 
   .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; }
   .primary-btn:active{ transform:scale(0.98); }
@@ -61,7 +59,6 @@
 
   .fine-print{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5; }
   .error-note{ font-size:12.5px; color:var(--bad); margin:-8px 0 14px; }
-  .save-note{ font-size:12.5px; color:var(--good); margin:-8px 0 14px; }
 
   .hero{ text-align:center; padding:6px 4px 20px; }
   .hero .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:10px; }
@@ -97,20 +94,6 @@
   table.roster-table th, table.roster-table td{ text-align:left; padding:9px 6px; border-bottom:1px solid var(--border); }
   table.roster-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
 
-  .tab-row{ display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; }
-  .tab-btn{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; padding:8px 12px; border-radius:100px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; color:var(--ink-soft); }
-  .tab-btn.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--ink); }
-
-  .qb-item{ border:1.5px solid var(--border); border-radius:12px; padding:12px; margin-bottom:10px; background:var(--paper); }
-  .qb-item .qbi-text{ font-weight:600; font-size:13px; margin-bottom:6px; }
-  .qb-item .qbi-c{ font-size:12px; color:var(--ink-soft); margin-bottom:2px; }
-  .qb-item .qbi-c.correct{ color:var(--good); font-weight:600; }
-  .small-del{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; background:transparent; border:1.5px solid var(--bad); color:var(--bad); border-radius:8px; padding:5px 9px; cursor:pointer; margin-top:8px; }
-
-  .activity-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 6px; border-bottom:1px solid var(--border); font-size:12.5px; }
-  .activity-row .a-name{ font-weight:600; }
-  .activity-row .a-time{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
-
   .skeleton{ border-radius:10px; background:linear-gradient(90deg, var(--border) 25%, var(--paper) 50%, var(--border) 75%); background-size:200% 100%; animation:shimmer 1.3s infinite; }
   @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
   .skeleton-row{ height:38px; margin-bottom:8px; }
@@ -127,7 +110,7 @@
 <div class="wrap">
   <div class="brand">
     <div class="logo-row">
-      <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
+      <img class="logo" src="data:image/jpeg;base64,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D4YDItnPa3LO3MESDam44XPf5cfjntXzdp7XUV5G9m7xzocqynBWujOp+M3XjVrjHs4H9KilRqVI3XMzrr4NRl7nKlbqj3XPh430R2agbYKTIoI3Fs/KB6DHJOeT6VNL/wAInF8xfVHUMRhtqjHrzjr/AEr58mk8VTjEup3jD/r4b+lVX0fVrg/vpJJP95mb+dW8HXeyl95nHCRXxSj93/BPerzXfANo0jXOpTR8jYnnpwMc5xk9eOO1YOs/ED4eW8L/AGF9Zu5tp2BIwEDY4yW7Z/SvKIfC983RWH+7HV628F3smNySn8hTWAxF73t6yRp7LCRXvtP5WNLU/iVduCunadFCOzzNvP5DArlNV1vWNYbbe3s869o14Qf8BHFdfZ+A5ODIiD/eOa3LLwZbRAebJ+CjFb/VL/xKi+Wv+REcVg8P/DjqeXW2mXcxHybAfXr+VdJofhG4ndWMRP8AtOOB+FekWei6fagbIFJ9TV9VCjCgAe1awVCjrCN33f8Akc1bNpz0grGPoegW2ngOwEkvqa2aKKmc5Td5M8qc5Td5BRRRUEhRRRQAUUUUAFIyqwwwBHvS0UAcfe+EoBrct1AoWO4kDMo/h4GfzOTXTwWNrFEsawphRjpVmitPaPlUeiNqledRJSexCLW2H/LCP8qcIIR0iQfhUlFRdmV2IEUdFA/CloopCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9k=" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
     <div class="tag">FOR TEACHERS<br>CLASSES &middot; RESULTS &middot; ROSTERS</div>
@@ -137,6 +120,10 @@
 </div>
 
 <script>
+/* ============================================================
+   FIREBASE SETUP — same project as Tap-Quiz for Students, so
+   classes created here show up when students enter the join code.
+   ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyBfU_gAw9MF-Aba-Brabcd9zYX8I9YdAuo",
   authDomain: "tap-quiz-59ff0.firebaseapp.com",
@@ -154,7 +141,6 @@ const SUBJECT_META = {
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)", cls:"english"}
 };
 const ORDER = ["math","science","english"];
-const MAX_QUESTIONS = 20;
 
 function escapeHtml(str){
   const d = document.createElement("div");
@@ -166,23 +152,16 @@ function fmtDate(ts){
   return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 }
 function genJoinCode(){
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no O/0/I/1 to avoid mix-ups
   let code = "";
   for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
   return code;
 }
-function toEpoch(dtLocalStr){
-  if(!dtLocalStr) return null;
-  const t = new Date(dtLocalStr).getTime();
-  return isNaN(t) ? null : t;
-}
-function fromEpoch(ts){
-  if(!ts) return "";
-  const d = new Date(ts);
-  const pad = n => String(n).padStart(2,'0');
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
 
+/* ============================================================
+   IDENTITY — name + email only, stored locally. No password,
+   no confirmation link, no separate auth round trip.
+   ============================================================ */
 function getTeacher(){
   try{
     const raw = window.localStorage.getItem("tq_teacher");
@@ -191,41 +170,20 @@ function getTeacher(){
 }
 function setTeacher(t){ window.localStorage.setItem("tq_teacher", JSON.stringify(t)); }
 
-function defaultAssignmentDraft(classSubjects){
-  const subs = (classSubjects && classSubjects.length) ? classSubjects.slice() : ["math"];
-  return {
-    subjects: subs,
-    numQuestions: 20,
-    timerSeconds: 20,
-    maxAttempts: 1,
-    scheduleStart: "",
-    scheduleEnd: "",
-    questionSource: "preset",
-    customQuestions: {
-      pretest:  {math:[], science:[], english:[]},
-      posttest: {math:[], science:[], english:[]}
-    },
-    customReviewer: {math:"", science:"", english:""},
-    qbTestType: "pretest",
-    qbForm: {subject: subs[0], q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
-  };
-}
-
+/* ============================================================
+   STATE — simple in-memory cache per class so re-opening a
+   class you already viewed this session doesn't re-hit Firestore.
+   ============================================================ */
 let state = {
   screen: "intro",
   teacher: getTeacher(),
-  myClasses: null,
-  classCache: {},
-  activityCache: {},
+  myClasses: null,        // cached list, null = not loaded yet
+  classCache: {},         // classId -> {classDoc, roster}
   activeClassId: null,
   newClassName: "",
   newClassSubjects: [],
   createError: "",
-  getStartedError: "",
-  assignmentDraft: null,
-  assignmentLoaded: false,
-  assignmentSaveNote: "",
-  activityTab: "attempts"
+  getStartedError: ""
 };
 
 const app = document.getElementById("app");
@@ -234,12 +192,14 @@ function route(){
   const r = {
     intro: renderIntro, getStarted: renderGetStarted, home: renderHome,
     createClass: renderCreateClass, myClasses: renderMyClasses,
-    classDetail: renderClassDetail, manageTest: renderManageTest,
-    classActivity: renderClassActivity
+    classDetail: renderClassDetail
   };
   (r[state.screen] || renderIntro)();
 }
 
+/* ============================================================
+   INTRO
+   ============================================================ */
 function renderIntro(){
   app.innerHTML = `
     <div class="fade-in">
@@ -249,9 +209,9 @@ function renderIntro(){
         <p>A quick tour before you dive in — here's what you can do:</p>
       </div>
       <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>Create a class:</b> pick a name and one subject, and get a join code students can enter from their own app.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Configure the test:</b> set how many questions, the timer, attempt limits, an optional schedule window, and whether to use the preset bank or your own questions.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Track activity:</b> see who joined, who opened the class, who opened the reviewer, and every attempt broken down by subject.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Create a class:</b> pick a name and the subjects it covers, and get a join code students can enter from their own app.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Track your roster:</b> see who has joined and how their Pre-Test and Post-Test attempts are going.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Shared with students:</b> this runs on the same class codes as Tap-Quiz for Students, so nothing extra to set up.</span></div>
       </div>
       <button class="primary-btn" id="continueBtn">Continue</button>
     </div>
@@ -262,6 +222,9 @@ function renderIntro(){
   });
 }
 
+/* ============================================================
+   GET STARTED — name + email only.
+   ============================================================ */
 function renderGetStarted(){
   app.innerHTML = `
     <div class="fade-in">
@@ -290,6 +253,9 @@ function renderGetStarted(){
   });
 }
 
+/* ============================================================
+   HOME
+   ============================================================ */
 function renderHome(){
   app.innerHTML = `
     <div class="fade-in">
@@ -300,11 +266,11 @@ function renderHome(){
       <div class="home-grid">
         <div class="home-card" id="createCard">
           <div class="hicon">➕</div>
-          <div><div class="htitle">Create a Class</div><div class="hsub">Pick a name and one subject, get a join code</div></div>
+          <div><div class="htitle">Create a Class</div><div class="hsub">Pick a name and subjects, get a join code</div></div>
         </div>
         <div class="home-card" id="classesCard">
           <div class="hicon">🏫</div>
-          <div><div class="htitle">My Classes</div><div class="hsub">Manage tests, rosters, and activity</div></div>
+          <div><div class="htitle">My Classes</div><div class="hsub">View rosters and student results</div></div>
         </div>
       </div>
     </div>
@@ -321,6 +287,9 @@ function renderHome(){
   document.getElementById("classesCard").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
 }
 
+/* ============================================================
+   CREATE CLASS
+   ============================================================ */
 function renderCreateClass(){
   const sel = state.newClassSubjects;
   app.innerHTML = `
@@ -330,8 +299,8 @@ function renderCreateClass(){
         <div class="who">Create a Class</div>
       </div>
       <p class="field-label">Class name</p>
-      <input type="text" id="classNameInput" placeholder="e.g. 11 - Vanguard" value="${escapeHtml(state.newClassName)}">
-      <p class="field-label">Subjects covered by this class</p>
+      <input type="text" id="classNameInput" placeholder="e.g. Grade 11 - Newton" value="${escapeHtml(state.newClassName)}">
+      <p class="field-label">Subjects covered</p>
       <div class="checkbox-row" id="subjChecks">
         ${ORDER.map(s=>`
           <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
@@ -369,7 +338,7 @@ function renderCreateClass(){
         joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email,
         createdAt: Date.now()
       });
-      state.myClasses = null;
+      state.myClasses = null; // invalidate cache
       state.activeClassId = docRef.id;
       state.classCache[docRef.id] = {
         classDoc: {id: docRef.id, className, subjects: state.newClassSubjects, joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email},
@@ -385,6 +354,9 @@ function renderCreateClass(){
   });
 }
 
+/* ============================================================
+   MY CLASSES — cached after first load.
+   ============================================================ */
 async function renderMyClasses(){
   if(state.myClasses === null){
     app.innerHTML = `
@@ -441,6 +413,11 @@ async function renderMyClasses(){
   });
 }
 
+/* ============================================================
+   CLASS DETAIL — join code + roster. Roster and attempts are
+   fetched in parallel (not one-student-at-a-time) and cached
+   per class so re-opening it later in the session is instant.
+   ============================================================ */
 async function renderClassDetail(){
   const id = state.activeClassId;
   const cached = state.classCache[id];
@@ -466,25 +443,35 @@ async function renderClassDetail(){
         db.collection("attempts").where("classId","==",id).get()
       ]);
       const students = new Map();
+      const rawAttempts = [];
       enrollSnap.forEach(d=>{
         const v = d.data();
         if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
       });
       attemptSnap.forEach(d=>{
         const v = d.data();
+        rawAttempts.push(v);
         if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
         const s = students.get(v.studentEmail);
         if(v.testType === "pretest") s.pre++; else if(v.testType === "posttest") s.post++;
         if(typeof v.pct === "number") s.scores.push(v.pct);
       });
       cached.roster = Array.from(students.values()).sort((a,b)=> a.name.localeCompare(b.name));
+      // Both of the below are computed from the SAME attemptSnap fetched
+      // above — no extra Firestore reads, so this adds zero additional
+      // load time on top of what the class page already fetched.
+      cached.rawAttempts = rawAttempts;
+      cached.subjectAverages = computeSubjectAverages(rawAttempts);
     }catch(e){
       console.error(e);
       cached.roster = [];
+      cached.rawAttempts = [];
+      cached.subjectAverages = [];
     }
   }
 
   const roster = cached.roster;
+  const subjectAverages = cached.subjectAverages || [];
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -496,7 +483,29 @@ async function renderClassDetail(){
         <div class="ccode">${escapeHtml(c.joinCode)}</div>
       </div>
       <div style="margin-bottom:14px;">${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
+      ${subjectAverages.length === 0 ? `` : `
+        <p class="field-label">Class Averages · Pre vs. Post</p>
+        <div style="overflow-x:auto; margin-bottom:18px;">
+          <table class="roster-table">
+            <thead><tr><th>Subject</th><th>Pre-Test Avg</th><th>Post-Test Avg</th><th>Change</th></tr></thead>
+            <tbody>
+              ${subjectAverages.map(sa=>{
+                const hasBoth = sa.prePct !== null && sa.postPct !== null;
+                const delta = hasBoth ? (sa.postPct - sa.prePct) : null;
+                const deltaTxt = delta === null ? "—" : (delta >= 0 ? `+${delta}%` : `${delta}%`);
+                return `<tr>
+                  <td>${SUBJECT_META[sa.subject] ? SUBJECT_META[sa.subject].label : sa.subject}</td>
+                  <td>${sa.prePct === null ? "—" : sa.prePct + "%"}</td>
+                  <td>${sa.postPct === null ? "—" : sa.postPct + "%"}</td>
+                  <td>${deltaTxt}</td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `}
       ${roster.length === 0 ? `<p class="empty-note">No students yet. Share the join code above — once someone joins, they'll show up here.</p>` : `
+        <p class="field-label">Roster</p>
         <div style="overflow-x:auto;">
           <table class="roster-table">
             <thead><tr><th>Student</th><th>Pre</th><th>Post</th><th>Avg %</th></tr></thead>
@@ -509,9 +518,10 @@ async function renderClassDetail(){
           </table>
         </div>
       `}
-      <button class="primary-btn ghost" id="manageTestBtn" style="margin-top:14px;">🛠️ Manage Test Settings</button>
-      <button class="primary-btn ghost" id="activityBtn" style="margin-top:10px;">👀 Class Activity</button>
-      <button class="pill-btn outline" id="refreshBtn" style="margin-top:10px;">Refresh roster</button>
+      <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+        <button class="pill-btn outline" id="refreshBtn">Refresh roster</button>
+        <button class="pill-btn outline" id="exportCsvBtn" ${(cached.rawAttempts||[]).length===0?'disabled':''}>Export CSV</button>
+      </div>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
@@ -519,353 +529,72 @@ async function renderClassDetail(){
     cached.roster = null;
     renderClassDetail();
   });
-  document.getElementById("manageTestBtn").addEventListener("click", ()=>{
-    state.assignmentLoaded = false; state.assignmentSaveNote = "";
-    state.screen = "manageTest"; route();
-  });
-  document.getElementById("activityBtn").addEventListener("click", ()=>{
-    state.activityTab = "attempts";
-    state.screen = "classActivity"; route();
+  const exportBtn = document.getElementById("exportCsvBtn");
+  if(exportBtn) exportBtn.addEventListener("click", ()=>{
+    downloadCsv(buildAttemptsCsv(cached.rawAttempts || []), `${c.className.replace(/[^a-z0-9]+/gi,'_')}_attempts.csv`);
   });
 }
 
-async function renderManageTest(){
-  const id = state.activeClassId;
-  const c = state.classCache[id].classDoc;
-  const classSubjects = (c.subjects && c.subjects.length) ? c.subjects : ["math"];
-  const primarySubject = classSubjects[0];
-
-  if(!state.assignmentLoaded){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">Manage Test</div></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-    try{
-      const doc = await db.collection("assignments").doc(id).get();
-      if(doc.exists){
-        const d = doc.data();
-        state.assignmentDraft = {
-          subjects: d.subjects || classSubjects.slice(),
-          numQuestions: d.numQuestions || 20,
-          timerSeconds: d.timerSeconds || 20,
-          maxAttempts: d.maxAttempts || 1,
-          scheduleStart: fromEpoch(d.scheduleStart),
-          scheduleEnd: fromEpoch(d.scheduleEnd),
-          questionSource: d.questionSource || "preset",
-          customQuestions: d.customQuestions || {pretest:{math:[],science:[],english:[]}, posttest:{math:[],science:[],english:[]}},
-          customReviewer: d.customReviewer || {math:"",science:"",english:""},
-          qbTestType: "pretest",
-          qbForm: {subject: primarySubject, q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
-        };
-      } else {
-        state.assignmentDraft = defaultAssignmentDraft(classSubjects);
-      }
-    }catch(e){
-      console.error(e);
-      state.assignmentDraft = defaultAssignmentDraft(classSubjects);
-    }
-    state.assignmentLoaded = true;
-  }
-
-  const draft = state.assignmentDraft;
-  const otherSubjects = ORDER.filter(s => !classSubjects.includes(s));
-
-  const qList = (draft.customQuestions[draft.qbTestType] && draft.customQuestions[draft.qbTestType][draft.qbForm.subject]) || [];
-
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Manage Test &middot; ${escapeHtml(c.className)}</div>
-      </div>
-
-      <p class="field-label">Subjects covered by this test</p>
-      <div class="checkbox-row">
-        ${classSubjects.map(s=>`
-          <label class="radio-item checked disabled">
-            <input type="checkbox" checked disabled>
-            <span>${SUBJECT_META[s].label} (class subject)</span>
-          </label>
-        `).join("")}
-        ${otherSubjects.map(s=>`
-          <label class="checkbox-item ${draft.subjects.includes(s)?'checked':''}" data-subj="${s}">
-            <input type="checkbox" ${draft.subjects.includes(s)?'checked':''}>
-            <span>Also include ${SUBJECT_META[s].label}</span>
-          </label>
-        `).join("")}
-      </div>
-
-      <p class="field-label">Number of questions (max ${MAX_QUESTIONS})</p>
-      <input type="number" id="numQInput" min="1" max="${MAX_QUESTIONS}" value="${draft.numQuestions}">
-
-      <p class="field-label">Timer per question (seconds)</p>
-      <input type="number" id="timerInput" min="5" max="120" value="${draft.timerSeconds}">
-
-      <p class="field-label">Max attempts per test (pre-test and post-test each)</p>
-      <input type="number" id="attemptsInput" min="1" max="20" value="${draft.maxAttempts}">
-
-      <p class="field-label">Schedule (optional — leave blank to keep it always open)</p>
-      <input type="datetime-local" id="startInput" value="${draft.scheduleStart}">
-      <input type="datetime-local" id="endInput" value="${draft.scheduleEnd}">
-
-      <p class="field-label">Question source</p>
-      <div class="checkbox-row">
-        <label class="radio-item ${draft.questionSource==='preset'?'checked':''}" data-src="preset">
-          <input type="radio" name="qsrc" ${draft.questionSource==='preset'?'checked':''}>
-          <span>Use the preset question bank</span>
-        </label>
-        <label class="radio-item ${draft.questionSource==='custom'?'checked':''}" data-src="custom">
-          <input type="radio" name="qsrc" ${draft.questionSource==='custom'?'checked':''}>
-          <span>Write my own questions</span>
-        </label>
-      </div>
-
-      ${draft.questionSource === 'custom' ? `
-        <div class="tab-row">
-          <button class="tab-btn ${draft.qbTestType==='pretest'?'active':''}" data-tt="pretest">Pre-Test</button>
-          <button class="tab-btn ${draft.qbTestType==='posttest'?'active':''}" data-tt="posttest">Post-Test</button>
-        </div>
-        <p class="field-label">Subject for new question</p>
-        <select id="qbSubjectSel">
-          ${draft.subjects.map(s=>`<option value="${s}" ${draft.qbForm.subject===s?'selected':''}>${SUBJECT_META[s].label}</option>`).join("")}
-        </select>
-        <p class="field-label">Question text</p>
-        <textarea id="qbText" placeholder="Type the question, or start with SCENARIO: for a scenario-type item">${escapeHtml(draft.qbForm.q)}</textarea>
-        <p class="field-label">Choices (mark the correct one)</p>
-        ${[0,1,2,3].map(i=>`
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <input type="radio" name="qbCorrect" data-ci="${i}" ${draft.qbForm.correct===i?'checked':''}>
-            <input type="text" id="qbC${i}" placeholder="Choice ${i+1}" value="${escapeHtml(draft.qbForm['c'+i])}" style="margin-bottom:0;">
-          </div>
-        `).join("")}
-        <button class="pill-btn outline" id="addQBtn" style="margin-bottom:16px;">➕ Add Question (${qList.length}/${MAX_QUESTIONS} for this subject)</button>
-        ${qList.length === 0 ? `<p class="empty-note">No custom questions yet for ${SUBJECT_META[draft.qbForm.subject].label} in ${draft.qbTestType === 'pretest' ? 'Pre-Test' : 'Post-Test'}.</p>` : qList.map((q,i)=>`
-          <div class="qb-item">
-            <div class="qbi-text">${escapeHtml(q.q)}</div>
-            ${q.c.map((ch,ci)=>`<div class="qbi-c ${ci===q.a?'correct':''}">${String.fromCharCode(65+ci)}. ${escapeHtml(ch)}${ci===q.a?' ✓':''}</div>`).join("")}
-            <button class="small-del" data-del="${i}">Delete</button>
-          </div>
-        `).join("")}
-      ` : ``}
-
-      <p class="field-label">Custom reviewer content (optional — blank keeps the built-in reviewer)</p>
-      ${draft.subjects.map(s=>`
-        <p class="fine-print" style="text-align:left; margin:0 0 6px 2px;">${SUBJECT_META[s].label}</p>
-        <textarea id="reviewer_${s}" placeholder="Leave blank to use the default reviewer">${escapeHtml(draft.customReviewer[s]||"")}</textarea>
-      `).join("")}
-
-      ${state.assignmentSaveNote ? `<p class="save-note">${escapeHtml(state.assignmentSaveNote)}</p>` : ``}
-      <button class="primary-btn" id="saveAssignmentBtn">Save Test Settings</button>
-    </div>
-  `;
-
-  function syncFormFieldsIntoDraft(){
-    draft.numQuestions = Math.min(MAX_QUESTIONS, Math.max(1, parseInt(document.getElementById("numQInput").value) || 20));
-    draft.timerSeconds = Math.max(5, parseInt(document.getElementById("timerInput").value) || 20);
-    draft.maxAttempts = Math.max(1, parseInt(document.getElementById("attemptsInput").value) || 1);
-    draft.scheduleStart = document.getElementById("startInput").value;
-    draft.scheduleEnd = document.getElementById("endInput").value;
-    draft.subjects = [...classSubjects, ...otherSubjects.filter(s=>draft.subjects.includes(s))];
-    draft.subjects.forEach(s=>{
-      const ta = document.getElementById("reviewer_"+s);
-      if(ta) draft.customReviewer[s] = ta.value;
-    });
-  }
-
-  document.getElementById("backBtn").addEventListener("click", ()=>{ syncFormFieldsIntoDraft(); state.screen="classDetail"; route(); });
-
-  document.querySelectorAll(".checkbox-row .checkbox-item[data-subj]").forEach(el=>{
-    el.addEventListener("click", (e)=>{
-      e.preventDefault();
-      syncFormFieldsIntoDraft();
-      const s = el.dataset.subj;
-      const idx = draft.subjects.indexOf(s);
-      if(idx >= 0) draft.subjects.splice(idx,1); else draft.subjects.push(s);
-      if(!draft.subjects.includes(draft.qbForm.subject)) draft.qbForm.subject = primarySubject;
-      renderManageTest();
+/* ============================================================
+   CLASS-LEVEL ANALYTICS & CSV EXPORT — both operate only on data
+   already sitting in memory from the class detail fetch above.
+   Neither one triggers a network request, so neither can slow
+   down anything already in the app.
+   ============================================================ */
+function computeSubjectAverages(rawAttempts){
+  // sums[subject][testType] = {correct, total}
+  const sums = {};
+  rawAttempts.forEach(a=>{
+    (a.subjectBreakdown || []).forEach(sb=>{
+      if(!sums[sb.subject]) sums[sb.subject] = { pretest:{correct:0,total:0}, posttest:{correct:0,total:0} };
+      const bucket = sums[sb.subject][a.testType];
+      if(bucket){ bucket.correct += (sb.correct||0); bucket.total += (sb.total||0); }
     });
   });
-
-  document.querySelectorAll(".radio-item[data-src]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.questionSource = el.dataset.src;
-      renderManageTest();
-    });
-  });
-
-  const tabBtns = document.querySelectorAll(".tab-btn[data-tt]");
-  tabBtns.forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.qbTestType = el.dataset.tt;
-      renderManageTest();
-    });
-  });
-
-  const qbSubjectSel = document.getElementById("qbSubjectSel");
-  if(qbSubjectSel){
-    qbSubjectSel.addEventListener("change", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.qbForm.subject = qbSubjectSel.value;
-      renderManageTest();
-    });
-  }
-
-  const addQBtn = document.getElementById("addQBtn");
-  if(addQBtn){
-    addQBtn.addEventListener("click", ()=>{
-      const qText = document.getElementById("qbText").value.trim();
-      const choices = [0,1,2,3].map(i=>document.getElementById("qbC"+i).value.trim());
-      const correctRadio = document.querySelector('input[name="qbCorrect"]:checked');
-      const correct = correctRadio ? parseInt(correctRadio.dataset.ci) : 0;
-      if(!qText || choices.some(c=>!c)){
-        state.assignmentSaveNote = "";
-        alert("Fill in the question text and all four choices before adding.");
-        return;
-      }
-      syncFormFieldsIntoDraft();
-      const subj = qbSubjectSel.value;
-      const tt = draft.qbTestType;
-      if(!draft.customQuestions[tt][subj]) draft.customQuestions[tt][subj] = [];
-      if(draft.customQuestions[tt][subj].length >= MAX_QUESTIONS){
-        alert(`You've reached the ${MAX_QUESTIONS}-question limit for this subject.`);
-        return;
-      }
-      draft.customQuestions[tt][subj].push({q:qText, c:choices, a:correct});
-      draft.qbForm = {subject: subj, q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false};
-      renderManageTest();
-    });
-  }
-
-  document.querySelectorAll(".small-del[data-del]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      const idx = parseInt(el.dataset.del);
-      draft.customQuestions[draft.qbTestType][draft.qbForm.subject].splice(idx,1);
-      renderManageTest();
-    });
-  });
-
-  document.getElementById("saveAssignmentBtn").addEventListener("click", async ()=>{
-    syncFormFieldsIntoDraft();
-    const btn = document.getElementById("saveAssignmentBtn");
-    btn.disabled = true; btn.textContent = "Saving...";
-    try{
-      await db.collection("assignments").doc(id).set({
-        classId: id,
-        teacherEmail: state.teacher.email,
-        subjects: draft.subjects,
-        numQuestions: draft.numQuestions,
-        timerSeconds: draft.timerSeconds,
-        maxAttempts: draft.maxAttempts,
-        scheduleStart: toEpoch(draft.scheduleStart),
-        scheduleEnd: toEpoch(draft.scheduleEnd),
-        questionSource: draft.questionSource,
-        customQuestions: draft.customQuestions,
-        customReviewer: draft.customReviewer,
-        updatedAt: Date.now()
-      });
-      state.assignmentSaveNote = "Saved. Students in this class will see the updated test next time they open it.";
-    }catch(e){
-      console.error(e);
-      state.assignmentSaveNote = "";
-      alert("Couldn't save — check your connection and try again.");
-    }
-    renderManageTest();
+  return ORDER.filter(s=> sums[s]).map(subject=>{
+    const pre = sums[subject].pretest, post = sums[subject].posttest;
+    return {
+      subject,
+      prePct: pre.total ? Math.round((pre.correct/pre.total)*100) : null,
+      postPct: post.total ? Math.round((post.correct/post.total)*100) : null
+    };
   });
 }
 
-async function renderClassActivity(){
-  const id = state.activeClassId;
-  const c = state.classCache[id].classDoc;
-
-  if(!state.activityCache[id]){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">Class Activity</div></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-    try{
-      const [attemptSnap, viewSnap, reviewerSnap] = await Promise.all([
-        db.collection("attempts").where("classId","==",id).get(),
-        db.collection("classViews").where("classId","==",id).get(),
-        db.collection("reviewerViews").where("classId","==",id).get()
-      ]);
-      const attempts = []; attemptSnap.forEach(d=>attempts.push(d.data()));
-      const views = []; viewSnap.forEach(d=>views.push(d.data()));
-      const reviewerViews = []; reviewerSnap.forEach(d=>reviewerViews.push(d.data()));
-      attempts.sort((a,b)=>b.timestamp-a.timestamp);
-      views.sort((a,b)=>b.timestamp-a.timestamp);
-      reviewerViews.sort((a,b)=>b.timestamp-a.timestamp);
-      state.activityCache[id] = {attempts, views, reviewerViews};
-    }catch(e){
-      console.error(e);
-      state.activityCache[id] = {attempts:[], views:[], reviewerViews:[]};
-    }
-  }
-
-  const data = state.activityCache[id];
-  const tab = state.activityTab;
-
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">${escapeHtml(c.className)} &middot; Activity</div>
-      </div>
-      <div class="tab-row">
-        <button class="tab-btn ${tab==='attempts'?'active':''}" data-tab="attempts">Attempts (${data.attempts.length})</button>
-        <button class="tab-btn ${tab==='views'?'active':''}" data-tab="views">Class Opens (${data.views.length})</button>
-        <button class="tab-btn ${tab==='reviewer'?'active':''}" data-tab="reviewer">Reviewer Opens (${data.reviewerViews.length})</button>
-      </div>
-      ${tab === 'attempts' ? (
-        data.attempts.length === 0 ? `<p class="empty-note">No attempts yet.</p>` :
-        `<div style="overflow-x:auto;"><table class="roster-table">
-          <thead><tr><th>Student</th><th>Test</th><th>Subject(s)</th><th>Score</th><th>Date</th></tr></thead>
-          <tbody>${data.attempts.map(a=>`
-            <tr>
-              <td>${escapeHtml(a.studentName||"")}</td>
-              <td>${a.testType==='pretest'?'PRE':'POST'}</td>
-              <td>${(a.subjects||[]).map(s=>SUBJECT_META[s]?SUBJECT_META[s].label:s).join(", ")}</td>
-              <td>${a.correct}/${a.total} (${a.pct}%)</td>
-              <td>${fmtDate(a.timestamp)}</td>
-            </tr>
-          `).join("")}</tbody>
-        </table></div>`
-      ) : tab === 'views' ? (
-        data.views.length === 0 ? `<p class="empty-note">No one has opened this class yet.</p>` :
-        data.views.map(v=>`
-          <div class="activity-row"><span class="a-name">${escapeHtml(v.studentName||"")}</span><span class="a-time">${fmtDate(v.timestamp)}</span></div>
-        `).join("")
-      ) : (
-        data.reviewerViews.length === 0 ? `<p class="empty-note">No one has opened the reviewer from this class yet.</p>` :
-        data.reviewerViews.map(v=>`
-          <div class="activity-row"><span class="a-name">${escapeHtml(v.studentName||"")} — ${SUBJECT_META[v.subject]?SUBJECT_META[v.subject].label:escapeHtml(v.subject||"")}</span><span class="a-time">${fmtDate(v.timestamp)}</span></div>
-        `).join("")
-      )}
-      <button class="pill-btn outline" id="refreshActivityBtn" style="margin-top:14px;">Refresh</button>
-    </div>
-  `;
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-  document.querySelectorAll(".tab-btn[data-tab]").forEach(el=>{
-    el.addEventListener("click", ()=>{ state.activityTab = el.dataset.tab; renderClassActivity(); });
-  });
-  document.getElementById("refreshActivityBtn").addEventListener("click", ()=>{
-    delete state.activityCache[id];
-    renderClassActivity();
-  });
+function csvEscape(val){
+  const s = String(val === undefined || val === null ? "" : val);
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
 }
 
+function buildAttemptsCsv(rawAttempts){
+  const header = ["student_name","student_email","subject","test_type","subject_correct","subject_total","subject_pct","overall_correct","overall_total","overall_pct","date"];
+  const lines = [header.join(",")];
+  rawAttempts.forEach(a=>{
+    const dateStr = a.timestamp ? new Date(a.timestamp).toISOString() : "";
+    (a.subjectBreakdown && a.subjectBreakdown.length ? a.subjectBreakdown : [{subject:"", correct:"", total:""}]).forEach(sb=>{
+      const subjPct = sb.total ? Math.round((sb.correct/sb.total)*100) : "";
+      lines.push([
+        csvEscape(a.studentName), csvEscape(a.studentEmail), csvEscape(sb.subject), csvEscape(a.testType),
+        csvEscape(sb.correct), csvEscape(sb.total), csvEscape(subjPct),
+        csvEscape(a.correct), csvEscape(a.total), csvEscape(a.pct), csvEscape(dateStr)
+      ].join(","));
+    });
+  });
+  return lines.join("\n");
+}
+
+function downloadCsv(csvText, filename){
+  const blob = new Blob([csvText], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
 route();
 </script>
 </body>
