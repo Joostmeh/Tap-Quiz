@@ -443,35 +443,25 @@ async function renderClassDetail(){
         db.collection("attempts").where("classId","==",id).get()
       ]);
       const students = new Map();
-      const rawAttempts = [];
       enrollSnap.forEach(d=>{
         const v = d.data();
         if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
       });
       attemptSnap.forEach(d=>{
         const v = d.data();
-        rawAttempts.push(v);
         if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
         const s = students.get(v.studentEmail);
         if(v.testType === "pretest") s.pre++; else if(v.testType === "posttest") s.post++;
         if(typeof v.pct === "number") s.scores.push(v.pct);
       });
       cached.roster = Array.from(students.values()).sort((a,b)=> a.name.localeCompare(b.name));
-      // Both of the below are computed from the SAME attemptSnap fetched
-      // above — no extra Firestore reads, so this adds zero additional
-      // load time on top of what the class page already fetched.
-      cached.rawAttempts = rawAttempts;
-      cached.subjectAverages = computeSubjectAverages(rawAttempts);
     }catch(e){
       console.error(e);
       cached.roster = [];
-      cached.rawAttempts = [];
-      cached.subjectAverages = [];
     }
   }
 
   const roster = cached.roster;
-  const subjectAverages = cached.subjectAverages || [];
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -483,29 +473,7 @@ async function renderClassDetail(){
         <div class="ccode">${escapeHtml(c.joinCode)}</div>
       </div>
       <div style="margin-bottom:14px;">${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
-      ${subjectAverages.length === 0 ? `` : `
-        <p class="field-label">Class Averages · Pre vs. Post</p>
-        <div style="overflow-x:auto; margin-bottom:18px;">
-          <table class="roster-table">
-            <thead><tr><th>Subject</th><th>Pre-Test Avg</th><th>Post-Test Avg</th><th>Change</th></tr></thead>
-            <tbody>
-              ${subjectAverages.map(sa=>{
-                const hasBoth = sa.prePct !== null && sa.postPct !== null;
-                const delta = hasBoth ? (sa.postPct - sa.prePct) : null;
-                const deltaTxt = delta === null ? "—" : (delta >= 0 ? `+${delta}%` : `${delta}%`);
-                return `<tr>
-                  <td>${SUBJECT_META[sa.subject] ? SUBJECT_META[sa.subject].label : sa.subject}</td>
-                  <td>${sa.prePct === null ? "—" : sa.prePct + "%"}</td>
-                  <td>${sa.postPct === null ? "—" : sa.postPct + "%"}</td>
-                  <td>${deltaTxt}</td>
-                </tr>`;
-              }).join("")}
-            </tbody>
-          </table>
-        </div>
-      `}
       ${roster.length === 0 ? `<p class="empty-note">No students yet. Share the join code above — once someone joins, they'll show up here.</p>` : `
-        <p class="field-label">Roster</p>
         <div style="overflow-x:auto;">
           <table class="roster-table">
             <thead><tr><th>Student</th><th>Pre</th><th>Post</th><th>Avg %</th></tr></thead>
@@ -518,10 +486,7 @@ async function renderClassDetail(){
           </table>
         </div>
       `}
-      <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-        <button class="pill-btn outline" id="refreshBtn">Refresh roster</button>
-        <button class="pill-btn outline" id="exportCsvBtn" ${(cached.rawAttempts||[]).length===0?'disabled':''}>Export CSV</button>
-      </div>
+      <button class="pill-btn outline" id="refreshBtn" style="margin-top:14px;">Refresh roster</button>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
@@ -529,67 +494,6 @@ async function renderClassDetail(){
     cached.roster = null;
     renderClassDetail();
   });
-  const exportBtn = document.getElementById("exportCsvBtn");
-  if(exportBtn) exportBtn.addEventListener("click", ()=>{
-    downloadCsv(buildAttemptsCsv(cached.rawAttempts || []), `${c.className.replace(/[^a-z0-9]+/gi,'_')}_attempts.csv`);
-  });
-}
-
-/* ============================================================
-   CLASS-LEVEL ANALYTICS & CSV EXPORT — both operate only on data
-   already sitting in memory from the class detail fetch above.
-   Neither one triggers a network request, so neither can slow
-   down anything already in the app.
-   ============================================================ */
-function computeSubjectAverages(rawAttempts){
-  // sums[subject][testType] = {correct, total}
-  const sums = {};
-  rawAttempts.forEach(a=>{
-    (a.subjectBreakdown || []).forEach(sb=>{
-      if(!sums[sb.subject]) sums[sb.subject] = { pretest:{correct:0,total:0}, posttest:{correct:0,total:0} };
-      const bucket = sums[sb.subject][a.testType];
-      if(bucket){ bucket.correct += (sb.correct||0); bucket.total += (sb.total||0); }
-    });
-  });
-  return ORDER.filter(s=> sums[s]).map(subject=>{
-    const pre = sums[subject].pretest, post = sums[subject].posttest;
-    return {
-      subject,
-      prePct: pre.total ? Math.round((pre.correct/pre.total)*100) : null,
-      postPct: post.total ? Math.round((post.correct/post.total)*100) : null
-    };
-  });
-}
-
-function csvEscape(val){
-  const s = String(val === undefined || val === null ? "" : val);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
-}
-
-function buildAttemptsCsv(rawAttempts){
-  const header = ["student_name","student_email","subject","test_type","subject_correct","subject_total","subject_pct","overall_correct","overall_total","overall_pct","date"];
-  const lines = [header.join(",")];
-  rawAttempts.forEach(a=>{
-    const dateStr = a.timestamp ? new Date(a.timestamp).toISOString() : "";
-    (a.subjectBreakdown && a.subjectBreakdown.length ? a.subjectBreakdown : [{subject:"", correct:"", total:""}]).forEach(sb=>{
-      const subjPct = sb.total ? Math.round((sb.correct/sb.total)*100) : "";
-      lines.push([
-        csvEscape(a.studentName), csvEscape(a.studentEmail), csvEscape(sb.subject), csvEscape(a.testType),
-        csvEscape(sb.correct), csvEscape(sb.total), csvEscape(subjPct),
-        csvEscape(a.correct), csvEscape(a.total), csvEscape(a.pct), csvEscape(dateStr)
-      ].join(","));
-    });
-  });
-  return lines.join("\n");
-}
-
-function downloadCsv(csvText, filename){
-  const blob = new Blob([csvText], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 /* ============================================================
