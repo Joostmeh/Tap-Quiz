@@ -198,6 +198,11 @@ const SUBJECT_META = {
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
 };
 const ORDER = ["math","science","english"];
+const TERMS = [
+  {value:"first", label:"First Term"},
+  {value:"second", label:"Second Term"},
+  {value:"third", label:"Third Term"}
+];
 const PRACTICE_TOTAL = 20;
 const PRACTICE_TIMER = 20;
 const TRANSITION_MS = 500;
@@ -282,6 +287,77 @@ WRITTEN COMMUNICATION
 
 REFLECTION & GROWTH
 • Effective communicators reflect on their own strengths and areas for growth, and use feedback constructively.`
+};
+
+// Additional term banks and reviewers follow the Grade 11 three-term
+// curriculum in the supplied General Mathematics, General Science, and
+// Effective Communication budget-of-work PDFs.
+const TERM_CONTENT = {
+  second: {
+    math: [
+      {q:"What is the slope of a line parallel to y = 4x - 7?", c:["-4","1/4","4","7"], a:2},
+      {q:"Which equation represents a circle with center (0,0) and radius 3?", c:["x + y = 3","x^2 + y^2 = 9","x^2 - y^2 = 9","3x + 3y = 0"], a:1},
+      {q:"What is the derivative of x^2?", c:["x","2x","x^3","2"], a:1},
+      {q:"A matrix is best described as:", c:["A list of random numbers","A rectangular arrangement of numbers","A single variable","A type of graph only"], a:1},
+      {q:"The determinant of [[a,b],[c,d]] is:", c:["ab - cd","ad - bc","ac - bd","a + d"], a:1},
+      {q:"Which measure describes the middle value of an ordered data set?", c:["Mean","Median","Mode","Range"], a:1}
+    ],
+    science: [
+      {q:"Which organelle controls the activities of a eukaryotic cell?", c:["Ribosome","Nucleus","Cell wall","Vacuole"], a:1},
+      {q:"The movement of water across a selectively permeable membrane is:", c:["Diffusion","Osmosis","Respiration","Transcription"], a:1},
+      {q:"DNA is mainly responsible for:", c:["Digesting food","Storing genetic information","Pumping blood","Producing sound"], a:1},
+      {q:"Which process produces two genetically identical daughter cells?", c:["Meiosis","Mitosis","Fertilization","Mutation"], a:1},
+      {q:"An organism's observable traits make up its:", c:["Genotype","Phenotype","Allele","Chromosome"], a:1},
+      {q:"A food web shows:", c:["Only one feeding relationship","Interconnected feeding relationships in an ecosystem","The shape of a cell","The stages of a star"], a:1}
+    ],
+    english: [
+      {q:"A research report should support its claims with:", c:["Rumors","Evidence and properly cited sources","Only personal opinion","Unrelated quotations"], a:1},
+      {q:"Which is an example of an academic presentation?", c:["A research defense","A private text","A birthday greeting","A casual joke"], a:0},
+      {q:"Plagiarism means:", c:["Summarizing with a citation","Presenting another person's work as your own","Writing an outline","Revising a draft"], a:1},
+      {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a text informal","Hide the topic"], a:0},
+      {q:"Discipline-specific vocabulary is vocabulary used by:", c:["A particular field of study","Every person identically","Only young children","No academic community"], a:0},
+      {q:"A thesis statement generally presents the:", c:["Main claim or controlling idea","Page number","Author's signature","List of greetings"], a:0}
+    ]
+  },
+  third: {
+    math: [
+      {q:"What is the probability of an event that is certain to occur?", c:["0","1/2","1","1000"], a:2},
+      {q:"If a fair die is rolled, what is the probability of getting a 6?", c:["1/6","1/3","1/2","6/6"], a:0},
+      {q:"A sample is:", c:["The entire population","A subset selected from a population","A data error","A mathematical symbol"], a:1},
+      {q:"A confidence interval gives:", c:["A range of plausible values for a population parameter","The exact answer every time","Only the sample size","A graph title"], a:0},
+      {q:"If two events cannot happen at the same time, they are:", c:["Independent","Mutually exclusive","Continuous","Equivalent"], a:1},
+      {q:"The expected value is a:", c:["Weighted average of possible outcomes","Guaranteed outcome","Maximum score only","Random label"], a:0}
+    ],
+    science: [
+      {q:"Which force holds planets in orbit around the Sun?", c:["Friction","Gravity","Buoyancy","Nuclear force"], a:1},
+      {q:"The movement of tectonic plates is driven largely by:", c:["Convection in Earth's mantle","Moonlight","Clouds","Sound waves"], a:0},
+      {q:"Which gas is a major greenhouse gas?", c:["Carbon dioxide","Helium","Neon","Argon only"], a:0},
+      {q:"A renewable resource is one that:", c:["Can naturally replenish on a human timescale","Never exists in nature","Can only be used once","Is always a metal"], a:0},
+      {q:"Biodiversity refers to the:", c:["Variety of life in an area","Age of a rock","Speed of wind","Amount of rainfall only"], a:0},
+      {q:"The safest response to an earthquake is to:", c:["Run toward windows","Drop, cover, and hold on","Use an elevator","Stand under a doorway outdoors"], a:1}
+    ],
+    english: [
+      {q:"A resume is primarily used to:", c:["Summarize qualifications and experience","Tell a fictional story","Record laboratory data","Replace an interview"], a:0},
+      {q:"Professional email language should generally be:", c:["Clear, concise, and appropriately formal","All slang","Unstructured and vague","Written without a greeting"], a:0},
+      {q:"A cover letter should connect the applicant's skills to the:", c:["Job requirements","Weather forecast","Unrelated hobby","Office furniture"], a:0},
+      {q:"Which behavior is appropriate in a workplace meeting?", c:["Listening and contributing relevant ideas","Interrupting everyone","Ignoring the agenda","Using insulting language"], a:0},
+      {q:"An interview response is strongest when it is:", c:["Specific and supported by an example","Only one word","Unrelated to the question","Critical of every former employer"], a:0},
+      {q:"Ethical workplace communication includes:", c:["Respecting confidentiality and using accurate information","Spreading rumors","Hiding important facts","Using discriminatory language"], a:0}
+    ]
+  }
+};
+const REVIEWER_BY_TERM = {
+  first: REVIEWER,
+  second: {
+    math: "GENERAL MATHEMATICS — SECOND TERM REVIEWER\n\nANALYTIC GEOMETRY & CALCULUS\n• Slope describes rate of change; parallel lines have equal slopes.\n• A circle with center (h,k) and radius r follows (x-h)^2 + (y-k)^2 = r^2.\n• The derivative describes instantaneous rate of change.\n\nDATA & MATRICES\n• A matrix is a rectangular arrangement of numbers.\n• The determinant of [[a,b],[c,d]] is ad - bc.\n• Median is the middle value after ordering data.",
+    science: "GENERAL SCIENCE — SECOND TERM REVIEWER\n\nCELLULAR ORGANIZATION\n• The nucleus stores genetic information; DNA carries hereditary instructions.\n• Osmosis is the movement of water across a selectively permeable membrane.\n• Mitosis produces genetically identical daughter cells.\n\nGENETICS & ECOLOGY\n• Genotype is genetic makeup; phenotype is observable traits.\n• Food webs show interconnected feeding relationships in an ecosystem.",
+    english: "EFFECTIVE COMMUNICATION — SECOND TERM REVIEWER\n\nACADEMIC & TRAINING COMMUNICATION\n• Academic communication is formal, structured, evidence-based, and discipline-specific.\n• A thesis states the central claim; an outline organizes ideas before drafting.\n• Cite sources and represent another person's work honestly to avoid plagiarism.\n• Presentations and research reports should be clear, supported, and appropriate for their audience."
+  },
+  third: {
+    math: "GENERAL MATHEMATICS — THIRD TERM REVIEWER\n\nPROBABILITY & STATISTICS\n• Probability ranges from 0 (impossible) to 1 (certain).\n• A sample is a subset of a population; expected value is a weighted average of outcomes.\n• Mutually exclusive events cannot happen at the same time.\n• A confidence interval gives a range of plausible values for a population parameter.",
+    science: "GENERAL SCIENCE — THIRD TERM REVIEWER\n\nEARTH, ENVIRONMENT & DISASTER READINESS\n• Gravity keeps planets in orbit.\n• Tectonic movement is related to convection in Earth's mantle.\n• Biodiversity is the variety of life in an area; greenhouse gases affect climate.\n• Renewable resources can replenish naturally on a human timescale.\n• During an earthquake: drop, cover, and hold on.",
+    english: "EFFECTIVE COMMUNICATION — THIRD TERM REVIEWER\n\nPROFESSIONAL & WORKPLACE COMMUNICATION\n• Professional messages are clear, concise, audience-aware, and appropriately formal.\n• A resume summarizes qualifications; a cover letter connects skills to job requirements.\n• In meetings and interviews, listen carefully, answer specifically, and use relevant examples.\n• Ethical communication protects confidentiality, uses accurate information, and respects others."
+  }
 };
 
 /* Preset question banks (same content as before, unchanged) */
@@ -541,11 +617,14 @@ function distributeCount(total, n){
 function subjectLabels(subjArr){
   return (subjArr||[]).map(s=>SUBJECT_META[s] ? SUBJECT_META[s].label : s).join(", ");
 }
-function buildPracticeQueue(subjects, testType){
+function termLabels(termArr){
+  return (termArr||["first"]).map(v => (TERMS.find(t=>t.value===v)||TERMS[0]).label).join(", ");
+}
+function buildPracticeQueue(subjects, testType, terms){
   const counts = distributeCount(PRACTICE_TOTAL, subjects.length);
   let queue = [];
   subjects.forEach((subj, i)=>{
-    const pool = BANK[testType][subj];
+    const pool = (terms || ["first"]).flatMap(term => (TERM_BANK[term] || BANK)[testType][subj] || []);
     const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
     picked.forEach(item=>{
       const correctText = item.c[item.a];
@@ -565,9 +644,11 @@ function buildAssignedQueue(assignment, testType){
   subjects.forEach((subj, i)=>{
     let pool;
     if(assignment.questionSource === "custom"){
-      pool = (assignment.customQuestions && assignment.customQuestions[testType] && assignment.customQuestions[testType][subj]) || [];
+      const terms = assignment.terms || [assignment.term || "first"];
+      pool = terms.flatMap(term => (((assignment.customQuestions || {})[term] || {})[testType] || {})[subj] || []);
     } else {
-      pool = BANK[testType][subj];
+      const terms = assignment.terms || [assignment.term || "first"];
+      pool = terms.flatMap(term => (TERM_BANK[term] || BANK)[testType][subj] || []);
     }
     const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
     picked.forEach(item=>{
@@ -598,6 +679,7 @@ let state = {
   student: getStudent(),
   practiceSubjects: [],
   practiceType: null,
+  practiceTerms: ["first"],
   quizQueue: [],
   qIndex: 0,
   answers: [],
@@ -742,6 +824,12 @@ function renderPracticeSetup(){
         <div class="who">${label}</div>
       </div>
       <p class="fine-print" style="margin-top:0; margin-bottom:14px;">${PRACTICE_TOTAL} questions total, ${PRACTICE_TIMER} seconds each. Pick your subject(s):</p>
+      <p class="field-label">Term(s)</p>
+      <div class="checkbox-row" id="termChecks">
+        ${TERMS.map(t=>`<label class="checkbox-item ${state.practiceTerms.includes(t.value)?'checked':''}" data-term="${t.value}">
+          <input type="checkbox" ${state.practiceTerms.includes(t.value)?'checked':''}><span>${t.label}</span>
+        </label>`).join("")}
+      </div>
       <div class="checkbox-row" id="subjChecks">
         ${ORDER.map(s=>`
           <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
@@ -755,6 +843,14 @@ function renderPracticeSetup(){
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+  document.querySelectorAll("#termChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", e=>{
+      e.preventDefault();
+      const i = state.practiceTerms.indexOf(el.dataset.term);
+      if(i >= 0) state.practiceTerms.splice(i,1); else state.practiceTerms.push(el.dataset.term);
+      renderPracticeSetup();
+    });
+  });
   document.querySelectorAll("#subjChecks .checkbox-item").forEach(el=>{
     el.addEventListener("click", (e)=>{
       e.preventDefault();
@@ -768,7 +864,8 @@ function renderPracticeSetup(){
     if(state.practiceSubjects.length === 0){ state.practiceError = "Pick at least one subject."; renderPracticeSetup(); return; }
     state.practiceError = "";
     state.currentTimerSeconds = PRACTICE_TIMER;
-    state.quizQueue = buildPracticeQueue(state.practiceSubjects, state.practiceType);
+    if(state.practiceTerms.length === 0){ state.practiceError = "Pick at least one term."; renderPracticeSetup(); return; }
+    state.quizQueue = buildPracticeQueue(state.practiceSubjects, state.practiceType, state.practiceTerms);
     state.qIndex = 0; state.answers = []; state.saved = false;
     state.screen = "quiz"; route();
   });
@@ -798,10 +895,12 @@ function logSelfAssessment(kind){
 function renderReviewer(){
   bg();
   const subj = state.reviewerSubject;
-  let content = REVIEWER[subj];
-  if(state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer && state.activeAssignment.customReviewer[subj]){
-    content = state.activeAssignment.customReviewer[subj];
-  }
+  const terms = state.reviewerTerms || (state.activeAssignment && (state.activeAssignment.terms || [state.activeAssignment.term])) || ["first"];
+  const content = terms.map(term=>{
+    const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
+      state.activeAssignment.customReviewer[term] && state.activeAssignment.customReviewer[term][subj];
+    return custom || (REVIEWER_BY_TERM[term] || REVIEWER)[subj];
+  }).filter(Boolean).join("\n\n");
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -811,12 +910,27 @@ function renderReviewer(){
       <div class="tab-row">
         ${ORDER.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
       </div>
+      <p class="field-label">Term(s)</p>
+      <div class="checkbox-row" id="reviewerTermChecks">
+        ${TERMS.map(t=>`<label class="checkbox-item ${terms.includes(t.value)?'checked':''}" data-term="${t.value}">
+          <input type="checkbox" ${terms.includes(t.value)?'checked':''}><span>${t.label}</span>
+        </label>`).join("")}
+      </div>
       <div class="reviewer-box">${escapeHtml(content)}</div>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen = state.reviewerReturnScreen; route(); });
   document.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click", ()=>{ state.reviewerSubject = btn.dataset.subj; renderReviewer(); });
+  });
+  document.querySelectorAll("#reviewerTermChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", e=>{
+      e.preventDefault();
+      const next = [...terms];
+      const i = next.indexOf(el.dataset.term);
+      if(i >= 0) next.splice(i,1); else next.push(el.dataset.term);
+      if(next.length){ state.reviewerTerms = next; renderReviewer(); }
+    });
   });
 }
 
@@ -971,7 +1085,7 @@ function renderResults(){
     </div>
   `;
 
-  autoSaveResult({testType: state.practiceType, correct, total, pct});
+  autoSaveResult({testType: state.practiceType, terms: state.practiceTerms, correct, total, pct});
 
   document.getElementById("answersBtn").addEventListener("click", ()=>{ state.screen="answerReview"; route(); });
   document.getElementById("reviewBtn").addEventListener("click", ()=>{ goToReviewer("results"); });
@@ -980,7 +1094,7 @@ function renderResults(){
   });
 }
 
-async function autoSaveResult({testType, correct, total, pct}){
+async function autoSaveResult({testType, terms, correct, total, pct}){
   const note = document.getElementById("saveNote");
   if(state.saved){ if(note) note.textContent = "Result saved."; return; }
   try{
@@ -993,7 +1107,7 @@ async function autoSaveResult({testType, correct, total, pct}){
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
       classId: state.activeClassId || null,
-      testType, subjects: subjectsCovered, subjectBreakdown,
+       testType, terms: terms && terms.length ? terms : ["first"], term: (terms && terms[0]) || "first", subjects: subjectsCovered, subjectBreakdown,
       correct, total, pct, timestamp: Date.now()
     });
     state.saved = true;
@@ -1044,8 +1158,8 @@ async function renderMyProgress(){
   }catch(e){ console.error(e); }
 
   const tableRows = rows.map(r=>{
-    const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
-    return `<tr><td>${tag}</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
+     const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
+     return `<tr><td>${tag}</td><td>${termLabels(r.terms || [r.term])}</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
   }).join("");
 
   app.innerHTML = `
@@ -1057,7 +1171,7 @@ async function renderMyProgress(){
       ${rows.length === 0 ? `<p class="empty-note">No attempts yet, try a Pre-Test or Post-Test practice.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
-            <thead><tr><th>Test</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <thead><tr><th>Test</th><th>Term</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
         </div>
@@ -1127,6 +1241,7 @@ async function renderStudentClass(){
   }catch(e){ console.error(e); }
 
   state.activeAssignment = assignment;
+  state.reviewerTerms = assignment ? (assignment.terms || [assignment.term || "first"]) : ["first"];
 
   if(!assignment){
     app.innerHTML = `
@@ -1170,6 +1285,7 @@ async function renderStudentClass(){
       <div class="subject-strip">${(assignment.subjects||c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <div class="assign-box">
+         <div class="al-row"><span class="al-label">Term(s)</span><span class="al-value">${termLabels(assignment.terms || [assignment.term])}</span></div>
         <div class="al-row"><span class="al-label">Questions</span><span class="al-value">${assignment.numQuestions||20}</span></div>
         <div class="al-row"><span class="al-label">Timer per question</span><span class="al-value">${assignment.timerSeconds||20}s</span></div>
         <div class="al-row"><span class="al-label">Attempts allowed</span><span class="al-value">${assignment.maxAttempts||1}</span></div>
@@ -1189,13 +1305,19 @@ async function renderStudentClass(){
     const btn = document.getElementById(id);
     if(btn) btn.addEventListener("click", ()=>{
       state.practiceType = testType;
+       state.practiceTerms = assignment.terms || [assignment.term || "first"];
       state.practiceSubjects = assignment.subjects || c.subjects || [];
       state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
       state.quizQueue = buildAssignedQueue(assignment, testType);
       state.qIndex = 0; state.answers = []; state.saved = false;
       state.screen = "quiz"; route();
     });
-  };
+};
+const TERM_BANK = {
+  first: BANK,
+  second: {pretest: TERM_CONTENT.second, posttest: TERM_CONTENT.second},
+  third: {pretest: TERM_CONTENT.third, posttest: TERM_CONTENT.third}
+};
   startBtn("startPreBtn", "pretest");
   startBtn("startPostBtn", "posttest");
 }
