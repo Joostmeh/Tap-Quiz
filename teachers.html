@@ -154,6 +154,14 @@ const SUBJECT_META = {
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)", cls:"english"}
 };
 const ORDER = ["math","science","english"];
+const TERMS = [
+  {value:"first", label:"First Term"},
+  {value:"second", label:"Second Term"},
+  {value:"third", label:"Third Term"}
+];
+function termLabels(termArr){
+  return (termArr||["first"]).map(v => (TERMS.find(t=>t.value===v)||TERMS[0]).label).join(", ");
+}
 const MAX_QUESTIONS = 20;
 
 function escapeHtml(str){
@@ -195,20 +203,34 @@ function defaultAssignmentDraft(classSubjects){
   const subs = (classSubjects && classSubjects.length) ? classSubjects.slice() : ["math"];
   return {
     subjects: subs,
+    terms: ["first"],
     numQuestions: 20,
     timerSeconds: 20,
     maxAttempts: 1,
     scheduleStart: "",
     scheduleEnd: "",
     questionSource: "preset",
-    customQuestions: {
-      pretest:  {math:[], science:[], english:[]},
-      posttest: {math:[], science:[], english:[]}
-    },
-    customReviewer: {math:"", science:"", english:""},
+    customQuestions: Object.fromEntries(TERMS.map(t=>[t.value, {
+      pretest:{math:[],science:[],english:[]}, posttest:{math:[],science:[],english:[]}
+    }])),
+    customReviewer: Object.fromEntries(TERMS.map(t=>[t.value, {math:"",science:"",english:""}])),
     qbTestType: "pretest",
+    qbTerm: "first",
     qbForm: {subject: subs[0], q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
   };
+}
+function normalizeAssignmentData(d, classSubjects){
+  const base = defaultAssignmentDraft(classSubjects);
+  const terms = d.terms || [d.term || "first"];
+  const customQuestions = d.customQuestions && d.customQuestions.first
+    ? d.customQuestions
+    : {first:d.customQuestions || base.customQuestions.first, second:base.customQuestions.second, third:base.customQuestions.third};
+  const customReviewer = d.customReviewer && d.customReviewer.first
+    ? d.customReviewer
+    : {first:d.customReviewer || base.customReviewer.first, second:base.customReviewer.second, third:base.customReviewer.third};
+  return {...base, ...d, scheduleStart:fromEpoch(d.scheduleStart), scheduleEnd:fromEpoch(d.scheduleEnd), terms, customQuestions, customReviewer,
+    qbTestType:"pretest", qbTerm:terms[0] || "first",
+    qbForm:{subject:(d.subjects||classSubjects)[0] || "math", q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}};
 }
 
 let state = {
@@ -549,19 +571,7 @@ async function renderManageTest(){
       const doc = await db.collection("assignments").doc(id).get();
       if(doc.exists){
         const d = doc.data();
-        state.assignmentDraft = {
-          subjects: d.subjects || classSubjects.slice(),
-          numQuestions: d.numQuestions || 20,
-          timerSeconds: d.timerSeconds || 20,
-          maxAttempts: d.maxAttempts || 1,
-          scheduleStart: fromEpoch(d.scheduleStart),
-          scheduleEnd: fromEpoch(d.scheduleEnd),
-          questionSource: d.questionSource || "preset",
-          customQuestions: d.customQuestions || {pretest:{math:[],science:[],english:[]}, posttest:{math:[],science:[],english:[]}},
-          customReviewer: d.customReviewer || {math:"",science:"",english:""},
-          qbTestType: "pretest",
-          qbForm: {subject: primarySubject, q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
-        };
+        state.assignmentDraft = normalizeAssignmentData(d, classSubjects);
       } else {
         state.assignmentDraft = defaultAssignmentDraft(classSubjects);
       }
@@ -575,7 +585,7 @@ async function renderManageTest(){
   const draft = state.assignmentDraft;
   const otherSubjects = ORDER.filter(s => !classSubjects.includes(s));
 
-  const qList = (draft.customQuestions[draft.qbTestType] && draft.customQuestions[draft.qbTestType][draft.qbForm.subject]) || [];
+  const qList = (((draft.customQuestions[draft.qbTerm] || {})[draft.qbTestType] || {})[draft.qbForm.subject]) || [];
 
   app.innerHTML = `
     <div class="fade-in">
@@ -598,6 +608,13 @@ async function renderManageTest(){
             <span>Also include ${SUBJECT_META[s].label}</span>
           </label>
         `).join("")}
+      </div>
+
+      <p class="field-label">Term(s) covered by this test</p>
+      <div class="checkbox-row" id="termChecks">
+        ${TERMS.map(t=>`<label class="checkbox-item ${draft.terms.includes(t.value)?'checked':''}" data-term="${t.value}">
+          <input type="checkbox" ${draft.terms.includes(t.value)?'checked':''}><span>${t.label}</span>
+        </label>`).join("")}
       </div>
 
       <p class="field-label">Number of questions (max ${MAX_QUESTIONS})</p>
@@ -630,6 +647,10 @@ async function renderManageTest(){
           <button class="tab-btn ${draft.qbTestType==='pretest'?'active':''}" data-tt="pretest">Pre-Test</button>
           <button class="tab-btn ${draft.qbTestType==='posttest'?'active':''}" data-tt="posttest">Post-Test</button>
         </div>
+         <p class="field-label">Term for new question</p>
+         <div class="tab-row">
+           ${draft.terms.map(term=>`<button class="tab-btn ${draft.qbTerm===term?'active':''}" data-qbt="${term}">${TERMS.find(t=>t.value===term).label}</button>`).join("")}
+         </div>
         <p class="field-label">Subject for new question</p>
         <select id="qbSubjectSel">
           ${draft.subjects.map(s=>`<option value="${s}" ${draft.qbForm.subject===s?'selected':''}>${SUBJECT_META[s].label}</option>`).join("")}
@@ -654,10 +675,10 @@ async function renderManageTest(){
       ` : ``}
 
       <p class="field-label">Custom reviewer content (optional — blank keeps the built-in reviewer)</p>
-      ${draft.subjects.map(s=>`
-        <p class="fine-print" style="text-align:left; margin:0 0 6px 2px;">${SUBJECT_META[s].label}</p>
-        <textarea id="reviewer_${s}" placeholder="Leave blank to use the default reviewer">${escapeHtml(draft.customReviewer[s]||"")}</textarea>
-      `).join("")}
+       ${draft.terms.flatMap(term=>draft.subjects.map(s=>`
+         <p class="fine-print" style="text-align:left; margin:0 0 6px 2px;">${TERMS.find(t=>t.value===term).label} — ${SUBJECT_META[s].label}</p>
+         <textarea id="reviewer_${term}_${s}" placeholder="Leave blank to use the PDF-based default reviewer">${escapeHtml((draft.customReviewer[term]||{})[s]||"")}</textarea>
+       `)).join("")}
 
       ${state.assignmentSaveNote ? `<p class="save-note">${escapeHtml(state.assignmentSaveNote)}</p>` : ``}
       <button class="primary-btn" id="saveAssignmentBtn">Save Test Settings</button>
@@ -665,16 +686,19 @@ async function renderManageTest(){
   `;
 
   function syncFormFieldsIntoDraft(){
+    draft.terms = TERMS.map(t=>t.value).filter(term=>document.querySelector(`#termChecks [data-term="${term}"] input`).checked);
+    if(!draft.terms.length) draft.terms = ["first"];
+    if(!draft.terms.includes(draft.qbTerm)) draft.qbTerm = draft.terms[0];
     draft.numQuestions = Math.min(MAX_QUESTIONS, Math.max(1, parseInt(document.getElementById("numQInput").value) || 20));
     draft.timerSeconds = Math.max(5, parseInt(document.getElementById("timerInput").value) || 20);
     draft.maxAttempts = Math.max(1, parseInt(document.getElementById("attemptsInput").value) || 1);
     draft.scheduleStart = document.getElementById("startInput").value;
     draft.scheduleEnd = document.getElementById("endInput").value;
     draft.subjects = [...classSubjects, ...otherSubjects.filter(s=>draft.subjects.includes(s))];
-    draft.subjects.forEach(s=>{
-      const ta = document.getElementById("reviewer_"+s);
-      if(ta) draft.customReviewer[s] = ta.value;
-    });
+    draft.terms.forEach(term=>draft.subjects.forEach(s=>{
+      const ta = document.getElementById(`reviewer_${term}_${s}`);
+      if(ta) draft.customReviewer[term][s] = ta.value;
+    }));
   }
 
   document.getElementById("backBtn").addEventListener("click", ()=>{ syncFormFieldsIntoDraft(); state.screen="classDetail"; route(); });
@@ -687,6 +711,18 @@ async function renderManageTest(){
       const idx = draft.subjects.indexOf(s);
       if(idx >= 0) draft.subjects.splice(idx,1); else draft.subjects.push(s);
       if(!draft.subjects.includes(draft.qbForm.subject)) draft.qbForm.subject = primarySubject;
+      renderManageTest();
+    });
+  });
+
+  document.querySelectorAll("#termChecks .checkbox-item").forEach(el=>{
+    el.addEventListener("click", e=>{
+      e.preventDefault();
+      syncFormFieldsIntoDraft();
+      const term = el.dataset.term;
+      const i = draft.terms.indexOf(term);
+      if(i >= 0 && draft.terms.length > 1) draft.terms.splice(i,1);
+      else if(i < 0) draft.terms.push(term);
       renderManageTest();
     });
   });
@@ -704,6 +740,13 @@ async function renderManageTest(){
     el.addEventListener("click", ()=>{
       syncFormFieldsIntoDraft();
       draft.qbTestType = el.dataset.tt;
+      renderManageTest();
+    });
+  });
+  document.querySelectorAll(".tab-btn[data-qbt]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      syncFormFieldsIntoDraft();
+      draft.qbTerm = el.dataset.qbt;
       renderManageTest();
     });
   });
@@ -732,12 +775,12 @@ async function renderManageTest(){
       syncFormFieldsIntoDraft();
       const subj = qbSubjectSel.value;
       const tt = draft.qbTestType;
-      if(!draft.customQuestions[tt][subj]) draft.customQuestions[tt][subj] = [];
-      if(draft.customQuestions[tt][subj].length >= MAX_QUESTIONS){
+       if(!draft.customQuestions[ draft.qbTerm ][tt][subj]) draft.customQuestions[draft.qbTerm][tt][subj] = [];
+       if(draft.customQuestions[draft.qbTerm][tt][subj].length >= MAX_QUESTIONS){
         alert(`You've reached the ${MAX_QUESTIONS}-question limit for this subject.`);
         return;
       }
-      draft.customQuestions[tt][subj].push({q:qText, c:choices, a:correct});
+       draft.customQuestions[draft.qbTerm][tt][subj].push({q:qText, c:choices, a:correct});
       draft.qbForm = {subject: subj, q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false};
       renderManageTest();
     });
@@ -747,7 +790,7 @@ async function renderManageTest(){
     el.addEventListener("click", ()=>{
       syncFormFieldsIntoDraft();
       const idx = parseInt(el.dataset.del);
-      draft.customQuestions[draft.qbTestType][draft.qbForm.subject].splice(idx,1);
+       draft.customQuestions[draft.qbTerm][draft.qbTestType][draft.qbForm.subject].splice(idx,1);
       renderManageTest();
     });
   });
@@ -760,6 +803,8 @@ async function renderManageTest(){
       await db.collection("assignments").doc(id).set({
         classId: id,
         teacherEmail: state.teacher.email,
+         terms: draft.terms || ["first"],
+         term: (draft.terms && draft.terms[0]) || "first",
         subjects: draft.subjects,
         numQuestions: draft.numQuestions,
         timerSeconds: draft.timerSeconds,
@@ -768,7 +813,7 @@ async function renderManageTest(){
         scheduleEnd: toEpoch(draft.scheduleEnd),
         questionSource: draft.questionSource,
         customQuestions: draft.customQuestions,
-        customReviewer: draft.customReviewer,
+         customReviewer: draft.customReviewer,
         updatedAt: Date.now()
       });
       state.assignmentSaveNote = "Saved. Students in this class will see the updated test next time they open it.";
@@ -848,11 +893,12 @@ async function renderClassActivity(){
       ${tab === 'attempts' ? (
         data.attempts.length === 0 ? `<p class="empty-note">No attempts yet.</p>` :
         `<div style="overflow-x:auto;"><table class="roster-table">
-          <thead><tr><th>Student</th><th>Test</th><th>Subject(s)</th><th>Score</th><th>Date</th></tr></thead>
+           <thead><tr><th>Student</th><th>Test</th><th>Term</th><th>Subject(s)</th><th>Score</th><th>Date</th></tr></thead>
           <tbody>${data.attempts.map(a=>`
             <tr>
               <td>${escapeHtml(a.studentName||"")}</td>
               <td>${a.testType==='pretest'?'PRE':'POST'}</td>
+              <td>${termLabels(a.terms || [a.term])}</td>
               <td>${(a.subjects||[]).map(s=>SUBJECT_META[s]?SUBJECT_META[s].label:s).join(", ")}</td>
               <td>${a.correct}/${a.total} (${a.pct}%)</td>
               <td>${fmtDate(a.timestamp)}</td>
