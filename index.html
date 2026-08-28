@@ -199,9 +199,7 @@ const SUBJECT_META = {
 };
 const ORDER = ["math","science","english"];
 const TERMS = [
-  {value:"first", label:"First Term"},
-  {value:"second", label:"Second Term"},
-  {value:"third", label:"Third Term"}
+  {value:"second", label:"Second Term"}
 ];
 const PRACTICE_TOTAL = 20;
 const PRACTICE_TIMER = 20;
@@ -355,28 +353,190 @@ REFLECTION & GROWTH
 const TERM_CONTENT = {
   second: {
     math: [
-      {q:"What is the slope of a line parallel to y = 4x - 7?", c:["-4","1/4","4","7"], a:2},
-      {q:"Which equation represents a circle with center (0,0) and radius 3?", c:["x + y = 3","x^2 + y^2 = 9","x^2 - y^2 = 9","3x + 3y = 0"], a:1},
-      {q:"What is the derivative of x^2?", c:["x","2x","x^3","2"], a:1},
-      {q:"A matrix is best described as:", c:["A list of random numbers","A rectangular arrangement of numbers","A single variable","A type of graph only"], a:1},
-      {q:"The determinant of [[a,b],[c,d]] is:", c:["ab - cd","ad - bc","ac - bd","a + d"], a:1},
-      {q:"Which measure describes the middle value of an ordered data set?", c:["Mean","Median","Mode","Range"], a:1}
+      {q:"A function that uses different rules on different intervals is called a:", c:["Constant function","Piecewise function","Inverse function","Quadratic sequence"], a:1},
+      {q:"A taxi charges P50 for the first 4 km and P13 for each additional kilometer. Which idea is needed to model this fare?", c:["A single constant rule","A piecewise function","A normal distribution","A trigonometric identity"], a:1},
+      {q:"Why are piecewise functions useful for income-tax schedules?", c:["Tax rates can change across income brackets","They remove all tax deductions","They only describe circular graphs","They require no input values"], a:0},
+      {q:"A store gives one discount rate for purchases below P1,000 and another for purchases of P1,000 or more. This is an example of:", c:["A piecewise purchasing rule","A geometric sequence","A random variable","A right triangle"], a:0},
+      {q:"Which is qualitative data?", c:["Number of siblings","Monthly income in pesos","Type of transportation used","Height in centimeters"], a:2},
+      {q:"Which is quantitative discrete data?", c:["Color of a shirt","Number of books borrowed","Temperature of a room","Length of fabric"], a:1},
+      {q:"The categories freshman, sophomore, junior, and senior represent which level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:1},
+      {q:"Which level of measurement has a meaningful zero and allows ratios?", c:["Nominal","Ordinal","Interval","Ratio"], a:3},
+      {q:"What is the mean of 4, 6, and 8?", c:["5","6","7","18"], a:1},
+      {q:"Which measure is the middle value after data are arranged in order?", c:["Mean","Median","Mode","Range"], a:1},
+      {q:"Which measure identifies the most frequently occurring value?", c:["Mean","Median","Mode","Variance"], a:2},
+      {q:"What is the range of 12, 5, 9, and 15?", c:["7","10","12","15"], a:1},
+      {q:"Which measure describes how spread out data values are?", c:["Variability","Category","Frequency label","Sample name"], a:0},
+      {q:"A spreadsheet is especially useful for:", c:["Calculating and organizing statistical measures","Changing a nominal variable into a person","Removing the need to interpret data","Making every data value identical"], a:0},
+      {q:"If two data sets have the same mean but one has a larger standard deviation, the second set is:", c:["Less variable","More spread out","Always smaller","Missing its median"], a:1},
+      {q:"When choosing a measure of central tendency, a researcher should consider:", c:["The purpose and type of the data","Only the largest value","The color of the graph","Whether the data were typed by hand"], a:0},
+      {q:"In a right triangle, sine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:1},
+      {q:"In a right triangle, cosine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/adjacent"], a:0},
+      {q:"In a right triangle, tangent of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:2},
+      {q:"Which theorem relates the side lengths of a right triangle?", c:["Heron's formula","Pythagorean theorem","Remainder theorem","Bayes' theorem"], a:1},
+      {q:"An angle of elevation is measured:", c:["Downward from a horizontal line","Upward from a horizontal line to an object","Only inside a circle","Between two parallel lines"], a:1},
+      {q:"An angle of depression is measured:", c:["Downward from a horizontal line to an object","Upward from the ground only","Between two radii","Only in an equilateral triangle"], a:0},
+      {q:"A bearing is commonly used to describe:", c:["Direction in navigation","The average of a data set","A tax bracket","The volume of a container"], a:0},
+      {q:"Which formula finds the area of a triangle when two sides and their included angle are known?", c:["A = lw","A = 1/2 ab sin(C)","A = πr^2","A = s^2"], a:1},
+      {q:"A data set has values 2, 4, 6, and 8. What is its mean?", c:["4","5","6","20"], a:1},
+      {q:"Which measure is least affected by an extremely large outlier?", c:["Mean","Median","Range","Variance"], a:1},
+      {q:"If every value in a data set is increased by 5, which measure also increases by 5?", c:["Mean","Standard deviation only","Range only","Coefficient of variation only"], a:0},
+      {q:"What does a small standard deviation indicate?", c:["Values are clustered near the mean","Values are all negative","The data have no mode","The sample has no central tendency"], a:0},
+      {q:"A survey records students' favorite color. What is the most appropriate level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:0},
+      {q:"A ranking of gold, silver, and bronze medals is an example of:", c:["Nominal data","Ordinal data","Interval data","Ratio data"], a:1},
+      {q:"Which variable is continuous?", c:["Number of cars in a parking lot","Number of siblings","Time needed to finish a race","Number of text messages"], a:2},
+      {q:"For strongly skewed income data, which pair is usually more suitable?", c:["Median and interquartile range","Mean and range only","Mode and maximum only","Minimum and variance only"], a:0},
+      {q:"A spreadsheet formula is useful, but the final statistical conclusion should also:", c:["Explain what the numbers mean in context","Ignore the original question","Remove all unusual values automatically","Use no units"], a:0},
+      {q:"A right triangle has opposite side 3 and hypotenuse 5 relative to angle θ. What is sin θ?", c:["3/5","5/3","4/5","3/4"], a:0},
+      {q:"A right triangle has adjacent side 12 and hypotenuse 13 relative to angle θ. What is cos θ?", c:["5/13","12/13","13/12","12/5"], a:1},
+      {q:"A 10-meter ladder makes a 30° angle with the ground. Which quantity can be found using 10 sin 30°?", c:["Vertical height reached","Horizontal distance only","The ladder's mass","The angle's bearing"], a:0},
+      {q:"If a map direction is recorded as 045°, it indicates a direction halfway between:", c:["North and east","South and east","North and west","South and west"], a:0},
+      {q:"Heron's Formula is useful when the triangle's:", c:["Three side lengths are known","Radius is the only known measurement","Height is always zero","Angles are all 90°"], a:0},
+      {q:"Before calculating a trigonometric ratio, the learner should first:", c:["Identify the reference angle and label the sides","Round every measurement to zero","Assume every triangle is equilateral","Ignore the diagram"], a:0},
+      {q:"A computed distance of −8 meters in a measurement problem should prompt the learner to:", c:["Check the model, labels, or calculation","Accept it as a physical distance","Change the unit to make it positive","Delete the measurement"], a:0},
+      {q:"Given f(x) = 2x + 1 for x < 4 and f(x) = x + 5 for x ≥ 4, what is f(3)?", c:["5","7","8","9"], a:1},
+      {q:"A taxi charges P40 for the first 2 km and P12 for every kilometer after that. What is the fare for 5 km?", c:["P52","P64","P76","P100"], a:2},
+      {q:"If a piecewise rule assigns one formula to x ≤ 10 and another to x > 10, which rule is used when x = 10?", c:["The rule for x ≤ 10","The rule for x > 10","Both rules must be averaged","Neither rule"], a:0},
+      {q:"Why can an income-tax schedule be represented by a piecewise function?", c:["Different income brackets can have different rules or rates","Income tax never uses numerical inputs","One formula must apply to every possible income","Tax schedules describe only geometric shapes"], a:0},
+      {q:"Which is quantitative data?", c:["Favorite school subject","Type of cellphone","Number of hours studied","Brand preference"], a:2},
+      {q:"Which variable is discrete?", c:["Mass of a package","Length of a table","Number of students absent","Time to finish a race"], a:2},
+      {q:"Temperature measured in degrees Celsius is usually classified at which level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:2},
+      {q:"What is the mean of 6, 8, and 10?", c:["6","8","10","24"], a:1},
+      {q:"What is the median of 3, 8, 11, 20, and 25?", c:["8","11","13","20"], a:1},
+      {q:"Which measure is most appropriate for the most common shoe size in a class?", c:["Mean","Median","Mode","Standard deviation"], a:2},
+      {q:"A data set contains one extremely high income. Which measure is generally less affected by that outlier?", c:["Mean","Median","Range","Maximum"], a:1},
+      {q:"A large standard deviation usually means that the values are:", c:["Widely spread around the mean","All equal to the mean","Always negative","All categorical"], a:0},
+      {q:"A spreadsheet calculates a standard deviation. What should the learner do next?", c:["Interpret what the spread means in the original context","Assume the data are automatically correct","Delete the mean","Change the units without explanation"], a:0},
+      {q:"A right triangle has opposite side 5 and adjacent side 12 relative to θ. What is tan θ?", c:["5/12","12/5","5/13","12/13"], a:0},
+      {q:"A right triangle has legs of 6 m and 8 m. What is the length of its hypotenuse?", c:["10 m","12 m","14 m","48 m"], a:0},
+      {q:"A person looking down from a building to a car measures an angle of:", c:["Elevation","Depression","Reflection","Rotation"], a:1},
+      {q:"A bearing of 090° indicates a direction toward:", c:["North","East","South","West"], a:1},
+      {q:"A triangle has side lengths 3, 4, and 5. Using Heron's Formula, what is its area?", c:["5 square units","6 square units","10 square units","12 square units"], a:1},
+      {q:"Two sides of a triangle are 6 cm and 10 cm, and their included angle is 30°. What is its area?", c:["10 cm²","15 cm²","30 cm²","60 cm²"], a:1},
+      {q:"A bearing of 225° points generally toward:", c:["Northeast","Southeast","Southwest","Northwest"], a:2}
     ],
     science: [
-      {q:"Which organelle controls the activities of a eukaryotic cell?", c:["Ribosome","Nucleus","Cell wall","Vacuole"], a:1},
-      {q:"The movement of water across a selectively permeable membrane is:", c:["Diffusion","Osmosis","Respiration","Transcription"], a:1},
-      {q:"DNA is mainly responsible for:", c:["Digesting food","Storing genetic information","Pumping blood","Producing sound"], a:1},
-      {q:"Which process produces two genetically identical daughter cells?", c:["Meiosis","Mitosis","Fertilization","Mutation"], a:1},
-      {q:"An organism's observable traits make up its:", c:["Genotype","Phenotype","Allele","Chromosome"], a:1},
-      {q:"A food web shows:", c:["Only one feeding relationship","Interconnected feeding relationships in an ecosystem","The shape of a cell","The stages of a star"], a:1}
+      {q:"A reaction in which one compound breaks into simpler substances is:", c:["Combustion","Decomposition","Neutralization only","Condensation"], a:1},
+      {q:"When an acid reacts with a carbonate, the products commonly include salt, water, and:", c:["Oxygen","Carbon dioxide","Nitrogen","Glucose"], a:1},
+      {q:"An acid reacting with a metal commonly produces salt and:", c:["Hydrogen gas","Carbon dioxide only","Chlorophyll","Starch"], a:0},
+      {q:"Combustion usually requires a fuel and:", c:["Oxygen","Salt","Water vapor only","Nitrogen only"], a:0},
+      {q:"Baking bread involves chemical changes such as gas production by:", c:["Yeast fermentation","Freezing","Melting","Filtration"], a:0},
+      {q:"Which is a safe practice when using a household chemical?", c:["Read the label and follow handling instructions","Mix every cleaner together","Store it in an unlabeled bottle","Pour leftovers into a river"], a:0},
+      {q:"Which equation represents photosynthesis?", c:["6CO2 + 6H2O + light → C6H12O6 + 6O2","C6H12O6 + 6O2 → 6CO2 + 6H2O + energy","NaCl → Na + Cl only","H2O → H2 + O2 in every cell"], a:0},
+      {q:"Cellular respiration primarily releases usable energy from:", c:["Glucose","Sand","Plastic","Table salt"], a:0},
+      {q:"Metabolism refers to:", c:["The chemical reactions occurring in body cells","Only the movement of blood","A type of weather pattern","The shape of a mineral"], a:0},
+      {q:"The law of conservation of mass means that during a chemical reaction:", c:["Atoms are rearranged but not created or destroyed","All matter disappears","Only gases can react","Products always weigh less"], a:0},
+      {q:"In a solution, the substance that is dissolved is the:", c:["Solute","Solvent","Residue","Indicator only"], a:0},
+      {q:"In saltwater, the water is usually the:", c:["Solute","Solvent","Precipitate","Reactant gas"], a:1},
+      {q:"A solution is best described as:", c:["A homogeneous mixture","A single solid element only","A mixture that must always be cloudy","A living organism"], a:0},
+      {q:"Increasing the amount of salt dissolved in the same amount of water generally makes the solution:", c:["More concentrated","Less concentrated","A gas","Chemically empty"], a:0},
+      {q:"Before storing a chemical, a student should first:", c:["Check its label and compatibility requirements","Remove the label","Place it near food","Mix it with another chemical"], a:0},
+      {q:"Why should household chemicals remain in labeled containers?", c:["Labels communicate ingredients, hazards, and safe use","Labels make chemicals harmless","Labels increase the chemical's volume","Labels replace ventilation"], a:0},
+      {q:"The safest general rule for disposing of chemicals is to:", c:["Follow the product label and applicable local guidance","Pour everything into a drain","Burn all chemicals outdoors","Hide them in ordinary food containers"], a:0},
+      {q:"Saltwater entering freshwater habitats can:", c:["Stress organisms and alter local ecosystem conditions","Always increase every species' population","Turn all organisms into producers","Have no effect at any concentration"], a:0},
+      {q:"Wastewater can harm an ecosystem when it:", c:["Adds pollutants or changes water conditions","Is carefully treated before release","Contains no contaminants","Is tested and managed responsibly"], a:0},
+      {q:"Which observation is evidence that a chemical reaction may have occurred?", c:["Formation of gas or an unexpected temperature change","A container remaining unchanged","A substance being measured","A label being read"], a:0},
+      {q:"Why should bleach not be mixed with other cleaners unless the label says it is safe?", c:["The mixture may produce dangerous substances","Mixing always makes it edible","It removes the need for ventilation","It turns bleach into pure water"], a:0},
+      {q:"A plant investigation testing how salt concentration affects growth should keep constant:", c:["Other conditions such as plant type, light, and water volume","Every variable including salt concentration","Only the final result","No measurement at all"], a:0},
+      {q:"A recommendation to reduce the environmental impact of wastewater should be based on:", c:["Evidence about its composition and effects","A guess unrelated to the investigation","The color of the container only","A random online comment"], a:0},
+      {q:"Which statement correctly connects photosynthesis and respiration?", c:["Photosynthesis stores energy in glucose, while respiration releases usable energy from it","Both processes only destroy water","Respiration makes sunlight, while photosynthesis consumes rocks","They are unrelated to living cells"], a:0},
+      {q:"Which reaction is represented by AB → A + B?", c:["Decomposition","Combustion","Acid-metal reaction","Photosynthesis"], a:0},
+      {q:"A metal reacts with hydrochloric acid and bubbles form. The bubbles are most likely:", c:["Hydrogen gas","Oxygen from photosynthesis","Nitrogen from the air","Water vapor only"], a:0},
+      {q:"When wood burns, the energy released is evidence of:", c:["A combustion reaction","A solution forming","A physical change only","Osmosis"], a:0},
+      {q:"Which daily activity is most directly associated with an acid-carbonate reaction?", c:["Vinegar reacting with baking soda","Ice melting","Water boiling","Salt dissolving without reaction"], a:0},
+      {q:"In a chemical equation, coefficients are adjusted to:", c:["Balance the number of each type of atom","Change the identity of an element","Make every substance a gas","Remove products"], a:0},
+      {q:"The products of cellular respiration include:", c:["Carbon dioxide, water, and energy","Only oxygen and sunlight","Salt and hydrogen gas","Glucose and chlorophyll only"], a:0},
+      {q:"Metabolism is important because it:", c:["Provides chemical processes that support cell functions","Stops all reactions in cells","Only describes digestion outside the body","Changes every cell into a plant"], a:0},
+      {q:"A solution with a small amount of solute compared with solvent is:", c:["Dilute","Concentrated","A pure element","A precipitate only"], a:0},
+      {q:"Which change would usually increase the concentration of a salt solution?", c:["Adding more salt without adding water","Adding more water only","Removing all salt","Freezing the container label"], a:0},
+      {q:"A solution that contains as much dissolved solute as it can under given conditions is:", c:["Saturated","Empty","A gas mixture only","Unmeasurable"], a:0},
+      {q:"Why should chemicals be stored according to compatibility guidance?", c:["Incompatible chemicals may react dangerously when mixed or stored together","Compatibility changes their labels into food","It guarantees no chemical can evaporate","It removes the need for protective equipment"], a:0},
+      {q:"Which practice best protects a student's skin and eyes during a chemical investigation?", c:["Use the required protective equipment and follow the procedure","Taste the solution first","Work without reading the label","Pour the solution into an open container"], a:0},
+      {q:"A plant in highly concentrated saltwater wilts because the solution can:", c:["Disrupt water movement and stress the plant","Provide unlimited freshwater","Stop all evaporation from leaves","Turn salt into glucose"], a:0},
+      {q:"In an investigation of saltwater effects on plants, the salt concentration is the:", c:["Independent variable","Dependent variable","Constant result","Unrelated observation"], a:0},
+      {q:"Plant growth in the saltwater investigation is the:", c:["Dependent variable","Independent variable","Chemical label","Control group only"], a:0},
+      {q:"A control group is useful because it:", c:["Provides a comparison under normal or unchanged conditions","Receives every possible treatment","Removes the need for measurements","Must always be the smallest plant"], a:0},
+      {q:"Which equation pattern represents decomposition?", c:["AB → A + B","A + B → AB","Fuel + oxygen → carbon dioxide + water","Acid + metal → salt + hydrogen"], a:0},
+      {q:"Vinegar reacting with baking soda is an example of an acid reacting with a:", c:["Metal","Carbonate","Noble gas","Sugar"], a:1},
+      {q:"When magnesium reacts with hydrochloric acid, the gas commonly produced is:", c:["Hydrogen","Carbon dioxide","Oxygen","Nitrogen"], a:0},
+      {q:"Which pair is needed for ordinary combustion?", c:["Fuel and oxygen","Salt and water","Glucose and nitrogen","Carbon dioxide and ice"], a:0},
+      {q:"Which observation most strongly suggests that a new substance formed?", c:["Gas bubbles and a lasting color change","The sample was placed on a balance","The container was labeled","The liquid was transferred to a beaker"], a:0},
+      {q:"What should be changed to balance a chemical equation?", c:["Coefficients in front of formulas","The subscripts inside formulas","The names of the elements","The products only"], a:0},
+      {q:"In photosynthesis, light energy helps plants produce:", c:["Glucose and oxygen","Salt and hydrogen","Carbon dioxide and nitrogen","Water and methane"], a:0},
+      {q:"Cellular respiration is important because it:", c:["Releases usable energy from glucose","Creates sunlight in the nucleus","Stops all chemical reactions","Turns oxygen into a mineral"], a:0},
+      {q:"Metabolism takes place mainly through chemical reactions in:", c:["Body cells","Rocks","Clouds","Empty containers"], a:0},
+      {q:"If the number of each type of atom is equal on both sides of an equation, the equation follows:", c:["Conservation of mass","The law of reflection","The water cycle","The food chain"], a:0},
+      {q:"Which statement describes the relationship between a solute and a solvent?", c:["The solute dissolves in the solvent","The solvent is always a solid","The solute must always be water","They cannot form a mixture"], a:0},
+      {q:"Which solution is more concentrated if both use the same amount of water?", c:["10 g salt in water","2 g salt in water","Both have the same concentration","Neither contains a solute"], a:0},
+      {q:"What is the best reason to keep a chemical in its original labeled container?", c:["The label provides identity, hazards, and handling information","The container makes every chemical harmless","The label prevents all reactions","The original container increases concentration"], a:0},
+      {q:"Which action is appropriate before using a household chemical?", c:["Read the label and use the required protective equipment","Smell it closely to identify it","Mix it with bleach for extra strength","Transfer it to a drink bottle"], a:0},
+      {q:"In an experiment, the factor deliberately changed by the researcher is the:", c:["Independent variable","Dependent variable","Control group","Conclusion"], a:0},
+      {q:"In a saltwater plant investigation, measuring the plant's height records the:", c:["Dependent variable","Independent variable","Solvent","Safety label"], a:0},
+      {q:"Why should other conditions be kept constant in a plant investigation?", c:["So changes in growth can be related to salt concentration","So no measurements are needed","So every plant receives a different treatment","So the result is based on a guess"], a:0},
+      {q:"A wastewater sample with pollutants may harm an ecosystem by:", c:["Changing water conditions and stressing organisms","Increasing oxygen for every species","Removing all contaminants naturally","Turning consumers into producers"], a:0},
+      {q:"A responsible recommendation for chemical disposal should use:", c:["Product instructions, local guidance, and evidence about environmental effects","The container's color only","An unverified rumor","The assumption that dilution makes every chemical safe"], a:0},
+      {q:"How can a concentrated salt solution generally be made more dilute?", c:["Add more solvent, such as water","Add more salt without water","Remove all solvent","Add an unlabeled cleaner"], a:0}
     ],
     english: [
-      {q:"A research report should support its claims with:", c:["Rumors","Evidence and properly cited sources","Only personal opinion","Unrelated quotations"], a:1},
-      {q:"Which is an example of an academic presentation?", c:["A research defense","A private text","A birthday greeting","A casual joke"], a:0},
-      {q:"Plagiarism means:", c:["Summarizing with a citation","Presenting another person's work as your own","Writing an outline","Revising a draft"], a:1},
-      {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a text informal","Hide the topic"], a:0},
-      {q:"Discipline-specific vocabulary is vocabulary used by:", c:["A particular field of study","Every person identically","Only young children","No academic community"], a:0},
-      {q:"A thesis statement generally presents the:", c:["Main claim or controlling idea","Page number","Author's signature","List of greetings"], a:0}
+      {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
+      {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
+      {q:"A chart or table in a report should be interpreted by examining its:", c:["Labels, units, patterns, and evidence","Background color only","File name only","Margins only"], a:0},
+      {q:"Specialized vocabulary is vocabulary that is:", c:["Used by a particular academic or technical field","Always informal slang","Unrelated to a discipline","Impossible to define from context"], a:0},
+      {q:"In an academic discussion, an appropriate tone is generally:", c:["Respectful, clear, and suited to the topic","Insulting and vague","Always humorous","Unrelated to the audience"], a:0},
+      {q:"Following a procedure accurately helps a learner:", c:["Achieve the intended outcome","Avoid reading instructions","Replace all safety checks","Make evidence unnecessary"], a:0},
+      {q:"A constructive question during a lecture should:", c:["Clarify or deepen understanding of the topic","Interrupt only to change the subject","Attack the speaker personally","Repeat an unrelated rumor"], a:0},
+      {q:"Useful feedback on a presentation should address its:", c:["Content, structure, and language","Presenter's clothing only","Unrelated personal history","Room temperature only"], a:0},
+      {q:"Effective collaboration on a technical task requires group members to:", c:["Share knowledge and work toward a common goal","Hide information from one another","Avoid assigning responsibilities","Reject all feedback"], a:0},
+      {q:"A thesis statement usually presents the:", c:["Central claim or controlling idea","List of page numbers","Author's home address","Final bibliography only"], a:0},
+      {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a report informal","Hide the topic"], a:0},
+      {q:"A research report should support important claims with:", c:["Evidence and properly cited sources","Rumors","Only personal preference","Unrelated quotations"], a:0},
+      {q:"A diagram, graph, or infographic can help a writer:", c:["Represent complex information in a multimodal form","Avoid explaining the information","Remove the need for labels","Guarantee that data are correct"], a:0},
+      {q:"To condense a long academic text means to:", c:["Reduce it to its essential ideas","Copy every sentence exactly","Add unrelated details","Remove the central claim"], a:0},
+      {q:"A paraphrase should:", c:["Restate an idea in your own words while acknowledging the source","Copy the source word for word without credit","Change only the punctuation","Present another person's idea as original"], a:0},
+      {q:"Plagiarism is:", c:["Presenting another person's work or ideas as your own","Using a citation correctly","Making an outline","Giving respectful feedback"], a:0},
+      {q:"Citation helps readers:", c:["Identify and verify the sources used","Know the writer's favorite color","Skip the entire report","Change the research question"], a:0},
+      {q:"AI assistance in an academic text should be:", c:["Acknowledged or declared according to the required practice","Hidden in every situation","Treated as a human source automatically","Used to invent evidence"], a:0},
+      {q:"Which is an academic communicative event?", c:["Presenting research findings","Sending a private birthday greeting","Casual joking with friends","Posting an unrelated meme"], a:0},
+      {q:"A technical report is clearest when it uses:", c:["Organized structure, precise language, and appropriate terminology","Only emotional appeals","Vague claims without evidence","Unexplained slang"], a:0},
+      {q:"When explaining a concept to a specific audience, the communicator should:", c:["Choose language and examples the audience can understand","Use the same explanation regardless of audience","Avoid defining technical terms","Ignore the purpose"], a:0},
+      {q:"A summary differs from a copy because a summary:", c:["Presents the central ideas more briefly","Repeats every word","Adds unsupported opinions","Changes the source's meaning"], a:0},
+      {q:"Reflecting after an academic presentation helps a learner:", c:["Identify strengths and areas for improvement","Avoid all future feedback","Prove every idea was perfect","Replace preparation"], a:0},
+      {q:"Intellectual integrity in academic communication requires:", c:["Honest use of evidence, sources, and one's own contribution","Borrowing without attribution","Inventing data to fit a conclusion","Ignoring corrections"], a:0},
+      {q:"The purpose of a reference list is to:", c:["Identify the sources used in a text","Replace the report's conclusion","Decorate the final page","Hide unsupported claims"], a:0},
+      {q:"When a technical term is unfamiliar, a useful first step is to:", c:["Use context clues and reliable references","Guess and never verify","Delete the entire paragraph","Replace it with unrelated slang"], a:0},
+      {q:"A presentation visual should:", c:["Support the key idea with clear labels and readable information","Contain every word the speaker will say","Use decoration instead of evidence","Be unrelated to the topic"], a:0},
+      {q:"Which response best demonstrates constructive feedback?", c:["Your conclusion is clear; adding evidence to the second point may strengthen it","This is bad and I will not explain why","You should change everything","I did not listen, but it is wrong"], a:0},
+      {q:"In an academic panel discussion, turn-taking helps participants:", c:["Share ideas without speaking over one another","Avoid responding to evidence","End the discussion immediately","Use only written communication"], a:0},
+      {q:"A procedure presented as numbered steps is a:", c:["Structured set of instructions","Personal narrative only","List of unrelated opinions","Citation style"], a:0},
+      {q:"A research claim is strongest when it is:", c:["Specific, relevant, and supported by evidence","Very broad and unsupported","Based only on popularity","Hidden from the audience"], a:0},
+      {q:"Which choice improves coherence in a report?", c:["Using transitions that show how ideas are related","Changing topics without explanation","Repeating the same sentence","Removing the introduction"], a:0},
+      {q:"A synopsis is:", c:["A concise account of the main points of a text","A list of every punctuation mark","A source copied without credit","An unrelated personal story"], a:0},
+      {q:"When paraphrasing, changing a few words while keeping the original sentence structure can still be:", c:["Plagiarism if the source is not properly acknowledged","A complete original argument","A data table","A visual aid"], a:0},
+      {q:"A speaker should adjust technical vocabulary when:", c:["The audience's background and purpose change","The topic has no audience","The speaker wants to hide the meaning","The presentation has no evidence"], a:0},
+      {q:"A multimodal report may combine:", c:["Written explanation, charts, images, and spoken presentation","Only one unformatted sentence","Unverified claims and no labels","A bibliography with no text"], a:0},
+      {q:"Ethical use of AI in academic work includes:", c:["Checking output, contributing one's own judgment, and declaring assistance when required","Submitting invented sources without review","Claiming generated work is always personal research","Using it to conceal plagiarism"], a:0},
+      {q:"A useful reflection after a group presentation asks:", c:["What worked, what needs improvement, and what to change next time","Which teammate to blame","How to avoid all future collaboration","Why feedback should be ignored"], a:0},
+      {q:"A technical audience generally benefits from:", c:["Precise terms defined or used appropriately with evidence","Vague emotional language only","Unlabeled diagrams","Unrelated examples"], a:0},
+      {q:"An abstract is intended to:", c:["Give a concise overview of a longer academic work","Replace all references","Add unrelated personal details","Hide the research purpose"], a:0},
+      {q:"Which factor most directly affects the structure and language of an academic text?", c:["Its audience, purpose, and context","The writer's favorite color","The number of decorations","The time spent choosing a font"], a:0},
+      {q:"When listening to a lecture, paraphrasing the speaker's idea helps the learner:", c:["Check understanding without copying the exact wording","Avoid paying attention","Replace all note-taking","Change the speaker's evidence"], a:0},
+      {q:"A reader sees a chart with a rising line. Before concluding that one variable caused another, the reader should:", c:["Check the labels, scale, evidence, and limits of the chart","Assume the chart proves causation","Ignore the units","Look only at the color of the line"], a:0},
+      {q:"A useful context clue for an unfamiliar technical word is:", c:["The surrounding words and explanation in the text","The length of the word alone","The author's initials","The page border"], a:0},
+      {q:"Which opening is most appropriate for a formal academic presentation?", c:["A clear statement of the topic and purpose","A long unrelated joke","An apology for having no evidence","A list of private messages"], a:0},
+      {q:"During a panel discussion, a participant should disagree by:", c:["Addressing the idea respectfully and giving relevant reasons","Insulting the speaker","Speaking over everyone","Changing the topic without explanation"], a:0},
+      {q:"When following a laboratory procedure, a learner should:", c:["Complete the steps in order and observe safety instructions","Skip steps that look difficult","Change measurements without recording them","Ignore diagrams and warning labels"], a:0},
+      {q:"Which division of work best supports a group research presentation?", c:["Assigning responsibilities while coordinating one shared goal","Letting one member do everything without review","Keeping sources private","Avoiding deadlines"], a:0},
+      {q:"A position paper primarily presents:", c:["A reasoned stand on an issue supported by evidence","A random list of vocabulary words","A private diary with no claim","A bibliography without discussion"], a:0},
+      {q:"Which sentence uses an appropriate academic style?", c:["The results indicate that study time was associated with higher scores.","The results are super cool and totally prove everything.","This thing shows stuff, I guess.","Everyone knows the answer, so evidence is unnecessary."], a:0},
+      {q:"A visual aid is effective when it:", c:["Makes important information easier to understand and is clearly labeled","Contains every sentence from the report","Uses decoration instead of data","Has no title or units"], a:0},
+      {q:"A paraphrase is acceptable when it:", c:["Uses the writer's own wording and still credits the source","Changes only two words and removes the citation","Copies the original structure as closely as possible without credit","Presents the source's idea as personal experience"], a:0},
+      {q:"Which transition best signals contrast?", c:["However","For example","Similarly","Therefore"], a:0},
+      {q:"A conclusion in an academic report should generally:", c:["Synthesize the main findings and connect them to the purpose","Introduce many unrelated claims","Copy the title only","Remove all evidence"], a:0},
+      {q:"If a source's data do not support a desired result, intellectual integrity requires the writer to:", c:["Report and interpret the data honestly","Alter the values to fit the hypothesis","Delete inconvenient observations","Invent a new sample"], a:0},
+      {q:"When declaring AI assistance in academic work, the student should:", c:["Follow the instructor's or institution's required disclosure practice","Claim the tool performed human fieldwork","Use invented citations from the tool","Hide all assistance automatically"], a:0},
+      {q:"Specific feedback is more useful than vague criticism because it:", c:["Identifies what works and what concrete change could improve the work","Makes the presenter feel embarrassed","Avoids discussing the content","Replaces revision"], a:0},
+      {q:"A reflection on an academic task should consider:", c:["The communication choices made, the result, and improvements for next time","Only the final grade","Which classmate to blame","How to avoid all future feedback"], a:0},
+      {q:"Organized notes taken during a lecture are useful because they:", c:["Support later review and accurate completion of tasks","Replace the need to understand the topic","Record only the speaker's jokes","Prevent the learner from asking questions"], a:0},
+      {q:"A reaction paper should generally:", c:["Summarize a text and give a reasoned response to it","Copy the source without a citation","List unrelated personal information","Present data without explaining its meaning"], a:0}
     ]
   },
   third: {
@@ -409,9 +569,9 @@ const TERM_CONTENT = {
 const REVIEWER_BY_TERM = {
   first: REVIEWER,
   second: {
-    math: "GENERAL MATHEMATICS — SECOND TERM REVIEWER\n\nANALYTIC GEOMETRY & CALCULUS\n• Slope describes rate of change; parallel lines have equal slopes.\n• A circle with center (h,k) and radius r follows (x-h)^2 + (y-k)^2 = r^2.\n• The derivative describes instantaneous rate of change.\n• Use graphs and equations together to classify and model functions.\n• Check units and interpret what a rate of change means in the real situation.\n\nDATA & MATRICES\n• A matrix is a rectangular arrangement of numbers.\n• The determinant of [[a,b],[c,d]] is ad - bc.\n• Median is the middle value after ordering data.\n• Use tables, graphs, and statistical measures to communicate patterns clearly.",
-    science: "GENERAL SCIENCE — SECOND TERM REVIEWER\n\nCELLULAR ORGANIZATION\n• The nucleus stores genetic information; DNA carries hereditary instructions.\n• Osmosis is the movement of water across a selectively permeable membrane.\n• Mitosis produces genetically identical daughter cells.\n• Cell structures work together to obtain materials, release energy, and maintain life.\n• Specialized cells have structures suited to their functions.\n\nGENETICS & ECOLOGY\n• Genotype is genetic makeup; phenotype is observable traits.\n• Food webs show interconnected feeding relationships in an ecosystem.\n• Genes are segments of DNA, and chromosomes organize genetic material.\n• Energy flows through ecosystems while matter cycles between living and nonliving parts.",
-    english: "EFFECTIVE COMMUNICATION — SECOND TERM REVIEWER\n\nACADEMIC & TRAINING COMMUNICATION\n• Academic communication is formal, structured, evidence-based, and discipline-specific.\n• A thesis states the central claim; an outline organizes ideas before drafting.\n• Cite sources and represent another person's work honestly to avoid plagiarism.\n• Presentations and research reports should be clear, supported, and appropriate for their audience.\n• Read charts, tables, figures, and diagrams by identifying their labels, patterns, and evidence.\n• Condense information into a summary, synopsis, paraphrase, outline, chart, or diagram.\n• AI assistance and borrowed ideas should be acknowledged according to the required citation practice."
+     math: "GENERAL MATHEMATICS — SECOND TERM, WEEKS 1–3 REVIEWER\n\nPIECEWISE FUNCTIONS\n• A piecewise function uses different formulas on specified intervals or conditions.\n• Use piecewise rules for practical situations such as fare rates, purchasing discounts, and income-tax brackets.\n• Identify the input interval first, then apply only the rule assigned to that interval.\n• Pay close attention to boundary symbols such as <, ≤, >, and ≥ so the correct rule is used.\n• Write the domain conditions beside each rule and evaluate one interval at a time.\n• Check whether the result is reasonable for the situation and the units used.\n\nDATA AND MEASUREMENT\n• Qualitative data describe categories; quantitative data are numerical.\n• Discrete data are countable; continuous data can take values within a range.\n• Nominal data are labels, ordinal data have an order, interval data have equal differences without a true zero, and ratio data have equal differences with a meaningful zero.\n• Mean = sum of values / number of values. Median is the middle ordered value. Mode is the most frequent value.\n• Range = maximum − minimum. Variability describes how spread out values are; variance and standard deviation quantify spread.\n• The mean is sensitive to outliers, while the median is often more representative of strongly skewed data.\n• Choose measures based on the data type and purpose. Calculators, spreadsheets, Jamovi, and other tools can calculate measures, but the results must still be interpreted.\n• A good interpretation names the measure, describes the pattern, and connects the result to the original context.\n\nTRIGONOMETRY AND TRIANGLES\n• SOH-CAH-TOA: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse, tan θ = opposite/adjacent.\n• The Pythagorean theorem is a² + b² = c² for a right triangle.\n• An angle of elevation is measured upward from a horizontal line; an angle of depression is measured downward.\n• Bearings describe direction in navigation and should be read with a clear reference direction, usually clockwise from north.\n• For an oblique triangle, Heron's Formula uses A = √[s(s−a)(s−b)(s−c)], where s = (a+b+c)/2.\n• When two sides and their included angle are known, use A = 1/2 ab sin(C).\n• Draw and label the figure, select the appropriate ratio or formula, keep units consistent, and check whether the answer fits the real situation.\n• In a right triangle, the hypotenuse is opposite the right angle and is always the longest side.\n• Report measured answers with appropriate units and a sensible degree of rounding.",
+     science: "GENERAL SCIENCE — SECOND TERM, WEEKS 1–3 REVIEWER\n\nCHEMICAL REACTIONS IN EVERYDAY LIFE\n• Decomposition breaks one compound into simpler substances and can be represented as AB → A + B.\n• Acids reacting with carbonates commonly produce a salt, water, and carbon dioxide.\n• Acids reacting with metals commonly produce a salt and hydrogen gas.\n• Combustion usually involves fuel and oxygen and releases energy; burning is a common example.\n• Baking, cleaning, burning, photosynthesis, respiration, and metabolism involve chemical reactions.\n• Photosynthesis: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂.\n• Cellular respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy.\n• Metabolism is the collection of chemical reactions in cells that builds, breaks down, and transforms substances needed for life.\n• The law of conservation of mass means atoms are rearranged, not created or destroyed. Equations should represent the same number of each type of atom on both sides.\n• Evidence of a reaction may include gas formation, an unexpected temperature change, a color change, or formation of a new substance.\n• Chemical equations should be balanced with coefficients without changing the chemical formulas of the substances.\n\nSOLUTIONS IN THE ENVIRONMENT\n• A solution is a homogeneous mixture. The solute is dissolved in the solvent; in saltwater, salt is the solute and water is the solvent.\n• Concentration describes how much solute is present relative to the amount of solution or solvent. A dilute solution has relatively little solute; a concentrated solution has more.\n• A saturated solution contains as much dissolved solute as it can hold under given conditions.\n• Household, industrial, and environmental solutions should be identified, handled, stored, and disposed of safely.\n• Keep labels, use appropriate protective equipment, provide ventilation when required, and never mix cleaners unless the label says it is safe.\n• Test investigations carefully: vary the intended factor, control other conditions, measure results, and record evidence.\n• In a plant investigation, salt concentration can be the independent variable and plant growth can be the dependent variable; a control group provides a comparison.\n• Saltwater and wastewater can change conditions in local ecosystems, stress organisms, and contaminate water sources.\n• Recommendations for reducing environmental harm should be based on evidence about a solution's composition and effects. Follow product labels and relevant DTI, FDA, and DENR guidance.",
+     english: "EFFECTIVE COMMUNICATION — COMPLETE SECOND TERM REVIEWER\n\nACADEMIC AND TECHNICAL TEXTS\n• Academic and technical communication is formal, structured, discipline-specific, and shaped by audience, purpose, and context.\n• Use critical listening, reading, and viewing to identify main ideas, evidence, assumptions, intent, and meaning.\n• Interpret charts, tables, figures, diagrams, and other multimodal forms by checking titles, labels, units, scales, patterns, trends, and supporting evidence.\n• Use context, word parts, references, and subject knowledge to understand unfamiliar specialized vocabulary; verify important meanings with reliable sources.\n• Distinguish an author's claim from the evidence used to support it and notice possible bias or unsupported assumptions.\n\nINTERACTION AND COLLABORATION\n• Match language, tone, and structure to the academic or training situation.\n• Follow spoken, written, and multimodal procedures accurately to achieve the intended outcome.\n• Participate constructively by asking relevant questions, providing respectful feedback, and responding appropriately.\n• Academic and technical collaboration works best when members share knowledge, divide responsibilities, listen to different viewpoints, and work toward a common goal.\n• In a discussion or debate, support a point with relevant reasons and evidence rather than attacking a person.\n\nCLEAR ACADEMIC EXPRESSION\n• A thesis states the central claim or controlling idea; an outline organizes ideas before drafting.\n• Academic texts, presentations, research reports, and essays need clear organization, precise language, appropriate terminology, and evidence.\n• Use diagrams, graphs, charts, infographics, and other visual aids to explain concepts when they improve understanding; label visuals so they can be interpreted accurately.\n• Condense information into a summary, synopsis, paraphrase, outline, chart, or diagram without changing its meaning.\n• Coherence connects ideas logically; transitions and clear references create cohesion.\n• Introductions establish context and purpose, body sections develop ideas with evidence, and conclusions synthesize the main points.\n\nETHICS AND REFLECTION\n• Cite sources and represent another person's words and ideas honestly. Presenting borrowed work as one's own is plagiarism.\n• A reference list helps readers locate the sources used in an academic or technical text.\n• AI assistance and borrowed ideas should be acknowledged or declared according to the required citation practice.\n• Intellectual integrity means not inventing evidence, altering results dishonestly, or hiding the source of information.\n• Give feedback about content, structure, and language in a specific, respectful, useful way.\n• Reflect after academic or technical communication: identify strengths, areas for growth, and ways to improve future performance."
   },
   third: {
     math: "GENERAL MATHEMATICS — THIRD TERM REVIEWER\n\nPROBABILITY & STATISTICS\n• Probability ranges from 0 (impossible) to 1 (certain).\n• A sample is a subset of a population; expected value is a weighted average of outcomes.\n• Mutually exclusive events cannot happen at the same time.\n• A confidence interval gives a range of plausible values for a population parameter.\n• Distinguish independent events from mutually exclusive events; independence concerns how events affect one another.\n• Sampling methods should represent the population and reduce avoidable bias.\n• Interpret statistical results in context instead of reporting numbers without meaning.",
@@ -678,19 +838,28 @@ function subjectLabels(subjArr){
   return (subjArr||[]).map(s=>SUBJECT_META[s] ? SUBJECT_META[s].label : s).join(", ");
 }
 function termLabels(termArr){
-  return (termArr||["first"]).map(v => (TERMS.find(t=>t.value===v)||TERMS[0]).label).join(", ");
+  return "Second Term";
 }
 const TERM_BANK = {
-  first: BANK,
-  second: {pretest: TERM_CONTENT.second, posttest: TERM_CONTENT.second},
-  third: {pretest: TERM_CONTENT.third, posttest: TERM_CONTENT.third}
+  second: {
+    pretest: {
+      math: TERM_CONTENT.second.math.slice(0, 30),
+      science: TERM_CONTENT.second.science.slice(0, 30),
+      english: TERM_CONTENT.second.english.slice(0, 30)
+    },
+    posttest: {
+      math: TERM_CONTENT.second.math.slice(30, 60),
+      science: TERM_CONTENT.second.science.slice(30, 60),
+      english: TERM_CONTENT.second.english.slice(30, 60)
+    }
+  },
 };
 
 function buildPracticeQueue(subjects, testType, terms){
   const counts = distributeCount(PRACTICE_TOTAL, subjects.length);
   let queue = [];
   subjects.forEach((subj, i)=>{
-    const pool = (terms || ["first"]).flatMap(term => (TERM_BANK[term] || BANK)[testType][subj] || []);
+    const pool = (terms || ["second"]).flatMap(term => (TERM_BANK[term] || TERM_BANK.second)[testType][subj] || []);
     const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
     picked.forEach(item=>{
       const correctText = item.c[item.a];
@@ -710,11 +879,11 @@ function buildAssignedQueue(assignment, testType){
   subjects.forEach((subj, i)=>{
     let pool;
     if(assignment.questionSource === "custom"){
-      const terms = assignment.terms || [assignment.term || "first"];
+      const terms = ["second"];
       pool = terms.flatMap(term => (((assignment.customQuestions || {})[term] || {})[testType] || {})[subj] || []);
     } else {
-      const terms = assignment.terms || [assignment.term || "first"];
-      pool = terms.flatMap(term => (TERM_BANK[term] || BANK)[testType][subj] || []);
+      const terms = ["second"];
+      pool = terms.flatMap(term => (TERM_BANK[term] || TERM_BANK.second)[testType][subj] || []);
     }
     const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
     picked.forEach(item=>{
@@ -745,7 +914,7 @@ let state = {
   student: getStudent(),
   practiceSubjects: [],
   practiceType: null,
-  practiceTerms: ["first"],
+  practiceTerms: ["second"],
   quizQueue: [],
   qIndex: 0,
   answers: [],
@@ -890,12 +1059,6 @@ function renderPracticeSetup(){
         <div class="who">${label}</div>
       </div>
       <p class="fine-print" style="margin-top:0; margin-bottom:14px;">${PRACTICE_TOTAL} questions total, ${PRACTICE_TIMER} seconds each. Pick your subject(s):</p>
-      <p class="field-label">Term(s)</p>
-      <div class="checkbox-row" id="termChecks">
-        ${TERMS.map(t=>`<label class="checkbox-item ${state.practiceTerms.includes(t.value)?'checked':''}" data-term="${t.value}">
-          <input type="checkbox" ${state.practiceTerms.includes(t.value)?'checked':''}><span>${t.label}</span>
-        </label>`).join("")}
-      </div>
       <div class="checkbox-row" id="subjChecks">
         ${ORDER.map(s=>`
           <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
@@ -909,14 +1072,7 @@ function renderPracticeSetup(){
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
-  document.querySelectorAll("#termChecks .checkbox-item").forEach(el=>{
-    el.addEventListener("click", e=>{
-      e.preventDefault();
-      const i = state.practiceTerms.indexOf(el.dataset.term);
-      if(i >= 0) state.practiceTerms.splice(i,1); else state.practiceTerms.push(el.dataset.term);
-      renderPracticeSetup();
-    });
-  });
+  state.practiceTerms = ["second"];
   document.querySelectorAll("#subjChecks .checkbox-item").forEach(el=>{
     el.addEventListener("click", (e)=>{
       e.preventDefault();
@@ -930,7 +1086,7 @@ function renderPracticeSetup(){
     if(state.practiceSubjects.length === 0){ state.practiceError = "Pick at least one subject."; renderPracticeSetup(); return; }
     state.practiceError = "";
     state.currentTimerSeconds = PRACTICE_TIMER;
-    if(state.practiceTerms.length === 0){ state.practiceError = "Pick at least one term."; renderPracticeSetup(); return; }
+    state.practiceTerms = ["second"];
     state.quizQueue = buildPracticeQueue(state.practiceSubjects, state.practiceType, state.practiceTerms);
     state.qIndex = 0; state.answers = []; state.saved = false;
     state.screen = "quiz"; route();
@@ -961,11 +1117,11 @@ function logSelfAssessment(kind){
 function renderReviewer(){
   bg();
   const subj = state.reviewerSubject;
-  const terms = state.reviewerTerms || (state.activeAssignment && (state.activeAssignment.terms || [state.activeAssignment.term])) || ["first"];
+  const terms = ["second"];
   const content = terms.map(term=>{
     const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
       state.activeAssignment.customReviewer[term] && state.activeAssignment.customReviewer[term][subj];
-    return custom || (REVIEWER_BY_TERM[term] || REVIEWER)[subj];
+    return custom || (REVIEWER_BY_TERM[term] || REVIEWER_BY_TERM.second)[subj];
   }).filter(Boolean).join("\n\n");
   app.innerHTML = `
     <div class="fade-in">
@@ -976,27 +1132,12 @@ function renderReviewer(){
       <div class="tab-row">
         ${ORDER.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
       </div>
-      <p class="field-label">Term(s)</p>
-      <div class="checkbox-row" id="reviewerTermChecks">
-        ${TERMS.map(t=>`<label class="checkbox-item ${terms.includes(t.value)?'checked':''}" data-term="${t.value}">
-          <input type="checkbox" ${terms.includes(t.value)?'checked':''}><span>${t.label}</span>
-        </label>`).join("")}
-      </div>
       <div class="reviewer-box">${escapeHtml(content)}</div>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen = state.reviewerReturnScreen; route(); });
   document.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click", ()=>{ state.reviewerSubject = btn.dataset.subj; renderReviewer(); });
-  });
-  document.querySelectorAll("#reviewerTermChecks .checkbox-item").forEach(el=>{
-    el.addEventListener("click", e=>{
-      e.preventDefault();
-      const next = [...terms];
-      const i = next.indexOf(el.dataset.term);
-      if(i >= 0) next.splice(i,1); else next.push(el.dataset.term);
-      if(next.length){ state.reviewerTerms = next; renderReviewer(); }
-    });
   });
 }
 
@@ -1179,8 +1320,8 @@ async function autoSaveResult({testType, terms, correct, total, pct}){
     }));
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
-      classId: state.activeClassId || null,
-       testType, terms: terms && terms.length ? terms : ["first"], term: (terms && terms[0]) || "first", subjects: subjectsCovered, subjectBreakdown,
+        classId: state.activeClassId || null,
+        testType, terms: ["second"], term: "second", subjects: subjectsCovered, subjectBreakdown,
       correct, total, pct, timestamp: Date.now()
     });
     state.saved = true;
@@ -1232,7 +1373,7 @@ async function renderMyProgress(){
 
   const tableRows = rows.map(r=>{
      const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
-     return `<tr><td>${tag}</td><td>${termLabels(r.terms || [r.term])}</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
+     return `<tr><td>${tag}</td><td>Second Term</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
   }).join("");
 
   app.innerHTML = `
@@ -1314,7 +1455,11 @@ async function renderStudentClass(){
   }catch(e){ console.error(e); }
 
   state.activeAssignment = assignment;
-  state.reviewerTerms = assignment ? (assignment.terms || [assignment.term || "first"]) : ["first"];
+  if(assignment){
+    assignment.terms = ["second"];
+    assignment.term = "second";
+  }
+  state.reviewerTerms = ["second"];
 
   if(!assignment){
     app.innerHTML = `
@@ -1358,7 +1503,7 @@ async function renderStudentClass(){
       <div class="subject-strip">${(assignment.subjects||c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <div class="assign-box">
-         <div class="al-row"><span class="al-label">Term(s)</span><span class="al-value">${termLabels(assignment.terms || [assignment.term])}</span></div>
+         <div class="al-row"><span class="al-label">Term</span><span class="al-value">Second Term</span></div>
         <div class="al-row"><span class="al-label">Questions</span><span class="al-value">${assignment.numQuestions||20}</span></div>
         <div class="al-row"><span class="al-label">Timer per question</span><span class="al-value">${assignment.timerSeconds||20}s</span></div>
         <div class="al-row"><span class="al-label">Attempts allowed</span><span class="al-value">${assignment.maxAttempts||1}</span></div>
@@ -1378,7 +1523,7 @@ async function renderStudentClass(){
     const btn = document.getElementById(id);
     if(btn) btn.addEventListener("click", ()=>{
       state.practiceType = testType;
-       state.practiceTerms = assignment.terms || [assignment.term || "first"];
+        state.practiceTerms = ["second"];
       state.practiceSubjects = assignment.subjects || c.subjects || [];
       state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
       state.quizQueue = buildAssignedQueue(assignment, testType);
