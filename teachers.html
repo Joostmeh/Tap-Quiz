@@ -21,12 +21,12 @@
     min-height:100vh;
     background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper);
     font-family:'IBM Plex Sans', sans-serif; color:var(--ink);
-    display:flex; justify-content:center; padding:28px 16px 60px;
+    display:flex; justify-content:center; padding:28px 16px 60px; transition:background 0.5s ease;
   }
   .wrap{ width:100%; max-width:560px; }
   .brand{ display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; gap:12px; }
   .brand .logo-row{ display:flex; align-items:center; gap:10px; }
-  .brand .logo{ width:46px; height:46px; border-radius:12px; box-shadow:var(--shadow); flex-shrink:0; object-fit:cover; }
+  .brand img.logo{ width:46px; height:46px; border-radius:12px; object-fit:cover; box-shadow:var(--shadow); }
   .brand h1{ font-family:'Space Grotesk', sans-serif; font-size:clamp(19px,5vw,24px); font-weight:700; letter-spacing:-0.02em; margin:0; line-height:1.05; }
   .brand h1 span{ color:var(--english); }
   .brand .tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.03em; text-align:right; line-height:1.4; }
@@ -38,87 +38,55 @@
   .pill-btn{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; background:var(--accent-soft); color:var(--ink); border:none; border-radius:100px; padding:8px 12px; cursor:pointer; }
   .pill-btn.outline{ background:transparent; border:1.5px solid var(--border); }
 
+  .subject-strip{ display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .subject-chip{ flex:1; min-width:90px; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; cursor:pointer; border:1.5px solid transparent; }
+  .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
+  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
+  .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
+  .subject-chip.selected{ border-color:currentColor; }
+
   .field-label{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin:0 0 8px 2px; }
 
-  input[type="text"], input[type="email"], input[type="number"], input[type="datetime-local"], textarea, select{
+  input[type="text"], input[type="email"], select{
     width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--border);
     background:var(--paper); font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink);
     outline:none; margin-bottom:16px; transition:border-color .15s ease, box-shadow .15s ease;
   }
-  input:focus, textarea:focus, select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
-  textarea{ min-height:110px; resize:vertical; font-family:'IBM Plex Mono', monospace; font-size:12.5px; line-height:1.5; }
+  input:focus, select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
 
   .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
-  .checkbox-item, .radio-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
-  .checkbox-item.checked, .radio-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
-  .checkbox-item input, .radio-item input{ width:auto; margin:0; }
-  .radio-item.disabled{ opacity:0.6; cursor:not-allowed; }
+  .checkbox-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; background:var(--paper); }
+  .checkbox-item.checked{ border-color:var(--accent); background:var(--accent-soft); }
+  .checkbox-item input{ width:auto; margin:0; }
 
-  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; }
+  .mode-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+  .mode-btn{ cursor:pointer; border:1.5px solid var(--border); background:var(--paper); border-radius:14px; padding:16px 10px; text-align:left; transition:all .15s ease; }
+  .mode-btn:hover{ border-color:var(--accent); }
+  .mode-btn .mtitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; display:block; margin-bottom:4px; }
+  .mode-btn .msub{ font-size:11.5px; color:var(--ink-soft); line-height:1.35; display:block; }
+  .mode-btn.locked{ opacity:0.45; cursor:not-allowed; }
+
+  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; margin-bottom:0; }
   .primary-btn:active{ transform:scale(0.98); }
-  .primary-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+  .primary-btn:disabled{ opacity:0.4; cursor:not-allowed; }
   .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
 
   .fine-print{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5; }
+  .link-btn{ background:none; border:none; color:var(--ink); text-decoration:underline; cursor:pointer; font:inherit; padding:0; }
   .error-note{ font-size:12.5px; color:var(--bad); margin:-8px 0 14px; }
-  .save-note{ font-size:12.5px; color:var(--good); margin:-8px 0 14px; }
-
-  .hero{ text-align:center; padding:6px 4px 20px; }
-  .hero .kicker{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:10px; }
-  .hero h2{ font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:700; line-height:1.25; margin:0 0 12px; }
-  .hero p{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin:0 0 20px; }
-  .feature-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; text-align:left; }
-  .feature-item{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--ink-soft); }
-  .feature-item b{ color:var(--ink); }
-  .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:6px; flex-shrink:0; }
-
-  .home-grid{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
-  .home-card{ border:1.5px solid var(--border); border-radius:16px; padding:18px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; display:flex; align-items:center; gap:14px; }
-  .home-card:hover{ border-color:var(--accent); }
-  .home-card .hicon{ font-size:22px; }
-  .home-card .htitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:2px; }
-  .home-card .hsub{ font-size:12px; color:var(--ink-soft); }
-
-  .subject-chip{ display:inline-block; padding:4px 10px; border-radius:100px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; margin:0 6px 6px 0; }
-  .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
-  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
-  .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
 
   .class-card{ border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; }
   .class-card:hover{ border-color:var(--accent); }
-  .class-card .ctitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:6px; }
-  .class-card .cmeta{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); margin-top:6px; }
+  .class-card .ctitle{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
+  .class-card .cmeta{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
 
-  .code-box{ text-align:center; padding:22px 10px; border-radius:16px; background:var(--accent-soft); margin-bottom:18px; }
-  .code-box .clabel{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.06em; margin-bottom:8px; }
-  .code-box .ccode{ font-family:'Space Grotesk', sans-serif; font-size:34px; font-weight:700; letter-spacing:0.08em; }
-
-  table.roster-table{ width:100%; border-collapse:collapse; font-size:12px; }
-  table.roster-table th, table.roster-table td{ text-align:left; padding:9px 6px; border-bottom:1px solid var(--border); }
-  table.roster-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
-
-  .tab-row{ display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; }
-  .tab-btn{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; padding:8px 12px; border-radius:100px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; color:var(--ink-soft); }
-  .tab-btn.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--ink); }
-
-  .qb-item{ border:1.5px solid var(--border); border-radius:12px; padding:12px; margin-bottom:10px; background:var(--paper); }
-  .qb-item .qbi-text{ font-weight:600; font-size:13px; margin-bottom:6px; }
-  .qb-item .qbi-c{ font-size:12px; color:var(--ink-soft); margin-bottom:2px; }
-  .qb-item .qbi-c.correct{ color:var(--good); font-weight:600; }
-  .small-del{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; background:transparent; border:1.5px solid var(--bad); color:var(--bad); border-radius:8px; padding:5px 9px; cursor:pointer; margin-top:8px; }
-
-  .activity-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 6px; border-bottom:1px solid var(--border); font-size:12.5px; }
-  .activity-row .a-name{ font-weight:600; }
-  .activity-row .a-time{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); }
-
-  .skeleton{ border-radius:10px; background:linear-gradient(90deg, var(--border) 25%, var(--paper) 50%, var(--border) 75%); background-size:200% 100%; animation:shimmer 1.3s infinite; }
-  @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
-  .skeleton-row{ height:38px; margin-bottom:8px; }
+  table.results-table{ width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+  table.results-table th, table.results-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--border); }
+  table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
   .fade-in{ animation:fadeIn .3s ease; }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 
   footer.credit{ text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; font-family:'IBM Plex Mono', monospace; }
 </style>
@@ -127,13 +95,13 @@
 <div class="wrap">
   <div class="brand">
     <div class="logo-row">
-      <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
+      <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
-    <div class="tag">FOR TEACHERS<br>CLASSES &middot; RESULTS &middot; ROSTERS</div>
+    <div class="tag">FOR TEACHERS<br>GEN. MATH · GEN. SCIENCE · COMMUNICATION</div>
   </div>
   <div id="app" class="card"></div>
-  <footer class="credit">web-based teacher companion &middot; research instrument</footer>
+  <footer class="credit">web-based quiz application &middot; research instrument</footer>
 </div>
 
 <script>
@@ -149,801 +117,258 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const SUBJECT_META = {
-  math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)",    cls:"math"},
-  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)", cls:"science"},
-  english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)", cls:"english"}
+  math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
+  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)"},
+  english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
 };
 const ORDER = ["math","science","english"];
 const TERMS = [
-  {value:"first", label:"First Term"},
-  {value:"second", label:"Second Term"},
-  {value:"third", label:"Third Term"}
+  {value:"second", label:"Second Term"}
 ];
-function termLabels(termArr){
-  return (termArr||["first"]).map(v => (TERMS.find(t=>t.value===v)||TERMS[0]).label).join(", ");
-}
-const MAX_QUESTIONS = 20;
 
-function escapeHtml(str){
-  const d = document.createElement("div");
-  d.textContent = str || "";
-  return d.innerHTML;
-}
-function fmtDate(ts){
-  const d = new Date(ts);
-  return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-}
-function genJoinCode(){
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = "";
-  for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
-  return code;
-}
-function toEpoch(dtLocalStr){
-  if(!dtLocalStr) return null;
-  const t = new Date(dtLocalStr).getTime();
-  return isNaN(t) ? null : t;
-}
-function fromEpoch(ts){
-  if(!ts) return "";
-  const d = new Date(ts);
-  const pad = n => String(n).padStart(2,'0');
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function getTeacher(){
-  try{
-    const raw = window.localStorage.getItem("tq_teacher");
-    return raw ? JSON.parse(raw) : null;
-  }catch(e){ return null; }
-}
-function setTeacher(t){ window.localStorage.setItem("tq_teacher", JSON.stringify(t)); }
-
-function defaultAssignmentDraft(classSubjects){
-  const subs = (classSubjects && classSubjects.length) ? classSubjects.slice() : ["math"];
-  return {
-    subjects: subs,
-    terms: ["first"],
-    numQuestions: 20,
-    timerSeconds: 20,
-    maxAttempts: 1,
-    scheduleStart: "",
-    scheduleEnd: "",
-    questionSource: "preset",
-    customQuestions: Object.fromEntries(TERMS.map(t=>[t.value, {
-      pretest:{math:[],science:[],english:[]}, posttest:{math:[],science:[],english:[]}
-    }])),
-    customReviewer: Object.fromEntries(TERMS.map(t=>[t.value, {math:"",science:"",english:""}])),
-    qbTestType: "pretest",
-    qbTerm: "first",
-    qbForm: {subject: subs[0], q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
-  };
-}
-function normalizeAssignmentData(d, classSubjects){
-  const base = defaultAssignmentDraft(classSubjects);
-  const terms = d.terms || [d.term || "first"];
-  const customQuestions = d.customQuestions && d.customQuestions.first
-    ? d.customQuestions
-    : {first:d.customQuestions || base.customQuestions.first, second:base.customQuestions.second, third:base.customQuestions.third};
-  const customReviewer = d.customReviewer && d.customReviewer.first
-    ? d.customReviewer
-    : {first:d.customReviewer || base.customReviewer.first, second:base.customReviewer.second, third:base.customReviewer.third};
-  return {...base, ...d, scheduleStart:fromEpoch(d.scheduleStart), scheduleEnd:fromEpoch(d.scheduleEnd), terms, customQuestions, customReviewer,
-    qbTestType:"pretest", qbTerm:terms[0] || "first",
-    qbForm:{subject:(d.subjects||classSubjects)[0] || "math", q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}};
-}
-
-let state = {
-  screen: "intro",
-  teacher: getTeacher(),
-  myClasses: null,
-  classCache: {},
-  activityCache: {},
-  activeClassId: null,
-  newClassName: "",
-  newClassSubjects: [],
-  createError: "",
-  getStartedError: "",
-  assignmentDraft: null,
-  assignmentLoaded: false,
-  assignmentSaveNote: "",
-  activityTab: "attempts"
+const TERM_CONTENT = {
+  second: {
+    math: [
+      {q:"A function that uses different rules on different intervals is called a:", c:["Constant function","Piecewise function","Inverse function","Quadratic sequence"], a:1},
+      {q:"A taxi charges P50 for the first 4 km and P13 for each additional kilometer. Which idea is needed to model this fare?", c:["A single constant rule","A piecewise function","A normal distribution","A trigonometric identity"], a:1},
+      {q:"Why are piecewise functions useful for income-tax schedules?", c:["Tax rates can change across income brackets","They remove all tax deductions","They only describe circular graphs","They require no input values"], a:0},
+      {q:"A store gives one discount rate for purchases below P1,000 and another for purchases of P1,000 or more. This is an example of:", c:["A piecewise purchasing rule","A geometric sequence","A random variable","A right triangle"], a:0},
+      {q:"Which is qualitative data?", c:["Number of siblings","Monthly income in pesos","Type of transportation used","Height in centimeters"], a:2},
+      {q:"Which is quantitative discrete data?", c:["Color of a shirt","Number of books borrowed","Temperature of a room","Length of fabric"], a:1},
+      {q:"The categories freshman, sophomore, junior, and senior represent which level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:1},
+      {q:"Which level of measurement has a meaningful zero and allows ratios?", c:["Nominal","Ordinal","Interval","Ratio"], a:3},
+      {q:"What is the mean of 4, 6, and 8?", c:["5","6","7","18"], a:1},
+      {q:"Which measure is the middle value after data are arranged in order?", c:["Mean","Median","Mode","Range"], a:1},
+      {q:"Which measure identifies the most frequently occurring value?", c:["Mean","Median","Mode","Variance"], a:2},
+      {q:"What is the range of 12, 5, 9, and 15?", c:["7","10","12","15"], a:1},
+      {q:"Which measure describes how spread out data values are?", c:["Variability","Category","Frequency label","Sample name"], a:0},
+      {q:"A spreadsheet is especially useful for:", c:["Calculating and organizing statistical measures","Changing a nominal variable into a person","Removing the need to interpret data","Making every data value identical"], a:0},
+      {q:"If two data sets have the same mean but one has a larger standard deviation, the second set is:", c:["Less variable","More spread out","Always smaller","Missing its median"], a:1},
+      {q:"When choosing a measure of central tendency, a researcher should consider:", c:["The purpose and type of the data","Only the largest value","The color of the graph","Whether the data were typed by hand"], a:0},
+      {q:"In a right triangle, sine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:1},
+      {q:"In a right triangle, cosine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/adjacent"], a:0},
+      {q:"In a right triangle, tangent of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:2},
+      {q:"Which theorem relates the side lengths of a right triangle?", c:["Heron's formula","Pythagorean theorem","Remainder theorem","Bayes' theorem"], a:1}
+    ],
+    science: [
+      {q:"A reaction in which one compound breaks into simpler substances is:", c:["Combustion","Decomposition","Neutralization only","Condensation"], a:1},
+      {q:"When an acid reacts with a carbonate, the products commonly include salt, water, and:", c:["Oxygen","Carbon dioxide","Nitrogen","Glucose"], a:1},
+      {q:"An acid reacting with a metal commonly produces salt and:", c:["Hydrogen gas","Carbon dioxide only","Chlorophyll","Starch"], a:0},
+      {q:"Combustion usually requires a fuel and:", c:["Oxygen","Salt","Water vapor only","Nitrogen only"], a:0},
+      {q:"Baking bread involves chemical changes such as gas production by:", c:["Yeast fermentation","Freezing","Melting","Filtration"], a:0},
+      {q:"Which is a safe practice when using a household chemical?", c:["Read the label and follow handling instructions","Mix every cleaner together","Store it in an unlabeled bottle","Pour leftovers into a river"], a:0},
+      {q:"Which equation represents photosynthesis?", c:["6CO2 + 6H2O + light → C6H12O6 + 6O2","C6H12O6 + 6O2 → 6CO2 + 6H2O + energy","NaCl → Na + Cl only","H2O → H2 + O2 in every cell"], a:0},
+      {q:"Cellular respiration primarily releases usable energy from:", c:["Glucose","Sand","Plastic","Table salt"], a:0},
+      {q:"Metabolism refers to:", c:["The chemical reactions occurring in body cells","Only the movement of blood","A type of weather pattern","The shape of a mineral"], a:0},
+      {q:"The law of conservation of mass means that during a chemical reaction:", c:["Atoms are rearranged but not created or destroyed","All matter disappears","Only gases can react","Products always weigh less"], a:0},
+      {q:"In a solution, the substance that is dissolved is the:", c:["Solute","Solvent","Residue","Indicator only"], a:0},
+      {q:"In saltwater, the water is usually the:", c:["Solute","Solvent","Precipitate","Reactant gas"], a:1},
+      {q:"A solution is best described as:", c:["A homogeneous mixture","A single solid element only","A mixture that must always be cloudy","A living organism"], a:0},
+      {q:"Increasing the amount of salt dissolved in the same amount of water generally makes the solution:", c:["More concentrated","Less concentrated","A gas","Chemically empty"], a:0},
+      {q:"Before storing a chemical, a student should first:", c:["Check its label and compatibility requirements","Remove the label","Place it near food","Mix it with another chemical"], a:0}
+    ],
+    english: [
+      {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
+      {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
+      {q:"A chart or table in a report should be interpreted by examining its:", c:["Labels, units, patterns, and evidence","Background color only","File name only","Margins only"], a:0},
+      {q:"Specialized vocabulary is vocabulary that is:", c:["Used by a particular academic or technical field","Always informal slang","Unrelated to a discipline","Impossible to define from context"], a:0},
+      {q:"In an academic discussion, an appropriate tone is generally:", c:["Respectful, clear, and suited to the topic","Insulting and vague","Always humorous","Unrelated to the audience"], a:0},
+      {q:"Following a procedure accurately helps a learner:", c:["Achieve the intended outcome","Avoid reading instructions","Replace all safety checks","Make evidence unnecessary"], a:0},
+      {q:"A constructive question during a lecture should:", c:["Clarify or deepen understanding of the topic","Interrupt only to change the subject","Attack the speaker personally","Repeat an unrelated rumor"], a:0},
+      {q:"Useful feedback on a presentation should address its:", c:["Content, structure, and language","Presenter's clothing only","Unrelated personal history","Room temperature only"], a:0},
+      {q:"Effective collaboration on a technical task requires group members to:", c:["Share knowledge and work toward a common goal","Hide information from one another","Avoid assigning responsibilities","Reject all feedback"], a:0},
+      {q:"A thesis statement usually presents the:", c:["Central claim or controlling idea","List of page numbers","Author's home address","Final bibliography only"], a:0},
+      {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a report informal","Hide the topic"], a:0},
+      {q:"A research report should support important claims with:", c:["Evidence and properly cited sources","Rumors","Only personal preference","Unrelated quotations"], a:0},
+      {q:"A diagram, graph, or infographic can help a writer:", c:["Represent complex information in a multimodal form","Avoid explaining the information","Remove the need for labels","Guarantee that data are correct"], a:0},
+      {q:"To condense a long academic text means to:", c:["Reduce it to its essential ideas","Copy every sentence exactly","Add unrelated details","Remove the central claim"], a:0},
+      {q:"A paraphrase should:", c:["Restate an idea in your own words while acknowledging the source","Copy the source word for word without credit","Change only the punctuation","Present another person's idea as original"], a:0},
+      {q:"Plagiarism is:", c:["Presenting another person's work or ideas as your own","Using a citation correctly","Making an outline","Giving respectful feedback"], a:0},
+      {q:"Citation helps readers:", c:["Identify and verify the sources used","Know the writer's favorite color","Skip the entire report","Change the research question"], a:0},
+      {q:"AI assistance in an academic text should be:", c:["Acknowledged or declared according to the required practice","Hidden in every situation","Treated as a human source automatically","Used to invent evidence"], a:0}
+    ]
+  }
 };
 
-const app = document.getElementById("app");
+let teacherUnsub = null;
 
-function route(){
-  const r = {
-    intro: renderIntro, getStarted: renderGetStarted, home: renderHome,
-    createClass: renderCreateClass, myClasses: renderMyClasses,
-    classDetail: renderClassDetail, manageTest: renderManageTest,
-    classActivity: renderClassActivity
-  };
-  (r[state.screen] || renderIntro)();
-}
-
-function renderIntro(){
+function renderTeacherHome(){
+  const app = document.getElementById('app');
   app.innerHTML = `
-    <div class="fade-in">
-      <div class="hero">
-        <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11</div>
-        <h2>Welcome to Tap-Quiz for Teachers.</h2>
-        <p>A quick tour before you dive in — here's what you can do:</p>
-      </div>
-      <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>Create a class:</b> pick a name and one subject, and get a join code students can enter from their own app.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Configure the test:</b> set how many questions, the timer, attempt limits, an optional schedule window, and whether to use the preset bank or your own questions.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Track activity:</b> see who joined, who opened the class, who opened the reviewer, and every attempt broken down by subject.</span></div>
-      </div>
-      <button class="primary-btn" id="continueBtn">Continue</button>
+    <div class="navbar">
+      <div class="who">Portal: <b>Teacher Dashboard</b></div>
+    </div>
+    <div class="hero">
+      <div class="kicker">SESSION MANAGEMENT</div>
+      <h2>Create or Monitor Quiz Sessions</h2>
+    </div>
+    <button class="primary-btn" onclick="showCreateClassForm()">+ Create New Class Session</button>
+    <div style="margin-top:20px;">
+      <div class="field-label">Active & Past Sessions</div>
+      <div id="class-list-container"><div class="empty-note">Loading sessions...</div></div>
     </div>
   `;
-  document.getElementById("continueBtn").addEventListener("click", ()=>{
-    state.screen = state.teacher ? "home" : "getStarted";
-    route();
+  refreshTeacherClasses();
+}
+
+function showCreateClassForm(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="navbar">
+      <button class="pill-btn outline" onclick="renderTeacherHome()">&larr; Back</button>
+      <div class="who">New Session</div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div class="field-label">Class / Section Name</div>
+      <input type="text" id="tc-section" placeholder="e.g. Grade 11 - Einstein" />
+
+      <div class="field-label">Select Subject</div>
+      <select id="tc-subject">
+        <option value="math">General Mathematics</option>
+        <option value="science">General Science</option>
+        <option value="english">Effective Communication</option>
+      </select>
+
+      <div class="field-label">Term</div>
+      <select id="tc-term">
+        <option value="second">Second Term</option>
+      </select>
+
+      <div class="field-label">Quiz Mode</div>
+      <select id="tc-mode">
+        <option value="pretest">Pre-Test</option>
+        <option value="posttest">Post-Test</option>
+      </select>
+    </div>
+    <div id="tc-error" class="error-note" style="display:none;"></div>
+    <button class="primary-btn" onclick="createClassSession()">Generate Access Code & Start</button>
+  `;
+}
+
+function createClassSession(){
+  const section = document.getElementById('tc-section').value.trim();
+  const subject = document.getElementById('tc-subject').value;
+  const term = document.getElementById('tc-term').value;
+  const mode = document.getElementById('tc-mode').value;
+  const err = document.getElementById('tc-error');
+
+  if(!section){
+    err.innerText = "Please enter a class or section name.";
+    err.style.display = "block";
+    return;
+  }
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  const sessionData = {
+    code: code,
+    sectionName: section,
+    subject: subject,
+    term: term,
+    mode: mode,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    status: "active",
+    results: []
+  };
+
+  db.collection("quiz_sessions").doc(code).set(sessionData).then(() => {
+    showClassDetail(code);
+  }).catch(e => {
+    err.innerText = "Error creating session: " + e.message;
+    err.style.display = "block";
   });
 }
 
-function renderGetStarted(){
-  app.innerHTML = `
-    <div class="fade-in">
-      <p class="field-label">Let's get you set up</p>
-      <input type="text" id="nameInput" placeholder="Full name">
-      <input type="email" id="emailInput" placeholder="Email address">
-      ${state.getStartedError ? `<p class="error-note">${escapeHtml(state.getStartedError)}</p>` : ``}
-      <button class="primary-btn" id="goBtn">Start Using Tap-Quiz</button>
-      <p class="fine-print">Just your name and email, no password, no confirmation link. This is how your classes are labeled and saved.</p>
-    </div>
-  `;
-  document.getElementById("goBtn").addEventListener("click", ()=>{
-    const name = document.getElementById("nameInput").value.trim();
-    const email = document.getElementById("emailInput").value.trim();
-    if(!name || !email || !email.includes("@")){
-      state.getStartedError = "Please enter your name and a valid email.";
-      renderGetStarted();
+function refreshTeacherClasses(){
+  db.collection("quiz_sessions").orderBy("createdAt", "desc").limit(20).get().then(snapshot => {
+    const container = document.getElementById('class-list-container');
+    if(!container) return;
+    if(snapshot.empty){
+      container.innerHTML = `<div class="empty-note">No active or previous quiz sessions found.</div>`;
       return;
     }
-    state.getStartedError = "";
-    const teacher = {name, email: email.toLowerCase()};
-    setTeacher(teacher);
-    state.teacher = teacher;
-    state.screen = "home";
-    route();
-  });
-}
-
-function renderHome(){
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <div class="who">Hi, <b>${escapeHtml(state.teacher.name.split(" ")[0])}</b></div>
-        <button class="pill-btn outline" id="switchBtn">Switch account</button>
-      </div>
-      <div class="home-grid">
-        <div class="home-card" id="createCard">
-          <div class="hicon">➕</div>
-          <div><div class="htitle">Create a Class</div><div class="hsub">Pick a name and one subject, get a join code</div></div>
+    let html = "";
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const count = data.results ? data.results.length : 0;
+      html += `
+        <div class="class-card" onclick="showClassDetail('${data.code}')">
+          <div class="ctitle">${data.sectionName} <span style="font-size:12px; font-weight:normal; color:var(--ink-soft);">(Code: ${data.code})</span></div>
+          <div class="cmeta">${SUBJECT_META[data.subject]?.label || data.subject} &middot; ${data.mode.toUpperCase()} &middot; ${count} Submissions</div>
         </div>
-        <div class="home-card" id="classesCard">
-          <div class="hicon">🏫</div>
-          <div><div class="htitle">My Classes</div><div class="hsub">Manage tests, rosters, and activity</div></div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.getElementById("switchBtn").addEventListener("click", ()=>{
-    window.localStorage.removeItem("tq_teacher");
-    state.teacher = null; state.myClasses = null; state.classCache = {};
-    state.screen = "getStarted"; route();
-  });
-  document.getElementById("createCard").addEventListener("click", ()=>{
-    state.newClassName=""; state.newClassSubjects=[]; state.createError="";
-    state.screen="createClass"; route();
-  });
-  document.getElementById("classesCard").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
-}
-
-function renderCreateClass(){
-  const sel = state.newClassSubjects;
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Create a Class</div>
-      </div>
-      <p class="field-label">Class name</p>
-      <input type="text" id="classNameInput" placeholder="e.g. 11 - Vanguard" value="${escapeHtml(state.newClassName)}">
-      <p class="field-label">Subjects covered by this class</p>
-      <div class="checkbox-row" id="subjChecks">
-        ${ORDER.map(s=>`
-          <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
-            <input type="checkbox" value="${s}" ${sel.includes(s)?'checked':''}>
-            <span>${SUBJECT_META[s].label}</span>
-          </label>
-        `).join("")}
-      </div>
-      ${state.createError ? `<p class="error-note">${escapeHtml(state.createError)}</p>` : ``}
-      <button class="primary-btn" id="createBtn">Create Class</button>
-    </div>
-  `;
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
-  document.querySelectorAll("#subjChecks .checkbox-item").forEach(el=>{
-    el.addEventListener("click", (e)=>{
-      e.preventDefault();
-      const v = el.dataset.subj;
-      const idx = state.newClassSubjects.indexOf(v);
-      if(idx >= 0) state.newClassSubjects.splice(idx,1); else state.newClassSubjects.push(v);
-      state.newClassName = document.getElementById("classNameInput").value;
-      renderCreateClass();
+      `;
     });
-  });
-  document.getElementById("createBtn").addEventListener("click", async ()=>{
-    const className = document.getElementById("classNameInput").value.trim();
-    if(!className){ state.createError = "Please name your class."; renderCreateClass(); return; }
-    if(state.newClassSubjects.length === 0){ state.createError = "Pick at least one subject."; renderCreateClass(); return; }
-    state.createError = "";
-    const btn = document.getElementById("createBtn");
-    btn.disabled = true; btn.textContent = "Creating...";
-    try{
-      const joinCode = genJoinCode();
-      const docRef = await db.collection("classes").add({
-        className, subjects: state.newClassSubjects,
-        joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email,
-        createdAt: Date.now()
-      });
-      state.myClasses = null;
-      state.activeClassId = docRef.id;
-      state.classCache[docRef.id] = {
-        classDoc: {id: docRef.id, className, subjects: state.newClassSubjects, joinCode, teacherName: state.teacher.name, teacherEmail: state.teacher.email},
-        roster: null
-      };
-      state.screen = "classDetail";
-      route();
-    }catch(err){
-      state.createError = "Couldn't create the class, check your connection.";
-      console.error(err);
-      renderCreateClass();
-    }
+    container.innerHTML = html;
   });
 }
 
-async function renderMyClasses(){
-  if(state.myClasses === null){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">My Classes</div></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
-    try{
-      const snap = await db.collection("classes").where("teacherEmail","==",state.teacher.email).get();
-      const list = [];
-      snap.forEach(d=> list.push({id:d.id, ...d.data()}));
-      list.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
-      state.myClasses = list;
-    }catch(e){
-      console.error(e);
-      state.myClasses = [];
-    }
-  }
-  const list = state.myClasses;
+function showClassDetail(code){
+  if(teacherUnsub) teacherUnsub();
+
+  const app = document.getElementById('app');
   app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">My Classes</div>
-      </div>
-      ${list.length === 0 ? `<p class="empty-note">No classes yet, create one to get a join code for your students.</p>` : list.map(c=>`
-        <div class="class-card" data-id="${c.id}">
-          <div class="ctitle">${escapeHtml(c.className)}</div>
-          <div>${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
-          <div class="cmeta">CODE: ${escapeHtml(c.joinCode)}</div>
-        </div>
-      `).join("")}
-      <button class="primary-btn ghost" id="newBtn" style="margin-top:6px;">➕ Create Another Class</button>
+    <div class="navbar">
+      <button class="pill-btn outline" onclick="renderTeacherHome()">&larr; Dashboard</button>
+      <div class="who">Session: <b>${code}</b></div>
+    </div>
+    <div id="session-info">
+      <div class="empty-note">Loading session details...</div>
+    </div>
+    <div style="margin-top:20px;">
+      <div class="field-label">Student Submissions (Live)</div>
+      <div id="live-leaderboard"><div class="empty-note">Waiting for students...</div></div>
     </div>
   `;
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
-  document.getElementById("newBtn").addEventListener("click", ()=>{
-    state.newClassName=""; state.newClassSubjects=[]; state.createError="";
-    state.screen="createClass"; route();
-  });
-  document.querySelectorAll(".class-card").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      const id = el.dataset.id;
-      const c = list.find(x=>x.id===id);
-      state.activeClassId = id;
-      if(!state.classCache[id]) state.classCache[id] = {classDoc: c, roster: null};
-      state.screen = "classDetail";
-      route();
-    });
-  });
-}
 
-async function renderClassDetail(){
-  const id = state.activeClassId;
-  const cached = state.classCache[id];
-  const c = cached.classDoc;
+  teacherUnsub = db.collection("quiz_sessions").doc(code).onSnapshot(doc => {
+    if(!doc.exists) return;
+    const data = doc.data();
 
-  if(cached.roster === null){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">${escapeHtml(c.className)}</div></div>
-        <div class="code-box">
-          <div class="clabel">JOIN CODE</div>
-          <div class="ccode">${escapeHtml(c.joinCode)}</div>
+    const info = document.getElementById('session-info');
+    if(info){
+      info.innerHTML = `
+        <div class="assign-box">
+          <div class="al-row"><span class="al-label">Section:</span><span class="al-value">${data.sectionName}</span></div>
+          <div class="al-row"><span class="al-label">Access Code:</span><span class="al-value" style="font-size:16px; color:var(--english);">${data.code}</span></div>
+          <div class="al-row"><span class="al-label">Subject:</span><span class="al-value">${SUBJECT_META[data.subject]?.label}</span></div>
+          <div class="al-row"><span class="al-label">Quiz Mode:</span><span class="al-value">${data.mode.toUpperCase()}</span></div>
         </div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
-    try{
-      const [enrollSnap, attemptSnap] = await Promise.all([
-        db.collection("enrollments").where("classId","==",id).get(),
-        db.collection("attempts").where("classId","==",id).get()
-      ]);
-      const students = new Map();
-      enrollSnap.forEach(d=>{
-        const v = d.data();
-        if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
-      });
-      attemptSnap.forEach(d=>{
-        const v = d.data();
-        if(!students.has(v.studentEmail)) students.set(v.studentEmail, {name:v.studentName, email:v.studentEmail, pre:0, post:0, scores:[]});
-        const s = students.get(v.studentEmail);
-        if(v.testType === "pretest") s.pre++; else if(v.testType === "posttest") s.post++;
-        if(typeof v.pct === "number") s.scores.push(v.pct);
-      });
-      cached.roster = Array.from(students.values()).sort((a,b)=> a.name.localeCompare(b.name));
-    }catch(e){
-      console.error(e);
-      cached.roster = [];
+      `;
     }
-  }
 
-  const roster = cached.roster;
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">${escapeHtml(c.className)}</div>
-      </div>
-      <div class="code-box">
-        <div class="clabel">JOIN CODE &middot; SHARE WITH STUDENTS</div>
-        <div class="ccode">${escapeHtml(c.joinCode)}</div>
-      </div>
-      <div style="margin-bottom:14px;">${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
-      ${roster.length === 0 ? `<p class="empty-note">No students yet. Share the join code above — once someone joins, they'll show up here.</p>` : `
-        <div style="overflow-x:auto;">
-          <table class="roster-table">
-            <thead><tr><th>Student</th><th>Pre</th><th>Post</th><th>Avg %</th></tr></thead>
-            <tbody>
-              ${roster.map(s=>{
-                const avg = s.scores.length ? Math.round(s.scores.reduce((a,b)=>a+b,0)/s.scores.length) : "—";
-                return `<tr><td>${escapeHtml(s.name)}</td><td>${s.pre}</td><td>${s.post}</td><td>${avg}${s.scores.length?'%':''}</td></tr>`;
-              }).join("")}
-            </tbody>
-          </table>
-        </div>
-      `}
-      <button class="primary-btn ghost" id="manageTestBtn" style="margin-top:14px;">🛠️ Manage Test Settings</button>
-      <button class="primary-btn ghost" id="activityBtn" style="margin-top:10px;">👀 Class Activity</button>
-      <button class="pill-btn outline" id="refreshBtn" style="margin-top:10px;">Refresh roster</button>
-    </div>
-  `;
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="myClasses"; route(); });
-  document.getElementById("refreshBtn").addEventListener("click", ()=>{
-    cached.roster = null;
-    renderClassDetail();
-  });
-  document.getElementById("manageTestBtn").addEventListener("click", ()=>{
-    state.assignmentLoaded = false; state.assignmentSaveNote = "";
-    state.screen = "manageTest"; route();
-  });
-  document.getElementById("activityBtn").addEventListener("click", ()=>{
-    state.activityTab = "attempts";
-    state.screen = "classActivity"; route();
-  });
-}
-
-async function renderManageTest(){
-  const id = state.activeClassId;
-  const c = state.classCache[id].classDoc;
-  const classSubjects = (c.subjects && c.subjects.length) ? c.subjects : ["math"];
-  const primarySubject = classSubjects[0];
-
-  if(!state.assignmentLoaded){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">Manage Test</div></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-    try{
-      const doc = await db.collection("assignments").doc(id).get();
-      if(doc.exists){
-        const d = doc.data();
-        state.assignmentDraft = normalizeAssignmentData(d, classSubjects);
+    const board = document.getElementById('live-leaderboard');
+    if(board){
+      const results = data.results || [];
+      if(results.length === 0){
+        board.innerHTML = `<div class="empty-note">No student has submitted results for this code yet.</div>`;
       } else {
-        state.assignmentDraft = defaultAssignmentDraft(classSubjects);
+        let html = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Score</th>
+                <th>Pct</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        results.forEach(r => {
+          html += `
+            <tr>
+              <td><b>${r.name || 'Anonymous'}</b></td>
+              <td>${r.score} / ${r.total}</td>
+              <td>${r.pct}%</td>
+            </tr>
+          `;
+        });
+        html += `</tbody></table>`;
+        board.innerHTML = html;
       }
-    }catch(e){
-      console.error(e);
-      state.assignmentDraft = defaultAssignmentDraft(classSubjects);
     }
-    state.assignmentLoaded = true;
-  }
-
-  const draft = state.assignmentDraft;
-  const otherSubjects = ORDER.filter(s => !classSubjects.includes(s));
-
-  const qList = (((draft.customQuestions[draft.qbTerm] || {})[draft.qbTestType] || {})[draft.qbForm.subject]) || [];
-
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Manage Test &middot; ${escapeHtml(c.className)}</div>
-      </div>
-
-      <p class="field-label">Subjects covered by this test</p>
-      <div class="checkbox-row">
-        ${classSubjects.map(s=>`
-          <label class="radio-item checked disabled">
-            <input type="checkbox" checked disabled>
-            <span>${SUBJECT_META[s].label} (class subject)</span>
-          </label>
-        `).join("")}
-        ${otherSubjects.map(s=>`
-          <label class="checkbox-item ${draft.subjects.includes(s)?'checked':''}" data-subj="${s}">
-            <input type="checkbox" ${draft.subjects.includes(s)?'checked':''}>
-            <span>Also include ${SUBJECT_META[s].label}</span>
-          </label>
-        `).join("")}
-      </div>
-
-      <p class="field-label">Term(s) covered by this test</p>
-      <div class="checkbox-row" id="termChecks">
-        ${TERMS.map(t=>`<label class="checkbox-item ${draft.terms.includes(t.value)?'checked':''}" data-term="${t.value}">
-          <input type="checkbox" ${draft.terms.includes(t.value)?'checked':''}><span>${t.label}</span>
-        </label>`).join("")}
-      </div>
-
-      <p class="field-label">Number of questions (max ${MAX_QUESTIONS})</p>
-      <input type="number" id="numQInput" min="1" max="${MAX_QUESTIONS}" value="${draft.numQuestions}">
-
-      <p class="field-label">Timer per question (seconds)</p>
-      <input type="number" id="timerInput" min="5" max="120" value="${draft.timerSeconds}">
-
-      <p class="field-label">Max attempts per test (pre-test and post-test each)</p>
-      <input type="number" id="attemptsInput" min="1" max="20" value="${draft.maxAttempts}">
-
-      <p class="field-label">Schedule (optional — leave blank to keep it always open)</p>
-      <input type="datetime-local" id="startInput" value="${draft.scheduleStart}">
-      <input type="datetime-local" id="endInput" value="${draft.scheduleEnd}">
-
-      <p class="field-label">Question source</p>
-      <div class="checkbox-row">
-        <label class="radio-item ${draft.questionSource==='preset'?'checked':''}" data-src="preset">
-          <input type="radio" name="qsrc" ${draft.questionSource==='preset'?'checked':''}>
-          <span>Use the preset question bank</span>
-        </label>
-        <label class="radio-item ${draft.questionSource==='custom'?'checked':''}" data-src="custom">
-          <input type="radio" name="qsrc" ${draft.questionSource==='custom'?'checked':''}>
-          <span>Write my own questions</span>
-        </label>
-      </div>
-
-      ${draft.questionSource === 'custom' ? `
-        <div class="tab-row">
-          <button class="tab-btn ${draft.qbTestType==='pretest'?'active':''}" data-tt="pretest">Pre-Test</button>
-          <button class="tab-btn ${draft.qbTestType==='posttest'?'active':''}" data-tt="posttest">Post-Test</button>
-        </div>
-         <p class="field-label">Term for new question</p>
-         <div class="tab-row">
-           ${draft.terms.map(term=>`<button class="tab-btn ${draft.qbTerm===term?'active':''}" data-qbt="${term}">${TERMS.find(t=>t.value===term).label}</button>`).join("")}
-         </div>
-        <p class="field-label">Subject for new question</p>
-        <select id="qbSubjectSel">
-          ${draft.subjects.map(s=>`<option value="${s}" ${draft.qbForm.subject===s?'selected':''}>${SUBJECT_META[s].label}</option>`).join("")}
-        </select>
-        <p class="field-label">Question text</p>
-        <textarea id="qbText" placeholder="Type the question, or start with SCENARIO: for a scenario-type item">${escapeHtml(draft.qbForm.q)}</textarea>
-        <p class="field-label">Choices (mark the correct one)</p>
-        ${[0,1,2,3].map(i=>`
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <input type="radio" name="qbCorrect" data-ci="${i}" ${draft.qbForm.correct===i?'checked':''}>
-            <input type="text" id="qbC${i}" placeholder="Choice ${i+1}" value="${escapeHtml(draft.qbForm['c'+i])}" style="margin-bottom:0;">
-          </div>
-        `).join("")}
-        <button class="pill-btn outline" id="addQBtn" style="margin-bottom:16px;">➕ Add Question (${qList.length}/${MAX_QUESTIONS} for this subject)</button>
-        ${qList.length === 0 ? `<p class="empty-note">No custom questions yet for ${SUBJECT_META[draft.qbForm.subject].label} in ${draft.qbTestType === 'pretest' ? 'Pre-Test' : 'Post-Test'}.</p>` : qList.map((q,i)=>`
-          <div class="qb-item">
-            <div class="qbi-text">${escapeHtml(q.q)}</div>
-            ${q.c.map((ch,ci)=>`<div class="qbi-c ${ci===q.a?'correct':''}">${String.fromCharCode(65+ci)}. ${escapeHtml(ch)}${ci===q.a?' ✓':''}</div>`).join("")}
-            <button class="small-del" data-del="${i}">Delete</button>
-          </div>
-        `).join("")}
-      ` : ``}
-
-      <p class="field-label">Custom reviewer content (optional — blank keeps the built-in reviewer)</p>
-       ${draft.terms.flatMap(term=>draft.subjects.map(s=>`
-         <p class="fine-print" style="text-align:left; margin:0 0 6px 2px;">${TERMS.find(t=>t.value===term).label} — ${SUBJECT_META[s].label}</p>
-         <textarea id="reviewer_${term}_${s}" placeholder="Leave blank to use the PDF-based default reviewer">${escapeHtml((draft.customReviewer[term]||{})[s]||"")}</textarea>
-       `)).join("")}
-
-      ${state.assignmentSaveNote ? `<p class="save-note">${escapeHtml(state.assignmentSaveNote)}</p>` : ``}
-      <button class="primary-btn" id="saveAssignmentBtn">Save Test Settings</button>
-    </div>
-  `;
-
-  function syncFormFieldsIntoDraft(){
-    draft.terms = TERMS.map(t=>t.value).filter(term=>document.querySelector(`#termChecks [data-term="${term}"] input`).checked);
-    if(!draft.terms.length) draft.terms = ["first"];
-    if(!draft.terms.includes(draft.qbTerm)) draft.qbTerm = draft.terms[0];
-    draft.numQuestions = Math.min(MAX_QUESTIONS, Math.max(1, parseInt(document.getElementById("numQInput").value) || 20));
-    draft.timerSeconds = Math.max(5, parseInt(document.getElementById("timerInput").value) || 20);
-    draft.maxAttempts = Math.max(1, parseInt(document.getElementById("attemptsInput").value) || 1);
-    draft.scheduleStart = document.getElementById("startInput").value;
-    draft.scheduleEnd = document.getElementById("endInput").value;
-    draft.subjects = [...classSubjects, ...otherSubjects.filter(s=>draft.subjects.includes(s))];
-    draft.terms.forEach(term=>draft.subjects.forEach(s=>{
-      const ta = document.getElementById(`reviewer_${term}_${s}`);
-      if(ta) draft.customReviewer[term][s] = ta.value;
-    }));
-  }
-
-  document.getElementById("backBtn").addEventListener("click", ()=>{ syncFormFieldsIntoDraft(); state.screen="classDetail"; route(); });
-
-  document.querySelectorAll(".checkbox-row .checkbox-item[data-subj]").forEach(el=>{
-    el.addEventListener("click", (e)=>{
-      e.preventDefault();
-      syncFormFieldsIntoDraft();
-      const s = el.dataset.subj;
-      const idx = draft.subjects.indexOf(s);
-      if(idx >= 0) draft.subjects.splice(idx,1); else draft.subjects.push(s);
-      if(!draft.subjects.includes(draft.qbForm.subject)) draft.qbForm.subject = primarySubject;
-      renderManageTest();
-    });
-  });
-
-  document.querySelectorAll("#termChecks .checkbox-item").forEach(el=>{
-    el.addEventListener("click", e=>{
-      e.preventDefault();
-      syncFormFieldsIntoDraft();
-      const term = el.dataset.term;
-      const i = draft.terms.indexOf(term);
-      if(i >= 0 && draft.terms.length > 1) draft.terms.splice(i,1);
-      else if(i < 0) draft.terms.push(term);
-      renderManageTest();
-    });
-  });
-
-  document.querySelectorAll(".radio-item[data-src]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.questionSource = el.dataset.src;
-      renderManageTest();
-    });
-  });
-
-  const tabBtns = document.querySelectorAll(".tab-btn[data-tt]");
-  tabBtns.forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.qbTestType = el.dataset.tt;
-      renderManageTest();
-    });
-  });
-  document.querySelectorAll(".tab-btn[data-qbt]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.qbTerm = el.dataset.qbt;
-      renderManageTest();
-    });
-  });
-
-  const qbSubjectSel = document.getElementById("qbSubjectSel");
-  if(qbSubjectSel){
-    qbSubjectSel.addEventListener("change", ()=>{
-      syncFormFieldsIntoDraft();
-      draft.qbForm.subject = qbSubjectSel.value;
-      renderManageTest();
-    });
-  }
-
-  const addQBtn = document.getElementById("addQBtn");
-  if(addQBtn){
-    addQBtn.addEventListener("click", ()=>{
-      const qText = document.getElementById("qbText").value.trim();
-      const choices = [0,1,2,3].map(i=>document.getElementById("qbC"+i).value.trim());
-      const correctRadio = document.querySelector('input[name="qbCorrect"]:checked');
-      const correct = correctRadio ? parseInt(correctRadio.dataset.ci) : 0;
-      if(!qText || choices.some(c=>!c)){
-        state.assignmentSaveNote = "";
-        alert("Fill in the question text and all four choices before adding.");
-        return;
-      }
-      syncFormFieldsIntoDraft();
-      const subj = qbSubjectSel.value;
-      const tt = draft.qbTestType;
-       if(!draft.customQuestions[ draft.qbTerm ][tt][subj]) draft.customQuestions[draft.qbTerm][tt][subj] = [];
-       if(draft.customQuestions[draft.qbTerm][tt][subj].length >= MAX_QUESTIONS){
-        alert(`You've reached the ${MAX_QUESTIONS}-question limit for this subject.`);
-        return;
-      }
-       draft.customQuestions[draft.qbTerm][tt][subj].push({q:qText, c:choices, a:correct});
-      draft.qbForm = {subject: subj, q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false};
-      renderManageTest();
-    });
-  }
-
-  document.querySelectorAll(".small-del[data-del]").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      syncFormFieldsIntoDraft();
-      const idx = parseInt(el.dataset.del);
-       draft.customQuestions[draft.qbTerm][draft.qbTestType][draft.qbForm.subject].splice(idx,1);
-      renderManageTest();
-    });
-  });
-
-  document.getElementById("saveAssignmentBtn").addEventListener("click", async ()=>{
-    syncFormFieldsIntoDraft();
-    const btn = document.getElementById("saveAssignmentBtn");
-    btn.disabled = true; btn.textContent = "Saving...";
-    try{
-      await db.collection("assignments").doc(id).set({
-        classId: id,
-        teacherEmail: state.teacher.email,
-         terms: draft.terms || ["first"],
-         term: (draft.terms && draft.terms[0]) || "first",
-        subjects: draft.subjects,
-        numQuestions: draft.numQuestions,
-        timerSeconds: draft.timerSeconds,
-        maxAttempts: draft.maxAttempts,
-        scheduleStart: toEpoch(draft.scheduleStart),
-        scheduleEnd: toEpoch(draft.scheduleEnd),
-        questionSource: draft.questionSource,
-        customQuestions: draft.customQuestions,
-         customReviewer: draft.customReviewer,
-        updatedAt: Date.now()
-      });
-      state.assignmentSaveNote = "Saved. Students in this class will see the updated test next time they open it.";
-    }catch(e){
-      console.error(e);
-      state.assignmentSaveNote = "";
-      alert("Couldn't save — check your connection and try again.");
-    }
-    renderManageTest();
   });
 }
 
-async function renderClassActivity(){
-  const id = state.activeClassId;
-  const c = state.classCache[id].classDoc;
-
-  if(!state.activityCache[id]){
-    app.innerHTML = `
-      <div class="fade-in">
-        <div class="navbar"><button class="pill-btn outline" id="backBtn">Back</button><div class="who">Class Activity</div></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-        <div class="skeleton skeleton-row"></div>
-      </div>
-    `;
-    document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-    try{
-      const [attemptSnap, viewSnap, reviewerSnap, selfAssessSnap] = await Promise.all([
-        db.collection("attempts").where("classId","==",id).get(),
-        db.collection("classViews").where("classId","==",id).get(),
-        db.collection("reviewerViews").where("classId","==",id).get(),
-        db.collection("selfAssessmentViews").where("classId","==",id).get()
-      ]);
-      const attempts = []; attemptSnap.forEach(d=>attempts.push(d.data()));
-      const views = []; viewSnap.forEach(d=>views.push(d.data()));
-      const reviewerViews = []; reviewerSnap.forEach(d=>reviewerViews.push(d.data()));
-      const selfAssessmentViews = []; selfAssessSnap.forEach(d=>selfAssessmentViews.push(d.data()));
-      attempts.sort((a,b)=>b.timestamp-a.timestamp);
-      views.sort((a,b)=>b.timestamp-a.timestamp);
-      reviewerViews.sort((a,b)=>b.timestamp-a.timestamp);
-      selfAssessmentViews.sort((a,b)=>b.timestamp-a.timestamp);
-
-      const profileMap = new Map();
-      const bump = (email, name, field) => {
-        if(!profileMap.has(email)) profileMap.set(email, {name: name||"", review:0, practice:0, selfAssessment:0});
-        const p = profileMap.get(email);
-        if(!p.name && name) p.name = name;
-        p[field]++;
-      };
-      reviewerViews.forEach(v=>bump(v.studentEmail, v.studentName, "review"));
-      attempts.forEach(a=>bump(a.studentEmail, a.studentName, "practice"));
-      selfAssessmentViews.forEach(v=>bump(v.studentEmail, v.studentName, "selfAssessment"));
-      const profile = Array.from(profileMap.values()).sort((a,b)=> a.name.localeCompare(b.name));
-
-      state.activityCache[id] = {attempts, views, reviewerViews, selfAssessmentViews, profile};
-    }catch(e){
-      console.error(e);
-      state.activityCache[id] = {attempts:[], views:[], reviewerViews:[], selfAssessmentViews:[], profile:[]};
-    }
-  }
-
-  const data = state.activityCache[id];
-  const tab = state.activityTab;
-
-  app.innerHTML = `
-    <div class="fade-in">
-      <div class="navbar">
-        <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">${escapeHtml(c.className)} &middot; Activity</div>
-      </div>
-      <div class="tab-row">
-        <button class="tab-btn ${tab==='attempts'?'active':''}" data-tab="attempts">Attempts (${data.attempts.length})</button>
-        <button class="tab-btn ${tab==='views'?'active':''}" data-tab="views">Class Opens (${data.views.length})</button>
-        <button class="tab-btn ${tab==='reviewer'?'active':''}" data-tab="reviewer">Reviewer Opens (${data.reviewerViews.length})</button>
-        <button class="tab-btn ${tab==='profile'?'active':''}" data-tab="profile">App Utilization Profile</button>
-      </div>
-      ${tab === 'attempts' ? (
-        data.attempts.length === 0 ? `<p class="empty-note">No attempts yet.</p>` :
-        `<div style="overflow-x:auto;"><table class="roster-table">
-           <thead><tr><th>Student</th><th>Test</th><th>Term</th><th>Subject(s)</th><th>Score</th><th>Date</th></tr></thead>
-          <tbody>${data.attempts.map(a=>`
-            <tr>
-              <td>${escapeHtml(a.studentName||"")}</td>
-              <td>${a.testType==='pretest'?'PRE':'POST'}</td>
-              <td>${termLabels(a.terms || [a.term])}</td>
-              <td>${(a.subjects||[]).map(s=>SUBJECT_META[s]?SUBJECT_META[s].label:s).join(", ")}</td>
-              <td>${a.correct}/${a.total} (${a.pct}%)</td>
-              <td>${fmtDate(a.timestamp)}</td>
-            </tr>
-          `).join("")}</tbody>
-        </table></div>`
-      ) : tab === 'views' ? (
-        data.views.length === 0 ? `<p class="empty-note">No one has opened this class yet.</p>` :
-        data.views.map(v=>`
-          <div class="activity-row"><span class="a-name">${escapeHtml(v.studentName||"")}</span><span class="a-time">${fmtDate(v.timestamp)}</span></div>
-        `).join("")
-      ) : tab === 'reviewer' ? (
-        data.reviewerViews.length === 0 ? `<p class="empty-note">No one has opened the reviewer from this class yet.</p>` :
-        data.reviewerViews.map(v=>`
-          <div class="activity-row"><span class="a-name">${escapeHtml(v.studentName||"")} — ${SUBJECT_META[v.subject]?SUBJECT_META[v.subject].label:escapeHtml(v.subject||"")}</span><span class="a-time">${fmtDate(v.timestamp)}</span></div>
-        `).join("")
-      ) : (
-        data.profile.length === 0 ? `<p class="empty-note">No usage recorded yet for this class.</p>` :
-        `<p class="fine-print" style="margin-top:0; margin-bottom:14px;">Review = reviewer opens. Practice = quiz attempts. Self-Assessment = times a student checked their own answers or progress.</p>
-        <div style="overflow-x:auto;"><table class="roster-table">
-          <thead><tr><th>Student</th><th>Review</th><th>Practice</th><th>Self-Assessment</th></tr></thead>
-          <tbody>${data.profile.map(p=>`
-            <tr>
-              <td>${escapeHtml(p.name)}</td>
-              <td>${p.review}</td>
-              <td>${p.practice}</td>
-              <td>${p.selfAssessment}</td>
-            </tr>
-          `).join("")}</tbody>
-        </table></div>`
-      )}
-      <button class="pill-btn outline" id="refreshActivityBtn" style="margin-top:14px;">Refresh</button>
-    </div>
-  `;
-  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="classDetail"; route(); });
-  document.querySelectorAll(".tab-btn[data-tab]").forEach(el=>{
-    el.addEventListener("click", ()=>{ state.activityTab = el.dataset.tab; renderClassActivity(); });
-  });
-  document.getElementById("refreshActivityBtn").addEventListener("click", ()=>{
-    delete state.activityCache[id];
-    renderClassActivity();
-  });
-}
-
-route();
+renderTeacherHome();
 </script>
 </body>
 </html>
