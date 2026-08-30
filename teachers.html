@@ -11,7 +11,7 @@
 <style>
   :root{
     --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
-    --math:#F0A202; --math-soft:#FCEACB; --science:#1B998B; --science-soft:#D6EFEA;
+    --math:#F0A202; --math-soft:#FCEACB;
     --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
     --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
   }
@@ -81,7 +81,6 @@
 
   .subject-chip{ display:inline-block; padding:4px 10px; border-radius:100px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; margin:0 6px 6px 0; }
   .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
-  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
   .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
 
   .class-card{ border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; cursor:pointer; background:var(--paper); transition:border-color .15s ease; }
@@ -150,10 +149,9 @@ const db = firebase.firestore();
 
 const SUBJECT_META = {
   math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)",    cls:"math"},
-  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)", cls:"science"},
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)", cls:"english"}
 };
-const ORDER = ["math","science","english"];
+const ORDER = ["math","english"];
 const TERMS = [
   {value:"second", label:"Second Term"}
 ];
@@ -198,7 +196,9 @@ function getTeacher(){
 function setTeacher(t){ window.localStorage.setItem("tq_teacher", JSON.stringify(t)); }
 
 function defaultAssignmentDraft(classSubjects){
-  const subs = (classSubjects && classSubjects.length) ? classSubjects.slice() : ["math"];
+  const subs = ((classSubjects || []).filter(s=>ORDER.includes(s)).length)
+    ? classSubjects.filter(s=>ORDER.includes(s))
+    : ["math"];
   return {
     subjects: subs,
     terms: ["second"],
@@ -209,9 +209,9 @@ function defaultAssignmentDraft(classSubjects){
     scheduleEnd: "",
     questionSource: "preset",
     customQuestions: Object.fromEntries(TERMS.map(t=>[t.value, {
-      pretest:{math:[],science:[],english:[]}, posttest:{math:[],science:[],english:[]}
+      pretest:{math:[],english:[]}, posttest:{math:[],english:[]}
     }])),
-    customReviewer: Object.fromEntries(TERMS.map(t=>[t.value, {math:"",science:"",english:""}])),
+     customReviewer: Object.fromEntries(TERMS.map(t=>[t.value, {math:"",english:""}])),
     qbTestType: "pretest",
      qbTerm: "second",
     qbForm: {subject: subs[0], q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}
@@ -220,15 +220,18 @@ function defaultAssignmentDraft(classSubjects){
 function normalizeAssignmentData(d, classSubjects){
   const base = defaultAssignmentDraft(classSubjects);
   const terms = ["second"];
+  const subjects = ((d.subjects || classSubjects || ["math"]).filter(s=>ORDER.includes(s)).length)
+    ? (d.subjects || classSubjects).filter(s=>ORDER.includes(s))
+    : ["math"];
   const customQuestions = d.customQuestions && d.customQuestions.second
     ? d.customQuestions
     : {second:base.customQuestions.second};
   const customReviewer = d.customReviewer && d.customReviewer.second
     ? d.customReviewer
     : {second:base.customReviewer.second};
-  return {...base, ...d, scheduleStart:fromEpoch(d.scheduleStart), scheduleEnd:fromEpoch(d.scheduleEnd), terms, customQuestions, customReviewer,
+  return {...base, ...d, subjects, scheduleStart:fromEpoch(d.scheduleStart), scheduleEnd:fromEpoch(d.scheduleEnd), terms, customQuestions, customReviewer,
      qbTestType:"pretest", qbTerm:"second",
-    qbForm:{subject:(d.subjects||classSubjects)[0] || "math", q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}};
+     qbForm:{subject:subjects[0], q:"", c0:"", c1:"", c2:"", c3:"", correct:0, scenario:false}};
 }
 
 let state = {
@@ -437,7 +440,7 @@ async function renderMyClasses(){
       ${list.length === 0 ? `<p class="empty-note">No classes yet, create one to get a join code for your students.</p>` : list.map(c=>`
         <div class="class-card" data-id="${c.id}">
           <div class="ctitle">${escapeHtml(c.className)}</div>
-          <div>${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
+          <div>${(c.subjects||[]).filter(s=>ORDER.includes(s)).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
           <div class="cmeta">CODE: ${escapeHtml(c.joinCode)}</div>
         </div>
       `).join("")}
@@ -515,7 +518,7 @@ async function renderClassDetail(){
         <div class="clabel">JOIN CODE &middot; SHARE WITH STUDENTS</div>
         <div class="ccode">${escapeHtml(c.joinCode)}</div>
       </div>
-      <div style="margin-bottom:14px;">${(c.subjects||[]).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
+      <div style="margin-bottom:14px;">${(c.subjects||[]).filter(s=>ORDER.includes(s)).map(s=>`<span class="subject-chip ${SUBJECT_META[s].cls}">${SUBJECT_META[s].label.toUpperCase()}</span>`).join("")}</div>
       ${roster.length === 0 ? `<p class="empty-note">No students yet. Share the join code above — once someone joins, they'll show up here.</p>` : `
         <div style="overflow-x:auto;">
           <table class="roster-table">
@@ -552,7 +555,9 @@ async function renderClassDetail(){
 async function renderManageTest(){
   const id = state.activeClassId;
   const c = state.classCache[id].classDoc;
-  const classSubjects = (c.subjects && c.subjects.length) ? c.subjects : ["math"];
+  const classSubjects = ((c.subjects||[]).filter(s=>ORDER.includes(s)).length)
+    ? c.subjects.filter(s=>ORDER.includes(s))
+    : ["math"];
   const primarySubject = classSubjects[0];
 
   if(!state.assignmentLoaded){
