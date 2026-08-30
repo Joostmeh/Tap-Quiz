@@ -11,7 +11,7 @@
 <style>
   :root{
     --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
-    --math:#F0A202; --math-soft:#FCEACB; --science:#1B998B; --science-soft:#D6EFEA;
+    --math:#F0A202; --math-soft:#FCEACB;
     --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
     --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
   }
@@ -41,7 +41,6 @@
   .subject-strip{ display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
   .subject-chip{ flex:1; min-width:90px; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; cursor:pointer; border:1.5px solid transparent; }
   .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
-  .subject-chip.science{ background:var(--science-soft); color:#0E5C52; }
   .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
   .subject-chip.selected{ border-color:currentColor; }
 
@@ -135,7 +134,7 @@
   table.results-table th, table.results-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--border); }
   table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
   .tag-pre{ background:var(--math-soft); color:#7A5300; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
-  .tag-post{ background:var(--science-soft); color:#0E5C52; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
+  .tag-post{ background:var(--english-soft); color:#8E2E15; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
   .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:13.5px; line-height:1.65; }
@@ -174,7 +173,7 @@
       <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
-    <div class="tag">FOR STUDENTS<br>GEN. MATH · GEN. SCIENCE · COMMUNICATION</div>
+    <div class="tag">FOR STUDENTS<br>GEN. MATH · COMMUNICATION</div>
   </div>
   <div id="app" class="card"></div>
   <footer class="credit">web-based quiz application &middot; research instrument</footer>
@@ -194,10 +193,9 @@ const db = firebase.firestore();
 
 const SUBJECT_META = {
   math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
-  science: {label:"General Science",          color:"var(--science)", soft:"var(--science-soft)"},
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
 };
-const ORDER = ["math","science","english"];
+const ORDER = ["math","english"];
 const TERMS = [
   {value:"second", label:"Second Term"}
 ];
@@ -414,68 +412,6 @@ const TERM_CONTENT = {
       {q:"Two sides of a triangle are 6 cm and 10 cm, and their included angle is 30°. What is its area?", c:["10 cm²","15 cm²","30 cm²","60 cm²"], a:1},
       {q:"A bearing of 225° points generally toward:", c:["Northeast","Southeast","Southwest","Northwest"], a:2}
     ],
-    science: [
-      {q:"A reaction in which one compound breaks into simpler substances is:", c:["Combustion","Decomposition","Neutralization only","Condensation"], a:1},
-      {q:"When an acid reacts with a carbonate, the products commonly include salt, water, and:", c:["Oxygen","Carbon dioxide","Nitrogen","Glucose"], a:1},
-      {q:"An acid reacting with a metal commonly produces salt and:", c:["Hydrogen gas","Carbon dioxide only","Chlorophyll","Starch"], a:0},
-      {q:"Combustion usually requires a fuel and:", c:["Oxygen","Salt","Water vapor only","Nitrogen only"], a:0},
-      {q:"Baking bread involves chemical changes such as gas production by:", c:["Yeast fermentation","Freezing","Melting","Filtration"], a:0},
-      {q:"Which is a safe practice when using a household chemical?", c:["Read the label and follow handling instructions","Mix every cleaner together","Store it in an unlabeled bottle","Pour leftovers into a river"], a:0},
-      {q:"Which equation represents photosynthesis?", c:["6CO2 + 6H2O + light → C6H12O6 + 6O2","C6H12O6 + 6O2 → 6CO2 + 6H2O + energy","NaCl → Na + Cl only","H2O → H2 + O2 in every cell"], a:0},
-      {q:"Cellular respiration primarily releases usable energy from:", c:["Glucose","Sand","Plastic","Table salt"], a:0},
-      {q:"Metabolism refers to:", c:["The chemical reactions occurring in body cells","Only the movement of blood","A type of weather pattern","The shape of a mineral"], a:0},
-      {q:"The law of conservation of mass means that during a chemical reaction:", c:["Atoms are rearranged but not created or destroyed","All matter disappears","Only gases can react","Products always weigh less"], a:0},
-      {q:"In a solution, the substance that is dissolved is the:", c:["Solute","Solvent","Residue","Indicator only"], a:0},
-      {q:"In saltwater, the water is usually the:", c:["Solute","Solvent","Precipitate","Reactant gas"], a:1},
-      {q:"A solution is best described as:", c:["A homogeneous mixture","A single solid element only","A mixture that must always be cloudy","A living organism"], a:0},
-      {q:"Increasing the amount of salt dissolved in the same amount of water generally makes the solution:", c:["More concentrated","Less concentrated","A gas","Chemically empty"], a:0},
-      {q:"Before storing a chemical, a student should first:", c:["Check its label and compatibility requirements","Remove the label","Place it near food","Mix it with another chemical"], a:0},
-      {q:"Why should household chemicals remain in labeled containers?", c:["Labels communicate ingredients, hazards, and safe use","Labels make chemicals harmless","Labels increase the chemical's volume","Labels replace ventilation"], a:0},
-      {q:"The safest general rule for disposing of chemicals is to:", c:["Follow the product label and applicable local guidance","Pour everything into a drain","Burn all chemicals outdoors","Hide them in ordinary food containers"], a:0},
-      {q:"Saltwater entering freshwater habitats can:", c:["Stress organisms and alter local ecosystem conditions","Always increase every species' population","Turn all organisms into producers","Have no effect at any concentration"], a:0},
-      {q:"Wastewater can harm an ecosystem when it:", c:["Adds pollutants or changes water conditions","Is carefully treated before release","Contains no contaminants","Is tested and managed responsibly"], a:0},
-      {q:"Which observation is evidence that a chemical reaction may have occurred?", c:["Formation of gas or an unexpected temperature change","A container remaining unchanged","A substance being measured","A label being read"], a:0},
-      {q:"Why should bleach not be mixed with other cleaners unless the label says it is safe?", c:["The mixture may produce dangerous substances","Mixing always makes it edible","It removes the need for ventilation","It turns bleach into pure water"], a:0},
-      {q:"A plant investigation testing how salt concentration affects growth should keep constant:", c:["Other conditions such as plant type, light, and water volume","Every variable including salt concentration","Only the final result","No measurement at all"], a:0},
-      {q:"A recommendation to reduce the environmental impact of wastewater should be based on:", c:["Evidence about its composition and effects","A guess unrelated to the investigation","The color of the container only","A random online comment"], a:0},
-      {q:"Which statement correctly connects photosynthesis and respiration?", c:["Photosynthesis stores energy in glucose, while respiration releases usable energy from it","Both processes only destroy water","Respiration makes sunlight, while photosynthesis consumes rocks","They are unrelated to living cells"], a:0},
-      {q:"Which reaction is represented by AB → A + B?", c:["Decomposition","Combustion","Acid-metal reaction","Photosynthesis"], a:0},
-      {q:"A metal reacts with hydrochloric acid and bubbles form. The bubbles are most likely:", c:["Hydrogen gas","Oxygen from photosynthesis","Nitrogen from the air","Water vapor only"], a:0},
-      {q:"When wood burns, the energy released is evidence of:", c:["A combustion reaction","A solution forming","A physical change only","Osmosis"], a:0},
-      {q:"Which daily activity is most directly associated with an acid-carbonate reaction?", c:["Vinegar reacting with baking soda","Ice melting","Water boiling","Salt dissolving without reaction"], a:0},
-      {q:"In a chemical equation, coefficients are adjusted to:", c:["Balance the number of each type of atom","Change the identity of an element","Make every substance a gas","Remove products"], a:0},
-      {q:"The products of cellular respiration include:", c:["Carbon dioxide, water, and energy","Only oxygen and sunlight","Salt and hydrogen gas","Glucose and chlorophyll only"], a:0},
-      {q:"Metabolism is important because it:", c:["Provides chemical processes that support cell functions","Stops all reactions in cells","Only describes digestion outside the body","Changes every cell into a plant"], a:0},
-      {q:"A solution with a small amount of solute compared with solvent is:", c:["Dilute","Concentrated","A pure element","A precipitate only"], a:0},
-      {q:"Which change would usually increase the concentration of a salt solution?", c:["Adding more salt without adding water","Adding more water only","Removing all salt","Freezing the container label"], a:0},
-      {q:"A solution that contains as much dissolved solute as it can under given conditions is:", c:["Saturated","Empty","A gas mixture only","Unmeasurable"], a:0},
-      {q:"Why should chemicals be stored according to compatibility guidance?", c:["Incompatible chemicals may react dangerously when mixed or stored together","Compatibility changes their labels into food","It guarantees no chemical can evaporate","It removes the need for protective equipment"], a:0},
-      {q:"Which practice best protects a student's skin and eyes during a chemical investigation?", c:["Use the required protective equipment and follow the procedure","Taste the solution first","Work without reading the label","Pour the solution into an open container"], a:0},
-      {q:"A plant in highly concentrated saltwater wilts because the solution can:", c:["Disrupt water movement and stress the plant","Provide unlimited freshwater","Stop all evaporation from leaves","Turn salt into glucose"], a:0},
-      {q:"In an investigation of saltwater effects on plants, the salt concentration is the:", c:["Independent variable","Dependent variable","Constant result","Unrelated observation"], a:0},
-      {q:"Plant growth in the saltwater investigation is the:", c:["Dependent variable","Independent variable","Chemical label","Control group only"], a:0},
-      {q:"A control group is useful because it:", c:["Provides a comparison under normal or unchanged conditions","Receives every possible treatment","Removes the need for measurements","Must always be the smallest plant"], a:0},
-      {q:"Which equation pattern represents decomposition?", c:["AB → A + B","A + B → AB","Fuel + oxygen → carbon dioxide + water","Acid + metal → salt + hydrogen"], a:0},
-      {q:"Vinegar reacting with baking soda is an example of an acid reacting with a:", c:["Metal","Carbonate","Noble gas","Sugar"], a:1},
-      {q:"When magnesium reacts with hydrochloric acid, the gas commonly produced is:", c:["Hydrogen","Carbon dioxide","Oxygen","Nitrogen"], a:0},
-      {q:"Which pair is needed for ordinary combustion?", c:["Fuel and oxygen","Salt and water","Glucose and nitrogen","Carbon dioxide and ice"], a:0},
-      {q:"Which observation most strongly suggests that a new substance formed?", c:["Gas bubbles and a lasting color change","The sample was placed on a balance","The container was labeled","The liquid was transferred to a beaker"], a:0},
-      {q:"What should be changed to balance a chemical equation?", c:["Coefficients in front of formulas","The subscripts inside formulas","The names of the elements","The products only"], a:0},
-      {q:"In photosynthesis, light energy helps plants produce:", c:["Glucose and oxygen","Salt and hydrogen","Carbon dioxide and nitrogen","Water and methane"], a:0},
-      {q:"Cellular respiration is important because it:", c:["Releases usable energy from glucose","Creates sunlight in the nucleus","Stops all chemical reactions","Turns oxygen into a mineral"], a:0},
-      {q:"Metabolism takes place mainly through chemical reactions in:", c:["Body cells","Rocks","Clouds","Empty containers"], a:0},
-      {q:"If the number of each type of atom is equal on both sides of an equation, the equation follows:", c:["Conservation of mass","The law of reflection","The water cycle","The food chain"], a:0},
-      {q:"Which statement describes the relationship between a solute and a solvent?", c:["The solute dissolves in the solvent","The solvent is always a solid","The solute must always be water","They cannot form a mixture"], a:0},
-      {q:"Which solution is more concentrated if both use the same amount of water?", c:["10 g salt in water","2 g salt in water","Both have the same concentration","Neither contains a solute"], a:0},
-      {q:"What is the best reason to keep a chemical in its original labeled container?", c:["The label provides identity, hazards, and handling information","The container makes every chemical harmless","The label prevents all reactions","The original container increases concentration"], a:0},
-      {q:"Which action is appropriate before using a household chemical?", c:["Read the label and use the required protective equipment","Smell it closely to identify it","Mix it with bleach for extra strength","Transfer it to a drink bottle"], a:0},
-      {q:"In an experiment, the factor deliberately changed by the researcher is the:", c:["Independent variable","Dependent variable","Control group","Conclusion"], a:0},
-      {q:"In a saltwater plant investigation, measuring the plant's height records the:", c:["Dependent variable","Independent variable","Solvent","Safety label"], a:0},
-      {q:"Why should other conditions be kept constant in a plant investigation?", c:["So changes in growth can be related to salt concentration","So no measurements are needed","So every plant receives a different treatment","So the result is based on a guess"], a:0},
-      {q:"A wastewater sample with pollutants may harm an ecosystem by:", c:["Changing water conditions and stressing organisms","Increasing oxygen for every species","Removing all contaminants naturally","Turning consumers into producers"], a:0},
-      {q:"A responsible recommendation for chemical disposal should use:", c:["Product instructions, local guidance, and evidence about environmental effects","The container's color only","An unverified rumor","The assumption that dilution makes every chemical safe"], a:0},
-      {q:"How can a concentrated salt solution generally be made more dilute?", c:["Add more solvent, such as water","Add more salt without water","Remove all solvent","Add an unlabeled cleaner"], a:0}
-    ],
     english: [
       {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
       {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
@@ -570,7 +506,6 @@ const REVIEWER_BY_TERM = {
   first: REVIEWER,
   second: {
      math: "GENERAL MATHEMATICS — SECOND TERM, WEEKS 1–3 REVIEWER\n\nPIECEWISE FUNCTIONS\n• A piecewise function uses different formulas on specified intervals or conditions.\n• Use piecewise rules for practical situations such as fare rates, purchasing discounts, and income-tax brackets.\n• Identify the input interval first, then apply only the rule assigned to that interval.\n• Pay close attention to boundary symbols such as <, ≤, >, and ≥ so the correct rule is used.\n• Write the domain conditions beside each rule and evaluate one interval at a time.\n• Check whether the result is reasonable for the situation and the units used.\n\nDATA AND MEASUREMENT\n• Qualitative data describe categories; quantitative data are numerical.\n• Discrete data are countable; continuous data can take values within a range.\n• Nominal data are labels, ordinal data have an order, interval data have equal differences without a true zero, and ratio data have equal differences with a meaningful zero.\n• Mean = sum of values / number of values. Median is the middle ordered value. Mode is the most frequent value.\n• Range = maximum − minimum. Variability describes how spread out values are; variance and standard deviation quantify spread.\n• The mean is sensitive to outliers, while the median is often more representative of strongly skewed data.\n• Choose measures based on the data type and purpose. Calculators, spreadsheets, Jamovi, and other tools can calculate measures, but the results must still be interpreted.\n• A good interpretation names the measure, describes the pattern, and connects the result to the original context.\n\nTRIGONOMETRY AND TRIANGLES\n• SOH-CAH-TOA: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse, tan θ = opposite/adjacent.\n• The Pythagorean theorem is a² + b² = c² for a right triangle.\n• An angle of elevation is measured upward from a horizontal line; an angle of depression is measured downward.\n• Bearings describe direction in navigation and should be read with a clear reference direction, usually clockwise from north.\n• For an oblique triangle, Heron's Formula uses A = √[s(s−a)(s−b)(s−c)], where s = (a+b+c)/2.\n• When two sides and their included angle are known, use A = 1/2 ab sin(C).\n• Draw and label the figure, select the appropriate ratio or formula, keep units consistent, and check whether the answer fits the real situation.\n• In a right triangle, the hypotenuse is opposite the right angle and is always the longest side.\n• Report measured answers with appropriate units and a sensible degree of rounding.",
-     science: "GENERAL SCIENCE — SECOND TERM, WEEKS 1–3 REVIEWER\n\nCHEMICAL REACTIONS IN EVERYDAY LIFE\n• Decomposition breaks one compound into simpler substances and can be represented as AB → A + B.\n• Acids reacting with carbonates commonly produce a salt, water, and carbon dioxide.\n• Acids reacting with metals commonly produce a salt and hydrogen gas.\n• Combustion usually involves fuel and oxygen and releases energy; burning is a common example.\n• Baking, cleaning, burning, photosynthesis, respiration, and metabolism involve chemical reactions.\n• Photosynthesis: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂.\n• Cellular respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy.\n• Metabolism is the collection of chemical reactions in cells that builds, breaks down, and transforms substances needed for life.\n• The law of conservation of mass means atoms are rearranged, not created or destroyed. Equations should represent the same number of each type of atom on both sides.\n• Evidence of a reaction may include gas formation, an unexpected temperature change, a color change, or formation of a new substance.\n• Chemical equations should be balanced with coefficients without changing the chemical formulas of the substances.\n\nSOLUTIONS IN THE ENVIRONMENT\n• A solution is a homogeneous mixture. The solute is dissolved in the solvent; in saltwater, salt is the solute and water is the solvent.\n• Concentration describes how much solute is present relative to the amount of solution or solvent. A dilute solution has relatively little solute; a concentrated solution has more.\n• A saturated solution contains as much dissolved solute as it can hold under given conditions.\n• Household, industrial, and environmental solutions should be identified, handled, stored, and disposed of safely.\n• Keep labels, use appropriate protective equipment, provide ventilation when required, and never mix cleaners unless the label says it is safe.\n• Test investigations carefully: vary the intended factor, control other conditions, measure results, and record evidence.\n• In a plant investigation, salt concentration can be the independent variable and plant growth can be the dependent variable; a control group provides a comparison.\n• Saltwater and wastewater can change conditions in local ecosystems, stress organisms, and contaminate water sources.\n• Recommendations for reducing environmental harm should be based on evidence about a solution's composition and effects. Follow product labels and relevant DTI, FDA, and DENR guidance.",
      english: "EFFECTIVE COMMUNICATION — COMPLETE SECOND TERM REVIEWER\n\nACADEMIC AND TECHNICAL TEXTS\n• Academic and technical communication is formal, structured, discipline-specific, and shaped by audience, purpose, and context.\n• Use critical listening, reading, and viewing to identify main ideas, evidence, assumptions, intent, and meaning.\n• Interpret charts, tables, figures, diagrams, and other multimodal forms by checking titles, labels, units, scales, patterns, trends, and supporting evidence.\n• Use context, word parts, references, and subject knowledge to understand unfamiliar specialized vocabulary; verify important meanings with reliable sources.\n• Distinguish an author's claim from the evidence used to support it and notice possible bias or unsupported assumptions.\n\nINTERACTION AND COLLABORATION\n• Match language, tone, and structure to the academic or training situation.\n• Follow spoken, written, and multimodal procedures accurately to achieve the intended outcome.\n• Participate constructively by asking relevant questions, providing respectful feedback, and responding appropriately.\n• Academic and technical collaboration works best when members share knowledge, divide responsibilities, listen to different viewpoints, and work toward a common goal.\n• In a discussion or debate, support a point with relevant reasons and evidence rather than attacking a person.\n\nCLEAR ACADEMIC EXPRESSION\n• A thesis states the central claim or controlling idea; an outline organizes ideas before drafting.\n• Academic texts, presentations, research reports, and essays need clear organization, precise language, appropriate terminology, and evidence.\n• Use diagrams, graphs, charts, infographics, and other visual aids to explain concepts when they improve understanding; label visuals so they can be interpreted accurately.\n• Condense information into a summary, synopsis, paraphrase, outline, chart, or diagram without changing its meaning.\n• Coherence connects ideas logically; transitions and clear references create cohesion.\n• Introductions establish context and purpose, body sections develop ideas with evidence, and conclusions synthesize the main points.\n\nETHICS AND REFLECTION\n• Cite sources and represent another person's words and ideas honestly. Presenting borrowed work as one's own is plagiarism.\n• A reference list helps readers locate the sources used in an academic or technical text.\n• AI assistance and borrowed ideas should be acknowledged or declared according to the required citation practice.\n• Intellectual integrity means not inventing evidence, altering results dishonestly, or hiding the source of information.\n• Give feedback about content, structure, and language in a specific, respectful, useful way.\n• Reflect after academic or technical communication: identify strengths, areas for growth, and ways to improve future performance."
   },
   third: {
@@ -844,12 +779,10 @@ const TERM_BANK = {
   second: {
     pretest: {
       math: TERM_CONTENT.second.math.slice(0, 30),
-      science: TERM_CONTENT.second.science.slice(0, 30),
       english: TERM_CONTENT.second.english.slice(0, 30)
     },
     posttest: {
       math: TERM_CONTENT.second.math.slice(30, 60),
-      science: TERM_CONTENT.second.science.slice(30, 60),
       english: TERM_CONTENT.second.english.slice(30, 60)
     }
   },
@@ -872,7 +805,9 @@ function buildPracticeQueue(subjects, testType, terms){
   return shuffle(queue);
 }
 function buildAssignedQueue(assignment, testType){
-  const subjects = (assignment.subjects && assignment.subjects.length) ? assignment.subjects : ORDER;
+  const selectedSubjects = ((assignment.subjects && assignment.subjects.length) ? assignment.subjects : ORDER)
+    .filter(s=>ORDER.includes(s));
+  const subjects = selectedSubjects.length ? selectedSubjects : ORDER;
   const total = Math.min(Math.max(assignment.numQuestions || 20, 1), MAX_QUESTIONS);
   const counts = distributeCount(total, subjects.length);
   let queue = [];
@@ -959,7 +894,7 @@ function renderIntro(){
         <p>A quick tour before you dive in — here's what you can do:</p>
       </div>
       <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>Pre-Test &amp; Post-Test practice:</b> take a randomized set of questions in General Mathematics, General Science, or Effective Communication, any time.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Pre-Test &amp; Post-Test practice:</b> take a randomized set of questions in General Mathematics or Effective Communication, any time.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Reviewers with real formulas:</b> tabbed by subject, so you can study exactly what you need before a test.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Scenario questions:</b> not just facts, real situations that ask you to apply what you know.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Track your progress:</b> every attempt is saved so you can see how you're improving over time.</span></div>
@@ -1436,6 +1371,7 @@ async function renderStudentClass(){
   bg();
   app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading class...</p></div>`;
   const c = state.activeClass;
+  const classSubjects = (c.subjects || []).filter(s=>ORDER.includes(s));
 
   db.collection("classViews").add({
     studentEmail: state.student.email, studentName: state.student.name,
@@ -1468,7 +1404,7 @@ async function renderStudentClass(){
           <button class="pill-btn outline" id="backBtn">Back</button>
           <div class="who">${escapeHtml(c.teacherName||"")}</div>
         </div>
-        <div class="subject-strip">${(c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
+        <div class="subject-strip">${classSubjects.map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
         <p class="field-label">${escapeHtml(c.className)}</p>
         <p class="fine-print" style="margin-top:-6px;">Your teacher hasn't set up a test for this class yet. Check back later, or use the reviewer in the meantime.</p>
         <button class="primary-btn ghost" id="reviewCardBtn">📖 Open Reviewer</button>
@@ -1500,7 +1436,7 @@ async function renderStudentClass(){
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${escapeHtml(c.teacherName||"")}</div>
       </div>
-      <div class="subject-strip">${(assignment.subjects||c.subjects||[]).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
+      <div class="subject-strip">${((assignment.subjects||classSubjects||[]).filter(s=>ORDER.includes(s))).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <div class="assign-box">
          <div class="al-row"><span class="al-label">Term</span><span class="al-value">Second Term</span></div>
@@ -1524,7 +1460,7 @@ async function renderStudentClass(){
     if(btn) btn.addEventListener("click", ()=>{
       state.practiceType = testType;
         state.practiceTerms = ["second"];
-      state.practiceSubjects = assignment.subjects || c.subjects || [];
+      state.practiceSubjects = (assignment.subjects || classSubjects || []).filter(s=>ORDER.includes(s));
       state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
       state.quizQueue = buildAssignedQueue(assignment, testType);
       if(!state.quizQueue.length){
