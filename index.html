@@ -156,6 +156,19 @@
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
   .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:13.5px; line-height:1.65; }
+  .reviewer-intro{ color:var(--ink-soft); font-size:12.5px; line-height:1.55; margin:-4px 0 14px; }
+  .reviewer-week-tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; }
+  .reviewer-week-tab{ border:1.5px solid var(--border); background:var(--surface); color:var(--ink-soft); border-radius:12px; padding:10px 7px; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; line-height:1.25; }
+  .reviewer-week-tab.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--ink); }
+  .reviewer-reading{ background:#FBF8F0; border:1px solid #E8E0D0; color:#343747; border-radius:16px; padding:20px 18px; margin-bottom:16px; font-size:16px; line-height:1.85; letter-spacing:.008em; box-shadow:0 5px 18px -16px rgba(50,45,35,.45); }
+  .reviewer-reading h3{ color:#292B39; font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 10px; }
+  .reviewer-reading .reading-lead{ color:#626579; font-size:14px; line-height:1.6; margin:0 0 16px; }
+  .reviewer-reading .reading-body{ white-space:pre-wrap; }
+  .reviewer-reading .reading-tip{ border-left:3px solid var(--math); background:#F3EEDC; color:#514A3D; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:14px; line-height:1.6; }
+  html[data-theme="dark"] .reviewer-reading{ background:#20231F; border-color:#454637; color:#E8E3D5; box-shadow:none; }
+  html[data-theme="dark"] .reviewer-reading h3{ color:#FFF8E7; }
+  html[data-theme="dark"] .reviewer-reading .reading-lead{ color:#C5C0B1; }
+  html[data-theme="dark"] .reviewer-reading .reading-tip{ background:#353522; color:#E8E3D5; }
   .learning-panel{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
   .learning-panel .lp-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
   .learning-panel .lp-sub{ color:var(--ink-soft); font-size:12px; line-height:1.45; margin-bottom:12px; }
@@ -180,6 +193,9 @@
   .assign-box .al-row:last-child{ border-bottom:none; }
   .assign-box .al-label{ color:var(--ink-soft); }
   .assign-box .al-value{ font-weight:600; }
+  .saved-class-section{ margin-top:20px; }
+  .saved-class-card{ width:100%; text-align:left; }
+  .saved-class-card .cmeta{ line-height:1.5; }
 
   .float-pt{ position:fixed; pointer-events:none; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; animation:floatUp .8s ease forwards; z-index:50; }
   @keyframes floatUp{ 0%{ opacity:1; transform:translateY(0);} 100%{ opacity:0; transform:translateY(-38px);} }
@@ -1082,6 +1098,179 @@ GENERAL PROBLEM-SOLVING CHECKLIST
 • Check endpoint conditions in piecewise functions and check that the selected formula matches the data given.
 • Ask whether the final value is reasonable in the real situation.`;
 
+/* Student-friendly weekly reading plan. Each screen shows one small section
+   instead of making students read the whole reviewer at once. */
+const STUDENT_REVIEWER_WEEKS = {
+  second: {
+    math: [
+      {
+        title:"Week 1 · Piecewise Functions",
+        lead:"A piecewise function is one rule with different instructions for different situations. Think of it like a fare chart: the price changes when the distance enters a new range.",
+        body:`Start by reading the condition, not the formula. The condition tells you which rule to use.
+
+Example:
+For a delivery fee, f(x) = 40 when 0 < x <= 2, and f(x) = 40 + 12(x - 2) when x > 2.
+If the delivery is 5 km, 5 belongs to the second interval. So f(5) = 40 + 12(5 - 2) = 76.
+
+At a boundary, the symbols matter. A closed dot or <= means the endpoint is included. An open dot or < means it is not included.
+
+To solve:
+1. Write down the input value.
+2. Find the interval containing that value.
+3. Substitute into only that rule.
+4. Simplify and include the correct unit.
+5. Ask whether the answer makes sense for the situation.
+
+When graphing, draw each rule only on its own interval. Do not draw one formula across the entire graph.`,
+        tip:"Helpful habit: circle the condition you used. This makes it easier to explain why your answer is correct."
+      },
+      {
+        title:"Week 2 · Data and Statistics",
+        lead:"Statistics helps us describe a group of information. The goal is not just to calculate a number, but to explain what that number tells us.",
+        body:`Qualitative data describe labels or qualities, such as favorite color. Quantitative data are numbers. Discrete data are counted, like the number of siblings. Continuous data are measured, like height or time.
+
+The four measurement levels are easier to remember this way:
+• Nominal = names only.
+• Ordinal = names with an order.
+• Interval = equal gaps, but zero does not mean none.
+• Ratio = equal gaps and a meaningful zero.
+
+For the data 4, 6, 6, 8, and 11:
+• Mean = (4 + 6 + 6 + 8 + 11) / 5 = 7.
+• Median = the middle value = 6.
+• Mode = the value that appears most = 6.
+• Range = 11 - 4 = 7.
+
+The mean can be pulled toward an unusually high or low value. The median may describe the center better when the data are uneven. Standard deviation describes spread: small means the values are close together; large means they are more spread out.
+
+When writing a conclusion, name the measure, describe the pattern, and connect it to the original situation.`,
+        tip:"Do not report a statistic without meaning. Say what it tells us about the actual class, survey, measurement, or situation."
+      },
+      {
+        title:"Week 3 · Trigonometry and Triangles",
+        lead:"Trigonometry connects an angle to the sides of a triangle. A quick sketch usually makes the problem much less confusing.",
+        body:`In a right triangle, first mark the angle you are using. Then label:
+• Opposite: across from the angle.
+• Adjacent: beside the angle, but not the hypotenuse.
+• Hypotenuse: across from the right angle and always the longest side.
+
+Use SOH-CAH-TOA:
+• sin(angle) = opposite / hypotenuse
+• cos(angle) = adjacent / hypotenuse
+• tan(angle) = opposite / adjacent
+
+If the two legs are 3 and 4, the hypotenuse is 5 because 3² + 4² = 5². If an angle is unknown, use an inverse function such as sin^-1, cos^-1, or tan^-1. Use degree mode when the problem gives degrees.
+
+For a triangle with two sides and their included angle, area = 1/2 ab sin(C). If all three sides are known, Heron's Formula can be used: first find s = (a + b + c) / 2, then area = square root of s(s-a)(s-b)(s-c).
+
+For elevation, depression, or bearing problems, draw the horizontal line or compass direction before choosing a ratio or formula. Keep units consistent and round only at the end.`,
+        tip:"Before calculating, point to the side you are naming. Many trigonometry mistakes happen because opposite and adjacent are switched."
+      }
+    ],
+    science: [
+      {
+        title:"Week 1 · Physics in Daily Life",
+        lead:"Physics explains how pushes, movement, energy, and machines work around us. The formulas become easier when you first identify the story in the problem.",
+        body:`Work happens when a force moves an object: W = Fd. Power tells how quickly work is done: P = W/t. Efficiency compares useful output with input: efficiency = useful output / input x 100%.
+
+Pressure is force spread over an area: P = F/A. The same force creates more pressure on a smaller area. Density is mass packed into space: density = mass / volume. An object is more likely to float when its average density is less than the fluid's density.
+
+Speed tells how far something travels per unit of time. Velocity also includes direction. Acceleration describes a change in velocity.
+
+Kinetic energy is energy of motion: KE = 1/2 mv². Gravitational potential energy is stored because of height: PE = mgh. Simple machines do not remove work; they make work easier by changing the force, distance, or direction.
+
+For a word problem, list the known values, choose one formula, substitute with units, and check whether the answer is reasonable. For electricity, never overload outlets or use damaged wires.`,
+        tip:"Units are clues. If the question asks for power, your final unit should describe work done per time, not just distance or force."
+      },
+      {
+        title:"Week 2 · Chemistry and Living Systems",
+        lead:"Chemistry describes how substances change. Biology describes how living systems use matter and energy. Both subjects ask us to look for patterns and causes.",
+        body:`In a chemical reaction, atoms are rearranged; they are not created or destroyed. This is the conservation of mass. Common reaction patterns include combustion, decomposition, and reactions between acids and metals or carbonates.
+
+The pH scale helps describe acidity. A pH below 7 is acidic, 7 is neutral, and above 7 is basic. Never mix household cleaners unless the label says it is safe, because some combinations produce dangerous gases.
+
+Photosynthesis uses light energy to help make glucose:
+carbon dioxide + water + light -> glucose + oxygen.
+Cellular respiration breaks down glucose with oxygen and releases usable energy:
+glucose + oxygen -> carbon dioxide + water + energy.
+
+Living things are organized as cell -> tissue -> organ -> organ system -> organism. Homeostasis means keeping internal conditions stable. In an ecosystem, producers capture energy, consumers obtain energy by feeding, and decomposers return matter to the environment.
+
+When studying a process, ask: What goes in? What changes? What comes out? What evidence would show that the process happened?`,
+        tip:"A formula is not the whole explanation. Practice saying what each substance or step does in plain language."
+      },
+      {
+        title:"Week 3 · Earth, Space, and Safety",
+        lead:"Earth science connects the planet's systems to everyday weather, natural hazards, and the conditions that make life possible.",
+        body:`Weather is what the atmosphere is doing over a short time. Climate is the long-term pattern of weather in a place. A single hot day is weather; a long-term warming trend is climate.
+
+The Philippines is affected by tectonic and volcanic activity because it lies near active plate boundaries. Tectonic movement can cause earthquakes, while volcanic activity can produce ash, lava, and other hazards. PAGASA monitors weather and hydrometeorological hazards. PHIVOLCS monitors volcanic and seismic activity.
+
+Earth can support life because of its distance from the Sun, its atmosphere, and the way greenhouse gases help regulate temperature. Too much warming can affect rainfall, heat, habitats, and biodiversity.
+
+Light can be reflected, refracted, or absorbed. Sound needs a medium, such as air, water, or a solid, to travel.
+
+For safety questions, choose the action that reduces risk: follow official advisories, use properly rated equipment, avoid damaged wires, prepare an evacuation plan, and protect people before property.`,
+        tip:"For a hazard question, do not choose the most dramatic action. Choose the calm, recommended action that gives people the best protection."
+      }
+    ],
+    english: [
+      {
+        title:"Week 1 · Communication and Audience",
+        lead:"Communication is more than sending words. It is the process of helping another person understand what you mean in a particular situation.",
+        body:`A communication event has a sender, message, channel, receiver, feedback, and context. The channel may be a conversation, text, email, presentation, report, image, or video. Noise is anything that gets in the way, such as a loud room, unfamiliar language, strong emotion, or too much information.
+
+Before speaking or writing, ask three simple questions:
+• Who is my audience?
+• What is my purpose?
+• What do I want the audience to understand or do?
+
+Informative messages explain. Persuasive messages support a position and encourage a response. Instructional messages guide someone through a task.
+
+Tone is the feeling or attitude of a message. The same information may sound respectful, angry, friendly, or careless depending on word choice and punctuation. A message to a close friend does not need the same level of formality as an email to a teacher or employer.
+
+Good communicators listen for feedback. If the other person looks confused or responds to a different idea, clarify instead of simply repeating the same sentence.`,
+        tip:"Read your message as if you were the audience. What might they misunderstand, and what small explanation would help?"
+      },
+      {
+        title:"Week 2 · Reading, Research, and Evidence",
+        lead:"Academic and technical communication asks you to understand information carefully, then support your own ideas honestly.",
+        body:`A thesis is the main claim or controlling idea of a text. An outline helps arrange main points before drafting. A clear paragraph often has a topic sentence, supporting explanation or evidence, and a sentence that connects to the next idea.
+
+When reading critically, separate a claim from its evidence. Ask:
+• Is the evidence relevant to the claim?
+• Is there enough evidence?
+• Is the source current and trustworthy?
+• What information or viewpoint might be missing?
+
+A primary source gives original or firsthand information. A secondary source explains or analyzes information from another source. Keep a source record with the author, title, date, site or publisher, page or link, and the idea you used.
+
+A summary gives only the main idea and important points. A paraphrase restates a specific idea in your own structure and wording while keeping the meaning and citing the source. Changing only a few words is not enough. Synthesis combines ideas from more than one source to create a larger conclusion.
+
+Evidence needs explanation. After presenting a fact or quotation, tell the reader how it supports your point.`,
+        tip:"A useful test for a paraphrase: could the original writer recognize the sentence structure? If yes, rewrite it more independently and cite it."
+      },
+      {
+        title:"Week 3 · Visuals, Collaboration, and Editing",
+        lead:"Effective communication also includes visuals, teamwork, grammar, and ethical choices. Clear presentation makes good ideas easier to understand.",
+        body:`Multimodal communication combines words with images, sound, layout, movement, charts, or diagrams. Bar charts compare categories. Line graphs show change over time. Tables show exact values. Every visual needs a useful title, labels, units when needed, an honest scale, and a source if the data are borrowed.
+
+Active listening means focusing on the speaker, noticing important details, asking clarifying questions, and responding to the actual message. Respectful feedback names a specific part of the work, explains its effect, and suggests a next step. In a group, clarify roles, deadlines, and responsibilities.
+
+During editing, check one thing at a time:
+1. Is the idea accurate and complete?
+2. Are the ideas in a logical order?
+3. Are sentences clear and concise?
+4. Do subjects and verbs agree?
+5. Are punctuation, spelling, citations, and formatting consistent?
+
+Plagiarism means presenting another person's words or ideas as your own. AI output and borrowed material must be checked, acknowledged, and used according to the required rules. Do not invent evidence or hide uncertainty.`,
+        tip:"A final reader should be able to tell what your message is about, why it matters, and what they should understand or do next."
+      }
+    ]
+  }
+};
+
 const TERM_BANK = {
   second: {
     pretest: {
@@ -1152,6 +1341,39 @@ function setStudent(student){
   window.localStorage.setItem("tq_student", JSON.stringify(student));
 }
 
+function joinedClassesKey(){
+  return "tq_joined_classes_" + encodeURIComponent((state.student && state.student.email) || "");
+}
+function getJoinedClasses(){
+  if(!state.student) return [];
+  try{
+    const raw = window.localStorage.getItem(joinedClassesKey());
+    const rows = raw ? JSON.parse(raw) : [];
+    return Array.isArray(rows) ? rows : [];
+  }catch(e){ return []; }
+}
+function saveJoinedClass(classData){
+  const previous = getJoinedClasses();
+  const record = {
+    id: classData.id,
+    joinCode: classData.joinCode || "",
+    className: classData.className || "Class",
+    teacherName: classData.teacherName || "",
+    subjects: (classData.subjects || []).filter(s=>ORDER.includes(s)),
+    joinedAt: classData.joinedAt || Date.now()
+  };
+  const next = [record, ...previous.filter(item=>item.id !== record.id)];
+  try{ window.localStorage.setItem(joinedClassesKey(), JSON.stringify(next)); }catch(e){}
+}
+function openSavedClass(saved){
+  state.activeClassId = saved.id;
+  state.activeClass = {id:saved.id, ...saved};
+  state.activeAssignment = null;
+  state.joinError = "";
+  state.screen = "studentClass";
+  route();
+}
+
 let state = {
   screen: "intro",
   student: getStudent(),
@@ -1167,6 +1389,7 @@ let state = {
   locked: false,
   saved: false,
   reviewerSubject: "math",
+  reviewerWeek: 0,
   reviewerReturnScreen: "home",
   activeClassId: null,
   activeClass: null,
@@ -1271,6 +1494,7 @@ function renderGetStarted(){
 
 function renderHome(){
   bg();
+  const joinedClasses = getJoinedClasses();
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -1300,6 +1524,18 @@ function renderHome(){
           <div><div class="htitle">Join a Class</div><div class="hsub">Have a class code from your teacher? Enter it here</div></div>
         </div>
       </div>
+      ${joinedClasses.length ? `
+        <div class="saved-class-section">
+          <p class="field-label">Your Classes</p>
+          ${joinedClasses.map((c,i)=>`
+            <button class="class-card saved-class-card" data-saved-class="${i}">
+              <div class="ctitle">${escapeHtml(c.className || "Class")}</div>
+              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} · Code ${escapeHtml(c.joinCode || "saved")}</div>
+            </button>
+          `).join("")}
+          <p class="fine-print" style="margin-top:6px;">Your joined classes stay here so you can open them again without re-entering the code.</p>
+        </div>
+      ` : ""}
     </div>
   `;
   document.getElementById("switchBtn").addEventListener("click", ()=>{
@@ -1313,6 +1549,9 @@ function renderHome(){
   document.getElementById("reviewCard").addEventListener("click", ()=>{ goToReviewer("home"); });
   document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
   document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError=""; state.screen="joinClass"; route(); });
+  document.querySelectorAll(".saved-class-card").forEach(btn=>{
+    btn.addEventListener("click", ()=>openSavedClass(joinedClasses[parseInt(btn.dataset.savedClass, 10)]));
+  });
   const pathStartBtn = document.getElementById("pathStartBtn");
   if(pathStartBtn) pathStartBtn.addEventListener("click", ()=>document.getElementById("preCard").click());
   const pathReviewBtn = document.getElementById("pathReviewBtn");
@@ -1392,13 +1631,13 @@ function logSelfAssessment(kind){
 function renderReviewer(){
   bg();
   const subj = state.reviewerSubject;
-  const terms = ["second"];
-  const content = terms.map(term=>{
-    const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
-      state.activeAssignment.customReviewer[term] && state.activeAssignment.customReviewer[term][subj];
-    const builtIn = (REVIEWER_BY_TERM[term] || REVIEWER_BY_TERM.second)[subj];
-    return custom || (builtIn + ((REVIEWER_ADDENDUM[term] || {})[subj] || ""));
-  }).filter(Boolean).join("\n\n");
+  const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
+    state.activeAssignment.customReviewer.second && state.activeAssignment.customReviewer.second[subj];
+  const weeks = custom
+    ? [{title:"Teacher's Reviewer", lead:"Your teacher's notes are shown below. Read one section at a time and pause when you need to.", body:custom, tip:"Try explaining one idea in your own words before moving to the next section."}]
+    : ((STUDENT_REVIEWER_WEEKS.second || {})[subj] || []);
+  const weekIndex = Math.min(Math.max(state.reviewerWeek || 0, 0), Math.max(weeks.length - 1, 0));
+  const week = weeks[weekIndex] || {title:"Reviewer", lead:"Read at your own pace.", body:"No reviewer content is available yet.", tip:""};
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -1408,12 +1647,24 @@ function renderReviewer(){
       <div class="tab-row">
         ${ORDER.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
       </div>
-      <div class="reviewer-box">${escapeHtml(content)}</div>
+      <p class="reviewer-intro">A calmer, student-friendly study plan. Read one week, take a short break, then continue when your eyes and mind feel ready.</p>
+      <div class="reviewer-week-tabs">
+        ${weeks.map((w,i)=>`<button class="reviewer-week-tab ${i===weekIndex?'active':''}" data-week="${i}">${escapeHtml(w.title.split(" · ")[0])}<br><span>${escapeHtml(w.title.split(" · ")[1] || "Notes")}</span></button>`).join("")}
+      </div>
+      <div class="reviewer-reading">
+        <h3>${escapeHtml(week.title)}</h3>
+        <p class="reading-lead">${escapeHtml(week.lead)}</p>
+        <div class="reading-body">${escapeHtml(week.body)}</div>
+        ${week.tip ? `<div class="reading-tip"><b>Study tip:</b> ${escapeHtml(week.tip)}</div>` : ""}
+      </div>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen = state.reviewerReturnScreen; route(); });
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{ state.reviewerSubject = btn.dataset.subj; renderReviewer(); });
+  document.querySelectorAll(".tab-btn[data-subj]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ state.reviewerSubject = btn.dataset.subj; state.reviewerWeek = 0; renderReviewer(); });
+  });
+  document.querySelectorAll(".reviewer-week-tab").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ state.reviewerWeek = parseInt(btn.dataset.week, 10) || 0; renderReviewer(); });
   });
 }
 
@@ -1702,6 +1953,7 @@ async function renderMyProgress(){
 
 function renderJoinClass(){
   bg();
+  const joinedClasses = getJoinedClasses();
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
@@ -1712,9 +1964,23 @@ function renderJoinClass(){
       <input type="text" id="joinCodeInput" placeholder="Enter class code">
       ${state.joinError ? `<p class="error-note">${escapeHtml(state.joinError)}</p>` : ``}
       <button class="primary-btn" id="joinBtn">Join Class</button>
+      ${joinedClasses.length ? `
+        <div class="saved-class-section">
+          <p class="field-label">Open a Joined Class</p>
+          ${joinedClasses.map((c,i)=>`
+            <button class="class-card saved-class-card" data-saved-class="${i}">
+              <div class="ctitle">${escapeHtml(c.className || "Class")}</div>
+              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} · Code ${escapeHtml(c.joinCode || "saved")}</div>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
+  document.querySelectorAll(".saved-class-card").forEach(btn=>{
+    btn.addEventListener("click", ()=>openSavedClass(joinedClasses[parseInt(btn.dataset.savedClass, 10)]));
+  });
   document.getElementById("joinBtn").addEventListener("click", async ()=>{
     const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
     state.joinError = "";
@@ -1728,6 +1994,7 @@ function renderJoinClass(){
       state.activeClassId = classDoc.id;
       state.activeClass = {id: classDoc.id, ...classDoc.data()};
       state.activeAssignment = null;
+      saveJoinedClass(state.activeClass);
       db.collection("enrollments").add({
         studentEmail: state.student.email, studentName: state.student.name,
         classId: classDoc.id, joinedAt: Date.now()
