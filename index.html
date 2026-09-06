@@ -138,6 +138,14 @@
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
   .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:13.5px; line-height:1.65; }
+  .learning-panel{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .learning-panel .lp-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
+  .learning-panel .lp-sub{ color:var(--ink-soft); font-size:12px; line-height:1.45; margin-bottom:12px; }
+  .mastery-row{ margin:10px 0; }
+  .mastery-row .mr-top{ display:flex; justify-content:space-between; gap:10px; font-size:12px; margin-bottom:5px; }
+  .mastery-row .mr-top span:last-child{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:10.5px; }
+  .mastery-track{ height:7px; border-radius:5px; background:var(--surface); overflow:hidden; }
+  .mastery-track i{ display:block; height:100%; border-radius:5px; background:var(--accent); }
 
   .tab-row{ display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; }
   .tab-btn{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; padding:8px 12px; border-radius:100px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; color:var(--ink-soft); }
@@ -803,6 +811,36 @@ function masteryLabel(pct){
   if(pct >= 70) return "Developing";
   return "Needs practice";
 }
+function getSavedMastery(){
+  try{
+    const raw = localStorage.getItem("tq_mastery_" + state.student.email);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function learningPathHtml(){
+  const rows = getSavedMastery();
+  if(!rows.length){
+    return `<div class="learning-panel">
+      <div class="lp-title">Your Learning Path</div>
+      <div class="lp-sub">Start with a Pre-Test to find your baseline. Your results will turn into a skill-by-skill study plan.</div>
+      <button class="primary-btn ghost" id="pathStartBtn">Find My Starting Point</button>
+    </div>`;
+  }
+  const focus = rows.filter(s=>s.pct < 85).sort((a,b)=>a.pct-b.pct);
+  const next = focus[0];
+  const action = next
+    ? `Recommended next step: review <b>${escapeHtml(next.skill)}</b>, then practice again before the Post-Test.`
+    : "You are showing mastery across the skills recorded so far. You are ready to measure your progress with the Post-Test.";
+  return `<div class="learning-panel">
+    <div class="lp-title">Your Learning Path</div>
+    <div class="lp-sub">${action}</div>
+    ${rows.map(s=>`<div class="mastery-row">
+      <div class="mr-top"><span>${escapeHtml(s.skill)}</span><span>${masteryLabel(s.pct)} &middot; ${s.pct}%</span></div>
+      <div class="mastery-track"><i style="width:${Math.max(4,Math.min(100,s.pct))}%"></i></div>
+    </div>`).join("")}
+    <button class="primary-btn ghost" id="pathReviewBtn">${next ? "Open Reviewer for Focus" : "View My Progress"}</button>
+  </div>`;
+}
 const TERM_BANK = {
   second: {
     pretest: {
@@ -975,6 +1013,7 @@ function renderHome(){
         <div class="who">Hi, <b>${escapeHtml(state.student.name.split(" ")[0])}</b></div>
         <button class="pill-btn outline" id="switchBtn">Switch account</button>
       </div>
+      ${learningPathHtml()}
       <div class="home-grid">
         <div class="home-card" id="preCard">
           <div class="hicon">📝</div>
@@ -1010,6 +1049,14 @@ function renderHome(){
   document.getElementById("reviewCard").addEventListener("click", ()=>{ goToReviewer("home"); });
   document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
   document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError=""; state.screen="joinClass"; route(); });
+  const pathStartBtn = document.getElementById("pathStartBtn");
+  if(pathStartBtn) pathStartBtn.addEventListener("click", ()=>document.getElementById("preCard").click());
+  const pathReviewBtn = document.getElementById("pathReviewBtn");
+  if(pathReviewBtn) pathReviewBtn.addEventListener("click", ()=>{
+    const next = getSavedMastery().filter(s=>s.pct < 85).sort((a,b)=>a.pct-b.pct)[0];
+    state.reviewerSubject = next && /mathematics|functions|statistics|trigonometry/i.test(next.skill) ? "math" : "english";
+    goToReviewer("home");
+  });
 }
 
 function renderPracticeSetup(){
@@ -1255,6 +1302,10 @@ function renderResults(){
   const masteryNote = skillBreakdown.length
     ? `Learning checkpoint: ${skillBreakdown.map(s=>`${s.skill} — ${masteryLabel(s.pct)}`).join(" &middot; ")}${focusSkills.length ? `<br>Next step: review ${focusSkills.join(", ")} before the Post-Test.` : `<br>Next step: try the Post-Test when you are ready.`}`
     : "";
+  const skillCards = skillBreakdown.map(s=>`<div class="mastery-row">
+    <div class="mr-top"><span>${escapeHtml(s.skill)}</span><span>${masteryLabel(s.pct)} &middot; ${s.pct}%</span></div>
+    <div class="mastery-track"><i style="width:${Math.max(4,s.pct)}%"></i></div>
+  </div>`).join("");
 
   app.innerHTML = `
     <div class="fade-in">
@@ -1264,6 +1315,7 @@ function renderResults(){
         <div class="msg">${msg}</div>
       </div>
       <p class="fine-print">${masteryNote}</p>
+      ${skillCards ? `<div class="learning-panel"><div class="lp-title">Skill mastery</div>${skillCards}</div>` : ""}
       <p class="fine-print" id="saveNote">Saving your result...</p>
       <div class="btn-row">
         <button class="primary-btn ghost" id="answersBtn">📝 View My Answers</button>
@@ -1293,6 +1345,7 @@ async function autoSaveResult({testType, terms, correct, total, pct}){
       total: state.answers.filter(a=>a.subject===s).length
     }));
     const skillBreakdown = buildSkillBreakdown(state.answers);
+    try{ localStorage.setItem("tq_mastery_" + state.student.email, JSON.stringify(skillBreakdown)); }catch(e){}
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
         classId: state.activeClassId || null,
