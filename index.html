@@ -6,6 +6,13 @@
 <title>Tap-Quiz for Students</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script>
+  try{
+    if(window.localStorage.getItem("tq_theme") === "dark"){
+      document.documentElement.dataset.theme = "dark";
+    }
+  }catch(e){}
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
@@ -13,13 +20,21 @@
     --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
     --math:#F0A202; --math-soft:#FCEACB;
     --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
-    --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+    --good:#1B998B; --bad:#E4572E; --glow-2:#ECE3FB; --button-bg:#211C4E; --button-ink:#FFFFFF;
+    --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+  }
+  html[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#11131F; --surface:#1B1E2B; --ink:#F5F2FF; --ink-soft:#B6AFD0; --border:#3B3658;
+    --accent:var(--ink); --accent-soft:#2A2644; --glow-2:#2A2441;
+    --math-soft:#493818; --english-soft:#45221D; --button-bg:#EEEAFE; --button-ink:#17142B;
+    --shadow:0 12px 30px -14px rgba(0,0,0,0.55);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     min-height:100vh;
-    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper);
+    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, var(--glow-2) 0%, transparent 40%), var(--paper);
     font-family:'IBM Plex Sans', sans-serif; color:var(--ink);
     display:flex; justify-content:center; padding:28px 16px 60px; transition:background 0.5s ease;
   }
@@ -30,6 +45,9 @@
   .brand h1{ font-family:'Space Grotesk', sans-serif; font-size:clamp(19px,5vw,24px); font-weight:700; letter-spacing:-0.02em; margin:0; line-height:1.05; }
   .brand h1 span{ color:var(--english); }
   .brand .tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.03em; text-align:right; line-height:1.4; }
+  .brand-actions{ display:flex; align-items:center; gap:10px; }
+  .theme-toggle{ border:1.5px solid var(--border); background:var(--surface); color:var(--ink); border-radius:100px; padding:8px 10px; cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; white-space:nowrap; }
+  .theme-toggle:hover{ border-color:var(--accent); }
   .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px; min-height:120px; }
 
   .navbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap; }
@@ -65,7 +83,7 @@
   .mode-btn .msub{ font-size:11.5px; color:var(--ink-soft); line-height:1.35; display:block; }
   .mode-btn.locked{ opacity:0.45; cursor:not-allowed; }
 
-  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; margin-bottom:0; }
+  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--button-bg); color:var(--button-ink); font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; margin-bottom:0; }
   .primary-btn:active{ transform:scale(0.98); }
   .primary-btn:disabled{ opacity:0.4; cursor:not-allowed; }
   .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
@@ -97,7 +115,7 @@
 
   .quiz-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; }
   .subj-pill{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.04em; padding:7px 12px; border-radius:100px; color:#fff; }
-  .score-chip{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.03em; background:var(--ink); color:#fff; padding:7px 12px; border-radius:100px; }
+  .score-chip{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; letter-spacing:0.03em; background:var(--button-bg); color:var(--button-ink); padding:7px 12px; border-radius:100px; }
   .track{ display:flex; gap:4px; margin-bottom:20px; }
   .track-seg{ flex:1; height:6px; border-radius:4px; background:var(--border); overflow:hidden; }
   .track-seg i{ display:block; height:100%; border-radius:4px; }
@@ -170,6 +188,14 @@
   .shake{ animation:shake .35s ease; }
   @keyframes shake{ 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-4px); } 75%{ transform:translateX(4px); } }
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+  html[data-theme="dark"] .choice.correct,
+  html[data-theme="dark"] .review-item .ri-c.correct{ background:#173B37; color:#8BE6D5; }
+  html[data-theme="dark"] .choice.wrong,
+  html[data-theme="dark"] .review-item .ri-c.wrong{ background:#48251F; color:#FFB3A3; }
+  html[data-theme="dark"] .subject-chip.math,
+  html[data-theme="dark"] .tag-pre{ color:#FFD27A; }
+  html[data-theme="dark"] .subject-chip.english,
+  html[data-theme="dark"] .tag-post{ color:#FFB09B; }
 
   footer.credit{ text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; font-family:'IBM Plex Mono', monospace; }
 </style>
@@ -181,7 +207,10 @@
       <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
-    <div class="tag">FOR STUDENTS<br>GEN. MATH · COMMUNICATION</div>
+    <div class="brand-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">🌙 Dark</button>
+      <div class="tag">FOR STUDENTS<br>GEN. MATH · COMMUNICATION</div>
+    </div>
   </div>
   <div id="app" class="card"></div>
   <footer class="credit">web-based quiz application &middot; research instrument</footer>
@@ -523,7 +552,10 @@ const REVIEWER_BY_TERM = {
   }
 };
 
-/* Preset question banks (same content as before, unchanged) */
+/* const REVIEWER_ADDENDUM = {
+  second: {
+    math: "\n\nDETAILED STUDY NOTES AND PRACTICE GUIDE\n\n1. FUNCTIONS, RELATIONS, AND REPRESENTATIONS\n• A relation pairs inputs with outputs. A relation is a function when every input has exactly one output.\n• The domain is the set of allowed input values; the range is the set of resulting output values.\n• Use the vertical-line test on a graph: if any vertical line touches the graph more than once, the relation is not a function.\n• Function notation f(x) means the output of function f for input x. To evaluate f(3), substitute 3 for every x in the rule.\n• A function may be represented by a table, ordered pairs, mapping diagram, graph, equation, or verbal rule. Check that all representations describe the same input-output relationship.\n• In a piecewise function, identify the condition first. Do not combine formulas from different intervals.\n• At an endpoint, use the inequality symbol exactly as written. A closed dot usually represents an included endpoint; an open dot represents an excluded endpoint.\n• When graphing a piecewise function, show each rule only on its assigned interval and label important endpoints.\n\n2. LINEAR, QUADRATIC, AND RATIONAL FUNCTIONS\n• A linear function has a constant rate of change and can be written as f(x) = mx + b. The slope m measures vertical change divided by horizontal change, and b is the y-intercept.\n• For two points, slope m = (y₂ − y₁)/(x₂ − x₁). A zero denominator means the line is vertical and has undefined slope.\n• A quadratic function has the form f(x) = ax² + bx + c. Its graph is a parabola; a > 0 opens upward and a < 0 opens downward.\n• Vertex form is f(x) = a(x − h)² + k. The vertex is (h,k), and the axis of symmetry is x = h.\n• A rational function is a quotient of polynomials. Its domain excludes values that make the denominator zero.\n• Before simplifying a rational expression, factor the numerator and denominator. A cancelled factor still creates a restriction from the original denominator.\n• To find an x-intercept, set f(x) = 0. To find a y-intercept, evaluate f(0), if 0 is in the domain.\n\n3. OPERATIONS, COMPOSITION, AND INVERSE FUNCTIONS\n• Add, subtract, multiply, or divide functions by combining their outputs. For division, exclude inputs that make the divisor zero.\n• Composition is written (f ∘ g)(x) = f(g(x)); evaluate the inside function first, then use that result as the input of the outside function.\n• To find an inverse, write y = f(x), interchange x and y, then solve for y. An inverse exists as a function when the original function is one-to-one on its domain.\n• The graphs of f and f-inverse are reflections across y = x. The domain and range switch places.\n• Always verify a simplified or inverse result by substituting it back into the original rule.\n\n4. EXPONENTIALS, LOGARITHMS, AND EQUATIONS\n• An exponential function has the form f(x) = abˣ, where a is the initial value and b is the growth or decay factor.\n• If b > 1, the function models growth; if 0 < b < 1, it models decay. The base must be positive and not equal to 1.\n• A logarithm answers the question: what exponent is needed? log_b(x) = y means bʸ = x.\n• Important identities include log_b(MN) = log_b(M) + log_b(N), log_b(M/N) = log_b(M) − log_b(N), and log_b(Mᵖ) = p log_b(M).\n• The argument of a logarithm must be positive. Check this restriction after solving a logarithmic equation.\n• For exponential equations with the same base, equate the exponents. Otherwise, use a logarithm and report a reasonable approximation when needed.\n\n5. SEQUENCES, SERIES, AND ALGEBRAIC PROBLEM SOLVING\n• An arithmetic sequence has a common difference d. Its nth term is aₙ = a₁ + (n − 1)d.\n• A geometric sequence has a common ratio r. Its nth term is aₙ = a₁rⁿ⁻¹.\n• An arithmetic series adds the terms of an arithmetic sequence: Sₙ = n/2[2a₁ + (n − 1)d].\n• When solving equations, perform the same operation on both sides and simplify one step at a time.\n• For inequalities, reverse the inequality sign only when multiplying or dividing by a negative number.\n• For systems of equations, substitution or elimination can be used. Check the ordered pair in both original equations.\n• For powers and radicals, use exponent laws carefully: xᵐxⁿ = xᵐ⁺ⁿ, xᵐ/xⁿ = xᵐ⁻ⁿ, and (xᵐ)ⁿ = xᵐⁿ.\n\n6. DATA, VARIABLES, AND STATISTICAL INTERPRETATION\n• A population is the complete group being studied; a sample is a selected part of that population.\n• A parameter describes a population, while a statistic describes a sample.\n• A representative sample should reflect the important characteristics of the population. Convenience sampling may be quick but can introduce bias.\n• Qualitative variables describe qualities or categories. Quantitative variables are numerical; discrete variables are countable, while continuous variables are measured.\n• Nominal data are labels, ordinal data have meaningful order, interval data have equal intervals but no true zero, and ratio data have equal intervals and a meaningful zero.\n• To find the mean, add all values and divide by the number of values. Put the data in order before finding the median.\n• For an even number of values, the median is the average of the two middle values. The mode is the most frequent value and may be more than one value.\n• Range is maximum minus minimum. Variance and standard deviation describe spread around the mean; a larger standard deviation means more variability.\n• Outliers can pull the mean toward an extreme value. Compare the mean and median before deciding which better represents the center.\n• A statistical conclusion should state the pattern, cite the measure or graph used, and explain what it means in context.\n\n7. TRIGONOMETRY AND TRIANGLE SOLVING\n• In a right triangle, identify the reference angle before naming opposite, adjacent, and hypotenuse.\n• SOH-CAH-TOA connects the angle and side lengths: sine = opposite/hypotenuse, cosine = adjacent/hypotenuse, tangent = opposite/adjacent.\n• Use inverse trigonometric functions to find an angle. Set the calculator to degree mode when the problem uses degrees.\n• The Pythagorean theorem a² + b² = c² applies only to right triangles, with c opposite the right angle.\n• An angle of elevation is measured upward from the horizontal; an angle of depression is measured downward from the horizontal.\n• A bearing is a direction measured from a reference such as north. Draw the compass direction before using a triangle formula.\n• For an oblique triangle, identify the known sides and angles before choosing a formula. Heron's Formula is useful when all three sides are known.\n• Area can be found with A = 1/2 ab sin(C) when two sides and their included angle are known.\n• Round only at the end. Label the final answer with units and check whether the size of the answer is reasonable.\n\n8. GENERAL CHECKLIST FOR SOLVING\n• Read the question twice and identify what is given and what must be found.\n• Write the relevant definition, formula, or condition before substituting values.\n• Keep exact values during the working process whenever possible.\n• Check restrictions, units, signs, endpoints, and whether the final answer fits the original question.\n• If an answer is wrong, locate the first step where the work changed from a valid expression to an invalid one. Correcting that step is more useful than memorizing the final answer.",
+    english: "\n\nDETAILED STUDY NOTES AND COMMUNICATION GUIDE\n\n1. THE COMMUNICATION PROCESS\n• Communication involves a sender, message, channel, receiver, feedback, context, and possible noise or barriers.\n• Encoding is turning an idea into words, symbols, images, gestures, or other signs. Decoding is interpreting the received message.\n• A channel is the medium used to deliver a message, such as speech, email, a report, a presentation, or a visual.\n• Feedback shows whether the message was understood. Effective communicators listen for the response and clarify when meaning is uncertain.\n• Physical, language, emotional, cultural, technological, and information-overload barriers can interfere with meaning.\n• Communication is transactional: participants influence one another, and meaning depends on the situation, relationship, purpose, and shared knowledge.\n\n2. AUDIENCE, PURPOSE, AND CONTEXT\n• Before writing or speaking, identify the audience, purpose, subject, occasion, and expected outcome.\n• Informative communication explains or clarifies. Persuasive communication supports a position and encourages a response. Instructional communication guides a process.\n• Match tone, vocabulary, detail, format, and level of formality to the audience. A message to a close friend should not use the same structure as an email to a professor.\n• Audience awareness includes anticipating what readers know, what they need explained, what concerns they may have, and what action they should take.\n• Use precise words instead of vague expressions. Avoid unnecessary jargon unless the audience understands the specialized terms.\n\n3. ACADEMIC AND TECHNICAL TEXTS\n• Academic and technical texts are formal, organized, evidence-based, and written for a clear discipline or task.\n• A thesis states the central claim or controlling idea. It should be specific enough to guide the entire text.\n• An outline arranges the main points and supporting details before drafting. A useful outline prevents repetition and missing ideas.\n• A paragraph usually has a topic sentence, supporting explanation or evidence, and a concluding or linking sentence.\n• Coherence means ideas make sense together. Cohesion is created through transitions, repeated key terms, pronouns with clear references, and logical connections.\n• Common organizational patterns include cause and effect, comparison and contrast, problem and solution, chronological order, classification, and process.\n• An introduction gives context and purpose. Body sections develop the ideas. A conclusion synthesizes the important points without introducing an unrelated main argument.\n\n4. CRITICAL READING, LISTENING, AND VIEWING\n• Identify the main idea, supporting details, purpose, intended audience, tone, and point of view.\n• Separate a claim from the evidence used to support it. Ask whether the evidence is relevant, sufficient, current, and credible.\n• Notice assumptions, emotionally loaded language, missing information, generalizations, and possible bias.\n• Critical listening requires attention to the speaker's words, tone, emphasis, evidence, and implied meaning. Do not confuse confidence with accuracy.\n• When viewing a visual, read the title, labels, legend, units, scale, source, and date before interpreting the pattern.\n• A conclusion from a chart should describe the visible trend and avoid claiming more than the data support.\n\n5. RESEARCH, SOURCES, AND EVIDENCE\n• Reliable sources identify an author or organization, provide evidence, explain methods when relevant, and can be checked against other sources.\n• Primary sources provide original data or firsthand information. Secondary sources interpret, analyze, or summarize information from other sources.\n• Use evidence that directly supports the claim. A quotation should not be included merely because it sounds impressive.\n• Introduce evidence, present it accurately, and explain how it supports the point. Evidence without explanation does not automatically prove a claim.\n• Keep a source record while researching: author, title, date, publisher or site, page or link, and the ideas or quotations used.\n• Cite borrowed words, facts, ideas, images, tables, and data according to the required style. A reference list helps readers locate the sources.\n\n6. SUMMARY, PARAPHRASE, AND SYNTHESIS\n• A summary reduces a longer text to its main idea and most important supporting points without changing the meaning.\n• A paraphrase restates a specific passage in your own sentence structure and wording while preserving the original meaning and citing the source.\n• Changing only a few words or rearranging the order of a source sentence is not an acceptable paraphrase.\n• Synthesis combines ideas from multiple sources to develop a larger conclusion or explanation. It does not simply list one source after another.\n• Compare sources for agreement, disagreement, scope, methods, and limitations before combining their ideas.\n• Read the original source, set it aside while drafting, then compare your version with the original for accuracy and proper attribution.\n\n7. MULTIMODAL AND VISUAL COMMUNICATION\n• Multimodal communication combines modes such as written language, speech, images, color, layout, sound, movement, charts, and diagrams.\n• Choose a chart based on the message: bar charts compare categories, line graphs show change over time, and tables provide exact values.\n• Every visual needs a clear title and labels. Include units, a useful scale, a legend when necessary, and a source when the data are borrowed.\n• Visual design should support meaning. Use consistent alignment, readable text, sufficient contrast, and a limited number of visual elements.\n• Do not distort a graph through a misleading scale, missing labels, inappropriate 3D effects, or selective data.\n• A presenter should explain what the audience should notice instead of reading every word on a slide.\n\n8. INTERACTION, LISTENING, AND FEEDBACK\n• Active listening includes focusing on the speaker, maintaining appropriate eye contact, noticing non-verbal signals, asking clarifying questions, and responding to the actual message.\n• Respectful feedback describes a specific behavior or part of the work, explains its effect, and offers a useful next step.\n• In collaboration, clarify roles, deadlines, decision rules, and responsibilities. Document important agreements so the group has a shared reference.\n• In a discussion or debate, respond to the claim and evidence rather than attacking the person. Acknowledge a valid point before explaining a different view.\n• Non-verbal communication includes facial expression, posture, gestures, eye contact, distance, and vocal features such as pace and emphasis.\n• Professional communication remains respectful even when the participants disagree or feel pressured.\n\n9. GRAMMAR, STYLE, AND EDITING\n• A complete sentence has a subject and a predicate and expresses a complete thought. Avoid fragments and run-on sentences.\n• Make the subject and verb agree: singular subjects take singular verbs, and plural subjects take plural verbs.\n• Use active voice when you want the actor and action to be direct and clear. Use passive voice when the receiver of the action or the process is more important.\n• Use pronouns with clear antecedents. Check that pronouns agree with the nouns they replace in number and person.\n• Use commas to separate items in a series, introductory elements, and independent clauses joined by a coordinating conjunction.\n• A semicolon can join closely related independent clauses. Do not use it between a dependent clause and an independent clause.\n• Revise for clarity, concision, precise vocabulary, transitions, spelling, capitalization, punctuation, and consistent formatting.\n\n10. ETHICS, AI, AND REFLECTION\n• Plagiarism is presenting another person's words, ideas, structure, or work as your own. It can occur even when the wording has been changed if the source is not acknowledged.\n• Do not invent sources, evidence, quotations, data, or research results. Represent uncertainty honestly.\n• Protect confidential information and obtain permission before sharing another person's private communication or work.\n• AI assistance and borrowed ideas should be acknowledged according to the instructor's or institution's required practice. AI output must be checked because it can be inaccurate, biased, or unsupported.\n• Reflect after communicating: identify what was clear, what confused the audience, what evidence was effective, and what you will change next time.\n• A strong final check asks: Is the message accurate, audience-aware, organized, ethical, accessible, and clear enough to achieve its purpose?\"\n+  }\n+};\n+\n+/* Preset question banks (same content as before, unchanged) */
 const BANK = {
   pretest: {
     math: [
@@ -841,6 +873,215 @@ function learningPathHtml(){
     <button class="primary-btn ghost" id="pathReviewBtn">${next ? "Open Reviewer for Focus" : "View My Progress"}</button>
   </div>`;
 }
+const REVIEWER_ADDENDUM = {
+  second: {
+    math: `
+
+DETAILED STUDY NOTES AND PRACTICE GUIDE
+
+FUNCTIONS AND REPRESENTATIONS
+• A relation pairs inputs with outputs. It is a function when every input has exactly one output.
+• The domain is the set of allowed inputs; the range is the set of resulting outputs.
+• Use the vertical-line test on a graph: a vertical line touching the graph more than once means the relation is not a function.
+• Function notation f(x) names the output for an input. To evaluate f(3), substitute 3 for every x in the rule.
+• Tables, ordered pairs, mapping diagrams, graphs, equations, and verbal rules can represent the same function.
+• In a piecewise function, identify the condition first and apply only the formula assigned to that interval.
+• Pay close attention to endpoint symbols. < and > exclude an endpoint; ≤ and ≥ include it.
+• When graphing a piecewise function, graph each rule only on its interval and mark included or excluded endpoints.
+
+LINEAR, QUADRATIC, AND RATIONAL FUNCTIONS
+• A linear function has the form f(x) = mx + b. The slope is m and the y-intercept is b.
+• For two points, m = (y₂ − y₁)/(x₂ − x₁). A zero denominator gives a vertical line with undefined slope.
+• A quadratic function has the form f(x) = ax² + bx + c and creates a parabola. If a > 0 it opens upward; if a < 0 it opens downward.
+• Vertex form is f(x) = a(x − h)² + k. The vertex is (h,k) and the axis of symmetry is x = h.
+• A rational function is a quotient of polynomials. Its domain excludes values that make the original denominator zero.
+• Factor before simplifying rational expressions. A cancelled factor still creates a restriction from the original denominator.
+• To find an x-intercept, set f(x) = 0. To find a y-intercept, evaluate f(0) when 0 is in the domain.
+
+FUNCTION OPERATIONS, COMPOSITION, AND INVERSES
+• Add, subtract, multiply, or divide functions by combining their outputs. Division also requires checking the divisor's restrictions.
+• Composition is (f ∘ g)(x) = f(g(x)); evaluate the inside function first.
+• To find an inverse, write y = f(x), interchange x and y, and solve for y.
+• An inverse is a function when the original function is one-to-one on its domain. The graphs of a function and its inverse reflect across y = x.
+• Domain and range switch places when a function is inverted. Verify an inverse by composing it with the original function.
+
+EXPONENTIALS, LOGARITHMS, AND EQUATIONS
+• An exponential function has the form f(x) = abˣ. If b > 1 it models growth; if 0 < b < 1 it models decay.
+• A logarithm answers the question: what exponent is needed? log_b(x) = y means bʸ = x.
+• Useful rules include log_b(MN) = log_b(M) + log_b(N), log_b(M/N) = log_b(M) − log_b(N), and log_b(Mᵖ) = p log_b(M).
+• The argument of a logarithm must be positive. Check this restriction after solving.
+• For exponential equations with the same base, equate exponents. Otherwise, use logarithms and round only at the end.
+
+SEQUENCES, SERIES, AND ALGEBRA
+• An arithmetic sequence has common difference d: aₙ = a₁ + (n − 1)d.
+• A geometric sequence has common ratio r: aₙ = a₁rⁿ⁻¹.
+• An arithmetic series uses Sₙ = n/2[2a₁ + (n − 1)d].
+• For inequalities, reverse the sign only when multiplying or dividing by a negative number.
+• For systems, use substitution or elimination and check the ordered pair in both original equations.
+• Keep exact values when possible and show one algebraic step at a time.
+
+DATA AND STATISTICS
+• A population is the complete group being studied; a sample is a selected part. A parameter describes a population, while a statistic describes a sample.
+• Qualitative variables describe categories. Quantitative variables are numerical; discrete values are countable and continuous values are measured.
+• Nominal data are labels, ordinal data have an order, interval data have equal differences without a true zero, and ratio data have a meaningful zero.
+• Mean = sum of values ÷ number of values. Put values in order before finding the median.
+• For an even number of values, the median is the average of the two middle values. The mode is the most frequent value.
+• Range = maximum − minimum. Variance and standard deviation describe spread around the mean.
+• Outliers can pull the mean toward an extreme value. Compare the mean and median before deciding which better represents the center.
+• A good statistical conclusion names the measure, describes the pattern, and explains what the result means in context.
+
+TRIGONOMETRY AND TRIANGLES
+• In a right triangle, identify the reference angle before naming opposite, adjacent, and hypotenuse.
+• SOH-CAH-TOA: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse, tan θ = opposite/adjacent.
+• Use inverse trigonometric functions to find an angle. Use degree mode when the problem uses degrees.
+• The Pythagorean theorem a² + b² = c² applies to right triangles, with c opposite the right angle.
+• An angle of elevation is measured upward from the horizontal; an angle of depression is measured downward.
+• Bearings should be drawn from a clear reference direction, usually north.
+• Heron's Formula finds the area of an oblique triangle when all three sides are known: A = √[s(s−a)(s−b)(s−c)], where s = (a+b+c)/2.
+• Use A = 1/2 ab sin(C) when two sides and their included angle are known.
+• Draw the figure, label units, choose the formula, avoid early rounding, and check whether the final answer is reasonable.`,
+    english: `
+
+DETAILED STUDY NOTES AND COMMUNICATION GUIDE
+
+THE COMMUNICATION PROCESS
+• Communication includes a sender, message, channel, receiver, feedback, context, and possible noise or barriers.
+• Encoding turns an idea into words, symbols, images, gestures, or other signs. Decoding is interpreting the received message.
+• A channel is the medium used to deliver a message, such as speech, email, a report, a presentation, or a visual.
+• Feedback shows whether the message was understood. Clarify when the response reveals confusion.
+• Physical, language, emotional, cultural, technological, and information-overload barriers can interfere with meaning.
+• Communication is transactional: participants influence one another, and meaning depends on the situation, relationship, purpose, and shared knowledge.
+
+AUDIENCE, PURPOSE, AND CONTEXT
+• Before writing or speaking, identify the audience, purpose, subject, occasion, and expected outcome.
+• Informative communication explains. Persuasive communication supports a position and encourages a response. Instructional communication guides a process.
+• Match tone, vocabulary, detail, format, and formality to the audience. A message to a close friend should not have the same structure as an email to a professor.
+• Audience awareness means anticipating what readers know, what needs explanation, what concerns they may have, and what action they should take.
+• Use precise words instead of vague expressions. Avoid unnecessary jargon unless the audience understands the specialized terms.
+
+ACADEMIC AND TECHNICAL TEXTS
+• Academic and technical texts are formal, organized, evidence-based, and written for a clear discipline or task.
+• A thesis states the central claim or controlling idea. An outline arranges main points and supporting details before drafting.
+• A paragraph usually has a topic sentence, supporting explanation or evidence, and a concluding or linking sentence.
+• Coherence means ideas make sense together. Cohesion is created through transitions, repeated key terms, clear pronouns, and logical connections.
+• Common patterns include cause and effect, comparison and contrast, problem and solution, chronological order, classification, and process.
+• An introduction gives context and purpose. Body sections develop ideas. A conclusion synthesizes important points without introducing an unrelated argument.
+
+CRITICAL READING, LISTENING, AND VIEWING
+• Identify the main idea, supporting details, purpose, audience, tone, and point of view.
+• Separate a claim from the evidence supporting it. Ask whether evidence is relevant, sufficient, current, and credible.
+• Notice assumptions, emotionally loaded language, missing information, generalizations, and possible bias.
+• Active listening requires attention to words, tone, emphasis, evidence, and implied meaning. Confidence does not guarantee accuracy.
+• For a chart or diagram, read the title, labels, legend, units, scale, source, and date before interpreting the pattern.
+• A conclusion should describe the visible trend and avoid claiming more than the data support.
+
+RESEARCH, SOURCES, AND EVIDENCE
+• Reliable sources identify an author or organization, provide evidence, explain methods when relevant, and can be checked against other sources.
+• Primary sources provide original or firsthand information. Secondary sources interpret, analyze, or summarize other sources.
+• Introduce evidence, present it accurately, and explain how it supports the point. Evidence without explanation does not automatically prove a claim.
+• Keep a source record with author, title, date, publisher or site, page or link, and the ideas or quotations used.
+• Cite borrowed words, facts, ideas, images, tables, and data according to the required style. A reference list helps readers locate sources.
+
+SUMMARY, PARAPHRASE, AND SYNTHESIS
+• A summary reduces a longer text to its main idea and most important points without changing the meaning.
+• A paraphrase restates a specific passage in your own sentence structure and wording while preserving the meaning and citing the source.
+• Changing only a few words or rearranging the source sentence is not an acceptable paraphrase.
+• Synthesis combines ideas from multiple sources to develop a larger conclusion. It does not simply list one source after another.
+• Compare sources for agreement, disagreement, scope, methods, and limitations before combining their ideas.
+
+MULTIMODAL AND VISUAL COMMUNICATION
+• Multimodal communication combines written language, speech, images, color, layout, sound, movement, charts, and diagrams.
+• Bar charts compare categories, line graphs show change over time, and tables provide exact values.
+• Every visual needs a clear title and labels. Include units, a useful scale, a legend when necessary, and a source when data are borrowed.
+• Use readable text, sufficient contrast, consistent alignment, and only the visual elements needed to support the message.
+• Do not distort a graph with a misleading scale, missing labels, inappropriate 3D effects, or selective data.
+• A presenter should explain what the audience should notice rather than reading every word on a slide.
+
+INTERACTION, LISTENING, AND FEEDBACK
+• Active listening includes focusing on the speaker, appropriate eye contact, noticing non-verbal signals, asking clarifying questions, and responding to the actual message.
+• Respectful feedback describes a specific behavior or part of the work, explains its effect, and offers a useful next step.
+• In collaboration, clarify roles, deadlines, decision rules, and responsibilities. Record important agreements.
+• In a discussion or debate, respond to the claim and evidence rather than attacking the person.
+• Non-verbal communication includes facial expression, posture, gestures, eye contact, distance, pace, and vocal emphasis.
+• Professional communication remains respectful even when participants disagree or feel pressured.
+
+GRAMMAR, STYLE, AND EDITING
+• A complete sentence has a subject and predicate and expresses a complete thought. Avoid fragments and run-on sentences.
+• Make the subject and verb agree. Use pronouns with clear antecedents and correct number and person.
+• Use active voice when you want the actor and action to be direct. Use passive voice when the receiver or process is more important.
+• Use commas in lists, introductory elements, and independent clauses joined by a coordinating conjunction.
+• A semicolon can join closely related independent clauses; do not use it between a dependent clause and an independent clause.
+• Revise for clarity, concision, precise vocabulary, transitions, spelling, capitalization, punctuation, and consistent formatting.
+
+ETHICS, AI, AND REFLECTION
+• Plagiarism is presenting another person's words, ideas, structure, or work as your own. Changing a few words does not remove the need to cite.
+• Do not invent sources, evidence, quotations, data, or research results. Represent uncertainty honestly.
+• Protect confidential information and obtain permission before sharing another person's private communication or work.
+• AI assistance and borrowed ideas should be acknowledged according to the instructor's or institution's required practice. Check AI output for accuracy, bias, and support.
+• Reflect after communicating: identify what was clear, what confused the audience, what evidence was effective, and what you will change next time.
+• Final check: Is the message accurate, audience-aware, organized, ethical, accessible, and clear enough to achieve its purpose?`
+  }
+};
+
+// Keep the General Mathematics reviewer focused on the three-week
+// Second Term coverage while retaining practical study support.
+REVIEWER_ADDENDUM.second.math = `
+
+THREE-WEEK GENERAL MATHEMATICS STUDY GUIDE
+
+WEEK 1 — PIECEWISE FUNCTIONS
+• A piecewise function uses different rules for different intervals or conditions.
+• Read the condition first. The condition tells you which formula to use; do not combine rules from separate intervals.
+• Symbols matter: < and > exclude an endpoint, while ≤ and ≥ include it. At a boundary, use the rule whose condition includes that value.
+• Example fare model:
+  f(x) = 40 for 0 < x ≤ 2
+  f(x) = 40 + 12(x − 2) for x > 2
+  For 5 km, use the second rule: f(5) = 40 + 12(3) = P76.
+• Practical uses include taxi fares, delivery charges, tiered discounts, and income-tax brackets.
+• To solve: identify the input, locate its interval, substitute into that interval's rule, simplify, and check the units and reasonableness.
+• When sketching a piecewise graph, draw each rule only on its assigned interval. Use a closed dot for an included endpoint and an open dot for an excluded endpoint.
+• A reasonable answer should match the situation: a fare should not decrease when extra distance is added, and an amount of money should have the correct currency unit.
+
+WEEK 2 — DATA, MEASUREMENT LEVELS, AND VARIABILITY
+• Qualitative data describe categories or qualities. Quantitative data are numerical.
+• Discrete data are countable, such as the number of absences. Continuous data are measured and can take values within a range, such as time, height, or temperature.
+• Nominal data are labels with no order. Ordinal data have an order. Interval data have equal differences but no meaningful zero. Ratio data have equal differences and a meaningful zero.
+• Mean = sum of values ÷ number of values.
+• Median is the middle value after arranging the data in order. With an even number of values, average the two middle values.
+• Mode is the most frequent value. A data set may have more than one mode or no mode.
+• Range = maximum − minimum. Variance and standard deviation describe how far values spread around the mean.
+• A small standard deviation means values are clustered near the mean; a large standard deviation means greater spread.
+• Outliers can pull the mean toward an extreme value. For strongly skewed data, compare the mean and median and consider using the median.
+• Example: for 4, 6, 6, 8, and 11, the mean is 7, the median is 6, the mode is 6, and the range is 7.
+• Use a calculator, spreadsheet, Jamovi, or another tool to calculate measures, but still explain what the result means in the original context.
+• A good interpretation names the measure, describes the pattern, includes units when needed, and avoids claiming more than the data show.
+
+WEEK 3 — TRIGONOMETRY AND TRIANGLES
+• In a right triangle, identify the reference angle and label the sides: opposite, adjacent, and hypotenuse. The hypotenuse is opposite the right angle.
+• SOH-CAH-TOA:
+  sin θ = opposite ÷ hypotenuse
+  cos θ = adjacent ÷ hypotenuse
+  tan θ = opposite ÷ adjacent
+• Use an inverse trigonometric function to find an unknown angle. Set the calculator to degree mode when the problem uses degrees.
+• The Pythagorean theorem is a² + b² = c² and applies to right triangles. The longest side is c, opposite the right angle.
+• An angle of elevation is measured upward from a horizontal line. An angle of depression is measured downward from a horizontal line.
+• Bearings describe direction from a reference, usually clockwise from north. For example, 090° is east and 225° is southwest. Draw the direction before forming a triangle.
+• Heron's Formula is useful when all three side lengths are known:
+  s = (a + b + c) ÷ 2
+  Area = √[s(s − a)(s − b)(s − c)]
+• If two sides and their included angle are known, use:
+  Area = 1/2 ab sin(C)
+• Example with the sine-area formula: sides 6 cm and 10 cm with included angle 30° give Area = 1/2(6)(10)sin30° = 15 cm².
+• Example with Heron's Formula: sides 3, 4, and 5 give s = 6 and area = √[6(3)(2)(1)] = 6 square units.
+
+GENERAL PROBLEM-SOLVING CHECKLIST
+• Read the problem twice and identify what is given and what must be found.
+• Draw and label a diagram for triangle, elevation, depression, or bearing problems.
+• Write the definition or formula before substituting values.
+• Keep units consistent and avoid rounding until the final step.
+• Check endpoint conditions in piecewise functions and check that the selected formula matches the data given.
+• Ask whether the final value is reasonable in the real situation.`;
+
 const TERM_BANK = {
   second: {
     pretest: {
@@ -936,6 +1177,29 @@ let state = {
 
 const app = document.getElementById("app");
 
+function applyTheme(theme){
+  const isDark = theme === "dark";
+  document.documentElement.dataset.theme = isDark ? "dark" : "light";
+  const btn = document.getElementById("themeToggle");
+  if(btn){
+    btn.textContent = isDark ? "☀️ Light" : "🌙 Dark";
+    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+    btn.title = isDark ? "Switch to light mode" : "Switch to dark mode";
+  }
+}
+function initTheme(){
+  let theme = "light";
+  try{ theme = window.localStorage.getItem("tq_theme") || "light"; }catch(e){}
+  applyTheme(theme);
+  const btn = document.getElementById("themeToggle");
+  if(btn) btn.addEventListener("click", ()=>{
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    try{ window.localStorage.setItem("tq_theme", next); }catch(e){}
+    applyTheme(next);
+    if(typeof bg === "function") bg();
+  });
+}
+
 function route(){
   clearInterval(state.timerId);
   const r = {
@@ -948,7 +1212,7 @@ function route(){
   (r[state.screen] || renderIntro)();
 }
 function bg(soft){
-  document.body.style.background = `radial-gradient(circle at 12% -10%, ${soft||'var(--accent-soft)'} 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper)`;
+  document.body.style.background = `radial-gradient(circle at 12% -10%, ${soft||'var(--accent-soft)'} 0%, transparent 45%), radial-gradient(circle at 110% 10%, var(--glow-2) 0%, transparent 40%), var(--paper)`;
 }
 
 function renderIntro(){
@@ -1132,7 +1396,8 @@ function renderReviewer(){
   const content = terms.map(term=>{
     const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
       state.activeAssignment.customReviewer[term] && state.activeAssignment.customReviewer[term][subj];
-    return custom || (REVIEWER_BY_TERM[term] || REVIEWER_BY_TERM.second)[subj];
+    const builtIn = (REVIEWER_BY_TERM[term] || REVIEWER_BY_TERM.second)[subj];
+    return custom || (builtIn + ((REVIEWER_ADDENDUM[term] || {})[subj] || ""));
   }).filter(Boolean).join("\n\n");
   app.innerHTML = `
     <div class="fade-in">
@@ -1581,6 +1846,7 @@ async function renderStudentClass(){
   startBtn("startPostBtn", "posttest");
 }
 
+initTheme();
 route();
 </script>
 </body>
