@@ -158,6 +158,11 @@ const TERMS = [
 function termLabels(termArr){
   return "Second Term";
 }
+function masteryLabel(pct){
+  if(pct >= 85) return "Mastered";
+  if(pct >= 70) return "Developing";
+  return "Needs practice";
+}
 const MAX_QUESTIONS = 20;
 
 function escapeHtml(str){
@@ -866,6 +871,16 @@ async function renderClassActivity(){
 
   const data = state.activityCache[id];
   const tab = state.activityTab;
+  const skillTotals = {};
+  data.attempts.forEach(a=>(a.skillBreakdown || []).forEach(s=>{
+    if(!skillTotals[s.skill]) skillTotals[s.skill] = {correct:0,total:0};
+    skillTotals[s.skill].correct += s.correct || 0;
+    skillTotals[s.skill].total += s.total || 0;
+  }));
+  const skillSummary = Object.entries(skillTotals).map(([skill,v])=>{
+    const pct = v.total ? Math.round(v.correct/v.total*100) : 0;
+    return `${skill}: ${masteryLabel(pct)} (${pct}%)`;
+  }).join(" &middot; ");
 
   app.innerHTML = `
     <div class="fade-in">
@@ -893,7 +908,7 @@ async function renderClassActivity(){
               <td>${fmtDate(a.timestamp)}</td>
             </tr>
           `).join("")}</tbody>
-        </table></div>`
+         </table>${skillSummary ? `<p class="fine-print" style="text-align:left; margin-bottom:0;">Mastery snapshot: ${skillSummary}</p>` : ``}</div>`
       ) : tab === 'views' ? (
         data.views.length === 0 ? `<p class="empty-note">No one has opened this class yet.</p>` :
         data.views.map(v=>`
