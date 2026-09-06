@@ -6,6 +6,13 @@
 <title>Tap-Quiz for Teachers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script>
+  try{
+    if(window.localStorage.getItem("tq_theme") === "dark"){
+      document.documentElement.dataset.theme = "dark";
+    }
+  }catch(e){}
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
@@ -13,13 +20,21 @@
     --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
     --math:#F0A202; --math-soft:#FCEACB;
     --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
-    --good:#1B998B; --bad:#E4572E; --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+    --good:#1B998B; --bad:#E4572E; --glow-2:#ECE3FB; --button-bg:#211C4E; --button-ink:#FFFFFF;
+    --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
+  }
+  html[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#11131F; --surface:#1B1E2B; --ink:#F5F2FF; --ink-soft:#B6AFD0; --border:#3B3658;
+    --accent:var(--ink); --accent-soft:#2A2644; --glow-2:#2A2441;
+    --math-soft:#493818; --english-soft:#45221D; --button-bg:#EEEAFE; --button-ink:#17142B;
+    --shadow:0 12px 30px -14px rgba(0,0,0,0.55);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     min-height:100vh;
-    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, #ECE3FB 0%, transparent 40%), var(--paper);
+    background:radial-gradient(circle at 12% -10%, var(--accent-soft) 0%, transparent 45%), radial-gradient(circle at 110% 10%, var(--glow-2) 0%, transparent 40%), var(--paper);
     font-family:'IBM Plex Sans', sans-serif; color:var(--ink);
     display:flex; justify-content:center; padding:28px 16px 60px;
   }
@@ -30,6 +45,9 @@
   .brand h1{ font-family:'Space Grotesk', sans-serif; font-size:clamp(19px,5vw,24px); font-weight:700; letter-spacing:-0.02em; margin:0; line-height:1.05; }
   .brand h1 span{ color:var(--english); }
   .brand .tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.03em; text-align:right; line-height:1.4; }
+  .brand-actions{ display:flex; align-items:center; gap:10px; }
+  .theme-toggle{ border:1.5px solid var(--border); background:var(--surface); color:var(--ink); border-radius:100px; padding:8px 10px; cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; white-space:nowrap; }
+  .theme-toggle:hover{ border-color:var(--accent); }
   .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px; min-height:120px; }
 
   .navbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap; }
@@ -54,7 +72,7 @@
   .checkbox-item input, .radio-item input{ width:auto; margin:0; }
   .radio-item.disabled{ opacity:0.6; cursor:not-allowed; }
 
-  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--ink); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; }
+  .primary-btn{ width:100%; border:none; cursor:pointer; background:var(--button-bg); color:var(--button-ink); font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; letter-spacing:0.01em; padding:15px 18px; border-radius:14px; transition:transform .12s ease, opacity .15s ease; }
   .primary-btn:active{ transform:scale(0.98); }
   .primary-btn:disabled{ opacity:0.5; cursor:not-allowed; }
   .primary-btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); }
@@ -118,6 +136,8 @@
   .fade-in{ animation:fadeIn .3s ease; }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+  html[data-theme="dark"] .subject-chip.math{ color:#FFD27A; }
+  html[data-theme="dark"] .subject-chip.english{ color:#FFB09B; }
 
   footer.credit{ text-align:center; font-size:10.5px; color:var(--ink-soft); margin-top:18px; font-family:'IBM Plex Mono', monospace; }
 </style>
@@ -129,7 +149,10 @@
       <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
-    <div class="tag">FOR TEACHERS<br>CLASSES &middot; RESULTS &middot; ROSTERS</div>
+    <div class="brand-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">🌙 Dark</button>
+      <div class="tag">FOR TEACHERS<br>CLASSES &middot; RESULTS &middot; ROSTERS</div>
+    </div>
   </div>
   <div id="app" class="card"></div>
   <footer class="credit">web-based teacher companion &middot; research instrument</footer>
@@ -257,6 +280,28 @@ let state = {
 };
 
 const app = document.getElementById("app");
+
+function applyTheme(theme){
+  const isDark = theme === "dark";
+  document.documentElement.dataset.theme = isDark ? "dark" : "light";
+  const btn = document.getElementById("themeToggle");
+  if(btn){
+    btn.textContent = isDark ? "☀️ Light" : "🌙 Dark";
+    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+    btn.title = isDark ? "Switch to light mode" : "Switch to dark mode";
+  }
+}
+function initTheme(){
+  let theme = "light";
+  try{ theme = window.localStorage.getItem("tq_theme") || "light"; }catch(e){}
+  applyTheme(theme);
+  const btn = document.getElementById("themeToggle");
+  if(btn) btn.addEventListener("click", ()=>{
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    try{ window.localStorage.setItem("tq_theme", next); }catch(e){}
+    applyTheme(next);
+  });
+}
 
 function route(){
   const r = {
@@ -681,7 +726,7 @@ async function renderManageTest(){
         `).join("")}
       ` : ``}
 
-      <p class="field-label">Custom reviewer content (optional — blank keeps the built-in reviewer)</p>
+      <p class="field-label">Custom reviewer content (optional — blank keeps the expanded built-in Second Term reviewer)</p>
        ${draft.terms.flatMap(term=>draft.subjects.map(s=>`
          <p class="fine-print" style="text-align:left; margin:0 0 6px 2px;">${TERMS.find(t=>t.value===term).label} — ${SUBJECT_META[s].label}</p>
          <textarea id="reviewer_${term}_${s}" placeholder="Leave blank to use the PDF-based default reviewer">${escapeHtml((draft.customReviewer[term]||{})[s]||"")}</textarea>
@@ -947,6 +992,7 @@ async function renderClassActivity(){
   });
 }
 
+initTheme();
 route();
 </script>
 </body>
