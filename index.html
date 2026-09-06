@@ -164,10 +164,19 @@
   .reviewer-reading h3{ color:#292B39; font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 10px; }
   .reviewer-reading .reading-lead{ color:#626579; font-size:14px; line-height:1.6; margin:0 0 16px; }
   .reviewer-reading .reading-body{ white-space:pre-wrap; }
+  .study-label{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin:4px 0 6px; }
+  .formula-card{ background:#F1EBDD; border:1.5px solid #D8C9AA; border-radius:13px; padding:14px; margin:0 0 18px; }
+  .formula-card .formula-label{ color:#756345; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; margin-bottom:7px; }
+  .formula-card .formula-text{ color:#27283A; font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:700; line-height:1.65; white-space:pre-wrap; }
+  .formula-card .formula-meaning{ color:#5E594E; font-size:13.5px; line-height:1.55; margin-top:8px; }
   .reviewer-reading .reading-tip{ border-left:3px solid var(--math); background:#F3EEDC; color:#514A3D; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:14px; line-height:1.6; }
   html[data-theme="dark"] .reviewer-reading{ background:#20231F; border-color:#454637; color:#E8E3D5; box-shadow:none; }
   html[data-theme="dark"] .reviewer-reading h3{ color:#FFF8E7; }
   html[data-theme="dark"] .reviewer-reading .reading-lead{ color:#C5C0B1; }
+  html[data-theme="dark"] .formula-card{ background:#343226; border-color:#62583B; }
+  html[data-theme="dark"] .formula-card .formula-label{ color:#D7C38C; }
+  html[data-theme="dark"] .formula-card .formula-text{ color:#FFF4D2; }
+  html[data-theme="dark"] .formula-card .formula-meaning{ color:#D6CFBA; }
   html[data-theme="dark"] .reviewer-reading .reading-tip{ background:#353522; color:#E8E3D5; }
   .learning-panel{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
   .learning-panel .lp-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; margin-bottom:4px; }
@@ -1106,6 +1115,9 @@ const STUDENT_REVIEWER_WEEKS = {
       {
         title:"Week 1 · Piecewise Functions",
         lead:"A piecewise function is one rule with different instructions for different situations. Think of it like a fare chart: the price changes when the distance enters a new range.",
+        formula:`f(x) = rule 1, when condition 1
+f(x) = rule 2, when condition 2`,
+        formulaMeaning:"The condition tells you which rule to use. Choose one interval first, then substitute the input into that interval's rule.",
         body:`Start by reading the condition, not the formula. The condition tells you which rule to use.
 
 The basic form is:
@@ -1145,6 +1157,12 @@ For a graph, draw each rule only on its assigned interval. Use a closed dot for 
       {
         title:"Week 2 · Data and Statistics",
         lead:"Statistics helps us describe a group of information. The goal is not just to calculate a number, but to explain what that number tells us.",
+        formula:`Mean = sum of all values / number of values
+Median = middle value after ordering
+Mode = most frequent value
+Range = maximum - minimum
+Population standard deviation = √[sum of (x - mean)² / N]`,
+        formulaMeaning:"These formulas summarize the center and spread of a data set. Use the mean for the average, the median for the middle, the mode for the most common value, and the range or standard deviation for spread.",
         body:`Statistics helps us describe a group of information. The goal is not just to calculate a number, but to explain what that number tells us.
 
 First identify the kind of data:
@@ -1191,6 +1209,12 @@ The mean can be pulled toward an unusually high or low value. The median may des
       {
         title:"Week 3 · Trigonometry and Triangles",
         lead:"Trigonometry connects an angle to the sides of a triangle. A quick sketch usually makes the problem much less confusing.",
+        formula:`sin(θ) = opposite / hypotenuse
+cos(θ) = adjacent / hypotenuse
+tan(θ) = opposite / adjacent
+a² + b² = c²
+Area = 1/2 ab sin(C)`,
+        formulaMeaning:"Choose the ratio that contains the sides you know and the side you need. Use the Pythagorean theorem for a right triangle, and use the area formula when two sides and their included angle are known.",
         body:`Trigonometry connects an angle to the sides of a triangle. A quick sketch usually makes the problem much less confusing.
 
 In a right triangle, first mark the angle you are using. Then label:
@@ -1728,7 +1752,16 @@ function renderReviewer(){
       </div>
       <div class="reviewer-reading">
         <h3>${escapeHtml(week.title)}</h3>
+        <div class="study-label">Meaning</div>
         <p class="reading-lead">${escapeHtml(week.lead)}</p>
+        ${week.formula ? `
+          <div class="formula-card">
+            <div class="formula-label">Formula to follow</div>
+            <div class="formula-text"><b>${escapeHtml(week.formula)}</b></div>
+            <div class="formula-meaning">${escapeHtml(week.formulaMeaning || "")}</div>
+          </div>
+        ` : ""}
+        <div class="study-label">Steps and worked solution</div>
         <div class="reading-body">${escapeHtml(week.body)}</div>
         ${week.tip ? `<div class="reading-tip"><b>Study tip:</b> ${escapeHtml(week.tip)}</div>` : ""}
       </div>
