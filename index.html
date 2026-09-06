@@ -775,6 +775,34 @@ function subjectLabels(subjArr){
 function termLabels(termArr){
   return "Second Term";
 }
+function inferSkill(subject, question){
+  const q = String(question || "").toLowerCase();
+  if(subject === "math"){
+    if(/piecewise|function|f\(x\)|interval/.test(q)) return "Functions";
+    if(/mean|median|mode|range|standard deviation|data|measurement/.test(q)) return "Statistics";
+    if(/sin|cos|tan|triangle|bearing|angle|heron/.test(q)) return "Trigonometry";
+    return "General Mathematics";
+  }
+  if(/thesis|outline|research|evidence|paraphrase|plagiarism|citation|technical report|academic/.test(q)) return "Academic & Technical Communication";
+  if(/chart|table|diagram|graph|infographic|multimodal/.test(q)) return "Multimodal Communication";
+  if(/audience|tone|feedback|collaboration|procedure/.test(q)) return "Communication Strategies";
+  return "Effective Communication";
+}
+function buildSkillBreakdown(answers){
+  const map = {};
+  (answers || []).forEach(a=>{
+    const skill = a.skill || inferSkill(a.subject, a.q);
+    if(!map[skill]) map[skill] = {skill, correct:0, total:0};
+    map[skill].total++;
+    if(a.correct) map[skill].correct++;
+  });
+  return Object.values(map).map(v=>({...v, pct: Math.round((v.correct/v.total)*100)}));
+}
+function masteryLabel(pct){
+  if(pct >= 85) return "Mastered";
+  if(pct >= 70) return "Developing";
+  return "Needs practice";
+}
 const TERM_BANK = {
   second: {
     pretest: {
@@ -799,7 +827,8 @@ function buildPracticeQueue(subjects, testType, terms){
       const shuffledChoices = shuffle(item.c);
       const newA = shuffledChoices.indexOf(correctText);
       const isScenario = item.q.startsWith("SCENARIO:");
-      queue.push({subject:subj, q:isScenario ? item.q.replace("SCENARIO: ","") : item.q, isScenario, c:shuffledChoices, a:newA});
+      const qtext = isScenario ? item.q.replace("SCENARIO: ","") : item.q;
+      queue.push({subject:subj, q:qtext, skill:inferSkill(subj, qtext), isScenario, c:shuffledChoices, a:newA});
     });
   });
   return shuffle(queue);
@@ -828,7 +857,7 @@ function buildAssignedQueue(assignment, testType){
       const rawQ = item.q || "";
       const isScenario = item.isScenario || rawQ.startsWith("SCENARIO:");
       const qtext = rawQ.startsWith("SCENARIO:") ? rawQ.replace("SCENARIO: ","") : rawQ;
-      queue.push({subject:subj, q:qtext, isScenario, c:shuffledChoices, a:newA});
+      queue.push({subject:subj, q:qtext, skill:item.skill || inferSkill(subj, qtext), isScenario, c:shuffledChoices, a:newA});
     });
   });
   return shuffle(queue);
@@ -1154,7 +1183,7 @@ function lockAnswer(choiceIndex){
   const item = state.quizQueue[state.qIndex];
   const isCorrect = choiceIndex === item.a;
   state.answers.push({
-    subject:item.subject, q:item.q, choices:item.c,
+    subject:item.subject, skill:item.skill || inferSkill(item.subject, item.q), q:item.q, choices:item.c,
     correctIndex:item.a, selectedIndex:choiceIndex, correct:isCorrect
   });
 
@@ -1182,12 +1211,16 @@ function renderTransition(){
   clearInterval(state.timerId);
   const nextItem = state.quizQueue[state.qIndex + 1];
   const meta = SUBJECT_META[nextItem.subject];
+  const lastAnswer = state.answers[state.answers.length - 1];
+  const feedback = lastAnswer && lastAnswer.correct ? "Correct — keep building mastery." : "Not yet — review this skill before your next attempt.";
+  const feedbackSkill = lastAnswer ? (lastAnswer.skill || inferSkill(lastAnswer.subject, lastAnswer.q)) : "";
   bg(meta.soft);
   app.innerHTML = `
     <div class="fade-in transition-screen">
       <div class="transition-dot" style="background:${meta.color}">${state.qIndex + 2}</div>
       <div class="tsub">${meta.label}</div>
-      <div class="tnext">GET READY...</div>
+      <div class="tnext">${feedback}</div>
+      <div class="tnext">${escapeHtml(feedbackSkill)} &middot; GET READY...</div>
     </div>
   `;
   setTimeout(()=>{
@@ -1217,6 +1250,11 @@ function renderResults(){
   if(pct >= 85) msg = "Outstanding work!";
   else if(pct >= 70) msg = "Great job!";
   else if(pct >= 50) msg = "Good effort!";
+  const skillBreakdown = buildSkillBreakdown(state.answers);
+  const focusSkills = skillBreakdown.filter(s=>s.pct < 70).map(s=>`${s.skill} (${s.pct}%)`);
+  const masteryNote = skillBreakdown.length
+    ? `Learning checkpoint: ${skillBreakdown.map(s=>`${s.skill} — ${masteryLabel(s.pct)}`).join(" &middot; ")}${focusSkills.length ? `<br>Next step: review ${focusSkills.join(", ")} before the Post-Test.` : `<br>Next step: try the Post-Test when you are ready.`}`
+    : "";
 
   app.innerHTML = `
     <div class="fade-in">
@@ -1225,6 +1263,7 @@ function renderResults(){
         <div class="frac">${correct} OUT OF ${total} CORRECT &middot; ${state.practiceType.toUpperCase()}</div>
         <div class="msg">${msg}</div>
       </div>
+      <p class="fine-print">${masteryNote}</p>
       <p class="fine-print" id="saveNote">Saving your result...</p>
       <div class="btn-row">
         <button class="primary-btn ghost" id="answersBtn">📝 View My Answers</button>
@@ -1253,11 +1292,12 @@ async function autoSaveResult({testType, terms, correct, total, pct}){
       correct: state.answers.filter(a=>a.subject===s && a.correct).length,
       total: state.answers.filter(a=>a.subject===s).length
     }));
+    const skillBreakdown = buildSkillBreakdown(state.answers);
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
         classId: state.activeClassId || null,
         testType, terms: ["second"], term: "second", subjects: subjectsCovered, subjectBreakdown,
-      correct, total, pct, timestamp: Date.now()
+      correct, total, pct, skillBreakdown, timestamp: Date.now()
     });
     state.saved = true;
     if(note) note.textContent = "Result saved to your progress history.";
@@ -1279,6 +1319,7 @@ function renderAnswerReview(){
       ${state.answers.map((a,i)=>`
         <div class="review-item">
           <div class="ri-q">Q${i+1}. ${escapeHtml(a.q)}</div>
+          <div class="fine-print" style="text-align:left; margin:0 0 8px;">Skill: ${escapeHtml(a.skill || inferSkill(a.subject, a.q))}</div>
           ${a.choices.map((ch,ci)=>{
             let cls = "";
             if(ci === a.correctIndex) cls = "correct";
@@ -1310,6 +1351,16 @@ async function renderMyProgress(){
      const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
      return `<tr><td>${tag}</td><td>Second Term</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
   }).join("");
+  const masteryMap = {};
+  rows.forEach(r=>(r.skillBreakdown || []).forEach(s=>{
+    if(!masteryMap[s.skill]) masteryMap[s.skill] = {correct:0,total:0};
+    masteryMap[s.skill].correct += s.correct || 0;
+    masteryMap[s.skill].total += s.total || 0;
+  }));
+  const masteryRows = Object.entries(masteryMap).map(([skill,v])=>{
+    const pct = v.total ? Math.round(v.correct/v.total*100) : 0;
+    return `${skill}: ${masteryLabel(pct)} (${pct}%)`;
+  });
 
   app.innerHTML = `
     <div class="fade-in">
@@ -1323,6 +1374,7 @@ async function renderMyProgress(){
             <thead><tr><th>Test</th><th>Term</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
+           ${masteryRows.length ? `<p class="fine-print" style="text-align:left; margin-bottom:0;">Mastery snapshot: ${masteryRows.join(" &middot; ")}</p>` : ``}
         </div>
       `}
     </div>
