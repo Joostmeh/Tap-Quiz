@@ -18,7 +18,6 @@
 <style>
   :root{
     --paper:#F3F1FB; --surface:#FFFFFF; --ink:#211C4E; --ink-soft:#5A5480; --border:#DDD7F2;
-    --math:#F0A202; --math-soft:#FCEACB;
     --english:#E4572E; --english-soft:#FBE1D9; --accent:var(--ink); --accent-soft:#E7E3F8;
     --good:#1B998B; --bad:#E4572E; --glow-2:#ECE3FB; --button-bg:#211C4E; --button-ink:#FFFFFF;
     --radius:18px; --shadow:0 12px 30px -14px rgba(33,28,78,0.35);
@@ -27,7 +26,7 @@
     color-scheme:dark;
     --paper:#11131F; --surface:#1B1E2B; --ink:#F5F2FF; --ink-soft:#B6AFD0; --border:#3B3658;
     --accent:var(--ink); --accent-soft:#2A2644; --glow-2:#2A2441;
-    --math-soft:#493818; --english-soft:#45221D; --button-bg:#EEEAFE; --button-ink:#17142B;
+    --english-soft:#45221D; --button-bg:#EEEAFE; --button-ink:#17142B;
     --shadow:0 12px 30px -14px rgba(0,0,0,0.55);
   }
   *{box-sizing:border-box;}
@@ -58,7 +57,6 @@
 
   .subject-strip{ display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
   .subject-chip{ flex:1; min-width:90px; padding:10px 8px; border-radius:12px; text-align:center; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:0.03em; cursor:pointer; border:1.5px solid transparent; }
-  .subject-chip.math{ background:var(--math-soft); color:#7A5300; }
   .subject-chip.english{ background:var(--english-soft); color:#8E2E15; }
   .subject-chip.selected{ border-color:currentColor; }
 
@@ -151,7 +149,7 @@
   table.results-table{ width:100%; border-collapse:collapse; font-size:12px; }
   table.results-table th, table.results-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--border); }
   table.results-table th{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); }
-  .tag-pre{ background:var(--math-soft); color:#7A5300; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
+  .tag-pre{ background:var(--accent-soft); color:var(--ink-soft); padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
   .tag-post{ background:var(--english-soft); color:#8E2E15; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
@@ -164,12 +162,22 @@
   .reviewer-reading h3{ color:#292B39; font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 10px; }
   .reviewer-reading .reading-lead{ color:#626579; font-size:14px; line-height:1.6; margin:0 0 16px; }
   .reviewer-reading .reading-body{ white-space:pre-wrap; }
+  .reviewer-list{ margin:0 0 16px; padding-left:18px; font-size:14px; line-height:1.6; color:var(--ink); }
+  .reviewer-list li{ margin-bottom:6px; }
+  .reviewer-list.check{ list-style:none; padding-left:0; }
+  .reviewer-list.check li{ position:relative; padding-left:22px; }
+  .reviewer-list.check li:before{ content:"\2610"; position:absolute; left:0; top:-1px; color:var(--english); font-size:15px; }
+  .reviewer-terms{ margin:0 0 16px; font-size:14px; line-height:1.55; }
+  .reviewer-terms dt{ font-weight:700; color:var(--ink); margin-top:8px; }
+  .reviewer-terms dd{ margin:2px 0 0; padding-left:0; color:var(--ink-soft); }
+  .reviewer-example{ border:1.5px solid var(--border); background:var(--surface); border-radius:12px; padding:12px 14px; margin-bottom:16px; font-size:14px; line-height:1.6; }
+  .reviewer-example b{ display:block; margin-bottom:6px; }
   .study-label{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin:4px 0 6px; }
   .formula-card{ background:#F1EBDD; border:1.5px solid #D8C9AA; border-radius:13px; padding:14px; margin:0 0 18px; }
   .formula-card .formula-label{ color:#756345; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; margin-bottom:7px; }
   .formula-card .formula-text{ color:#27283A; font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:700; line-height:1.65; white-space:pre-wrap; }
   .formula-card .formula-meaning{ color:#5E594E; font-size:13.5px; line-height:1.55; margin-top:8px; }
-  .reviewer-reading .reading-tip{ border-left:3px solid var(--math); background:#F3EEDC; color:#514A3D; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:14px; line-height:1.6; }
+  .reviewer-reading .reading-tip{ border-left:3px solid var(--english); background:#FBF1EE; color:#6B3A2C; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:14px; line-height:1.6; }
   html[data-theme="dark"] .reviewer-reading{ background:#20231F; border-color:#454637; color:#E8E3D5; box-shadow:none; }
   html[data-theme="dark"] .reviewer-reading h3{ color:#FFF8E7; }
   html[data-theme="dark"] .reviewer-reading .reading-lead{ color:#C5C0B1; }
@@ -217,7 +225,6 @@
   html[data-theme="dark"] .review-item .ri-c.correct{ background:#173B37; color:#8BE6D5; }
   html[data-theme="dark"] .choice.wrong,
   html[data-theme="dark"] .review-item .ri-c.wrong{ background:#48251F; color:#FFB3A3; }
-  html[data-theme="dark"] .subject-chip.math,
   html[data-theme="dark"] .tag-pre{ color:#FFD27A; }
   html[data-theme="dark"] .subject-chip.english,
   html[data-theme="dark"] .tag-post{ color:#FFB09B; }
@@ -234,7 +241,7 @@
     </div>
     <div class="brand-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">🌙 Dark</button>
-      <div class="tag">FOR STUDENTS<br>GEN. MATH · COMMUNICATION</div>
+      <div class="tag">FOR STUDENTS<br>EFFECTIVE COMMUNICATION</div>
     </div>
   </div>
   <div id="app" class="card"></div>
@@ -254,10 +261,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const SUBJECT_META = {
-  math:    {label:"General Mathematics",      color:"var(--math)",    soft:"var(--math-soft)"},
   english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
 };
-const ORDER = ["math","english"];
+const ORDER = ["english"];
+const SUBJECT = "english";
 const TERMS = [
   {value:"second", label:"Second Term"}
 ];
@@ -267,107 +274,6 @@ const TRANSITION_MS = 500;
 const MAX_QUESTIONS = 20;
 
 const REVIEWER = {
-  math: `GENERAL MATHEMATICS — QUICK REVIEWER
-
-BUSINESS & FINANCE
-• Wage = hourly rate x hours worked. Overtime is usually 1.5x the regular rate.
-• Percentage change = (new value - old value) / old value x 100
-• VAT in the Philippines is typically 12% added to the selling price.
-• Gross pay = regular pay + overtime pay + benefits; net pay = gross pay - deductions.
-• Simple interest: I = Prt; maturity value: A = P + I.
-• Discount = original price x discount rate; sale price = original price - discount.
-• Markup = cost x markup rate; selling price = cost + markup.
-
-SEQUENCES & SERIES
-• Arithmetic sequence: a(n) = a1 + (n - 1)d
-• Arithmetic series sum: S(n) = n/2 x (a1 + a(n))
-• Geometric sequence: a(n) = a1 x r^(n-1)
-• Arithmetic nth term: a(n) = a1 + (n - 1)d; arithmetic sum: S(n) = n/2[2a1 + (n - 1)d].
-• Geometric sum: S(n) = a1(r^n - 1)/(r - 1), when r ≠ 1.
-• A sequence is a list of terms; a series is the sum of terms.
-• Fibonacci sequence: each term is the sum of the two preceding terms.
-
-FUNCTIONS & GRAPHS
-• A function assigns exactly one output to each input (vertical line test).
-• Linear: f(x) = mx + b. Quadratic: f(x) = ax^2 + bx + c (graph is a parabola).
-• A rational function is undefined wherever its denominator equals 0.
-• Slope: m = (y2 - y1)/(x2 - x1); point-slope form: y - y1 = m(x - x1).
-• Composition: (f ∘ g)(x) = f(g(x)); inverse functions undo one another.
-• Absolute value graphs have a V-shape; square-root and cube-root graphs have restricted shapes.
-• Piecewise functions use different formulas on specified intervals.
-
-MEASUREMENT & TRIGONOMETRY
-• SOH-CAH-TOA: sin = opposite/hypotenuse, cos = adjacent/hypotenuse, tan = opposite/adjacent.
-• Area of a triangle (SAS): Area = 1/2 x a x b x sin(C)
-• Rectangle area = lw; triangle area = 1/2bh; circle area = πr²; circumference = 2πr.
-• Prism/cylinder volume = base area x height; pyramid/cone volume = 1/3(base area x height).
-• Sphere volume = 4/3πr³; sphere surface area = 4πr².
-• Pythagorean theorem: a² + b² = c² for a right triangle.
-• Convert units by multiplying by a conversion factor equal to 1; keep units in every step.
-
-STATISTICS
-• Mean = sum of values / number of values.
-• A p-value below your significance level means you reject the null hypothesis.
-• Median is the middle value; mode is the most frequent value; range = maximum - minimum.
-• Population describes the whole group; sample describes part of the group.
-• Standard deviation measures spread around the mean; a larger value means more variability.
-• Correlation describes association, but correlation alone does not prove causation.
-
-COMPOUND INTEREST & ANNUITIES
-• Compound interest: A = P(1 + r/n)^(nt)
-• An annuity is a series of equal payments made at regular intervals.
-• Gross pay is total earnings before deductions; net pay is what remains after deductions.
-• For a geometric series, the common ratio is the multiplier between consecutive terms.
-• Measurement work requires choosing appropriate units, converting consistently, and checking scale.
-• Piecewise functions use different rules on different intervals.
-
-LOGIC
-• A proposition is a declarative statement that is true or false, never a question or command.
-• In financial problems, identify the rate, time period, principal, and payment frequency before calculating.`,
-
-  science: `GENERAL SCIENCE — QUICK REVIEWER
-
-PHYSICS IN DAILY LIFE
-• Simple machines (levers, pulleys, inclined planes) reduce the force needed to do work.
-• Pascal's Principle: pressure applied to a fluid is transmitted equally in all directions (used in hydraulic systems).
-• Archimedes' Principle: an object floats if it displaces a weight of fluid equal to its own weight.
-• Avoid overloaded outlets and damaged wiring — both raise the risk of electrical hazards.
-• Work: W = Fd; power: P = W/t; efficiency = useful output/input x 100%.
-• Pressure: P = F/A. Hydraulic systems transmit pressure through a confined fluid.
-• Density: ρ = m/V. An object is more likely to float when its average density is less than the fluid's density.
-• Speed = distance/time; velocity includes direction; acceleration = change in velocity/time.
-• Kinetic energy: KE = 1/2mv²; gravitational potential energy: PE = mgh.
-
-CHEMISTRY IN EVERYDAY LIFE
-• Common reaction types: decomposition, acid + carbonate, acid + metal, and combustion.
-• Photosynthesis: 6CO2 + 6H2O + light -> C6H12O6 + 6O2
-• Cellular respiration: C6H12O6 + 6O2 -> 6CO2 + 6H2O + energy
-• Check DTI, FDA, and DENR guidance before using or disposing of household chemicals.
-• Acids have pH below 7; bases have pH above 7; a neutral solution has pH 7.
-• Conservation of mass means atoms are rearranged, not created or destroyed, in a reaction.
-• Combustion commonly requires fuel and oxygen and releases energy.
-• Never mix household cleaners unless the label explicitly says it is safe.
-
-BIOLOGY & ECOSYSTEMS
-• Cells convert nutrients into usable energy to sustain life.
-• Organ systems work together — e.g. the nervous and endocrine systems regulate body temperature.
-• Climate change affects Philippine ecosystems and biodiversity, often through rising heat and shifting rainfall.
-• Levels of organization: cell → tissue → organ → organ system → organism.
-• Producers capture energy; consumers obtain energy by feeding; decomposers recycle matter.
-• Homeostasis is the maintenance of stable internal conditions.
-• Photosynthesis stores energy in glucose; cellular respiration releases usable energy from glucose.
-• Work is done when a force moves an object; machines trade force for distance or direction.
-• Light can be reflected, refracted, or absorbed; sound requires a medium to travel.
-• Chemical labels communicate hazards, ingredients, safe handling, and disposal information.
-• Energy can be transferred or transformed, but it is conserved.
-
-EARTH & SPACE SCIENCE
-• Earth supports life because of its distance from the sun, its atmosphere, and greenhouse gases that regulate temperature.
-• The Philippine archipelago was shaped by tectonic and volcanic activity.
-• PAGASA monitors weather and hydrometeorological hazards; PHIVOLCS monitors volcanic and seismic activity.
-• Weather describes short-term atmospheric conditions; climate describes longer-term patterns.
-• Reduce electrical risk by using properly rated equipment and avoiding damaged wires or overloaded outlets.`,
-
   english: `EFFECTIVE COMMUNICATION — QUICK REVIEWER
 
 THE COMMUNICATION PROCESS
@@ -407,153 +313,159 @@ REFLECTION & GROWTH
 • Respectful communication considers context, culture, inclusion, ethics, and the needs of the audience.`
 };
 
-// Additional term banks and reviewers follow the Grade 11 three-term
-// curriculum in the supplied General Mathematics, General Science, and
-// Effective Communication budget-of-work PDFs.
+// Second Term Effective Communication content, organized into the three
+// weekly clusters of the Budget of Work: reception, research and evidence,
+// and multimodal collaboration. Each week carries its own pre-test and
+// post-test bank so practice can be taken one week at a time.
+const TERM_WEEKS = [
+  {key:"week1", label:"Week 1", topic:"Communication and Audience", blurb:"Communication process, audience, purpose, context, tone, critical listening and reading, specialized vocabulary."},
+  {key:"week2", label:"Week 2", topic:"Reading, Research, and Evidence", blurb:"Thesis and outline, claims and evidence, sources and citation, summary and paraphrase, plagiarism and AI declaration."},
+  {key:"week3", label:"Week 3", topic:"Visuals, Collaboration, and Editing", blurb:"Multimodal data and visuals, procedures, questions and feedback, collaboration, editing, and reflection."}
+];
 const TERM_CONTENT = {
   second: {
-    math: [
-      {q:"A function that uses different rules on different intervals is called a:", c:["Constant function","Piecewise function","Inverse function","Quadratic sequence"], a:1},
-      {q:"A taxi charges P50 for the first 4 km and P13 for each additional kilometer. Which idea is needed to model this fare?", c:["A single constant rule","A piecewise function","A normal distribution","A trigonometric identity"], a:1},
-      {q:"Why are piecewise functions useful for income-tax schedules?", c:["Tax rates can change across income brackets","They remove all tax deductions","They only describe circular graphs","They require no input values"], a:0},
-      {q:"A store gives one discount rate for purchases below P1,000 and another for purchases of P1,000 or more. This is an example of:", c:["A piecewise purchasing rule","A geometric sequence","A random variable","A right triangle"], a:0},
-      {q:"Which is qualitative data?", c:["Number of siblings","Monthly income in pesos","Type of transportation used","Height in centimeters"], a:2},
-      {q:"Which is quantitative discrete data?", c:["Color of a shirt","Number of books borrowed","Temperature of a room","Length of fabric"], a:1},
-      {q:"The categories freshman, sophomore, junior, and senior represent which level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:1},
-      {q:"Which level of measurement has a meaningful zero and allows ratios?", c:["Nominal","Ordinal","Interval","Ratio"], a:3},
-      {q:"What is the mean of 4, 6, and 8?", c:["5","6","7","18"], a:1},
-      {q:"Which measure is the middle value after data are arranged in order?", c:["Mean","Median","Mode","Range"], a:1},
-      {q:"Which measure identifies the most frequently occurring value?", c:["Mean","Median","Mode","Variance"], a:2},
-      {q:"What is the range of 12, 5, 9, and 15?", c:["7","10","12","15"], a:1},
-      {q:"Which measure describes how spread out data values are?", c:["Variability","Category","Frequency label","Sample name"], a:0},
-      {q:"A spreadsheet is especially useful for:", c:["Calculating and organizing statistical measures","Changing a nominal variable into a person","Removing the need to interpret data","Making every data value identical"], a:0},
-      {q:"If two data sets have the same mean but one has a larger standard deviation, the second set is:", c:["Less variable","More spread out","Always smaller","Missing its median"], a:1},
-      {q:"When choosing a measure of central tendency, a researcher should consider:", c:["The purpose and type of the data","Only the largest value","The color of the graph","Whether the data were typed by hand"], a:0},
-      {q:"In a right triangle, sine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:1},
-      {q:"In a right triangle, cosine of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/adjacent"], a:0},
-      {q:"In a right triangle, tangent of an angle equals:", c:["Adjacent/hypotenuse","Opposite/hypotenuse","Opposite/adjacent","Hypotenuse/opposite"], a:2},
-      {q:"Which theorem relates the side lengths of a right triangle?", c:["Heron's formula","Pythagorean theorem","Remainder theorem","Bayes' theorem"], a:1},
-      {q:"An angle of elevation is measured:", c:["Downward from a horizontal line","Upward from a horizontal line to an object","Only inside a circle","Between two parallel lines"], a:1},
-      {q:"An angle of depression is measured:", c:["Downward from a horizontal line to an object","Upward from the ground only","Between two radii","Only in an equilateral triangle"], a:0},
-      {q:"A bearing is commonly used to describe:", c:["Direction in navigation","The average of a data set","A tax bracket","The volume of a container"], a:0},
-      {q:"Which formula finds the area of a triangle when two sides and their included angle are known?", c:["A = lw","A = 1/2 ab sin(C)","A = πr^2","A = s^2"], a:1},
-      {q:"A data set has values 2, 4, 6, and 8. What is its mean?", c:["4","5","6","20"], a:1},
-      {q:"Which measure is least affected by an extremely large outlier?", c:["Mean","Median","Range","Variance"], a:1},
-      {q:"If every value in a data set is increased by 5, which measure also increases by 5?", c:["Mean","Standard deviation only","Range only","Coefficient of variation only"], a:0},
-      {q:"What does a small standard deviation indicate?", c:["Values are clustered near the mean","Values are all negative","The data have no mode","The sample has no central tendency"], a:0},
-      {q:"A survey records students' favorite color. What is the most appropriate level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:0},
-      {q:"A ranking of gold, silver, and bronze medals is an example of:", c:["Nominal data","Ordinal data","Interval data","Ratio data"], a:1},
-      {q:"Which variable is continuous?", c:["Number of cars in a parking lot","Number of siblings","Time needed to finish a race","Number of text messages"], a:2},
-      {q:"For strongly skewed income data, which pair is usually more suitable?", c:["Median and interquartile range","Mean and range only","Mode and maximum only","Minimum and variance only"], a:0},
-      {q:"A spreadsheet formula is useful, but the final statistical conclusion should also:", c:["Explain what the numbers mean in context","Ignore the original question","Remove all unusual values automatically","Use no units"], a:0},
-      {q:"A right triangle has opposite side 3 and hypotenuse 5 relative to angle θ. What is sin θ?", c:["3/5","5/3","4/5","3/4"], a:0},
-      {q:"A right triangle has adjacent side 12 and hypotenuse 13 relative to angle θ. What is cos θ?", c:["5/13","12/13","13/12","12/5"], a:1},
-      {q:"A 10-meter ladder makes a 30° angle with the ground. Which quantity can be found using 10 sin 30°?", c:["Vertical height reached","Horizontal distance only","The ladder's mass","The angle's bearing"], a:0},
-      {q:"If a map direction is recorded as 045°, it indicates a direction halfway between:", c:["North and east","South and east","North and west","South and west"], a:0},
-      {q:"Heron's Formula is useful when the triangle's:", c:["Three side lengths are known","Radius is the only known measurement","Height is always zero","Angles are all 90°"], a:0},
-      {q:"Before calculating a trigonometric ratio, the learner should first:", c:["Identify the reference angle and label the sides","Round every measurement to zero","Assume every triangle is equilateral","Ignore the diagram"], a:0},
-      {q:"A computed distance of −8 meters in a measurement problem should prompt the learner to:", c:["Check the model, labels, or calculation","Accept it as a physical distance","Change the unit to make it positive","Delete the measurement"], a:0},
-      {q:"Given f(x) = 2x + 1 for x < 4 and f(x) = x + 5 for x ≥ 4, what is f(3)?", c:["5","7","8","9"], a:1},
-      {q:"A taxi charges P40 for the first 2 km and P12 for every kilometer after that. What is the fare for 5 km?", c:["P52","P64","P76","P100"], a:2},
-      {q:"If a piecewise rule assigns one formula to x ≤ 10 and another to x > 10, which rule is used when x = 10?", c:["The rule for x ≤ 10","The rule for x > 10","Both rules must be averaged","Neither rule"], a:0},
-      {q:"Why can an income-tax schedule be represented by a piecewise function?", c:["Different income brackets can have different rules or rates","Income tax never uses numerical inputs","One formula must apply to every possible income","Tax schedules describe only geometric shapes"], a:0},
-      {q:"Which is quantitative data?", c:["Favorite school subject","Type of cellphone","Number of hours studied","Brand preference"], a:2},
-      {q:"Which variable is discrete?", c:["Mass of a package","Length of a table","Number of students absent","Time to finish a race"], a:2},
-      {q:"Temperature measured in degrees Celsius is usually classified at which level of measurement?", c:["Nominal","Ordinal","Interval","Ratio"], a:2},
-      {q:"What is the mean of 6, 8, and 10?", c:["6","8","10","24"], a:1},
-      {q:"What is the median of 3, 8, 11, 20, and 25?", c:["8","11","13","20"], a:1},
-      {q:"Which measure is most appropriate for the most common shoe size in a class?", c:["Mean","Median","Mode","Standard deviation"], a:2},
-      {q:"A data set contains one extremely high income. Which measure is generally less affected by that outlier?", c:["Mean","Median","Range","Maximum"], a:1},
-      {q:"A large standard deviation usually means that the values are:", c:["Widely spread around the mean","All equal to the mean","Always negative","All categorical"], a:0},
-      {q:"A spreadsheet calculates a standard deviation. What should the learner do next?", c:["Interpret what the spread means in the original context","Assume the data are automatically correct","Delete the mean","Change the units without explanation"], a:0},
-      {q:"A right triangle has opposite side 5 and adjacent side 12 relative to θ. What is tan θ?", c:["5/12","12/5","5/13","12/13"], a:0},
-      {q:"A right triangle has legs of 6 m and 8 m. What is the length of its hypotenuse?", c:["10 m","12 m","14 m","48 m"], a:0},
-      {q:"A person looking down from a building to a car measures an angle of:", c:["Elevation","Depression","Reflection","Rotation"], a:1},
-      {q:"A bearing of 090° indicates a direction toward:", c:["North","East","South","West"], a:1},
-      {q:"A triangle has side lengths 3, 4, and 5. Using Heron's Formula, what is its area?", c:["5 square units","6 square units","10 square units","12 square units"], a:1},
-      {q:"Two sides of a triangle are 6 cm and 10 cm, and their included angle is 30°. What is its area?", c:["10 cm²","15 cm²","30 cm²","60 cm²"], a:1},
-      {q:"A bearing of 225° points generally toward:", c:["Northeast","Southeast","Southwest","Northwest"], a:2}
-    ],
-    english: [
-      {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
-      {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
-      {q:"A chart or table in a report should be interpreted by examining its:", c:["Labels, units, patterns, and evidence","Background color only","File name only","Margins only"], a:0},
-      {q:"Specialized vocabulary is vocabulary that is:", c:["Used by a particular academic or technical field","Always informal slang","Unrelated to a discipline","Impossible to define from context"], a:0},
-      {q:"In an academic discussion, an appropriate tone is generally:", c:["Respectful, clear, and suited to the topic","Insulting and vague","Always humorous","Unrelated to the audience"], a:0},
-      {q:"Following a procedure accurately helps a learner:", c:["Achieve the intended outcome","Avoid reading instructions","Replace all safety checks","Make evidence unnecessary"], a:0},
-      {q:"A constructive question during a lecture should:", c:["Clarify or deepen understanding of the topic","Interrupt only to change the subject","Attack the speaker personally","Repeat an unrelated rumor"], a:0},
-      {q:"Useful feedback on a presentation should address its:", c:["Content, structure, and language","Presenter's clothing only","Unrelated personal history","Room temperature only"], a:0},
-      {q:"Effective collaboration on a technical task requires group members to:", c:["Share knowledge and work toward a common goal","Hide information from one another","Avoid assigning responsibilities","Reject all feedback"], a:0},
-      {q:"A thesis statement usually presents the:", c:["Central claim or controlling idea","List of page numbers","Author's home address","Final bibliography only"], a:0},
-      {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a report informal","Hide the topic"], a:0},
-      {q:"A research report should support important claims with:", c:["Evidence and properly cited sources","Rumors","Only personal preference","Unrelated quotations"], a:0},
-      {q:"A diagram, graph, or infographic can help a writer:", c:["Represent complex information in a multimodal form","Avoid explaining the information","Remove the need for labels","Guarantee that data are correct"], a:0},
-      {q:"To condense a long academic text means to:", c:["Reduce it to its essential ideas","Copy every sentence exactly","Add unrelated details","Remove the central claim"], a:0},
-      {q:"A paraphrase should:", c:["Restate an idea in your own words while acknowledging the source","Copy the source word for word without credit","Change only the punctuation","Present another person's idea as original"], a:0},
-      {q:"Plagiarism is:", c:["Presenting another person's work or ideas as your own","Using a citation correctly","Making an outline","Giving respectful feedback"], a:0},
-      {q:"Citation helps readers:", c:["Identify and verify the sources used","Know the writer's favorite color","Skip the entire report","Change the research question"], a:0},
-      {q:"AI assistance in an academic text should be:", c:["Acknowledged or declared according to the required practice","Hidden in every situation","Treated as a human source automatically","Used to invent evidence"], a:0},
-      {q:"Which is an academic communicative event?", c:["Presenting research findings","Sending a private birthday greeting","Casual joking with friends","Posting an unrelated meme"], a:0},
-      {q:"A technical report is clearest when it uses:", c:["Organized structure, precise language, and appropriate terminology","Only emotional appeals","Vague claims without evidence","Unexplained slang"], a:0},
-      {q:"When explaining a concept to a specific audience, the communicator should:", c:["Choose language and examples the audience can understand","Use the same explanation regardless of audience","Avoid defining technical terms","Ignore the purpose"], a:0},
-      {q:"A summary differs from a copy because a summary:", c:["Presents the central ideas more briefly","Repeats every word","Adds unsupported opinions","Changes the source's meaning"], a:0},
-      {q:"Reflecting after an academic presentation helps a learner:", c:["Identify strengths and areas for improvement","Avoid all future feedback","Prove every idea was perfect","Replace preparation"], a:0},
-      {q:"Intellectual integrity in academic communication requires:", c:["Honest use of evidence, sources, and one's own contribution","Borrowing without attribution","Inventing data to fit a conclusion","Ignoring corrections"], a:0},
-      {q:"The purpose of a reference list is to:", c:["Identify the sources used in a text","Replace the report's conclusion","Decorate the final page","Hide unsupported claims"], a:0},
-      {q:"When a technical term is unfamiliar, a useful first step is to:", c:["Use context clues and reliable references","Guess and never verify","Delete the entire paragraph","Replace it with unrelated slang"], a:0},
-      {q:"A presentation visual should:", c:["Support the key idea with clear labels and readable information","Contain every word the speaker will say","Use decoration instead of evidence","Be unrelated to the topic"], a:0},
-      {q:"Which response best demonstrates constructive feedback?", c:["Your conclusion is clear; adding evidence to the second point may strengthen it","This is bad and I will not explain why","You should change everything","I did not listen, but it is wrong"], a:0},
-      {q:"In an academic panel discussion, turn-taking helps participants:", c:["Share ideas without speaking over one another","Avoid responding to evidence","End the discussion immediately","Use only written communication"], a:0},
-      {q:"A procedure presented as numbered steps is a:", c:["Structured set of instructions","Personal narrative only","List of unrelated opinions","Citation style"], a:0},
-      {q:"A research claim is strongest when it is:", c:["Specific, relevant, and supported by evidence","Very broad and unsupported","Based only on popularity","Hidden from the audience"], a:0},
-      {q:"Which choice improves coherence in a report?", c:["Using transitions that show how ideas are related","Changing topics without explanation","Repeating the same sentence","Removing the introduction"], a:0},
-      {q:"A synopsis is:", c:["A concise account of the main points of a text","A list of every punctuation mark","A source copied without credit","An unrelated personal story"], a:0},
-      {q:"When paraphrasing, changing a few words while keeping the original sentence structure can still be:", c:["Plagiarism if the source is not properly acknowledged","A complete original argument","A data table","A visual aid"], a:0},
-      {q:"A speaker should adjust technical vocabulary when:", c:["The audience's background and purpose change","The topic has no audience","The speaker wants to hide the meaning","The presentation has no evidence"], a:0},
-      {q:"A multimodal report may combine:", c:["Written explanation, charts, images, and spoken presentation","Only one unformatted sentence","Unverified claims and no labels","A bibliography with no text"], a:0},
-      {q:"Ethical use of AI in academic work includes:", c:["Checking output, contributing one's own judgment, and declaring assistance when required","Submitting invented sources without review","Claiming generated work is always personal research","Using it to conceal plagiarism"], a:0},
-      {q:"A useful reflection after a group presentation asks:", c:["What worked, what needs improvement, and what to change next time","Which teammate to blame","How to avoid all future collaboration","Why feedback should be ignored"], a:0},
-      {q:"A technical audience generally benefits from:", c:["Precise terms defined or used appropriately with evidence","Vague emotional language only","Unlabeled diagrams","Unrelated examples"], a:0},
-      {q:"An abstract is intended to:", c:["Give a concise overview of a longer academic work","Replace all references","Add unrelated personal details","Hide the research purpose"], a:0},
-      {q:"Which factor most directly affects the structure and language of an academic text?", c:["Its audience, purpose, and context","The writer's favorite color","The number of decorations","The time spent choosing a font"], a:0},
-      {q:"When listening to a lecture, paraphrasing the speaker's idea helps the learner:", c:["Check understanding without copying the exact wording","Avoid paying attention","Replace all note-taking","Change the speaker's evidence"], a:0},
-      {q:"A reader sees a chart with a rising line. Before concluding that one variable caused another, the reader should:", c:["Check the labels, scale, evidence, and limits of the chart","Assume the chart proves causation","Ignore the units","Look only at the color of the line"], a:0},
-      {q:"A useful context clue for an unfamiliar technical word is:", c:["The surrounding words and explanation in the text","The length of the word alone","The author's initials","The page border"], a:0},
-      {q:"Which opening is most appropriate for a formal academic presentation?", c:["A clear statement of the topic and purpose","A long unrelated joke","An apology for having no evidence","A list of private messages"], a:0},
-      {q:"During a panel discussion, a participant should disagree by:", c:["Addressing the idea respectfully and giving relevant reasons","Insulting the speaker","Speaking over everyone","Changing the topic without explanation"], a:0},
-      {q:"When following a laboratory procedure, a learner should:", c:["Complete the steps in order and observe safety instructions","Skip steps that look difficult","Change measurements without recording them","Ignore diagrams and warning labels"], a:0},
-      {q:"Which division of work best supports a group research presentation?", c:["Assigning responsibilities while coordinating one shared goal","Letting one member do everything without review","Keeping sources private","Avoiding deadlines"], a:0},
-      {q:"A position paper primarily presents:", c:["A reasoned stand on an issue supported by evidence","A random list of vocabulary words","A private diary with no claim","A bibliography without discussion"], a:0},
-      {q:"Which sentence uses an appropriate academic style?", c:["The results indicate that study time was associated with higher scores.","The results are super cool and totally prove everything.","This thing shows stuff, I guess.","Everyone knows the answer, so evidence is unnecessary."], a:0},
-      {q:"A visual aid is effective when it:", c:["Makes important information easier to understand and is clearly labeled","Contains every sentence from the report","Uses decoration instead of data","Has no title or units"], a:0},
-      {q:"A paraphrase is acceptable when it:", c:["Uses the writer's own wording and still credits the source","Changes only two words and removes the citation","Copies the original structure as closely as possible without credit","Presents the source's idea as personal experience"], a:0},
-      {q:"Which transition best signals contrast?", c:["However","For example","Similarly","Therefore"], a:0},
-      {q:"A conclusion in an academic report should generally:", c:["Synthesize the main findings and connect them to the purpose","Introduce many unrelated claims","Copy the title only","Remove all evidence"], a:0},
-      {q:"If a source's data do not support a desired result, intellectual integrity requires the writer to:", c:["Report and interpret the data honestly","Alter the values to fit the hypothesis","Delete inconvenient observations","Invent a new sample"], a:0},
-      {q:"When declaring AI assistance in academic work, the student should:", c:["Follow the instructor's or institution's required disclosure practice","Claim the tool performed human fieldwork","Use invented citations from the tool","Hide all assistance automatically"], a:0},
-      {q:"Specific feedback is more useful than vague criticism because it:", c:["Identifies what works and what concrete change could improve the work","Makes the presenter feel embarrassed","Avoids discussing the content","Replaces revision"], a:0},
-      {q:"A reflection on an academic task should consider:", c:["The communication choices made, the result, and improvements for next time","Only the final grade","Which classmate to blame","How to avoid all future feedback"], a:0},
-      {q:"Organized notes taken during a lecture are useful because they:", c:["Support later review and accurate completion of tasks","Replace the need to understand the topic","Record only the speaker's jokes","Prevent the learner from asking questions"], a:0},
-      {q:"A reaction paper should generally:", c:["Summarize a text and give a reasoned response to it","Copy the source without a citation","List unrelated personal information","Present data without explaining its meaning"], a:0}
-    ]
+    english: {
+      week1: {
+        pretest: [
+          {q:"The basic elements of a communication event include the sender, message, channel, receiver, feedback, and:", c:["Context","Page count","Font size","Alphabet"], a:0},
+          {q:"Encoding a message means:", c:["Turning an idea into words, symbols, or images","Reading the message aloud only","Deleting the message","Storing the message without meaning"], a:0},
+          {q:"Decoding a message means:", c:["Interpreting the message that was received","Sending a reply immediately","Translating every word into numbers","Ignoring the speaker's purpose"], a:0},
+          {q:"In communication, noise refers to:", c:["Anything that interferes with the message","Only loud sounds in a room","The volume of a speaker's voice","A type of citation"], a:0},
+          {q:"A channel is:", c:["The medium used to deliver a message","The central claim of a text","The writer's personal opinion","A list of references"], a:0},
+          {q:"Feedback matters in communication because it:", c:["Shows whether the message was understood","Ends the conversation politely","Replaces the need for evidence","Makes the message longer"], a:0},
+          {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
+          {q:"A message to a close friend and an email to a professor differ mainly in:", c:["Tone and level of formality","Topic only","Number of letters","Choice of alphabet"], a:0},
+          {q:"Informative academic communication mainly aims to:", c:["Explain information clearly","Win an argument at any cost","Entertain with unrelated jokes","Hide the writer's purpose"], a:0},
+          {q:"Persuasive communication mainly aims to:", c:["Support a position and encourage a response","List facts without a claim","Avoid taking any stand","Replace all evidence with opinion"], a:0},
+          {q:"Instructional communication mainly aims to:", c:["Guide the audience through a process","Summarize a novel","Compare two unrelated topics","Conceal the required steps"], a:0},
+          {q:"Tone in academic communication refers to:", c:["The attitude expressed through word choice and delivery","The number of pages in a report","The font used on a slide","The order of the reference list"], a:0},
+          {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
+          {q:"Critical listening during a lecture requires attention to:", c:["Evidence, emphasis, and implied meaning","The speaker's clothing only","The length of the break","The color of the slides"], a:0},
+          {q:"Specialized vocabulary is vocabulary that is:", c:["Used by a particular academic or technical field","Always informal slang","Unrelated to a discipline","Impossible to define from context"], a:0},
+          {q:"When a technical term is unfamiliar, a useful first step is to:", c:["Use context clues and reliable references","Guess and never verify","Delete the entire paragraph","Replace it with unrelated slang"], a:0},
+          {q:"Audience awareness means:", c:["Anticipating what the audience knows and what needs explaining","Writing the same way for everyone","Avoiding all technical terms forever","Letting the audience guess the purpose"], a:0},
+          {q:"In an academic discussion, an appropriate tone is generally:", c:["Respectful, clear, and suited to the topic","Insulting and vague","Always humorous","Unrelated to the audience"], a:0},
+          {q:"Which is an academic communicative event?", c:["Presenting research findings","Sending a private birthday greeting","Casual joking with friends","Posting an unrelated meme"], a:0},
+          {q:"SCENARIO: A student rereads a journal article and marks the author's claim separately from the supporting data. This best demonstrates:", c:["Critical reading of an academic text","Memorizing the text word for word","Avoiding the writer's purpose","Replacing evidence with opinion"], a:0}
+        ],
+        posttest: [
+          {q:"Which factor most directly affects the structure and language of an academic text?", c:["Its audience, purpose, and context","The writer's favorite color","The number of decorations","The time spent choosing a font"], a:0},
+          {q:"When explaining a concept to a specific audience, the communicator should:", c:["Choose language and examples the audience can understand","Use the same explanation regardless of audience","Avoid defining technical terms","Ignore the purpose"], a:0},
+          {q:"A speaker should adjust technical vocabulary when:", c:["The audience's background and purpose change","The topic has no audience","The speaker wants to hide the meaning","The presentation has no evidence"], a:0},
+          {q:"A technical audience generally benefits from:", c:["Precise terms defined or used appropriately with evidence","Vague emotional language only","Unlabeled diagrams","Unrelated examples"], a:0},
+          {q:"When listening to a lecture, paraphrasing the speaker's idea helps the learner:", c:["Check understanding without copying the exact wording","Avoid paying attention","Replace all note-taking","Change the speaker's evidence"], a:0},
+          {q:"A useful context clue for an unfamiliar technical word is:", c:["The surrounding words and explanation in the text","The length of the word alone","The author's initials","The page border"], a:0},
+          {q:"Organized notes taken during a lecture are useful because they:", c:["Support later review and accurate completion of tasks","Replace the need to understand the topic","Record only the speaker's jokes","Prevent the learner from asking questions"], a:0},
+          {q:"Barriers to communication include:", c:["Physical, language, emotional, and cultural interference","Only weak internet connections","Only long sentences","Only unfamiliar fonts"], a:0},
+          {q:"Communication is described as transactional because:", c:["Participants influence one another while meaning is built together","Only the sender creates meaning","The receiver stays silent","Messages travel in one direction only"], a:0},
+          {q:"Before writing an academic text, the first step should be to:", c:["Identify the audience, purpose, and expected outcome","Choose a decorative border","Count the available pages","Copy a sample conclusion"], a:0},
+          {q:"A formal register is most appropriate in:", c:["A research presentation before a panel","A quick message to a sibling","A casual group chat","A personal joke with a seatmate"], a:0},
+          {q:"Which choice best shows audience-appropriate word use for non-specialists?", c:["Defining a technical term the first time it appears","Using as much jargon as possible","Removing all examples","Leaving abbreviations unexplained"], a:0},
+          {q:"Critical viewing of a documentary includes:", c:["Asking who produced it and what evidence supports its claims","Believing every statement because it is on video","Watching only the opening credits","Judging it by its background music"], a:0},
+          {q:"A reader who identifies the writer's point of view is examining:", c:["Perspective and possible bias","Paper size","Line spacing","Printing cost"], a:0},
+          {q:"The main idea of an academic text is usually supported by:", c:["Details, examples, and evidence","Decorative images only","The page number","The writer's signature"], a:0},
+          {q:"When a speaker uses emotionally loaded language, a critical listener should:", c:["Separate the emotional appeal from the actual evidence","Accept the claim because it sounds passionate","Stop listening entirely","Repeat the wording without checking it"], a:0},
+          {q:"Skimming a technical text before reading closely helps the reader:", c:["Preview the structure and locate key sections","Avoid understanding the content","Replace careful reading permanently","Remove the need for a purpose"], a:0},
+          {q:"For a mixed audience, jargon is best handled by:", c:["Defining it briefly when it first appears","Using it without explanation","Removing every technical idea","Replacing it with slang"], a:0},
+          {q:"SCENARIO: A student adjusts vocabulary when moving from a technical presentation to a casual chat with friends. What skill is this?", c:["Audience awareness","Redundancy","Plagiarism avoidance","Data interpretation"], a:0},
+          {q:"SCENARIO: A learner does not understand a term used in a lecture and copies the whole sentence to check it later. This shows:", c:["Using context and follow-up verification to build vocabulary","Ignoring unfamiliar terminology","Replacing the term with a guess","Avoiding the lecture topic"], a:0}
+        ]
+      },
+      week2: {
+        pretest: [
+          {q:"A thesis statement usually presents the:", c:["Central claim or controlling idea","List of page numbers","Author's home address","Final bibliography only"], a:0},
+          {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a report informal","Hide the topic"], a:0},
+          {q:"A research report should support important claims with:", c:["Evidence and properly cited sources","Rumors","Only personal preference","Unrelated quotations"], a:0},
+          {q:"A research claim is strongest when it is:", c:["Specific, relevant, and supported by evidence","Very broad and unsupported","Based only on popularity","Hidden from the audience"], a:0},
+          {q:"To condense a long academic text means to:", c:["Reduce it to its essential ideas","Copy every sentence exactly","Add unrelated details","Remove the central claim"], a:0},
+          {q:"A paraphrase should:", c:["Restate an idea in your own words while acknowledging the source","Copy the source word for word without credit","Change only the punctuation","Present another person's idea as original"], a:0},
+          {q:"A summary differs from a copy because a summary:", c:["Presents the central ideas more briefly","Repeats every word","Adds unsupported opinions","Changes the source's meaning"], a:0},
+          {q:"A synopsis is:", c:["A concise account of the main points of a text","A list of every punctuation mark","A source copied without credit","An unrelated personal story"], a:0},
+          {q:"Plagiarism is:", c:["Presenting another person's work or ideas as your own","Using a citation correctly","Making an outline","Giving respectful feedback"], a:0},
+          {q:"Citation helps readers:", c:["Identify and verify the sources used","Know the writer's favorite color","Skip the entire report","Change the research question"], a:0},
+          {q:"The purpose of a reference list is to:", c:["Identify the sources used in a text","Replace the report's conclusion","Decorate the final page","Hide unsupported claims"], a:0},
+          {q:"AI assistance in an academic text should be:", c:["Acknowledged or declared according to the required practice","Hidden in every situation","Treated as a human source automatically","Used to invent evidence"], a:0},
+          {q:"Intellectual integrity in academic communication requires:", c:["Honest use of evidence, sources, and one's own contribution","Borrowing without attribution","Inventing data to fit a conclusion","Ignoring corrections"], a:0},
+          {q:"A primary source provides:", c:["Original or firsthand information","A summary of other studies","An opinion column about a study","A textbook overview"], a:0},
+          {q:"A secondary source is one that:", c:["Interprets, analyzes, or summarizes other sources","Collects original data directly","Contains no references","Cannot be cited"], a:0},
+          {q:"A credible source usually:", c:["Identifies its author, evidence, and date","Hides who produced it","Avoids all references","Changes its claims without notice"], a:0},
+          {q:"Evidence is most convincing when the writer:", c:["Introduces it and explains how it supports the claim","Drops it into the text without comment","Uses it without a source","Contradicts it in the next line"], a:0},
+          {q:"When two credible sources disagree, a researcher should:", c:["Compare their methods, scope, and evidence","Use whichever is shorter","Ignore both sources","Assume the newer one is always right"], a:0},
+          {q:"An abstract is intended to:", c:["Give a concise overview of a longer academic work","Replace all references","Add unrelated personal details","Hide the research purpose"], a:0},
+          {q:"SCENARIO: A student copies two sentences from a website into a report and adds no citation. This is:", c:["Plagiarism, even though the copied text is short","Acceptable because the text is short","A paraphrase","A properly cited quotation"], a:0}
+        ],
+        posttest: [
+          {q:"A technical report is clearest when it uses:", c:["Organized structure, precise language, and appropriate terminology","Only emotional appeals","Vague claims without evidence","Unexplained slang"], a:0},
+          {q:"Which choice improves coherence in a report?", c:["Using transitions that show how ideas are related","Changing topics without explanation","Repeating the same sentence","Removing the introduction"], a:0},
+          {q:"A conclusion in an academic report should generally:", c:["Synthesize the main findings and connect them to the purpose","Introduce many unrelated claims","Copy the title only","Remove all evidence"], a:0},
+          {q:"When paraphrasing, changing a few words while keeping the original sentence structure can still be:", c:["Plagiarism if the source is not properly acknowledged","A complete original argument","A data table","A visual aid"], a:0},
+          {q:"A paraphrase is acceptable when it:", c:["Uses the writer's own wording and still credits the source","Changes only two words and removes the citation","Copies the original structure as closely as possible without credit","Presents the source's idea as personal experience"], a:0},
+          {q:"If a source's data do not support a desired result, intellectual integrity requires the writer to:", c:["Report and interpret the data honestly","Alter the values to fit the hypothesis","Delete inconvenient observations","Invent a new sample"], a:0},
+          {q:"When declaring AI assistance in academic work, the student should:", c:["Follow the instructor's or institution's required disclosure practice","Claim the tool performed human fieldwork","Use invented citations from the tool","Hide all assistance automatically"], a:0},
+          {q:"Ethical use of AI in academic work includes:", c:["Checking output, contributing one's own judgment, and declaring assistance when required","Submitting invented sources without review","Claiming generated work is always personal research","Using it to conceal plagiarism"], a:0},
+          {q:"A position paper primarily presents:", c:["A reasoned stand on an issue supported by evidence","A random list of vocabulary words","A private diary with no claim","A bibliography without discussion"], a:0},
+          {q:"A reaction paper should generally:", c:["Summarize a text and give a reasoned response to it","Copy the source without a citation","List unrelated personal information","Present data without explaining its meaning"], a:0},
+          {q:"Which sentence uses an appropriate academic style?", c:["The results indicate that study time was associated with higher scores.","The results are super cool and totally prove everything.","This thing shows stuff, I guess.","Everyone knows the answer, so evidence is unnecessary."], a:0},
+          {q:"Synthesis of sources means:", c:["Combining ideas from several sources to reach a larger conclusion","Listing one source after another without connection","Using a single source repeatedly","Removing all citations"], a:0},
+          {q:"A source record should include:", c:["Author, title, date, and where the source was found","Only the first word of the title","The reader's opinion of the author","The font used by the publisher"], a:0},
+          {q:"Direct quotation is appropriate when:", c:["The exact wording matters and the source is cited","The writer forgets to paraphrase","A citation is unavailable","The passage is too long to read"], a:0},
+          {q:"A borrowed idea presented without a citation is weak because:", c:["Readers cannot verify where the idea came from","It uses too many words","It shortens the report","It improves the conclusion"], a:0},
+          {q:"The introduction of an academic text should:", c:["Give context and state the purpose","Present the reference list","Repeat the conclusion word for word","Avoid mentioning the topic"], a:0},
+          {q:"A well-developed academic paragraph typically includes:", c:["A topic sentence, supporting evidence, and a closing or linking sentence","One unrelated sentence","Only a quotation","A list of page numbers"], a:0},
+          {q:"Which organizational pattern presents reasons and their results?", c:["Cause and effect","Chronological narration only","Alphabetical listing","Random ordering"], a:0},
+          {q:"SCENARIO: A student finds a blog post with no author, no date, and no sources. The best action is to:", c:["Look for a more credible source before using it","Cite it as a primary source","Copy it without attribution","Treat it as peer-reviewed research"], a:0},
+          {q:"SCENARIO: A group includes a reference produced by an AI tool but cannot find the article anywhere. The main problem is that:", c:["The evidence is fabricated and cannot be verified","The reference list is too short","The citation style is outdated","The article is too recent"], a:0}
+        ]
+      },
+      week3: {
+        pretest: [
+          {q:"A chart or table in a report should be interpreted by examining its:", c:["Labels, units, patterns, and evidence","Background color only","File name only","Margins only"], a:0},
+          {q:"A diagram, graph, or infographic can help a writer:", c:["Represent complex information in a multimodal form","Avoid explaining the information","Remove the need for labels","Guarantee that data are correct"], a:0},
+          {q:"A multimodal report may combine:", c:["Written explanation, charts, images, and spoken presentation","Only one unformatted sentence","Unverified claims and no labels","A bibliography with no text"], a:0},
+          {q:"A presentation visual should:", c:["Support the key idea with clear labels and readable information","Contain every word the speaker will say","Use decoration instead of evidence","Be unrelated to the topic"], a:0},
+          {q:"A visual aid is effective when it:", c:["Makes important information easier to understand and is clearly labeled","Contains every sentence from the report","Uses decoration instead of data","Has no title or units"], a:0},
+          {q:"Following a procedure accurately helps a learner:", c:["Achieve the intended outcome","Avoid reading instructions","Replace all safety checks","Make evidence unnecessary"], a:0},
+          {q:"A procedure presented as numbered steps is a:", c:["Structured set of instructions","Personal narrative only","List of unrelated opinions","Citation style"], a:0},
+          {q:"When following a laboratory procedure, a learner should:", c:["Complete the steps in order and observe safety instructions","Skip steps that look difficult","Change measurements without recording them","Ignore diagrams and warning labels"], a:0},
+          {q:"A constructive question during a lecture should:", c:["Clarify or deepen understanding of the topic","Interrupt only to change the subject","Attack the speaker personally","Repeat an unrelated rumor"], a:0},
+          {q:"Useful feedback on a presentation should address its:", c:["Content, structure, and language","Presenter's clothing only","Unrelated personal history","Room temperature only"], a:0},
+          {q:"Which response best demonstrates constructive feedback?", c:["Your conclusion is clear; adding evidence to the second point may strengthen it","This is bad and I will not explain why","You should change everything","I did not listen, but it is wrong"], a:0},
+          {q:"Specific feedback is more useful than vague criticism because it:", c:["Identifies what works and what concrete change could improve the work","Makes the presenter feel embarrassed","Avoids discussing the content","Replaces revision"], a:0},
+          {q:"Effective collaboration on a technical task requires group members to:", c:["Share knowledge and work toward a common goal","Hide information from one another","Avoid assigning responsibilities","Reject all feedback"], a:0},
+          {q:"Which division of work best supports a group research presentation?", c:["Assigning responsibilities while coordinating one shared goal","Letting one member do everything without review","Keeping sources private","Avoiding deadlines"], a:0},
+          {q:"In an academic panel discussion, turn-taking helps participants:", c:["Share ideas without speaking over one another","Avoid responding to evidence","End the discussion immediately","Use only written communication"], a:0},
+          {q:"During a panel discussion, a participant should disagree by:", c:["Addressing the idea respectfully and giving relevant reasons","Insulting the speaker","Speaking over everyone","Changing the topic without explanation"], a:0},
+          {q:"Which opening is most appropriate for a formal academic presentation?", c:["A clear statement of the topic and purpose","A long unrelated joke","An apology for having no evidence","A list of private messages"], a:0},
+          {q:"Reflecting after an academic presentation helps a learner:", c:["Identify strengths and areas for improvement","Avoid all future feedback","Prove every idea was perfect","Replace preparation"], a:0},
+          {q:"A useful reflection after a group presentation asks:", c:["What worked, what needs improvement, and what to change next time","Which teammate to blame","How to avoid all future collaboration","Why feedback should be ignored"], a:0},
+          {q:"A reader sees a chart with a rising line. Before concluding that one variable caused another, the reader should:", c:["Check the labels, scale, evidence, and limits of the chart","Assume the chart proves causation","Ignore the units","Look only at the color of the line"], a:0}
+        ],
+        posttest: [
+          {q:"A bar chart is most useful for:", c:["Comparing values across categories","Showing every exact decimal value","Listing references","Replacing the report's conclusion"], a:0},
+          {q:"A line graph is most useful for:", c:["Showing change over time","Comparing unrelated categories only","Recording citations","Hiding a trend"], a:0},
+          {q:"A table is the better choice when the audience needs:", c:["Exact values that can be read directly","A rough impression only","Decorative images","Fewer labels"], a:0},
+          {q:"Every visual used in an academic report needs:", c:["A clear title, labels, and units","Only a bright color scheme","A three-dimensional effect","An unlabeled legend"], a:0},
+          {q:"A graph becomes misleading when it:", c:["Uses a distorted scale or omits key labels","Includes its data source","Shows all relevant data points","Uses a readable font"], a:0},
+          {q:"While showing a slide, an effective presenter:", c:["Explains what the audience should notice","Reads every word aloud","Hides the title","Skips the data source"], a:0},
+          {q:"Slide readability improves with:", c:["Clear fonts, good contrast, and few words per line","Small text and busy backgrounds","Long paragraphs on every slide","Unlabeled images only"], a:0},
+          {q:"Recording agreed roles and deadlines in group work helps the team:", c:["Avoid confusion and track responsibilities","Work without any plan","Hide progress from members","Remove the shared goal"], a:0},
+          {q:"Active listening in a group discussion includes:", c:["Asking clarifying questions and responding to the actual point","Planning a reply while ignoring the speaker","Interrupting to change the topic","Repeating personal opinions only"], a:0},
+          {q:"Non-verbal communication includes:", c:["Posture, gestures, eye contact, and vocal emphasis","Only the words on a slide","Only the reference list","Only written punctuation"], a:0},
+          {q:"When a teammate misses an agreed deadline, a professional response is to:", c:["Clarify the problem and agree on a revised plan","Announce the failure publicly","Remove the teammate without discussion","Ignore the task completely"], a:0},
+          {q:"Which transition best signals contrast?", c:["However","For example","Similarly","Therefore"], a:0},
+          {q:"Editing a draft focuses mainly on:", c:["Clarity, grammar, punctuation, and consistency","Choosing a new topic","Deleting the reference list","Adding unrelated images"], a:0},
+          {q:"A run-on sentence is corrected by:", c:["Separating or properly joining the independent clauses","Adding more clauses","Removing the subject","Changing the font"], a:0},
+          {q:"Subject-verb agreement means that:", c:["The verb matches the subject in number and person","Every sentence uses the same verb","The subject appears at the end","Verbs are avoided in reports"], a:0},
+          {q:"Active voice is preferred when:", c:["The doer of the action should be clear and direct","The writer wants to hide responsibility","The sentence must be longer","The process matters more than the actor"], a:0},
+          {q:"Proofreading is most effective when it is done:", c:["After revising the content and structure","Before deciding on the topic","Instead of revising","Only by an automatic spell-checker"], a:0},
+          {q:"A reflection on a completed communication task should identify:", c:["What was clear, what confused the audience, and what to improve","Only the final grade","Which classmate to blame","Why feedback should be ignored"], a:0},
+          {q:"SCENARIO: A group's slide shows a colorful 3D pie chart with no labels or source. The best revision is to:", c:["Use a simple labeled chart with units and the data source","Add more colors and effects","Remove the chart title entirely","Enlarge the decoration instead"], a:0},
+          {q:"SCENARIO: A peer says the second section of a report is unclear. The writer should:", c:["Reread that section and revise it for clarity","Ignore the comment because the draft is finished","Delete the whole report","Ask the peer to stop giving feedback"], a:0}
+        ]
+      }
+    }
   },
   third: {
-    math: [
-      {q:"What is the probability of an event that is certain to occur?", c:["0","1/2","1","1000"], a:2},
-      {q:"If a fair die is rolled, what is the probability of getting a 6?", c:["1/6","1/3","1/2","6/6"], a:0},
-      {q:"A sample is:", c:["The entire population","A subset selected from a population","A data error","A mathematical symbol"], a:1},
-      {q:"A confidence interval gives:", c:["A range of plausible values for a population parameter","The exact answer every time","Only the sample size","A graph title"], a:0},
-      {q:"If two events cannot happen at the same time, they are:", c:["Independent","Mutually exclusive","Continuous","Equivalent"], a:1},
-      {q:"The expected value is a:", c:["Weighted average of possible outcomes","Guaranteed outcome","Maximum score only","Random label"], a:0}
-    ],
-    science: [
-      {q:"Which force holds planets in orbit around the Sun?", c:["Friction","Gravity","Buoyancy","Nuclear force"], a:1},
-      {q:"The movement of tectonic plates is driven largely by:", c:["Convection in Earth's mantle","Moonlight","Clouds","Sound waves"], a:0},
-      {q:"Which gas is a major greenhouse gas?", c:["Carbon dioxide","Helium","Neon","Argon only"], a:0},
-      {q:"A renewable resource is one that:", c:["Can naturally replenish on a human timescale","Never exists in nature","Can only be used once","Is always a metal"], a:0},
-      {q:"Biodiversity refers to the:", c:["Variety of life in an area","Age of a rock","Speed of wind","Amount of rainfall only"], a:0},
-      {q:"The safest response to an earthquake is to:", c:["Run toward windows","Drop, cover, and hold on","Use an elevator","Stand under a doorway outdoors"], a:1}
-    ],
     english: [
       {q:"A resume is primarily used to:", c:["Summarize qualifications and experience","Tell a fictional story","Record laboratory data","Replace an interview"], a:0},
       {q:"Professional email language should generally be:", c:["Clear, concise, and appropriately formal","All slang","Unstructured and vague","Written without a greeting"], a:0},
@@ -567,96 +479,15 @@ const TERM_CONTENT = {
 const REVIEWER_BY_TERM = {
   first: REVIEWER,
   second: {
-     math: "GENERAL MATHEMATICS — SECOND TERM, WEEKS 1–3 REVIEWER\n\nPIECEWISE FUNCTIONS\n• A piecewise function uses different formulas on specified intervals or conditions.\n• Use piecewise rules for practical situations such as fare rates, purchasing discounts, and income-tax brackets.\n• Identify the input interval first, then apply only the rule assigned to that interval.\n• Pay close attention to boundary symbols such as <, ≤, >, and ≥ so the correct rule is used.\n• Write the domain conditions beside each rule and evaluate one interval at a time.\n• Check whether the result is reasonable for the situation and the units used.\n\nDATA AND MEASUREMENT\n• Qualitative data describe categories; quantitative data are numerical.\n• Discrete data are countable; continuous data can take values within a range.\n• Nominal data are labels, ordinal data have an order, interval data have equal differences without a true zero, and ratio data have equal differences with a meaningful zero.\n• Mean = sum of values / number of values. Median is the middle ordered value. Mode is the most frequent value.\n• Range = maximum − minimum. Variability describes how spread out values are; variance and standard deviation quantify spread.\n• The mean is sensitive to outliers, while the median is often more representative of strongly skewed data.\n• Choose measures based on the data type and purpose. Calculators, spreadsheets, Jamovi, and other tools can calculate measures, but the results must still be interpreted.\n• A good interpretation names the measure, describes the pattern, and connects the result to the original context.\n\nTRIGONOMETRY AND TRIANGLES\n• SOH-CAH-TOA: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse, tan θ = opposite/adjacent.\n• The Pythagorean theorem is a² + b² = c² for a right triangle.\n• An angle of elevation is measured upward from a horizontal line; an angle of depression is measured downward.\n• Bearings describe direction in navigation and should be read with a clear reference direction, usually clockwise from north.\n• For an oblique triangle, Heron's Formula uses A = √[s(s−a)(s−b)(s−c)], where s = (a+b+c)/2.\n• When two sides and their included angle are known, use A = 1/2 ab sin(C).\n• Draw and label the figure, select the appropriate ratio or formula, keep units consistent, and check whether the answer fits the real situation.\n• In a right triangle, the hypotenuse is opposite the right angle and is always the longest side.\n• Report measured answers with appropriate units and a sensible degree of rounding.",
      english: "EFFECTIVE COMMUNICATION — COMPLETE SECOND TERM REVIEWER\n\nACADEMIC AND TECHNICAL TEXTS\n• Academic and technical communication is formal, structured, discipline-specific, and shaped by audience, purpose, and context.\n• Use critical listening, reading, and viewing to identify main ideas, evidence, assumptions, intent, and meaning.\n• Interpret charts, tables, figures, diagrams, and other multimodal forms by checking titles, labels, units, scales, patterns, trends, and supporting evidence.\n• Use context, word parts, references, and subject knowledge to understand unfamiliar specialized vocabulary; verify important meanings with reliable sources.\n• Distinguish an author's claim from the evidence used to support it and notice possible bias or unsupported assumptions.\n\nINTERACTION AND COLLABORATION\n• Match language, tone, and structure to the academic or training situation.\n• Follow spoken, written, and multimodal procedures accurately to achieve the intended outcome.\n• Participate constructively by asking relevant questions, providing respectful feedback, and responding appropriately.\n• Academic and technical collaboration works best when members share knowledge, divide responsibilities, listen to different viewpoints, and work toward a common goal.\n• In a discussion or debate, support a point with relevant reasons and evidence rather than attacking a person.\n\nCLEAR ACADEMIC EXPRESSION\n• A thesis states the central claim or controlling idea; an outline organizes ideas before drafting.\n• Academic texts, presentations, research reports, and essays need clear organization, precise language, appropriate terminology, and evidence.\n• Use diagrams, graphs, charts, infographics, and other visual aids to explain concepts when they improve understanding; label visuals so they can be interpreted accurately.\n• Condense information into a summary, synopsis, paraphrase, outline, chart, or diagram without changing its meaning.\n• Coherence connects ideas logically; transitions and clear references create cohesion.\n• Introductions establish context and purpose, body sections develop ideas with evidence, and conclusions synthesize the main points.\n\nETHICS AND REFLECTION\n• Cite sources and represent another person's words and ideas honestly. Presenting borrowed work as one's own is plagiarism.\n• A reference list helps readers locate the sources used in an academic or technical text.\n• AI assistance and borrowed ideas should be acknowledged or declared according to the required citation practice.\n• Intellectual integrity means not inventing evidence, altering results dishonestly, or hiding the source of information.\n• Give feedback about content, structure, and language in a specific, respectful, useful way.\n• Reflect after academic or technical communication: identify strengths, areas for growth, and ways to improve future performance."
   },
   third: {
-    math: "GENERAL MATHEMATICS — THIRD TERM REVIEWER\n\nPROBABILITY & STATISTICS\n• Probability ranges from 0 (impossible) to 1 (certain).\n• A sample is a subset of a population; expected value is a weighted average of outcomes.\n• Mutually exclusive events cannot happen at the same time.\n• A confidence interval gives a range of plausible values for a population parameter.\n• Distinguish independent events from mutually exclusive events; independence concerns how events affect one another.\n• Sampling methods should represent the population and reduce avoidable bias.\n• Interpret statistical results in context instead of reporting numbers without meaning.",
-    science: "GENERAL SCIENCE — THIRD TERM REVIEWER\n\nEARTH, ENVIRONMENT & DISASTER READINESS\n• Gravity keeps planets in orbit.\n• Tectonic movement is related to convection in Earth's mantle.\n• Biodiversity is the variety of life in an area; greenhouse gases affect climate.\n• Renewable resources can replenish naturally on a human timescale.\n• During an earthquake: drop, cover, and hold on.\n• Hazards include earthquakes, volcanic activity, typhoons, floods, and landslides.\n• Preparedness includes monitoring reliable advisories, planning evacuation routes, and protecting resources.\n• Sustainable decisions consider effects on people, ecosystems, and future generations.",
     english: "EFFECTIVE COMMUNICATION — THIRD TERM REVIEWER\n\nPROFESSIONAL & WORKPLACE COMMUNICATION\n• Professional messages are clear, concise, audience-aware, and appropriately formal.\n• A resume summarizes qualifications; a cover letter connects skills to job requirements.\n• In meetings and interviews, listen carefully, answer specifically, and use relevant examples.\n• Ethical communication protects confidentiality, uses accurate information, and respects others.\n• Memos, incident reports, meeting minutes, requests, and follow-ups each have a clear workplace purpose.\n• Use layout, headings, bullets, font choices, and concise language to make information easy to scan.\n• Tailor professional profiles, applications, and presentations to the audience and purpose.\n• Handle customer feedback or complaints calmly, accurately, and respectfully."
   }
 };
 
-/* const REVIEWER_ADDENDUM = {
-  second: {
-    math: "\n\nDETAILED STUDY NOTES AND PRACTICE GUIDE\n\n1. FUNCTIONS, RELATIONS, AND REPRESENTATIONS\n• A relation pairs inputs with outputs. A relation is a function when every input has exactly one output.\n• The domain is the set of allowed input values; the range is the set of resulting output values.\n• Use the vertical-line test on a graph: if any vertical line touches the graph more than once, the relation is not a function.\n• Function notation f(x) means the output of function f for input x. To evaluate f(3), substitute 3 for every x in the rule.\n• A function may be represented by a table, ordered pairs, mapping diagram, graph, equation, or verbal rule. Check that all representations describe the same input-output relationship.\n• In a piecewise function, identify the condition first. Do not combine formulas from different intervals.\n• At an endpoint, use the inequality symbol exactly as written. A closed dot usually represents an included endpoint; an open dot represents an excluded endpoint.\n• When graphing a piecewise function, show each rule only on its assigned interval and label important endpoints.\n\n2. LINEAR, QUADRATIC, AND RATIONAL FUNCTIONS\n• A linear function has a constant rate of change and can be written as f(x) = mx + b. The slope m measures vertical change divided by horizontal change, and b is the y-intercept.\n• For two points, slope m = (y₂ − y₁)/(x₂ − x₁). A zero denominator means the line is vertical and has undefined slope.\n• A quadratic function has the form f(x) = ax² + bx + c. Its graph is a parabola; a > 0 opens upward and a < 0 opens downward.\n• Vertex form is f(x) = a(x − h)² + k. The vertex is (h,k), and the axis of symmetry is x = h.\n• A rational function is a quotient of polynomials. Its domain excludes values that make the denominator zero.\n• Before simplifying a rational expression, factor the numerator and denominator. A cancelled factor still creates a restriction from the original denominator.\n• To find an x-intercept, set f(x) = 0. To find a y-intercept, evaluate f(0), if 0 is in the domain.\n\n3. OPERATIONS, COMPOSITION, AND INVERSE FUNCTIONS\n• Add, subtract, multiply, or divide functions by combining their outputs. For division, exclude inputs that make the divisor zero.\n• Composition is written (f ∘ g)(x) = f(g(x)); evaluate the inside function first, then use that result as the input of the outside function.\n• To find an inverse, write y = f(x), interchange x and y, then solve for y. An inverse exists as a function when the original function is one-to-one on its domain.\n• The graphs of f and f-inverse are reflections across y = x. The domain and range switch places.\n• Always verify a simplified or inverse result by substituting it back into the original rule.\n\n4. EXPONENTIALS, LOGARITHMS, AND EQUATIONS\n• An exponential function has the form f(x) = abˣ, where a is the initial value and b is the growth or decay factor.\n• If b > 1, the function models growth; if 0 < b < 1, it models decay. The base must be positive and not equal to 1.\n• A logarithm answers the question: what exponent is needed? log_b(x) = y means bʸ = x.\n• Important identities include log_b(MN) = log_b(M) + log_b(N), log_b(M/N) = log_b(M) − log_b(N), and log_b(Mᵖ) = p log_b(M).\n• The argument of a logarithm must be positive. Check this restriction after solving a logarithmic equation.\n• For exponential equations with the same base, equate the exponents. Otherwise, use a logarithm and report a reasonable approximation when needed.\n\n5. SEQUENCES, SERIES, AND ALGEBRAIC PROBLEM SOLVING\n• An arithmetic sequence has a common difference d. Its nth term is aₙ = a₁ + (n − 1)d.\n• A geometric sequence has a common ratio r. Its nth term is aₙ = a₁rⁿ⁻¹.\n• An arithmetic series adds the terms of an arithmetic sequence: Sₙ = n/2[2a₁ + (n − 1)d].\n• When solving equations, perform the same operation on both sides and simplify one step at a time.\n• For inequalities, reverse the inequality sign only when multiplying or dividing by a negative number.\n• For systems of equations, substitution or elimination can be used. Check the ordered pair in both original equations.\n• For powers and radicals, use exponent laws carefully: xᵐxⁿ = xᵐ⁺ⁿ, xᵐ/xⁿ = xᵐ⁻ⁿ, and (xᵐ)ⁿ = xᵐⁿ.\n\n6. DATA, VARIABLES, AND STATISTICAL INTERPRETATION\n• A population is the complete group being studied; a sample is a selected part of that population.\n• A parameter describes a population, while a statistic describes a sample.\n• A representative sample should reflect the important characteristics of the population. Convenience sampling may be quick but can introduce bias.\n• Qualitative variables describe qualities or categories. Quantitative variables are numerical; discrete variables are countable, while continuous variables are measured.\n• Nominal data are labels, ordinal data have meaningful order, interval data have equal intervals but no true zero, and ratio data have equal intervals and a meaningful zero.\n• To find the mean, add all values and divide by the number of values. Put the data in order before finding the median.\n• For an even number of values, the median is the average of the two middle values. The mode is the most frequent value and may be more than one value.\n• Range is maximum minus minimum. Variance and standard deviation describe spread around the mean; a larger standard deviation means more variability.\n• Outliers can pull the mean toward an extreme value. Compare the mean and median before deciding which better represents the center.\n• A statistical conclusion should state the pattern, cite the measure or graph used, and explain what it means in context.\n\n7. TRIGONOMETRY AND TRIANGLE SOLVING\n• In a right triangle, identify the reference angle before naming opposite, adjacent, and hypotenuse.\n• SOH-CAH-TOA connects the angle and side lengths: sine = opposite/hypotenuse, cosine = adjacent/hypotenuse, tangent = opposite/adjacent.\n• Use inverse trigonometric functions to find an angle. Set the calculator to degree mode when the problem uses degrees.\n• The Pythagorean theorem a² + b² = c² applies only to right triangles, with c opposite the right angle.\n• An angle of elevation is measured upward from the horizontal; an angle of depression is measured downward from the horizontal.\n• A bearing is a direction measured from a reference such as north. Draw the compass direction before using a triangle formula.\n• For an oblique triangle, identify the known sides and angles before choosing a formula. Heron's Formula is useful when all three sides are known.\n• Area can be found with A = 1/2 ab sin(C) when two sides and their included angle are known.\n• Round only at the end. Label the final answer with units and check whether the size of the answer is reasonable.\n\n8. GENERAL CHECKLIST FOR SOLVING\n• Read the question twice and identify what is given and what must be found.\n• Write the relevant definition, formula, or condition before substituting values.\n• Keep exact values during the working process whenever possible.\n• Check restrictions, units, signs, endpoints, and whether the final answer fits the original question.\n• If an answer is wrong, locate the first step where the work changed from a valid expression to an invalid one. Correcting that step is more useful than memorizing the final answer.",
-    english: "\n\nDETAILED STUDY NOTES AND COMMUNICATION GUIDE\n\n1. THE COMMUNICATION PROCESS\n• Communication involves a sender, message, channel, receiver, feedback, context, and possible noise or barriers.\n• Encoding is turning an idea into words, symbols, images, gestures, or other signs. Decoding is interpreting the received message.\n• A channel is the medium used to deliver a message, such as speech, email, a report, a presentation, or a visual.\n• Feedback shows whether the message was understood. Effective communicators listen for the response and clarify when meaning is uncertain.\n• Physical, language, emotional, cultural, technological, and information-overload barriers can interfere with meaning.\n• Communication is transactional: participants influence one another, and meaning depends on the situation, relationship, purpose, and shared knowledge.\n\n2. AUDIENCE, PURPOSE, AND CONTEXT\n• Before writing or speaking, identify the audience, purpose, subject, occasion, and expected outcome.\n• Informative communication explains or clarifies. Persuasive communication supports a position and encourages a response. Instructional communication guides a process.\n• Match tone, vocabulary, detail, format, and level of formality to the audience. A message to a close friend should not use the same structure as an email to a professor.\n• Audience awareness includes anticipating what readers know, what they need explained, what concerns they may have, and what action they should take.\n• Use precise words instead of vague expressions. Avoid unnecessary jargon unless the audience understands the specialized terms.\n\n3. ACADEMIC AND TECHNICAL TEXTS\n• Academic and technical texts are formal, organized, evidence-based, and written for a clear discipline or task.\n• A thesis states the central claim or controlling idea. It should be specific enough to guide the entire text.\n• An outline arranges the main points and supporting details before drafting. A useful outline prevents repetition and missing ideas.\n• A paragraph usually has a topic sentence, supporting explanation or evidence, and a concluding or linking sentence.\n• Coherence means ideas make sense together. Cohesion is created through transitions, repeated key terms, pronouns with clear references, and logical connections.\n• Common organizational patterns include cause and effect, comparison and contrast, problem and solution, chronological order, classification, and process.\n• An introduction gives context and purpose. Body sections develop the ideas. A conclusion synthesizes the important points without introducing an unrelated main argument.\n\n4. CRITICAL READING, LISTENING, AND VIEWING\n• Identify the main idea, supporting details, purpose, intended audience, tone, and point of view.\n• Separate a claim from the evidence used to support it. Ask whether the evidence is relevant, sufficient, current, and credible.\n• Notice assumptions, emotionally loaded language, missing information, generalizations, and possible bias.\n• Critical listening requires attention to the speaker's words, tone, emphasis, evidence, and implied meaning. Do not confuse confidence with accuracy.\n• When viewing a visual, read the title, labels, legend, units, scale, source, and date before interpreting the pattern.\n• A conclusion from a chart should describe the visible trend and avoid claiming more than the data support.\n\n5. RESEARCH, SOURCES, AND EVIDENCE\n• Reliable sources identify an author or organization, provide evidence, explain methods when relevant, and can be checked against other sources.\n• Primary sources provide original data or firsthand information. Secondary sources interpret, analyze, or summarize information from other sources.\n• Use evidence that directly supports the claim. A quotation should not be included merely because it sounds impressive.\n• Introduce evidence, present it accurately, and explain how it supports the point. Evidence without explanation does not automatically prove a claim.\n• Keep a source record while researching: author, title, date, publisher or site, page or link, and the ideas or quotations used.\n• Cite borrowed words, facts, ideas, images, tables, and data according to the required style. A reference list helps readers locate the sources.\n\n6. SUMMARY, PARAPHRASE, AND SYNTHESIS\n• A summary reduces a longer text to its main idea and most important supporting points without changing the meaning.\n• A paraphrase restates a specific passage in your own sentence structure and wording while preserving the original meaning and citing the source.\n• Changing only a few words or rearranging the order of a source sentence is not an acceptable paraphrase.\n• Synthesis combines ideas from multiple sources to develop a larger conclusion or explanation. It does not simply list one source after another.\n• Compare sources for agreement, disagreement, scope, methods, and limitations before combining their ideas.\n• Read the original source, set it aside while drafting, then compare your version with the original for accuracy and proper attribution.\n\n7. MULTIMODAL AND VISUAL COMMUNICATION\n• Multimodal communication combines modes such as written language, speech, images, color, layout, sound, movement, charts, and diagrams.\n• Choose a chart based on the message: bar charts compare categories, line graphs show change over time, and tables provide exact values.\n• Every visual needs a clear title and labels. Include units, a useful scale, a legend when necessary, and a source when the data are borrowed.\n• Visual design should support meaning. Use consistent alignment, readable text, sufficient contrast, and a limited number of visual elements.\n• Do not distort a graph through a misleading scale, missing labels, inappropriate 3D effects, or selective data.\n• A presenter should explain what the audience should notice instead of reading every word on a slide.\n\n8. INTERACTION, LISTENING, AND FEEDBACK\n• Active listening includes focusing on the speaker, maintaining appropriate eye contact, noticing non-verbal signals, asking clarifying questions, and responding to the actual message.\n• Respectful feedback describes a specific behavior or part of the work, explains its effect, and offers a useful next step.\n• In collaboration, clarify roles, deadlines, decision rules, and responsibilities. Document important agreements so the group has a shared reference.\n• In a discussion or debate, respond to the claim and evidence rather than attacking the person. Acknowledge a valid point before explaining a different view.\n• Non-verbal communication includes facial expression, posture, gestures, eye contact, distance, and vocal features such as pace and emphasis.\n• Professional communication remains respectful even when the participants disagree or feel pressured.\n\n9. GRAMMAR, STYLE, AND EDITING\n• A complete sentence has a subject and a predicate and expresses a complete thought. Avoid fragments and run-on sentences.\n• Make the subject and verb agree: singular subjects take singular verbs, and plural subjects take plural verbs.\n• Use active voice when you want the actor and action to be direct and clear. Use passive voice when the receiver of the action or the process is more important.\n• Use pronouns with clear antecedents. Check that pronouns agree with the nouns they replace in number and person.\n• Use commas to separate items in a series, introductory elements, and independent clauses joined by a coordinating conjunction.\n• A semicolon can join closely related independent clauses. Do not use it between a dependent clause and an independent clause.\n• Revise for clarity, concision, precise vocabulary, transitions, spelling, capitalization, punctuation, and consistent formatting.\n\n10. ETHICS, AI, AND REFLECTION\n• Plagiarism is presenting another person's words, ideas, structure, or work as your own. It can occur even when the wording has been changed if the source is not acknowledged.\n• Do not invent sources, evidence, quotations, data, or research results. Represent uncertainty honestly.\n• Protect confidential information and obtain permission before sharing another person's private communication or work.\n• AI assistance and borrowed ideas should be acknowledged according to the instructor's or institution's required practice. AI output must be checked because it can be inaccurate, biased, or unsupported.\n• Reflect after communicating: identify what was clear, what confused the audience, what evidence was effective, and what you will change next time.\n• A strong final check asks: Is the message accurate, audience-aware, organized, ethical, accessible, and clear enough to achieve its purpose?\"\n+  }\n+};\n+\n+/* Preset question banks (same content as before, unchanged) */
 const BANK = {
   pretest: {
-    math: [
-      {q:"Evaluate f(x) = 2x + 3 at x = 4.", c:["9","11","14","8"], a:1},
-      {q:"Which relation below represents a function?", c:["{(1,2),(1,3)}","{(2,4),(3,6),(4,8)}","{(0,1),(0,2)}","{(5,5),(5,6)}"], a:1},
-      {q:"What is the domain restriction of f(x) = 1/(x - 2)?", c:["x is not 0","x is not 2","x is not -2","x is not 1"], a:1},
-      {q:"Simplify (x^2 - 9)/(x - 3).", c:["x - 3","x + 3","x^2 + 3","x - 9"], a:1},
-      {q:"Solve for x: 3(x + 2) = 21", c:["x = 5","x = 7","x = 3","x = 9"], a:0},
-      {q:"What is the y-intercept of y = 3x - 6?", c:["3","6","-6","0"], a:2},
-      {q:"Find the slope of the line through (1, 2) and (3, 10).", c:["2","4","8","6"], a:1},
-      {q:"Convert 3/4 to a percent.", c:["34%","43%","75%","57%"], a:2},
-      {q:"What is 6^2 - 4^2?", c:["4","16","20","36"], a:2},
-      {q:"Simplify log base 2 of 8.", c:["2","3","4","8"], a:1},
-      {q:"Solve for x: 2^x = 16", c:["x = 2","x = 3","x = 4","x = 8"], a:2},
-      {q:"What is the inverse of f(x) = x + 5?", c:["f-inverse(x) = x - 5","f-inverse(x) = x + 5","f-inverse(x) = 5 - x","f-inverse(x) = 5x"], a:0},
-      {q:"A rational function has a vertical asymptote where the:", c:["numerator = 0","denominator = 0","exponent = 0","constant = 0"], a:1},
-      {q:"Find the sum of 2 + 4 + 6 + 8 + 10.", c:["24","28","30","32"], a:2},
-      {q:"Evaluate the absolute value of -7 plus the absolute value of 3.", c:["4","-10","10","-4"], a:2},
-      {q:"Simplify (2x)(3x^2).", c:["5x^3","6x^2","6x^3","5x^2"], a:2},
-      {q:"Solve the inequality x + 3 > 7.", c:["x > 4","x < 4","x > 10","x < 10"], a:0},
-      {q:"What is 15% of 200?", c:["15","20","25","30"], a:3},
-      {q:"A circle has radius 5. What is its area?", c:["10 pi","15 pi","20 pi","25 pi"], a:3},
-      {q:"Solve the system: x + y = 10, x - y = 2. What is x?", c:["4","5","6","8"], a:2},
-      {q:"Find the midpoint of (2, 3) and (6, 7).", c:["(3,4)","(4,5)","(5,4)","(8,10)"], a:1},
-      {q:"Simplify the square root of 50.", c:["5 root 2","2 root 5","10 root 5","25 root 2"], a:0},
-      {q:"If f(x) = x + 1 and g(x) = 2x, what is f(g(x))?", c:["2x + 1","x + 2","2x + 2","x^2 + 1"], a:0},
-      {q:"What is the general form of a quadratic function?", c:["f(x) = ax + b","f(x) = ax^2 + bx + c","f(x) = a/x","f(x) = a^x"], a:1},
-      {q:"Solve x^2 = 49.", c:["x = 7 only","x = -7 only","x = 7 or x = -7","x = 0"], a:2},
-      {q:"What is the reciprocal of 3/5?", c:["3/5","5/3","-3/5","1"], a:1},
-      {q:"Convert 0.25 to a fraction.", c:["1/2","1/4","1/5","2/5"], a:1},
-      {q:"A function where the graph is broken into pieces by intervals is called a:", c:["linear function","piecewise function","rational function","constant function"], a:1},
-      {q:"Find the range of f(x) = x^2.", c:["all real numbers","y >= 0","y <= 0","x >= 0"], a:1},
-      {q:"Simplify: (4x^3)/(2x).", c:["2x","2x^2","4x^2","2x^3"], a:1},
-      {q:"SCENARIO: Liza earns a 5% commission on her sales. If she sold P18,000 worth of items this week, how much commission did she earn?", c:["P90","P900","P180","P9,000"], a:1},
-      {q:"SCENARIO: A store gives a 20% discount on a jacket originally priced at P1,500. What is the discounted price?", c:["P1,200","P1,300","P300","P1,000"], a:0},
-      {q:"SCENARIO: Theater seating grows by 3 seats per row. Row 1 has 20 seats, Row 2 has 23, Row 3 has 26. How many seats are in Row 5?", c:["29","32","35","38"], a:1},
-      {q:"SCENARIO: A ladder leans against a wall, forming a 60-degree angle with the ground. To find how high it reaches on the wall, which ratio would you use?", c:["sine","cosine","tangent","secant"], a:0},
-      {q:"SCENARIO: You deposit P10,000 at 6% interest compounded annually. Which expression gives its value after 3 years?", c:["10000(1 + 0.06)(3)","10000(1 + 0.06/3)^3","10000(1 + 0.06)^3","10000(0.06)^3"], a:2}
-    ],
-    science: [
-      {q:"What is the basic unit of life?", c:["Tissue","Organ","Cell","Molecule"], a:2},
-      {q:"Which organelle is known as the powerhouse of the cell?", c:["Nucleus","Mitochondria","Ribosome","Golgi body"], a:1},
-      {q:"Which gas do plants absorb for photosynthesis?", c:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], a:2},
-      {q:"What force pulls objects toward the Earth?", c:["Friction","Magnetism","Gravity","Tension"], a:2},
-      {q:"What is the chemical symbol for water?", c:["H2O","HO2","O2H","H2O2"], a:0},
-      {q:"Which planet is known as the Red Planet?", c:["Venus","Mars","Jupiter","Mercury"], a:1},
-      {q:"What organ pumps blood throughout the human body?", c:["Lungs","Liver","Heart","Kidney"], a:2},
-      {q:"Which state of matter has a fixed shape and volume?", c:["Gas","Liquid","Solid","Plasma"], a:2},
-      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl2"], a:0},
-      {q:"Which of these is a producer in an ecosystem?", c:["Lion","Mushroom","Grass","Wolf"], a:2},
-      {q:"What process do plants use to release energy from glucose?", c:["Photosynthesis","Respiration","Transpiration","Digestion"], a:1},
-      {q:"Which particle in an atom has a negative charge?", c:["Proton","Neutron","Electron","Nucleus"], a:2},
-      {q:"What is the boiling point of water at sea level in Celsius?", c:["0 C","50 C","100 C","212 C"], a:2},
-      {q:"Which law states that an object in motion stays in motion unless acted on by a force?", c:["Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Gravity"], a:0},
-      {q:"What is the main function of red blood cells?", c:["Fight infection","Carry oxygen","Clot blood","Digest food"], a:1},
-      {q:"Which of these is a renewable energy source?", c:["Coal","Natural gas","Solar power","Petroleum"], a:2},
-      {q:"What do we call a substance that speeds up a chemical reaction without being consumed?", c:["Catalyst","Reactant","Product","Solvent"], a:0},
-      {q:"Which layer of the Earth do we live on?", c:["Core","Mantle","Crust","Atmosphere"], a:2},
-      {q:"What is the smallest unit of an element that retains its properties?", c:["Molecule","Atom","Cell","Compound"], a:1},
-      {q:"Which system in the body is responsible for breathing?", c:["Circulatory system","Digestive system","Respiratory system","Nervous system"], a:2},
-      {q:"What type of energy is stored in food?", c:["Kinetic energy","Chemical energy","Nuclear energy","Sound energy"], a:1},
-      {q:"Which of these best describes an ecosystem?", c:["Only plants in an area","Living things and their environment interacting","Only animals in an area","A single organism"], a:1},
-      {q:"What causes the seasons on Earth?", c:["Distance from the sun changing daily","The tilt of Earth's axis","The moon's gravity","Ocean currents"], a:1},
-      {q:"Which of these is NOT a state of matter?", c:["Solid","Liquid","Gas","Energy"], a:3},
-      {q:"What is the process by which water changes from liquid to gas called?", c:["Condensation","Evaporation","Precipitation","Freezing"], a:1},
-      {q:"Which vitamin is produced when skin is exposed to sunlight?", c:["Vitamin A","Vitamin C","Vitamin D","Vitamin K"], a:2},
-      {q:"What is the pH of a neutral solution?", c:["0","7","14","10"], a:1},
-      {q:"Which of these organs is part of the digestive system?", c:["Heart","Stomach","Lungs","Brain"], a:1},
-      {q:"What is the term for animals that only eat plants?", c:["Carnivores","Herbivores","Omnivores","Decomposers"], a:1},
-      {q:"Which force keeps planets in orbit around the sun?", c:["Magnetism","Gravity","Friction","Inertia"], a:1},
-      {q:"SCENARIO: A factory worker keeps lifting heavy boxes at their workstation. Which simple machine would best reduce the physical effort needed?", c:["Pulley system","Thermometer","Voltmeter","Barometer"], a:0},
-      {q:"SCENARIO: A homeowner wants to reduce their electricity bill safely. Which practice best reflects safe and efficient energy use?", c:["Overloading a single outlet with many appliances","Using outdated, damaged wiring to save money","Turning off appliances when not in use and avoiding overloaded outlets","Leaving lights on overnight for convenience"], a:2},
-      {q:"SCENARIO: A cleaning product label lists sodium hypochlorite (bleach). What should a household consider before using and disposing of it?", c:["It can be safely mixed with any other cleaning product","It has no environmental impact and can be poured anywhere","It should be handled and disposed of following safety guidelines","It cannot cause any harm to skin or eyes"], a:2},
-      {q:"SCENARIO: Rising sea levels linked to climate change are affecting coastal Philippine communities. Which is a direct impact on the local ecosystem?", c:["Increased biodiversity with no consequences","Loss of habitat for coastal species like mangroves","Improved soil fertility inland","Decreased typhoon frequency"], a:1},
-      {q:"SCENARIO: A family is preparing a home emergency plan for typhoon season. Which agency provides the most relevant hazard and weather information?", c:["PAGASA","PHIVOLCS","DTI","FDA"], a:0}
-    ],
     english: [
       {q:"Which sentence is correctly punctuated?", c:["I bought apples, bread, and milk.","I bought apples bread, and milk.","I bought, apples bread and milk.","I bought apples, bread and, milk."], a:0},
       {q:"Choose the synonym of \"abundant.\"", c:["Scarce","Plentiful","Empty","Faint"], a:1},
@@ -696,82 +527,8 @@ const BANK = {
     ]
   },
   posttest: {
-    math: [
-      {q:"Evaluate f(x) = 3x - 2 at x = 5.", c:["10","11","13","15"], a:2},
-      {q:"Which relation below represents a function?", c:["{(2,3),(2,5)}","{(1,2),(2,4),(3,6)}","{(4,1),(4,2)}","{(0,0),(0,1)}"], a:1},
-      {q:"What is the domain restriction of f(x) = 1/(x + 3)?", c:["x is not 3","x is not -3","x is not 0","x is not 1"], a:1},
-      {q:"Simplify (x^2 - 16)/(x - 4).", c:["x - 4","x + 4","x^2 + 4","x - 16"], a:1},
-      {q:"Solve for x: 4(x - 1) = 16", c:["x = 4","x = 5","x = 6","x = 3"], a:1},
-      {q:"What is the y-intercept of y = -2x + 8?", c:["-2","8","0","4"], a:1},
-      {q:"Find the slope of the line through (2, 1) and (4, 9).", c:["2","4","8","6"], a:1},
-      {q:"Convert 2/5 to a percent.", c:["25%","40%","20%","45%"], a:1},
-      {q:"What is 7^2 - 3^2?", c:["30","40","46","58"], a:1},
-      {q:"Simplify log base 3 of 9.", c:["1","2","3","9"], a:1},
-      {q:"Solve for x: 3^x = 27", c:["x = 2","x = 3","x = 9","x = 27"], a:1},
-      {q:"What is the inverse of f(x) = x - 4?", c:["f-inverse(x) = x + 4","f-inverse(x) = x - 4","f-inverse(x) = 4 - x","f-inverse(x) = 4x"], a:0},
-      {q:"A rational function is undefined where the:", c:["numerator = 0","denominator = 0","coefficient = 0","exponent = 1"], a:1},
-      {q:"Find the sum of 3 + 6 + 9 + 12 + 15.", c:["40","42","45","48"], a:2},
-      {q:"Evaluate the absolute value of -9 plus the absolute value of 4.", c:["5","-5","13","-13"], a:2},
-      {q:"Simplify (3x)(2x^3).", c:["5x^4","6x^3","6x^4","5x^3"], a:2},
-      {q:"Solve the inequality x - 2 < 5.", c:["x < 7","x > 7","x < 3","x > 3"], a:0},
-      {q:"What is 25% of 160?", c:["30","35","40","45"], a:2},
-      {q:"A circle has radius 4. What is its area?", c:["8 pi","12 pi","16 pi","20 pi"], a:2},
-      {q:"Solve the system: x + y = 12, x - y = 4. What is x?", c:["6","7","8","10"], a:2},
-      {q:"Find the midpoint of (1, 4) and (5, 8).", c:["(2,5)","(3,6)","(6,4)","(3,12)"], a:1},
-      {q:"Simplify the square root of 72.", c:["6 root 2","2 root 6","6 root 6","36 root 2"], a:0},
-      {q:"If f(x) = x - 2 and g(x) = 3x, what is f(g(x))?", c:["3x - 2","x - 6","3x + 2","x - 5"], a:0},
-      {q:"What is the vertex form pattern of a quadratic function?", c:["f(x) = a(x - h)^2 + k","f(x) = ax + b","f(x) = a/x","f(x) = a^x"], a:0},
-      {q:"Solve x^2 = 81.", c:["x = 9 only","x = -9 only","x = 9 or x = -9","x = 0"], a:2},
-      {q:"What is the reciprocal of 4/7?", c:["4/7","7/4","-4/7","1"], a:1},
-      {q:"Convert 0.75 to a fraction.", c:["3/4","1/4","2/3","4/5"], a:0},
-      {q:"A function whose graph is a straight line is called a:", c:["quadratic function","linear function","rational function","exponential function"], a:1},
-      {q:"Find the range of f(x) = -x^2.", c:["all real numbers","y >= 0","y <= 0","x >= 0"], a:2},
-      {q:"Simplify: (6x^4)/(2x).", c:["3x^3","3x^4","6x^3","3x^2"], a:0},
-      {q:"SCENARIO: Mark is a delivery rider paid P12 per delivery plus a P500 weekly base pay. If he made 65 deliveries this week, how much did he earn in total?", c:["P780","P1,280","P1,500","P1,780"], a:1},
-      {q:"SCENARIO: A bookstore marks up a notebook's price from P40 to P52. What is the percentage increase?", c:["12%","20%","30%","52%"], a:2},
-      {q:"SCENARIO: A stack of chairs grows by 4 chairs per row. Row 1 has 6 chairs, Row 2 has 10. How many chairs are in Row 4?", c:["14","18","22","26"], a:1},
-      {q:"SCENARIO: A kite string makes a 45-degree angle with the ground and is 20 meters long. Which ratio helps find the horizontal distance to the point below the kite?", c:["sine","cosine","tangent","secant"], a:1},
-      {q:"SCENARIO: You invest P8,000 at 5% interest compounded annually for 2 years. Which expression gives the correct future value?", c:["8000(1 + 0.05)^2","8000(1 + 0.05)(2)","8000(0.05)^2","8000(1 + 0.05/2)^2"], a:0}
-    ],
-    science: [
-      {q:"What is the basic building block of living organisms?", c:["Organ","Tissue","Cell","Atom"], a:2},
-      {q:"Which organelle stores genetic material in a cell?", c:["Mitochondria","Nucleus","Ribosome","Vacuole"], a:1},
-      {q:"Which gas do living things need for respiration?", c:["Carbon dioxide","Oxygen","Nitrogen","Helium"], a:1},
-      {q:"What force keeps planets in orbit around the sun?", c:["Magnetism","Gravity","Friction","Inertia"], a:1},
-      {q:"What is the chemical symbol for table salt?", c:["NaCl","KCl","NaOH","CaCl2"], a:0},
-      {q:"Which planet is closest to the sun?", c:["Venus","Earth","Mercury","Mars"], a:2},
-      {q:"Which organ is mainly responsible for filtering blood in the human body?", c:["Liver","Kidney","Stomach","Spleen"], a:1},
-      {q:"Which state of matter has no fixed shape or volume?", c:["Solid","Liquid","Gas","Plasma only"], a:2},
-      {q:"What is the chemical formula for carbon dioxide?", c:["CO","CO2","C2O","CO3"], a:1},
-      {q:"Which of these is a consumer in an ecosystem?", c:["Grass","Tree","Deer","Mushroom"], a:2},
-      {q:"What process do plants use to make their own food?", c:["Respiration","Photosynthesis","Transpiration","Fermentation"], a:1},
-      {q:"Which particle in an atom has a positive charge?", c:["Electron","Neutron","Proton","Photon"], a:2},
-      {q:"What is the freezing point of water at sea level in Celsius?", c:["0 C","32 C","100 C","-10 C"], a:0},
-      {q:"Which law states that for every action there is an equal and opposite reaction?", c:["Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Gravity"], a:2},
-      {q:"What is the main function of white blood cells?", c:["Carry oxygen","Fight infection","Clot blood","Digest food"], a:1},
-      {q:"Which of these is a non-renewable energy source?", c:["Solar power","Wind power","Coal","Hydropower"], a:2},
-      {q:"What do we call a substance that is dissolved in a solvent?", c:["Solute","Catalyst","Mixture","Precipitate"], a:0},
-      {q:"Which layer of the Earth is the hottest?", c:["Crust","Mantle","Outer core","Inner core"], a:3},
-      {q:"What is a group of atoms bonded together called?", c:["Cell","Molecule","Tissue","Nucleus"], a:1},
-      {q:"Which system in the body transports blood?", c:["Respiratory system","Digestive system","Circulatory system","Nervous system"], a:2},
-      {q:"What type of energy is associated with motion?", c:["Potential energy","Kinetic energy","Chemical energy","Thermal energy"], a:1},
-      {q:"Which of these best describes a food chain?", c:["A single organism","The transfer of energy from one organism to another","Only plants in an area","A type of habitat"], a:1},
-      {q:"What causes day and night on Earth?", c:["Earth's revolution around the sun","Earth's rotation on its axis","The moon's orbit","Ocean currents"], a:1},
-      {q:"Which of these is an example of a physical change?", c:["Burning wood","Rusting iron","Melting ice","Baking a cake"], a:2},
-      {q:"What is the process by which water vapor turns into liquid called?", c:["Evaporation","Condensation","Sublimation","Precipitation"], a:1},
-      {q:"Which mineral is important for strong bones and teeth?", c:["Iron","Calcium","Potassium","Zinc"], a:1},
-      {q:"What is the pH of a strongly acidic solution?", c:["Close to 0","Close to 7","Close to 14","Exactly 7"], a:0},
-      {q:"Which of these organs is part of the respiratory system?", c:["Stomach","Lungs","Liver","Kidney"], a:1},
-      {q:"What is the term for animals that eat both plants and animals?", c:["Carnivores","Herbivores","Omnivores","Producers"], a:2},
-      {q:"What force pulls a thrown ball back down to the ground?", c:["Friction","Magnetism","Gravity","Tension"], a:2},
-      {q:"SCENARIO: An engineer is designing a car jack to lift heavy vehicles using minimal force. Which principle is most directly being applied?", c:["Pascal's Principle","Newton's Third Law only","The Doppler Effect","Ohm's Law"], a:0},
-      {q:"SCENARIO: A student tests whether an object's shape and mass affect its ability to float in water. Which principle explains this?", c:["Archimedes' Principle","Pascal's Principle","Newton's First Law","Boyle's Law"], a:0},
-      {q:"SCENARIO: A household pours leftover paint down the drain. What is the most likely environmental consequence?", c:["It has no effect on water systems","It could contaminate water sources and harm local ecosystems","It will evaporate completely with no residue","It automatically gets filtered out safely"], a:1},
-      {q:"SCENARIO: After a strong earthquake, a community wants updated information on aftershocks and fault activity. Which agency should they consult?", c:["PHIVOLCS","PAGASA","DENR","DTI"], a:0},
-      {q:"SCENARIO: A student's body temperature rises after intense exercise, then gradually returns to normal. Which two systems primarily work together to regulate this?", c:["Nervous and endocrine systems","Skeletal and muscular systems","Digestive and excretory systems","Respiratory and integumentary systems only"], a:0}
-    ],
     english: [
-      {q:"Which sentence is correctly punctuated?", c:["My favorite subjects are Math, Science, and English.","My favorite subjects are Math Science, and English.","My favorite subjects are, Math, Science and English.","My favorite subjects are Math, Science and, English."], a:0},
+      {q:"Which sentence is correctly punctuated?", c:["My favorite subjects are reading, writing, and speaking.","My favorite subjects are reading writing, and speaking.","My favorite subjects are, reading, writing and speaking.","My favorite subjects are reading, writing and, speaking."], a:0},
       {q:"Choose the synonym of \"swift.\"", c:["Slow","Fast","Quiet","Heavy"], a:1},
       {q:"Choose the correct verb form: \"They ___ their homework every night.\"", c:["does","doing","do","did doing"], a:2},
       {q:"What is the plural form of \"mouse\"?", c:["mouses","mices","mice","mouse's"], a:2},
@@ -842,12 +599,6 @@ function termLabels(termArr){
 }
 function inferSkill(subject, question){
   const q = String(question || "").toLowerCase();
-  if(subject === "math"){
-    if(/piecewise|function|f\(x\)|interval/.test(q)) return "Functions";
-    if(/mean|median|mode|range|standard deviation|data|measurement/.test(q)) return "Statistics";
-    if(/sin|cos|tan|triangle|bearing|angle|heron/.test(q)) return "Trigonometry";
-    return "General Mathematics";
-  }
   if(/thesis|outline|research|evidence|paraphrase|plagiarism|citation|technical report|academic/.test(q)) return "Academic & Technical Communication";
   if(/chart|table|diagram|graph|infographic|multimodal/.test(q)) return "Multimodal Communication";
   if(/audience|tone|feedback|collaboration|procedure/.test(q)) return "Communication Strategies";
@@ -900,71 +651,6 @@ function learningPathHtml(){
 }
 const REVIEWER_ADDENDUM = {
   second: {
-    math: `
-
-DETAILED STUDY NOTES AND PRACTICE GUIDE
-
-FUNCTIONS AND REPRESENTATIONS
-• A relation pairs inputs with outputs. It is a function when every input has exactly one output.
-• The domain is the set of allowed inputs; the range is the set of resulting outputs.
-• Use the vertical-line test on a graph: a vertical line touching the graph more than once means the relation is not a function.
-• Function notation f(x) names the output for an input. To evaluate f(3), substitute 3 for every x in the rule.
-• Tables, ordered pairs, mapping diagrams, graphs, equations, and verbal rules can represent the same function.
-• In a piecewise function, identify the condition first and apply only the formula assigned to that interval.
-• Pay close attention to endpoint symbols. < and > exclude an endpoint; ≤ and ≥ include it.
-• When graphing a piecewise function, graph each rule only on its interval and mark included or excluded endpoints.
-
-LINEAR, QUADRATIC, AND RATIONAL FUNCTIONS
-• A linear function has the form f(x) = mx + b. The slope is m and the y-intercept is b.
-• For two points, m = (y₂ − y₁)/(x₂ − x₁). A zero denominator gives a vertical line with undefined slope.
-• A quadratic function has the form f(x) = ax² + bx + c and creates a parabola. If a > 0 it opens upward; if a < 0 it opens downward.
-• Vertex form is f(x) = a(x − h)² + k. The vertex is (h,k) and the axis of symmetry is x = h.
-• A rational function is a quotient of polynomials. Its domain excludes values that make the original denominator zero.
-• Factor before simplifying rational expressions. A cancelled factor still creates a restriction from the original denominator.
-• To find an x-intercept, set f(x) = 0. To find a y-intercept, evaluate f(0) when 0 is in the domain.
-
-FUNCTION OPERATIONS, COMPOSITION, AND INVERSES
-• Add, subtract, multiply, or divide functions by combining their outputs. Division also requires checking the divisor's restrictions.
-• Composition is (f ∘ g)(x) = f(g(x)); evaluate the inside function first.
-• To find an inverse, write y = f(x), interchange x and y, and solve for y.
-• An inverse is a function when the original function is one-to-one on its domain. The graphs of a function and its inverse reflect across y = x.
-• Domain and range switch places when a function is inverted. Verify an inverse by composing it with the original function.
-
-EXPONENTIALS, LOGARITHMS, AND EQUATIONS
-• An exponential function has the form f(x) = abˣ. If b > 1 it models growth; if 0 < b < 1 it models decay.
-• A logarithm answers the question: what exponent is needed? log_b(x) = y means bʸ = x.
-• Useful rules include log_b(MN) = log_b(M) + log_b(N), log_b(M/N) = log_b(M) − log_b(N), and log_b(Mᵖ) = p log_b(M).
-• The argument of a logarithm must be positive. Check this restriction after solving.
-• For exponential equations with the same base, equate exponents. Otherwise, use logarithms and round only at the end.
-
-SEQUENCES, SERIES, AND ALGEBRA
-• An arithmetic sequence has common difference d: aₙ = a₁ + (n − 1)d.
-• A geometric sequence has common ratio r: aₙ = a₁rⁿ⁻¹.
-• An arithmetic series uses Sₙ = n/2[2a₁ + (n − 1)d].
-• For inequalities, reverse the sign only when multiplying or dividing by a negative number.
-• For systems, use substitution or elimination and check the ordered pair in both original equations.
-• Keep exact values when possible and show one algebraic step at a time.
-
-DATA AND STATISTICS
-• A population is the complete group being studied; a sample is a selected part. A parameter describes a population, while a statistic describes a sample.
-• Qualitative variables describe categories. Quantitative variables are numerical; discrete values are countable and continuous values are measured.
-• Nominal data are labels, ordinal data have an order, interval data have equal differences without a true zero, and ratio data have a meaningful zero.
-• Mean = sum of values ÷ number of values. Put values in order before finding the median.
-• For an even number of values, the median is the average of the two middle values. The mode is the most frequent value.
-• Range = maximum − minimum. Variance and standard deviation describe spread around the mean.
-• Outliers can pull the mean toward an extreme value. Compare the mean and median before deciding which better represents the center.
-• A good statistical conclusion names the measure, describes the pattern, and explains what the result means in context.
-
-TRIGONOMETRY AND TRIANGLES
-• In a right triangle, identify the reference angle before naming opposite, adjacent, and hypotenuse.
-• SOH-CAH-TOA: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse, tan θ = opposite/adjacent.
-• Use inverse trigonometric functions to find an angle. Use degree mode when the problem uses degrees.
-• The Pythagorean theorem a² + b² = c² applies to right triangles, with c opposite the right angle.
-• An angle of elevation is measured upward from the horizontal; an angle of depression is measured downward.
-• Bearings should be drawn from a clear reference direction, usually north.
-• Heron's Formula finds the area of an oblique triangle when all three sides are known: A = √[s(s−a)(s−b)(s−c)], where s = (a+b+c)/2.
-• Use A = 1/2 ab sin(C) when two sides and their included angle are known.
-• Draw the figure, label units, choose the formula, avoid early rounding, and check whether the final answer is reasonable.`,
     english: `
 
 DETAILED STUDY NOTES AND COMMUNICATION GUIDE
@@ -1048,323 +734,265 @@ ETHICS, AI, AND REFLECTION
   }
 };
 
-// Keep the General Mathematics reviewer focused on the three-week
-// Second Term coverage while retaining practical study support.
-REVIEWER_ADDENDUM.second.math = `
-
-THREE-WEEK GENERAL MATHEMATICS STUDY GUIDE
-
-WEEK 1 — PIECEWISE FUNCTIONS
-• A piecewise function uses different rules for different intervals or conditions.
-• Read the condition first. The condition tells you which formula to use; do not combine rules from separate intervals.
-• Symbols matter: < and > exclude an endpoint, while ≤ and ≥ include it. At a boundary, use the rule whose condition includes that value.
-• Example fare model:
-  f(x) = 40 for 0 < x ≤ 2
-  f(x) = 40 + 12(x − 2) for x > 2
-  For 5 km, use the second rule: f(5) = 40 + 12(3) = P76.
-• Practical uses include taxi fares, delivery charges, tiered discounts, and income-tax brackets.
-• To solve: identify the input, locate its interval, substitute into that interval's rule, simplify, and check the units and reasonableness.
-• When sketching a piecewise graph, draw each rule only on its assigned interval. Use a closed dot for an included endpoint and an open dot for an excluded endpoint.
-• A reasonable answer should match the situation: a fare should not decrease when extra distance is added, and an amount of money should have the correct currency unit.
-
-WEEK 2 — DATA, MEASUREMENT LEVELS, AND VARIABILITY
-• Qualitative data describe categories or qualities. Quantitative data are numerical.
-• Discrete data are countable, such as the number of absences. Continuous data are measured and can take values within a range, such as time, height, or temperature.
-• Nominal data are labels with no order. Ordinal data have an order. Interval data have equal differences but no meaningful zero. Ratio data have equal differences and a meaningful zero.
-• Mean = sum of values ÷ number of values.
-• Median is the middle value after arranging the data in order. With an even number of values, average the two middle values.
-• Mode is the most frequent value. A data set may have more than one mode or no mode.
-• Range = maximum − minimum. Variance and standard deviation describe how far values spread around the mean.
-• A small standard deviation means values are clustered near the mean; a large standard deviation means greater spread.
-• Outliers can pull the mean toward an extreme value. For strongly skewed data, compare the mean and median and consider using the median.
-• Example: for 4, 6, 6, 8, and 11, the mean is 7, the median is 6, the mode is 6, and the range is 7.
-• Use a calculator, spreadsheet, Jamovi, or another tool to calculate measures, but still explain what the result means in the original context.
-• A good interpretation names the measure, describes the pattern, includes units when needed, and avoids claiming more than the data show.
-
-WEEK 3 — TRIGONOMETRY AND TRIANGLES
-• In a right triangle, identify the reference angle and label the sides: opposite, adjacent, and hypotenuse. The hypotenuse is opposite the right angle.
-• SOH-CAH-TOA:
-  sin θ = opposite ÷ hypotenuse
-  cos θ = adjacent ÷ hypotenuse
-  tan θ = opposite ÷ adjacent
-• Use an inverse trigonometric function to find an unknown angle. Set the calculator to degree mode when the problem uses degrees.
-• The Pythagorean theorem is a² + b² = c² and applies to right triangles. The longest side is c, opposite the right angle.
-• An angle of elevation is measured upward from a horizontal line. An angle of depression is measured downward from a horizontal line.
-• Bearings describe direction from a reference, usually clockwise from north. For example, 090° is east and 225° is southwest. Draw the direction before forming a triangle.
-• Heron's Formula is useful when all three side lengths are known:
-  s = (a + b + c) ÷ 2
-  Area = √[s(s − a)(s − b)(s − c)]
-• If two sides and their included angle are known, use:
-  Area = 1/2 ab sin(C)
-• Example with the sine-area formula: sides 6 cm and 10 cm with included angle 30° give Area = 1/2(6)(10)sin30° = 15 cm².
-• Example with Heron's Formula: sides 3, 4, and 5 give s = 6 and area = √[6(3)(2)(1)] = 6 square units.
-
-GENERAL PROBLEM-SOLVING CHECKLIST
-• Read the problem twice and identify what is given and what must be found.
-• Draw and label a diagram for triangle, elevation, depression, or bearing problems.
-• Write the definition or formula before substituting values.
-• Keep units consistent and avoid rounding until the final step.
-• Check endpoint conditions in piecewise functions and check that the selected formula matches the data given.
-• Ask whether the final value is reasonable in the real situation.`;
-
 /* Student-friendly weekly reading plan. Each screen shows one small section
    instead of making students read the whole reviewer at once. */
 const STUDENT_REVIEWER_WEEKS = {
   second: {
-    math: [
-      {
-        title:"Week 1 · Piecewise Functions",
-        lead:"A piecewise function is one rule with different instructions for different situations. Think of it like a fare chart: the price changes when the distance enters a new range.",
-        formula:`f(x) = rule 1, when condition 1
-f(x) = rule 2, when condition 2`,
-        formulaMeaning:"The condition tells you which rule to use. Choose one interval first, then substitute the input into that interval's rule.",
-        body:`Start by reading the condition, not the formula. The condition tells you which rule to use.
-
-The basic form is:
-f(x) = rule 1, when condition 1
-       rule 2, when condition 2
-
-The letter x is the input. The value f(x) is the output. A piecewise function is useful when a situation changes after a limit, such as a delivery fee, taxi fare, water bill, or discount.
-
-Worked Example 1 — finding a delivery fee:
-For a delivery fee, f(x) = 40 when 0 < x <= 2, and f(x) = 40 + 12(x - 2) when x > 2. Find the fee for 5 km.
-
-Step 1: Identify the input: x = 5.
-Step 2: Check the conditions. Since 5 > 2, use the second rule.
-Step 3: Substitute x = 5: f(5) = 40 + 12(5 - 2).
-Step 4: Work inside the parentheses: 5 - 2 = 3.
-Step 5: Multiply: 12(3) = 36.
-Step 6: Add: 40 + 36 = 76.
-Answer: f(5) = P76.
-
-Worked Example 2 — checking a boundary:
-For the same function, find f(2). The first condition says 0 < x <= 2, so x = 2 is included in the first rule.
-f(2) = 40.
-Do not use the second rule just because 2 is near the boundary. The symbol <= decides.
-
-To solve any piecewise problem:
-1. Write down the input value.
-2. Read every condition carefully.
-3. Choose the one interval that contains the input.
-4. Copy only that formula.
-5. Substitute the input using parentheses.
-6. Simplify one step at a time.
-7. Include the correct unit and check if the answer fits the situation.
-
-For a graph, draw each rule only on its assigned interval. Use a closed dot for an included endpoint and an open dot for an excluded endpoint. Do not draw one formula across the entire graph.`,
-        tip:"Helpful habit: circle the condition you used and underline the formula you chose. This makes your solution easy to check."
-      },
-      {
-        title:"Week 2 · Data and Statistics",
-        lead:"Statistics helps us describe a group of information. The goal is not just to calculate a number, but to explain what that number tells us.",
-        formula:`Mean = sum of all values / number of values
-Median = middle value after ordering
-Mode = most frequent value
-Range = maximum - minimum
-Population standard deviation = √[sum of (x - mean)² / N]`,
-        formulaMeaning:"These formulas summarize the center and spread of a data set. Use the mean for the average, the median for the middle, the mode for the most common value, and the range or standard deviation for spread.",
-        body:`Statistics helps us describe a group of information. The goal is not just to calculate a number, but to explain what that number tells us.
-
-First identify the kind of data:
-• Qualitative data describe labels or qualities, such as favorite color.
-• Quantitative data are numbers.
-• Discrete data are counted, like the number of siblings.
-• Continuous data are measured, like height, temperature, or time.
-
-The four measurement levels are easier to remember this way:
-• Nominal = names only.
-• Ordinal = names with an order.
-• Interval = equal gaps, but zero does not mean none.
-• Ratio = equal gaps and a meaningful zero.
-
-Formula guide:
-• Mean = sum of all values / number of values.
-• Median = middle value after arranging the data from least to greatest.
-• Mode = value that appears most often.
-• Range = maximum - minimum.
-• Population standard deviation: sigma = square root of [sum of (x - mean)^2 / N].
-
-Worked Example 1 — mean, median, mode, and range:
-Use the data 4, 6, 6, 8, and 11.
-Step 1: Put the values in order: 4, 6, 6, 8, 11.
-Step 2: Add them: 4 + 6 + 6 + 8 + 11 = 35.
-Step 3: Count the values: there are 5.
-Step 4: Mean = 35 / 5 = 7.
-Step 5: The middle value is 6, so the median is 6.
-Step 6: The value appearing most is 6, so the mode is 6.
-Step 7: Range = 11 - 4 = 7.
-
-Worked Example 2 — standard deviation idea:
-For 2, 4, and 6, the mean is (2 + 4 + 6) / 3 = 4.
-Subtract the mean from each value: 2 - 4 = -2, 4 - 4 = 0, and 6 - 4 = 2.
-Square the differences: 4, 0, and 4.
-Add them: 4 + 0 + 4 = 8.
-Divide by the number of values: 8 / 3 = 2.67.
-Take the square root: standard deviation is about 1.63.
-This small value tells us the data are fairly close to the mean of 4.
-
-The mean can be pulled toward an unusually high or low value. The median may describe the center better when the data are uneven. When writing a conclusion, name the measure, describe the pattern, include units when useful, and connect it to the original situation.`,
-        tip:"Do not report a statistic without meaning. Show the formula, substitute the values, and then explain what the answer says about the class, survey, or measurement."
-      },
-      {
-        title:"Week 3 · Trigonometry and Triangles",
-        lead:"Trigonometry connects an angle to the sides of a triangle. A quick sketch usually makes the problem much less confusing.",
-        formula:`sin(θ) = opposite / hypotenuse
-cos(θ) = adjacent / hypotenuse
-tan(θ) = opposite / adjacent
-a² + b² = c²
-Area = 1/2 ab sin(C)`,
-        formulaMeaning:"Choose the ratio that contains the sides you know and the side you need. Use the Pythagorean theorem for a right triangle, and use the area formula when two sides and their included angle are known.",
-        body:`Trigonometry connects an angle to the sides of a triangle. A quick sketch usually makes the problem much less confusing.
-
-In a right triangle, first mark the angle you are using. Then label:
-• Opposite: across from the angle.
-• Adjacent: beside the angle, but not the hypotenuse.
-• Hypotenuse: across from the right angle and always the longest side.
-
-Formula guide — SOH-CAH-TOA:
-• sin(theta) = opposite / hypotenuse
-• cos(theta) = adjacent / hypotenuse
-• tan(theta) = opposite / adjacent
-
-Worked Example 1 — finding a ratio:
-Suppose the opposite side is 6 cm and the hypotenuse is 10 cm.
-Step 1: Identify the two sides. Opposite = 6 and hypotenuse = 10.
-Step 2: Choose sine because sine uses opposite and hypotenuse.
-Step 3: Substitute: sin(theta) = 6 / 10.
-Step 4: Simplify: sin(theta) = 0.6.
-
-Worked Example 2 — finding an angle:
-If tan(theta) = 3 / 4, then theta = tan^-1(3 / 4).
-Step 1: Enter 3 ÷ 4 in the calculator.
-Step 2: Use the inverse tangent button.
-Step 3: theta is about 36.87 degrees.
-Make sure the calculator is in degree mode when the problem uses degrees.
-
-Worked Example 3 — finding a missing side:
-If a right triangle has legs 3 and 4, use the Pythagorean theorem:
-a² + b² = c²
-3² + 4² = c²
-9 + 16 = c²
-25 = c²
-c = square root of 25 = 5.
-The hypotenuse is 5 because it is opposite the right angle.
-
-Area formulas:
-• Right-triangle area = 1/2(base)(height).
-• If two sides and their included angle are known, area = 1/2 ab sin(C).
-For sides 6 cm and 10 cm with included angle 30 degrees:
-Area = 1/2(6)(10)sin(30) = 30(0.5) = 15 cm².
-
-If all three sides are known, use Heron's Formula:
-Step 1: s = (a + b + c) / 2.
-Step 2: Area = square root of [s(s-a)(s-b)(s-c)].
-For sides 3, 4, and 5, s = (3 + 4 + 5) / 2 = 6.
-Area = square root of [6(3)(2)(1)] = square root of 36 = 6 square units.
-
-For elevation, depression, or bearing problems, draw the horizontal line or compass direction before choosing a ratio. Keep units consistent, keep exact values while working, and round only at the end.`,
-        tip:"Before calculating, point to the side you are naming. Many trigonometry mistakes happen because opposite and adjacent are switched."
-      }
-    ],
-    science: [
-      {
-        title:"Week 1 · Physics in Daily Life",
-        lead:"Physics explains how pushes, movement, energy, and machines work around us. The formulas become easier when you first identify the story in the problem.",
-        body:`Work happens when a force moves an object: W = Fd. Power tells how quickly work is done: P = W/t. Efficiency compares useful output with input: efficiency = useful output / input x 100%.
-
-Pressure is force spread over an area: P = F/A. The same force creates more pressure on a smaller area. Density is mass packed into space: density = mass / volume. An object is more likely to float when its average density is less than the fluid's density.
-
-Speed tells how far something travels per unit of time. Velocity also includes direction. Acceleration describes a change in velocity.
-
-Kinetic energy is energy of motion: KE = 1/2 mv². Gravitational potential energy is stored because of height: PE = mgh. Simple machines do not remove work; they make work easier by changing the force, distance, or direction.
-
-For a word problem, list the known values, choose one formula, substitute with units, and check whether the answer is reasonable. For electricity, never overload outlets or use damaged wires.`,
-        tip:"Units are clues. If the question asks for power, your final unit should describe work done per time, not just distance or force."
-      },
-      {
-        title:"Week 2 · Chemistry and Living Systems",
-        lead:"Chemistry describes how substances change. Biology describes how living systems use matter and energy. Both subjects ask us to look for patterns and causes.",
-        body:`In a chemical reaction, atoms are rearranged; they are not created or destroyed. This is the conservation of mass. Common reaction patterns include combustion, decomposition, and reactions between acids and metals or carbonates.
-
-The pH scale helps describe acidity. A pH below 7 is acidic, 7 is neutral, and above 7 is basic. Never mix household cleaners unless the label says it is safe, because some combinations produce dangerous gases.
-
-Photosynthesis uses light energy to help make glucose:
-carbon dioxide + water + light -> glucose + oxygen.
-Cellular respiration breaks down glucose with oxygen and releases usable energy:
-glucose + oxygen -> carbon dioxide + water + energy.
-
-Living things are organized as cell -> tissue -> organ -> organ system -> organism. Homeostasis means keeping internal conditions stable. In an ecosystem, producers capture energy, consumers obtain energy by feeding, and decomposers return matter to the environment.
-
-When studying a process, ask: What goes in? What changes? What comes out? What evidence would show that the process happened?`,
-        tip:"A formula is not the whole explanation. Practice saying what each substance or step does in plain language."
-      },
-      {
-        title:"Week 3 · Earth, Space, and Safety",
-        lead:"Earth science connects the planet's systems to everyday weather, natural hazards, and the conditions that make life possible.",
-        body:`Weather is what the atmosphere is doing over a short time. Climate is the long-term pattern of weather in a place. A single hot day is weather; a long-term warming trend is climate.
-
-The Philippines is affected by tectonic and volcanic activity because it lies near active plate boundaries. Tectonic movement can cause earthquakes, while volcanic activity can produce ash, lava, and other hazards. PAGASA monitors weather and hydrometeorological hazards. PHIVOLCS monitors volcanic and seismic activity.
-
-Earth can support life because of its distance from the Sun, its atmosphere, and the way greenhouse gases help regulate temperature. Too much warming can affect rainfall, heat, habitats, and biodiversity.
-
-Light can be reflected, refracted, or absorbed. Sound needs a medium, such as air, water, or a solid, to travel.
-
-For safety questions, choose the action that reduces risk: follow official advisories, use properly rated equipment, avoid damaged wires, prepare an evacuation plan, and protect people before property.`,
-        tip:"For a hazard question, do not choose the most dramatic action. Choose the calm, recommended action that gives people the best protection."
-      }
-    ],
     english: [
       {
         title:"Week 1 · Communication and Audience",
-        lead:"Communication is more than sending words. It is the process of helping another person understand what you mean in a particular situation.",
-        body:`A communication event has a sender, message, channel, receiver, feedback, and context. The channel may be a conversation, text, email, presentation, report, image, or video. Noise is anything that gets in the way, such as a loud room, unfamiliar language, strong emotion, or too much information.
+        lead:"Second Term is about communicating in academic and training contexts, where talk and writing are formal, structured, and discipline-specific. Week 1 builds the skill of reading a situation before you speak or write: who the audience is, what the purpose is, and what the context allows.",
+        competencies:[
+          "Identify how content, structure, and language of spoken, written, and multimodal academic and technical texts are shaped by audience, purpose, and context.",
+          "Use critical listening, reading, and viewing strategies in comprehending academic and technical texts.",
+          "Employ appropriate strategies in understanding unfamiliar vocabulary, including specialized terminology.",
+          "Use language, tone, and structure appropriately for audience, purpose, and context when discussing academic and technical topics."
+        ],
+        body:`1. THE COMMUNICATION SITUATION
 
-Before speaking or writing, ask three simple questions:
-• Who is my audience?
-• What is my purpose?
-• What do I want the audience to understand or do?
+Every academic message has a sender, a message, a channel, a receiver, feedback, and a context. Noise is anything that blocks understanding: a noisy room, an unfamiliar term, a cluttered slide, strong emotion, or simply too much information at once.
 
-Informative messages explain. Persuasive messages support a position and encourage a response. Instructional messages guide someone through a task.
+In academic and training contexts the situation has extra rules. Interaction is formal (you use standard language), structured (there is an expected order and format), and discipline-specific (each subject has its own terms and conventions). A lab report, a panel discussion, a reaction paper, and a podcast episode are all "communication," but each one follows a different set of expectations.
 
-Tone is the feeling or attitude of a message. The same information may sound respectful, angry, friendly, or careless depending on word choice and punctuation. A message to a close friend does not need the same level of formality as an email to a teacher or employer.
+2. AUDIENCE, PURPOSE, CONTEXT
 
-Good communicators listen for feedback. If the other person looks confused or responds to a different idea, clarify instead of simply repeating the same sentence.`,
-        tip:"Read your message as if you were the audience. What might they misunderstand, and what small explanation would help?"
+Ask three questions before drafting anything:
+• Audience — Who will read, listen to, or view this? What do they already know? What words will they accept without explanation?
+• Purpose — Am I informing, explaining, persuading, instructing, or reflecting? What should the audience understand or do afterwards?
+• Context — Where does this happen: a graded essay, a class discussion, a training demo, a group chat? How much time or space do I have?
+
+These three shape CONTENT (what you include and leave out), STRUCTURE (the order and the sections), and LANGUAGE (word choice, tone, level of formality). Change the audience and all three change with it. A technical definition written for classmates in the same strand can keep the jargon; the same idea written for a general assembly needs everyday words and an example.
+
+3. TONE AND REGISTER
+
+Register is the level of formality. Academic register avoids slang, contractions, and text-speak, and it prefers precise verbs. Tone is the attitude the reader hears: respectful, tentative, confident, or careless. Hedging words (may, suggests, appears to) show honest uncertainty; overstatement (proves, always, never) usually weakens an academic claim.
+
+Inclusive language is part of the standard: describe people accurately and respectfully, avoid stereotypes, and critique the idea rather than the person.
+
+4. CRITICAL LISTENING, READING, AND VIEWING
+
+Critical means active, not suspicious. Use a before–during–after routine:
+• Before: preview the title, headings, abstract, figures, and the speaker's outline. Predict the main claim.
+• During: mark the thesis, the main points, the evidence, and the transitions. Note what is claim and what is support. Write questions in the margin.
+• After: state the main idea in one sentence of your own, then list what is still unclear.
+
+For listening and viewing, watch signposts ("first", "however", "to summarise"), repetition, and emphasis; these mark what the speaker thinks is important. In a video or infographic, read the images as part of the message, not as decoration.
+
+5. UNFAMILIAR AND SPECIALIZED VOCABULARY
+
+You are not expected to know every term, only to have a strategy:
+• Context clues — definition, restatement, example, or contrast inside the same sentence or paragraph.
+• Word parts — prefixes, roots, suffixes (bio-, -logy, un-, -tion) give a first guess.
+• Reference tools — subject glossaries, textbook margins, and dictionaries; general dictionaries may miss a technical sense.
+• Discipline check — a word can shift meaning by field: "significant" in statistics is not "important" in everyday talk; "power" in physics is not "power" in social studies.
+
+Keep a personal glossary: the term, the definition in your own words, and one sentence using it correctly.
+
+6. PUTTING IT TOGETHER
+
+When you speak or write this term, plan in this order: situation → purpose → audience → structure → language. If a reader could ask "why are you telling me this?", your purpose was not clear enough.`,
+        terms:[
+          {t:"Audience", d:"The reader, listener, or viewer the text is made for; their knowledge and needs shape your choices."},
+          {t:"Purpose", d:"What the text is meant to do: inform, explain, persuade, instruct, or reflect."},
+          {t:"Context", d:"The situation around the message: the setting, the task, the time limit, the discipline."},
+          {t:"Register", d:"The level of formality of the language you use."},
+          {t:"Tone", d:"The attitude the audience hears in your words."},
+          {t:"Critical listening/reading/viewing", d:"Actively separating main ideas, claims, evidence, and gaps instead of receiving passively."},
+          {t:"Specialized terminology", d:"Words with a specific technical meaning inside a discipline."},
+          {t:"Noise", d:"Anything that interferes with understanding, whether physical, linguistic, or emotional."}
+        ],
+        example:{
+          title:"Same content, two audiences",
+          text:`Task: report that a school water test found 0.4 mg/L of residual chlorine.
+
+To the science teacher: "Residual chlorine measured 0.4 mg/L, within the 0.3–0.5 mg/L range prescribed for potable supply, indicating adequate disinfection at the sampling point."
+
+To the student body: "We tested the drinking water. The chlorine level is 0.4 — inside the safe range set for drinking water, so the water is properly disinfected."
+
+Same facts. The audience changed the vocabulary, the sentence length, and how much was explained.`
+        },
+        checklist:[
+          "I can name my audience, purpose, and context in one sentence each.",
+          "My structure follows what this text type expects.",
+          "My tone is formal and respectful, and my claims are not overstated.",
+          "I used a strategy (context clues, word parts, glossary) for every unfamiliar term.",
+          "I can restate the material I read or heard in one sentence of my own."
+        ],
+        tip:"After reading or listening, close the text and write the main idea from memory in one sentence. If you cannot, you recognised the words but did not yet comprehend the message."
       },
       {
         title:"Week 2 · Reading, Research, and Evidence",
-        lead:"Academic and technical communication asks you to understand information carefully, then support your own ideas honestly.",
-        body:`A thesis is the main claim or controlling idea of a text. An outline helps arrange main points before drafting. A clear paragraph often has a topic sentence, supporting explanation or evidence, and a sentence that connects to the next idea.
+        lead:"Week 2 moves from understanding texts to producing them. You compose well-structured academic and technical texts, condense sources into outlines, summaries, and paraphrases, and handle evidence with intellectual integrity — citation, AI declaration, and no plagiarism.",
+        competencies:[
+          "Compose well-structured academic and technical texts, showing awareness of audience and purpose (e.g., essays, research and analysis reports, presentations with visual aids).",
+          "Condense spoken, written, or multimodal texts into diagrams, charts, outline, summary, synopsis, or paraphrase.",
+          "Employ ethical considerations (citation methods, AI attribution/declaration, avoiding plagiarism) in producing extended academic and technical texts.",
+          "Explain concepts using appropriate academic and technical vocabulary."
+        ],
+        body:`1. STRUCTURE FIRST
 
-When reading critically, separate a claim from its evidence. Ask:
-• Is the evidence relevant to the claim?
-• Is there enough evidence?
-• Is the source current and trustworthy?
-• What information or viewpoint might be missing?
+A thesis is the controlling claim of the whole text — one sentence that is arguable and specific. "Social media affects students" is a topic; "Unstructured evening social media use lowers Grade 11 students' recall of lesson content" is a thesis.
 
-A primary source gives original or firsthand information. A secondary source explains or analyzes information from another source. Keep a source record with the author, title, date, site or publisher, page or link, and the idea you used.
+An outline arranges the main points before drafting, so you argue instead of wander. A dependable shape for academic and technical texts:
+• Introduction — context, the problem or question, the thesis, and a preview of the sections.
+• Body — one main point per section or paragraph, each with evidence and explanation.
+• Conclusion — the answer restated, the limits of the answer, and what follows from it.
 
-A summary gives only the main idea and important points. A paraphrase restates a specific idea in your own structure and wording while keeping the meaning and citing the source. Changing only a few words is not enough. Synthesis combines ideas from more than one source to create a larger conclusion.
+Inside a paragraph use the C-E-E pattern: Claim (topic sentence), Evidence (data, quotation, example, observation), Explanation (how the evidence supports the claim). A paragraph with evidence but no explanation leaves the reader to guess your reasoning.
 
-Evidence needs explanation. After presenting a fact or quotation, tell the reader how it supports your point.`,
-        tip:"A useful test for a paraphrase: could the original writer recognize the sentence structure? If yes, rewrite it more independently and cite it."
+Technical texts add their own sections: abstract, methods, results, discussion, recommendations, references. Follow the format the task prescribes; format is part of the meaning in these disciplines.
+
+2. CLAIMS AND EVIDENCE
+
+Test your own evidence the same way you test a source:
+• Relevance — does it actually support this claim?
+• Sufficiency — is one example enough, or do you need a set?
+• Accuracy — are the numbers, names, and quotations exact?
+• Currency — is the information recent enough for this field?
+• Authority — who produced it, and what makes them qualified?
+• Bias — who benefits if the reader believes it? What is left out?
+
+Primary sources give firsthand or original material (raw data, interviews, original studies, historical documents). Secondary sources analyse or report on those (reviews, textbooks, news articles). Both are useful; you must know which you are holding.
+
+3. CONDENSING: OUTLINE, SUMMARY, PARAPHRASE, SYNTHESIS
+
+• Outline — the skeleton: main points and subpoints only.
+• Summary — much shorter than the original, main idea plus key supporting points, in your own words, source cited.
+• Synopsis — a brief overview of an entire work, usually keeping its order.
+• Paraphrase — roughly the same length as the original passage, one specific idea restated in your own words and your own sentence structure, source still cited.
+• Synthesis — combining ideas from several sources to reach a conclusion none of them states alone.
+
+Method for an honest paraphrase: read the passage, close it, write the idea from memory, then reopen it to check accuracy — not to copy phrasing. Changing a few words while keeping the original sentence pattern is still plagiarism.
+
+4. CITATION AND INTELLECTUAL INTEGRITY
+
+Cite whenever you quote, paraphrase, summarise, or use data, images, or ideas that are not your own and not common knowledge. A citation has two parts: the in-text marker and the full entry in the reference list. Keep a source record while you research — author, title, date, publisher or site, page or link, and the exact idea you took — because reconstructing citations afterwards is where mistakes and accidental plagiarism happen.
+
+Plagiarism includes copying without attribution, patch-writing (stitching lightly edited sentences together), reusing your own graded work without permission, and inventing or altering data. Quotation marks plus a citation are required for exact wording; a citation alone is not enough.
+
+AI attribution and declaration: if you used an AI tool, state it as your school requires — which tool, for which part of the work (brainstorming, outlining, language editing), and what you did to verify the output. AI text can be fluent and still wrong, and it can fabricate sources, so every AI-supplied fact and reference must be checked against a real source. The thinking, the claims, and the responsibility remain yours.
+
+5. REVISING FOR EVIDENCE
+
+Before submitting, reread only for support: highlight each claim, then check that something specific follows it and that its source is credited. Unsupported claims are the most common reason academic work loses credibility.`,
+        terms:[
+          {t:"Thesis", d:"The single controlling claim of a text; arguable and specific."},
+          {t:"Outline", d:"The planned order of main points and subpoints before drafting."},
+          {t:"Claim / Evidence / Explanation", d:"The paragraph pattern: what you assert, what supports it, and how it supports it."},
+          {t:"Primary source", d:"Original, firsthand material such as raw data, interviews, or original studies."},
+          {t:"Secondary source", d:"A work that reports on or analyses primary material."},
+          {t:"Summary", d:"A much shorter version giving only main ideas, in your own words, with the source cited."},
+          {t:"Paraphrase", d:"One idea restated in your own words and sentence structure, same length, source cited."},
+          {t:"Synthesis", d:"A conclusion drawn by combining several sources."},
+          {t:"Citation", d:"The in-text marker plus reference entry that credits a source."},
+          {t:"Plagiarism", d:"Presenting another's words, ideas, or data as your own, including patch-writing."},
+          {t:"AI declaration", d:"A statement of which AI tool was used, for what part of the work, and how the output was verified."}
+        ],
+        example:{
+          title:"Paraphrase or plagiarism?",
+          text:`Original: "Regular formative feedback improves student performance more reliably than a single summative assessment at the end of a unit."
+
+Unacceptable (patch-writing): "Regular formative feedback improves learner performance more dependably than one summative test at the end of a unit." — Only synonyms changed; the structure is the original's.
+
+Acceptable paraphrase: "Students tend to improve more consistently when they receive feedback while learning than when they are judged only by one end-of-unit test (Reyes, 2024)." — New structure, new wording, meaning preserved, source cited.`
+        },
+        checklist:[
+          "My thesis is one arguable, specific sentence.",
+          "Every body section has a claim, evidence, and an explanation.",
+          "Each source is recorded with author, title, date, and link or page.",
+          "Every quotation is exact and inside quotation marks; every paraphrase is restructured, not reworded.",
+          "All borrowed ideas, data, and images are cited, and any AI use is declared and verified."
+        ],
+        tip:"Write your reference entry at the moment you copy an idea into your notes. It takes ten seconds then and prevents the most common integrity problem later."
       },
       {
         title:"Week 3 · Visuals, Collaboration, and Editing",
-        lead:"Effective communication also includes visuals, teamwork, grammar, and ethical choices. Clear presentation makes good ideas easier to understand.",
-        body:`Multimodal communication combines words with images, sound, layout, movement, charts, or diagrams. Bar charts compare categories. Line graphs show change over time. Tables show exact values. Every visual needs a useful title, labels, units when needed, an honest scale, and a source if the data are borrowed.
+        lead:"Week 3 covers the interactive and multimodal side of academic work: reading data in charts and figures, following and giving procedures, asking questions and giving feedback, collaborating on technical tasks, and reflecting on how well you communicated.",
+        competencies:[
+          "Interpret data represented in multimodal forms (e.g., charts, tables, figures).",
+          "Explain concepts using multimodal representations (e.g., diagrams, graphs, charts, infographics).",
+          "Follow procedures, instructions, or processes in spoken, written, or multimodal forms to successfully achieve outcomes.",
+          "Participate constructively in lectures, presentations, or discussions by formulating and asking questions, providing feedback, and responding appropriately.",
+          "Collaborate on academic and technical tasks to leverage individual knowledge and optimize common goals.",
+          "Describe and review your own processes of interpretation, engagement, and expression, identifying strengths and areas for growth."
+        ],
+        body:`1. READING DATA IN MULTIMODAL FORMS
 
-Active listening means focusing on the speaker, noticing important details, asking clarifying questions, and responding to the actual message. Respectful feedback names a specific part of the work, explains its effect, and suggests a next step. In a group, clarify roles, deadlines, and responsibilities.
+Multimodal texts combine words with images, layout, sound, movement, or data displays. Read a chart in a fixed order: title → axes and units → scale → legend → the data pattern → the source and date. Only then state what it shows.
 
-During editing, check one thing at a time:
-1. Is the idea accurate and complete?
-2. Are the ideas in a logical order?
-3. Are sentences clear and concise?
-4. Do subjects and verbs agree?
-5. Are punctuation, spelling, citations, and formatting consistent?
+Match the display to the job:
+• Bar chart — compares amounts across categories.
+• Line graph — shows change over time or trend.
+• Pie chart — shows parts of one whole (use few slices).
+• Table — gives exact values for lookup and comparison.
+• Flowchart or diagram — shows steps, parts, or relationships.
+• Infographic — combines several of these for a general audience.
 
-Plagiarism means presenting another person's words or ideas as your own. AI output and borrowed material must be checked, acknowledged, and used according to the required rules. Do not invent evidence or hide uncertainty.`,
-        tip:"A final reader should be able to tell what your message is about, why it matters, and what they should understand or do next."
+Watch for misleading design: a vertical axis that does not start at zero, uneven intervals, missing units, 3-D effects that distort area, cherry-picked date ranges, or a missing source. Describe data carefully: a chart shows an association, not automatically a cause.
+
+When you make a visual, give it a number and caption, label axes with units, keep it readable in one glance, cite the data source, and refer to it in your text ("As Figure 2 shows, ..."). A visual that is never mentioned in the text is decoration.
+
+2. FOLLOWING AND WRITING PROCEDURES
+
+To follow a procedure: read all steps first, gather materials, note warnings and conditions, do the steps in order, and verify the outcome against the stated result. If a step fails, stop and check the previous step rather than improvising forward.
+
+To write one: state the goal and the expected outcome, list materials or prerequisites, number the steps in order, use one imperative action per step ("Connect the probe", not "The probe should be connected"), place warnings before the risky step, and add a verification step at the end. Test it by asking someone to follow it exactly as written.
+
+3. PARTICIPATING: QUESTIONS AND FEEDBACK
+
+Good academic questions are specific and purposeful:
+• Clarifying — "When you say 'stable', over what period?"
+• Probing — "What evidence supports that step?"
+• Extending — "How would this apply to a smaller sample?"
+Ask one question at a time, use the speaker's own terms, and signal what you already understood so the answer starts where you need it.
+
+Constructive feedback is specific, descriptive, and actionable. A workable frame: name the specific part → describe its effect on you as audience → suggest a next step. "Your graph on slide 4 has no units, so I could not tell if the values are minutes or hours — labelling the y-axis would fix it" is usable. "Your slides are confusing" is not. Critique the work, not the person, and receive feedback by listening fully, asking for clarification, and deciding what to act on.
+
+4. COLLABORATING ON ACADEMIC AND TECHNICAL TASKS
+
+Collaboration is a deliberate structure, not simply dividing the file. Agree at the start on: the goal and the standard of "done"; roles and who owns which section; deadlines that are earlier than the submission date; how you will communicate and how quickly you reply; and how the final text gets one consistent voice and format. Handle disagreement by returning to the evidence and the task requirements. Credit each member's contribution honestly.
+
+5. EDITING IN PASSES
+
+Edit one concern at a time; trying to fix everything at once is how errors survive:
+1. Content — accurate, complete, and relevant to the purpose.
+2. Organisation — logical order, clear transitions, one idea per paragraph.
+3. Clarity and concision — cut empty phrases, prefer strong verbs, break overlong sentences.
+4. Grammar and mechanics — agreement, tense, pronoun reference, punctuation, spelling.
+5. Documentation and format — citations, references, figure numbers, headings, font, margins.
+Read the final draft aloud, or have a tool read it to you; your ear catches what your eye skips.
+
+6. REFLECTION
+
+Reflection is a competency, not an afterthought. After a task, review your own processes of interpretation (how you read or listened), engagement (how you participated), and expression (how you produced the text). Name one strength with evidence, one area for growth, and one concrete action for the next task. This is how readiness for academic and technical communication actually improves.`,
+        terms:[
+          {t:"Multimodal text", d:"A text that communicates through more than one mode: words, images, layout, sound, or movement."},
+          {t:"Axis / scale / legend", d:"The parts of a chart that tell you what is measured, in what units, and what each colour or symbol means."},
+          {t:"Caption", d:"The numbered label and short description that lets a figure be referred to and understood on its own."},
+          {t:"Procedure", d:"An ordered set of steps that reliably produces a stated outcome."},
+          {t:"Clarifying / probing / extending question", d:"Questions that fix understanding, test evidence, or push an idea further."},
+          {t:"Constructive feedback", d:"Comment that is specific, descriptive of effect, and actionable."},
+          {t:"Active listening", d:"Attending fully, noting key detail, and responding to the actual message."},
+          {t:"Editing pass", d:"One focused review of a draft for a single concern."},
+          {t:"Reflection", d:"Reviewing your own interpretation, engagement, and expression to identify strengths and next steps."}
+        ],
+        example:{
+          title:"Describing a figure without overclaiming",
+          text:`Figure: line graph, "Average quiz score by week, Grade 11-B (n = 42), Weeks 1–6, source: class records".
+
+Weak: "The graph proves that the new reviewer made everyone smarter."
+
+Better: "Average scores rose from 62% in Week 1 to 78% in Week 6 (Figure 1). The increase coincides with the introduction of the weekly reviewer in Week 3, although attendance also rose over the same period, so the reviewer cannot be identified as the sole cause."`
+        },
+        checklist:[
+          "Every figure has a number, caption, labelled axes with units, and a cited source, and is referred to in my text.",
+          "My procedure can be followed by someone else exactly as written, and ends with a way to verify the result.",
+          "My questions are specific, and my feedback names a part, its effect, and a next step.",
+          "Our group agreed on roles, deadlines, and one consistent format before drafting.",
+          "I edited in separate passes and read the final draft aloud.",
+          "I named one strength, one area for growth, and one action for next time."
+        ],
+        tip:"Before submitting anything multimodal, cover the text and look only at the visuals. If a classmate cannot tell what they mean from labels and captions alone, the visuals are not finished."
       }
     ]
   }
@@ -1373,61 +1001,99 @@ Plagiarism means presenting another person's words or ideas as your own. AI outp
 const TERM_BANK = {
   second: {
     pretest: {
-      math: TERM_CONTENT.second.math.slice(0, 30),
-      english: TERM_CONTENT.second.english.slice(0, 30)
+      english: {
+        week1: TERM_CONTENT.second.english.week1.pretest,
+        week2: TERM_CONTENT.second.english.week2.pretest,
+        week3: TERM_CONTENT.second.english.week3.pretest
+      }
     },
     posttest: {
-      math: TERM_CONTENT.second.math.slice(30, 60),
-      english: TERM_CONTENT.second.english.slice(30, 60)
+      english: {
+        week1: TERM_CONTENT.second.english.week1.posttest,
+        week2: TERM_CONTENT.second.english.week2.posttest,
+        week3: TERM_CONTENT.second.english.week3.posttest
+      }
     }
   },
 };
 
-function buildPracticeQueue(subjects, testType, terms){
-  const counts = distributeCount(PRACTICE_TOTAL, subjects.length);
+const WEEK_KEYS = TERM_WEEKS.map(w=>w.key);
+function weekMeta(key){
+  return TERM_WEEKS.find(w=>w.key === key) || null;
+}
+function weekLabel(key){
+  const w = weekMeta(key);
+  return w ? w.label : "Week";
+}
+function weekSkill(key){
+  const w = weekMeta(key);
+  return w ? (w.label + " \u00b7 " + w.topic) : "Effective Communication";
+}
+function weekLabels(keys){
+  return (keys || []).filter(k=>weekMeta(k)).map(weekLabel).join(", ");
+}
+function validWeeks(keys){
+  const list = (keys || []).filter(k=>WEEK_KEYS.includes(k));
+  return list.length ? list : WEEK_KEYS.slice();
+}
+function weekPool(testType, key){
+  const bank = ((TERM_BANK.second || {})[testType] || {}).english || {};
+  return bank[key] || [];
+}
+function flattenPool(value){
+  if(Array.isArray(value)) return value;
+  if(value && typeof value === "object") return WEEK_KEYS.concat(Object.keys(value))
+    .filter((k,i,arr)=>arr.indexOf(k) === i)
+    .flatMap(k=>Array.isArray(value[k]) ? value[k] : []);
+  return [];
+}
+function prepareItem(item, weekKey){
+  const correctText = item.c[item.a];
+  const shuffledChoices = shuffle(item.c);
+  const rawQ = item.q || "";
+  const isScenario = item.isScenario || rawQ.startsWith("SCENARIO:");
+  const qtext = rawQ.startsWith("SCENARIO:") ? rawQ.replace("SCENARIO: ","") : rawQ;
+  return {
+    subject: SUBJECT,
+    week: weekKey || null,
+    weekLabel: weekKey ? weekLabel(weekKey) : "",
+    q: qtext,
+    skill: weekKey ? weekSkill(weekKey) : (item.skill || inferSkill(SUBJECT, qtext)),
+    isScenario,
+    c: shuffledChoices,
+    a: shuffledChoices.indexOf(correctText)
+  };
+}
+function buildQueueFromPools(pools, total){
+  const counts = distributeCount(total, pools.length);
   let queue = [];
-  subjects.forEach((subj, i)=>{
-    const pool = (terms || ["second"]).flatMap(term => (TERM_BANK[term] || TERM_BANK.second)[testType][subj] || []);
-    const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
-    picked.forEach(item=>{
-      const correctText = item.c[item.a];
-      const shuffledChoices = shuffle(item.c);
-      const newA = shuffledChoices.indexOf(correctText);
-      const isScenario = item.q.startsWith("SCENARIO:");
-      const qtext = isScenario ? item.q.replace("SCENARIO: ","") : item.q;
-      queue.push({subject:subj, q:qtext, skill:inferSkill(subj, qtext), isScenario, c:shuffledChoices, a:newA});
-    });
+  pools.forEach((pool, i)=>{
+    const picked = shuffle(pool.items).slice(0, Math.min(counts[i], pool.items.length));
+    picked.forEach(item=>queue.push(prepareItem(item, pool.key)));
   });
   return shuffle(queue);
 }
+
+function buildPracticeQueue(weeks, testType){
+  const keys = validWeeks(weeks);
+  const pools = keys.map(key=>({key, items: weekPool(testType, key)}));
+  return buildQueueFromPools(pools, PRACTICE_TOTAL);
+}
 function buildAssignedQueue(assignment, testType){
-  const selectedSubjects = ((assignment.subjects && assignment.subjects.length) ? assignment.subjects : ORDER)
-    .filter(s=>ORDER.includes(s));
-  const subjects = selectedSubjects.length ? selectedSubjects : ORDER;
+  const keys = validWeeks(assignment.weeks);
   const total = Math.min(Math.max(assignment.numQuestions || 20, 1), MAX_QUESTIONS);
-  const counts = distributeCount(total, subjects.length);
-  let queue = [];
-  subjects.forEach((subj, i)=>{
-    let pool;
-    if(assignment.questionSource === "custom"){
-      const terms = ["second"];
-      pool = terms.flatMap(term => (((assignment.customQuestions || {})[term] || {})[testType] || {})[subj] || []);
-    } else {
-      const terms = ["second"];
-      pool = terms.flatMap(term => (TERM_BANK[term] || TERM_BANK.second)[testType][subj] || []);
-    }
-    const picked = shuffle(pool).slice(0, Math.min(counts[i], pool.length));
-    picked.forEach(item=>{
-      const correctText = item.c[item.a];
-      const shuffledChoices = shuffle(item.c);
-      const newA = shuffledChoices.indexOf(correctText);
-      const rawQ = item.q || "";
-      const isScenario = item.isScenario || rawQ.startsWith("SCENARIO:");
-      const qtext = rawQ.startsWith("SCENARIO:") ? rawQ.replace("SCENARIO: ","") : rawQ;
-      queue.push({subject:subj, q:qtext, skill:item.skill || inferSkill(subj, qtext), isScenario, c:shuffledChoices, a:newA});
-    });
-  });
-  return shuffle(queue);
+  let pools;
+  if(assignment.questionSource === "custom"){
+    const custom = (((assignment.customQuestions || {}).second || {})[testType] || {})[SUBJECT];
+    pools = (custom && !Array.isArray(custom))
+      ? keys.map(key=>({key, items: flattenPool(custom[key])}))
+      : [{key: null, items: flattenPool(custom)}];
+  } else {
+    pools = keys.map(key=>({key, items: weekPool(testType, key)}));
+  }
+  pools = pools.filter(p=>p.items.length);
+  if(!pools.length) return [];
+  return buildQueueFromPools(pools, total);
 }
 
 function getStudent(){
@@ -1476,7 +1142,8 @@ function openSavedClass(saved){
 let state = {
   screen: "intro",
   student: getStudent(),
-  practiceSubjects: [],
+  practiceSubjects: [SUBJECT],
+  practiceWeeks: [],
   practiceType: null,
   practiceTerms: ["second"],
   quizQueue: [],
@@ -1487,7 +1154,7 @@ let state = {
   timerId: null,
   locked: false,
   saved: false,
-  reviewerSubject: "math",
+  reviewerSubject: SUBJECT,
   reviewerWeek: 0,
   reviewerReturnScreen: "home",
   activeClassId: null,
@@ -1529,7 +1196,8 @@ function route(){
     reviewer: renderReviewer, practiceSetup: renderPracticeSetup,
     quiz: renderQuestion, transition: renderTransition, results: renderResults,
     answerReview: renderAnswerReview, myProgress: renderMyProgress,
-    joinClass: renderJoinClass, studentClass: renderStudentClass
+    joinClass: renderJoinClass, studentClass: renderStudentClass,
+    teacher: renderTeacherDashboard
   };
   (r[state.screen] || renderIntro)();
 }
@@ -1547,8 +1215,8 @@ function renderIntro(){
         <p>A quick tour before you dive in — here's what you can do:</p>
       </div>
       <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>Pre-Test &amp; Post-Test practice:</b> take a randomized set of questions in General Mathematics or Effective Communication, any time.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Reviewers with real formulas:</b> tabbed by subject, so you can study exactly what you need before a test.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Pre-Test &amp; Post-Test practice:</b> take a randomized set of Effective Communication questions, one week at a time or all three weeks together.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Weekly reviewers:</b> Week 1 to Week 3 of the Second Term, so you can study exactly what you need before a test.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Scenario questions:</b> not just facts, real situations that ask you to apply what you know.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Track your progress:</b> every attempt is saved so you can see how you're improving over time.</span></div>
         <div class="feature-item"><span class="dot"></span><span><b>Join a class:</b> enter your teacher's code to get the exact test they've set up for you.</span></div>
@@ -1604,15 +1272,15 @@ function renderHome(){
       <div class="home-grid">
         <div class="home-card" id="preCard">
           <div class="hicon">📝</div>
-          <div><div class="htitle">Pre-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} randomized questions, baseline check</div></div>
+          <div><div class="htitle">Pre-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} randomized questions by week, baseline check</div></div>
         </div>
         <div class="home-card" id="postCard">
           <div class="hicon">✅</div>
-          <div><div class="htitle">Post-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} different randomized questions</div></div>
+          <div><div class="htitle">Post-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} different randomized questions by week</div></div>
         </div>
         <div class="home-card" id="reviewCard">
           <div class="hicon">📖</div>
-          <div><div class="htitle">Reviewers</div><div class="hsub">Formulas and key concepts, by subject</div></div>
+          <div><div class="htitle">Reviewers</div><div class="hsub">Key concepts for Weeks 1&ndash;3 of the Second Term</div></div>
         </div>
         <div class="home-card" id="progressCard">
           <div class="hicon">📈</div>
@@ -1643,8 +1311,8 @@ function renderHome(){
     state.screen = "getStarted";
     route();
   });
-  document.getElementById("preCard").addEventListener("click", ()=>{ state.practiceType="pretest"; state.practiceSubjects=[]; state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
-  document.getElementById("postCard").addEventListener("click", ()=>{ state.practiceType="posttest"; state.practiceSubjects=[]; state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
+  document.getElementById("preCard").addEventListener("click", ()=>{ state.practiceType="pretest"; state.practiceWeeks=WEEK_KEYS.slice(); state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
+  document.getElementById("postCard").addEventListener("click", ()=>{ state.practiceType="posttest"; state.practiceWeeks=WEEK_KEYS.slice(); state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
   document.getElementById("reviewCard").addEventListener("click", ()=>{ goToReviewer("home"); });
   document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
   document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError=""; state.screen="joinClass"; route(); });
@@ -1656,51 +1324,58 @@ function renderHome(){
   const pathReviewBtn = document.getElementById("pathReviewBtn");
   if(pathReviewBtn) pathReviewBtn.addEventListener("click", ()=>{
     const next = getSavedMastery().filter(s=>s.pct < 85).sort((a,b)=>a.pct-b.pct)[0];
-    state.reviewerSubject = next && /mathematics|functions|statistics|trigonometry/i.test(next.skill) ? "math" : "english";
+    state.reviewerSubject = SUBJECT;
+    const focusWeek = next ? TERM_WEEKS.findIndex(w=>String(next.skill || "").indexOf(w.label) === 0) : -1;
+    state.reviewerWeek = focusWeek >= 0 ? focusWeek : 0;
     goToReviewer("home");
   });
 }
 
 function renderPracticeSetup(){
   bg();
-  const sel = state.practiceSubjects;
+  const sel = state.practiceWeeks;
   const label = state.practiceType === "pretest" ? "Pre-Test Practice" : "Post-Test Practice";
+  const poolSize = sel.reduce((sum,key)=>sum + weekPool(state.practiceType, key).length, 0);
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${label}</div>
       </div>
-      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">${PRACTICE_TOTAL} questions total, ${PRACTICE_TIMER} seconds each. Pick your subject(s):</p>
-      <div class="checkbox-row" id="subjChecks">
-        ${ORDER.map(s=>`
-          <label class="checkbox-item ${sel.includes(s)?'checked':''}" data-subj="${s}">
-            <input type="checkbox" value="${s}" ${sel.includes(s)?'checked':''}>
-            <span>${SUBJECT_META[s].label}</span>
+      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">Effective Communication &middot; Second Term. Up to ${PRACTICE_TOTAL} questions, ${PRACTICE_TIMER} seconds each. Pick the week(s) you want to practice:</p>
+      <div class="checkbox-row" id="weekChecks">
+        ${TERM_WEEKS.map(w=>`
+          <label class="checkbox-item ${sel.includes(w.key)?'checked':''}" data-week="${w.key}">
+            <input type="checkbox" value="${w.key}" ${sel.includes(w.key)?'checked':''}>
+            <span>${w.label} &middot; ${w.topic}</span>
           </label>
         `).join("")}
       </div>
+      ${sel.length ? `<p class="fine-print" style="text-align:left;">${TERM_WEEKS.filter(w=>sel.includes(w.key)).map(w=>`<b>${w.label}:</b> ${w.blurb}`).join("<br>")}<br>Question pool for this selection: ${poolSize}.</p>` : ``}
       ${state.practiceError ? `<p class="error-note">${escapeHtml(state.practiceError)}</p>` : ``}
       <button class="primary-btn" id="startBtn">Start ${label}</button>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
   state.practiceTerms = ["second"];
-  document.querySelectorAll("#subjChecks .checkbox-item").forEach(el=>{
+  state.practiceSubjects = [SUBJECT];
+  document.querySelectorAll("#weekChecks .checkbox-item").forEach(el=>{
     el.addEventListener("click", (e)=>{
       e.preventDefault();
-      const v = el.dataset.subj;
-      const idx = state.practiceSubjects.indexOf(v);
-      if(idx >= 0) state.practiceSubjects.splice(idx,1); else state.practiceSubjects.push(v);
+      const v = el.dataset.week;
+      const idx = state.practiceWeeks.indexOf(v);
+      if(idx >= 0) state.practiceWeeks.splice(idx,1); else state.practiceWeeks.push(v);
+      state.practiceWeeks = WEEK_KEYS.filter(k=>state.practiceWeeks.includes(k));
       renderPracticeSetup();
     });
   });
   document.getElementById("startBtn").addEventListener("click", ()=>{
-    if(state.practiceSubjects.length === 0){ state.practiceError = "Pick at least one subject."; renderPracticeSetup(); return; }
+    if(state.practiceWeeks.length === 0){ state.practiceError = "Pick at least one week."; renderPracticeSetup(); return; }
     state.practiceError = "";
     state.currentTimerSeconds = PRACTICE_TIMER;
     state.practiceTerms = ["second"];
-    state.quizQueue = buildPracticeQueue(state.practiceSubjects, state.practiceType, state.practiceTerms);
+    state.quizQueue = buildPracticeQueue(state.practiceWeeks, state.practiceType);
+    if(!state.quizQueue.length){ state.practiceError = "No questions are available for that week yet."; renderPracticeSetup(); return; }
     state.qIndex = 0; state.answers = []; state.saved = false;
     state.screen = "quiz"; route();
   });
@@ -1744,7 +1419,7 @@ function renderReviewer(){
         <div class="who">Reviewer</div>
       </div>
       <div class="tab-row">
-        ${ORDER.map(s=>`<button class="tab-btn ${s===subj?'active':''}" data-subj="${s}">${SUBJECT_META[s].label}</button>`).join("")}
+        <button class="tab-btn active" data-subj="${subj}">${SUBJECT_META[subj].label} &middot; Second Term</button>
       </div>
       <p class="reviewer-intro">A calmer, student-friendly study plan. Read one week, take a short break, then continue when your eyes and mind feel ready.</p>
       <div class="reviewer-week-tabs">
@@ -1761,8 +1436,24 @@ function renderReviewer(){
             <div class="formula-meaning">${escapeHtml(week.formulaMeaning || "")}</div>
           </div>
         ` : ""}
-        <div class="study-label">Steps and worked solution</div>
+        ${(week.competencies && week.competencies.length) ? `
+          <div class="study-label">What you should be able to do</div>
+          <ul class="reviewer-list">${week.competencies.map(c=>`<li>${escapeHtml(c)}</li>`).join("")}</ul>
+        ` : ""}
+        <div class="study-label">Study notes</div>
         <div class="reading-body">${escapeHtml(week.body)}</div>
+        ${(week.terms && week.terms.length) ? `
+          <div class="study-label">Key terms</div>
+          <dl class="reviewer-terms">${week.terms.map(t=>`<dt>${escapeHtml(t.t)}</dt><dd>${escapeHtml(t.d)}</dd>`).join("")}</dl>
+        ` : ""}
+        ${week.example ? `
+          <div class="study-label">Worked example</div>
+          <div class="reviewer-example"><b>${escapeHtml(week.example.title)}</b><div class="reading-body">${escapeHtml(week.example.text)}</div></div>
+        ` : ""}
+        ${(week.checklist && week.checklist.length) ? `
+          <div class="study-label">Before you submit</div>
+          <ul class="reviewer-list check">${week.checklist.map(c=>`<li>${escapeHtml(c)}</li>`).join("")}</ul>
+        ` : ""}
         ${week.tip ? `<div class="reading-tip"><b>Study tip:</b> ${escapeHtml(week.tip)}</div>` : ""}
       </div>
     </div>
@@ -1802,7 +1493,7 @@ function renderQuestion(){
       </div>
       <div class="track"><div class="track-seg"><i style="width:${(state.qIndex/state.quizQueue.length*100)}%;background:${meta.color}"></i></div></div>
       <div class="qhead">
-        <span class="qcount">Q${state.qIndex+1} / ${state.quizQueue.length} &middot; ${meta.label}${item.isScenario ? '<span class="qtag">SCENARIO</span>' : ''}</span>
+        <span class="qcount">Q${state.qIndex+1} / ${state.quizQueue.length} &middot; ${item.weekLabel || meta.label}${item.isScenario ? '<span class="qtag">SCENARIO</span>' : ''}</span>
         <div class="timer-ring">
           <svg width="40" height="40">
             <circle cx="20" cy="20" r="16" stroke="var(--border)" stroke-width="4" fill="none"/>
@@ -1854,7 +1545,7 @@ function lockAnswer(choiceIndex){
   const item = state.quizQueue[state.qIndex];
   const isCorrect = choiceIndex === item.a;
   state.answers.push({
-    subject:item.subject, skill:item.skill || inferSkill(item.subject, item.q), q:item.q, choices:item.c,
+    subject:item.subject, week:item.week || null, skill:item.skill || inferSkill(item.subject, item.q), q:item.q, choices:item.c,
     correctIndex:item.a, selectedIndex:choiceIndex, correct:isCorrect
   });
 
@@ -1889,7 +1580,7 @@ function renderTransition(){
   app.innerHTML = `
     <div class="fade-in transition-screen">
       <div class="transition-dot" style="background:${meta.color}">${state.qIndex + 2}</div>
-      <div class="tsub">${meta.label}</div>
+      <div class="tsub">${nextItem.weekLabel ? meta.label + " &middot; " + nextItem.weekLabel : meta.label}</div>
       <div class="tnext">${feedback}</div>
       <div class="tnext">${escapeHtml(feedbackSkill)} &middot; GET READY...</div>
     </div>
@@ -1921,6 +1612,7 @@ function renderResults(){
   if(pct >= 85) msg = "Outstanding work!";
   else if(pct >= 70) msg = "Great job!";
   else if(pct >= 50) msg = "Good effort!";
+  const weeksCovered = WEEK_KEYS.filter(k=>state.answers.some(a=>a.week === k));
   const skillBreakdown = buildSkillBreakdown(state.answers);
   const focusSkills = skillBreakdown.filter(s=>s.pct < 70).map(s=>`${s.skill} (${s.pct}%)`);
   const masteryNote = skillBreakdown.length
@@ -1935,7 +1627,7 @@ function renderResults(){
     <div class="fade-in">
       <div class="result-hero">
         <div class="pct">${pct}%</div>
-        <div class="frac">${correct} OUT OF ${total} CORRECT &middot; ${state.practiceType.toUpperCase()}</div>
+        <div class="frac">${correct} OUT OF ${total} CORRECT &middot; ${state.practiceType.toUpperCase()}${weeksCovered.length ? " &middot; " + weekLabels(weeksCovered).toUpperCase() : ""}</div>
         <div class="msg">${msg}</div>
       </div>
       <p class="fine-print">${masteryNote}</p>
@@ -1954,7 +1646,7 @@ function renderResults(){
   document.getElementById("answersBtn").addEventListener("click", ()=>{ state.screen="answerReview"; route(); });
   document.getElementById("reviewBtn").addEventListener("click", ()=>{ goToReviewer("results"); });
   document.getElementById("backBtn").addEventListener("click", ()=>{
-    state.practiceType=null; state.practiceSubjects=[]; state.activeAssignment=null; state.screen="home"; route();
+    state.practiceType=null; state.practiceWeeks=[]; state.activeAssignment=null; state.screen="home"; route();
   });
 }
 
@@ -1968,12 +1660,20 @@ async function autoSaveResult({testType, terms, correct, total, pct}){
       correct: state.answers.filter(a=>a.subject===s && a.correct).length,
       total: state.answers.filter(a=>a.subject===s).length
     }));
+    const weeksCovered = WEEK_KEYS.filter(k=>state.answers.some(a=>a.week === k));
+    const weekBreakdown = weeksCovered.map(k=>({
+      week:k,
+      label: weekLabel(k),
+      correct: state.answers.filter(a=>a.week===k && a.correct).length,
+      total: state.answers.filter(a=>a.week===k).length
+    }));
     const skillBreakdown = buildSkillBreakdown(state.answers);
     try{ localStorage.setItem("tq_mastery_" + state.student.email, JSON.stringify(skillBreakdown)); }catch(e){}
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
         classId: state.activeClassId || null,
         testType, terms: ["second"], term: "second", subjects: subjectsCovered, subjectBreakdown,
+        weeks: weeksCovered, weekBreakdown,
       correct, total, pct, skillBreakdown, timestamp: Date.now()
     });
     state.saved = true;
@@ -2026,7 +1726,8 @@ async function renderMyProgress(){
 
   const tableRows = rows.map(r=>{
      const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
-     return `<tr><td>${tag}</td><td>Second Term</td><td>${subjectLabels(r.subjects)}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
+     const weeksText = (r.weeks && r.weeks.length) ? weekLabels(r.weeks) : "All weeks";
+     return `<tr><td>${tag}</td><td>Second Term</td><td>${weeksText}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
   }).join("");
   const masteryMap = {};
   rows.forEach(r=>(r.skillBreakdown || []).forEach(s=>{
@@ -2048,7 +1749,7 @@ async function renderMyProgress(){
       ${rows.length === 0 ? `<p class="empty-note">No attempts yet, try a Pre-Test or Post-Test practice.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
-            <thead><tr><th>Test</th><th>Term</th><th>Subject(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <thead><tr><th>Test</th><th>Term</th><th>Week(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
            ${masteryRows.length ? `<p class="fine-print" style="text-align:left; margin-bottom:0;">Mastery snapshot: ${masteryRows.join(" &middot; ")}</p>` : ``}
@@ -2181,10 +1882,11 @@ async function renderStudentClass(){
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${escapeHtml(c.teacherName||"")}</div>
       </div>
-      <div class="subject-strip">${((assignment.subjects||classSubjects||[]).filter(s=>ORDER.includes(s))).map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
+      <div class="subject-strip"><div class="subject-chip ${SUBJECT}">${SUBJECT_META[SUBJECT].label.toUpperCase()}</div></div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <div class="assign-box">
          <div class="al-row"><span class="al-label">Term</span><span class="al-value">Second Term</span></div>
+        <div class="al-row"><span class="al-label">Coverage</span><span class="al-value">${weekLabels(validWeeks(assignment.weeks))}</span></div>
         <div class="al-row"><span class="al-label">Questions</span><span class="al-value">${assignment.numQuestions||20}</span></div>
         <div class="al-row"><span class="al-label">Timer per question</span><span class="al-value">${assignment.timerSeconds||20}s</span></div>
         <div class="al-row"><span class="al-label">Attempts allowed</span><span class="al-value">${assignment.maxAttempts||1}</span></div>
@@ -2205,12 +1907,13 @@ async function renderStudentClass(){
     if(btn) btn.addEventListener("click", ()=>{
       state.practiceType = testType;
         state.practiceTerms = ["second"];
-      state.practiceSubjects = (assignment.subjects || classSubjects || []).filter(s=>ORDER.includes(s));
+      state.practiceSubjects = [SUBJECT];
+      state.practiceWeeks = validWeeks(assignment.weeks);
       state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
       state.quizQueue = buildAssignedQueue(assignment, testType);
       if(!state.quizQueue.length){
         console.error("No questions found for", testType, assignment);
-        alert("No questions are available for the selected term and subject(s).");
+        alert("No questions are available for the selected week(s).");
         return;
       }
       state.qIndex = 0; state.answers = []; state.saved = false;
@@ -2221,7 +1924,230 @@ async function renderStudentClass(){
   startBtn("startPostBtn", "posttest");
 }
 
+/* ---------- Hidden teacher dashboard ----------
+   Tap the Tap-Quiz logo 5 times quickly, then enter the passcode. */
+const TEACHER_PASSCODE = "tapquiz2026";
+const TEACHER_UNLOCK_TAPS = 5;
+let teacherTaps = 0, teacherTapTimer = null;
+
+function unlockTeacher(){
+  if(sessionStorage.getItem("tq_teacher") === "1"){ openTeacher(); return; }
+  const code = prompt("Passcode:");
+  if(code === null) return;
+  if(code.trim() !== TEACHER_PASSCODE){ alert("Wrong passcode."); return; }
+  try{ sessionStorage.setItem("tq_teacher", "1"); }catch(e){}
+  openTeacher();
+}
+function openTeacher(){
+  state.teacherQuery = "";
+  state.teacherExpanded = null;
+  state.screen = "teacher";
+  route();
+}
+function countTeacherTap(){
+  teacherTaps++;
+  clearTimeout(teacherTapTimer);
+  teacherTapTimer = setTimeout(()=>{ teacherTaps = 0; }, 5000);
+  if(teacherTaps >= TEACHER_UNLOCK_TAPS){
+    teacherTaps = 0;
+    clearTimeout(teacherTapTimer);
+    unlockTeacher();
+  }
+}
+function registerTeacherUnlock(){
+  const zone = document.querySelector(".brand .logo-row") || document.querySelector(".brand");
+  if(zone){
+    zone.style.cursor = "pointer";
+    zone.style.webkitTapHighlightColor = "transparent";
+    zone.style.userSelect = "none";
+    zone.addEventListener("pointerup", countTeacherTap);
+  }
+  const footer = document.querySelector("footer.credit");
+  if(footer){
+    let holdTimer = null;
+    const startHold = ()=>{ holdTimer = setTimeout(unlockTeacher, 1500); };
+    const cancelHold = ()=>{ clearTimeout(holdTimer); };
+    footer.style.userSelect = "none";
+    footer.addEventListener("pointerdown", startHold);
+    ["pointerup","pointerleave","pointercancel"].forEach(ev=>footer.addEventListener(ev, cancelHold));
+  }
+  const checkHash = ()=>{
+    if(location.hash.toLowerCase() === "#teacher") unlockTeacher();
+  };
+  window.addEventListener("hashchange", checkHash);
+  checkHash();
+}
+
+function summarizeStudents(rows){
+  const byStudent = {};
+  rows.forEach(r=>{
+    const key = (r.studentEmail || "unknown").toLowerCase();
+    if(!byStudent[key]){
+      byStudent[key] = {email: r.studentEmail || "unknown", name: r.studentName || "", attempts: [], weeks: {}};
+    }
+    const s = byStudent[key];
+    if(r.studentName) s.name = r.studentName;
+    s.attempts.push(r);
+    (r.weekBreakdown || []).forEach(w=>{
+      if(!s.weeks[w.week]) s.weeks[w.week] = {correct:0, total:0};
+      s.weeks[w.week].correct += w.correct || 0;
+      s.weeks[w.week].total += w.total || 0;
+    });
+  });
+  return Object.values(byStudent).map(s=>{
+    s.attempts.sort((a,b)=> b.timestamp - a.timestamp);
+    const best = type => {
+      const list = s.attempts.filter(a=>a.testType === type);
+      return list.length ? Math.max(...list.map(a=>a.pct || 0)) : null;
+    };
+    s.bestPre = best("pretest");
+    s.bestPost = best("posttest");
+    s.lastAt = s.attempts.length ? s.attempts[0].timestamp : 0;
+    return s;
+  }).sort((a,b)=> b.lastAt - a.lastAt);
+}
+function teacherCsv(rows){
+  const head = ["Student","Email","Test","Weeks","Correct","Total","Percent","Class","Date"];
+  const lines = rows.map(r=>[
+    r.studentName || "", r.studentEmail || "", r.testType || "",
+    weekLabels(r.weeks || []) || "All weeks",
+    r.correct, r.total, r.pct, r.classId || "", fmtDate(r.timestamp)
+  ]);
+  return [head].concat(lines)
+    .map(cols => cols.map(v => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`).join(","))
+    .join("\n");
+}
+
+async function renderTeacherDashboard(){
+  bg();
+  app.innerHTML = `<div class="fade-in"><p class="empty-note">Loading student results...</p></div>`;
+  let rows = [];
+  let loadError = "";
+  try{
+    const snap = await db.collection("attempts").get();
+    snap.forEach(d => rows.push({id: d.id, ...d.data()}));
+    rows.sort((a,b)=> b.timestamp - a.timestamp);
+  }catch(e){
+    console.error(e);
+    loadError = "Couldn't load results. Check your connection or Firestore rules.";
+  }
+
+  const query = (state.teacherQuery || "").trim().toLowerCase();
+  const students = summarizeStudents(rows).filter(s=>
+    !query || s.name.toLowerCase().includes(query) || s.email.toLowerCase().includes(query)
+  );
+  const totalAttempts = rows.length;
+  const avg = totalAttempts ? Math.round(rows.reduce((t,r)=>t + (r.pct||0), 0) / totalAttempts) : 0;
+  const weekAverage = key => {
+    const parts = rows.flatMap(r=>(r.weekBreakdown||[]).filter(w=>w.week === key));
+    const total = parts.reduce((t,w)=>t + (w.total||0), 0);
+    const correct = parts.reduce((t,w)=>t + (w.correct||0), 0);
+    return total ? Math.round(correct/total*100) : null;
+  };
+
+  app.innerHTML = `
+    <div class="fade-in">
+      <div class="navbar">
+        <button class="pill-btn outline" id="backBtn">Back</button>
+        <div class="who">Teacher View</div>
+      </div>
+      ${loadError ? `<p class="error-note">${escapeHtml(loadError)}</p>` : ``}
+      <div class="assign-box">
+        <div class="al-row"><span class="al-label">Students</span><span class="al-value">${summarizeStudents(rows).length}</span></div>
+        <div class="al-row"><span class="al-label">Attempts</span><span class="al-value">${totalAttempts}</span></div>
+        <div class="al-row"><span class="al-label">Average score</span><span class="al-value">${avg}%</span></div>
+        ${TERM_WEEKS.map(w=>{
+          const pct = weekAverage(w.key);
+          return `<div class="al-row"><span class="al-label">${w.label} average</span><span class="al-value">${pct === null ? "&mdash;" : pct + "%"}</span></div>`;
+        }).join("")}
+      </div>
+      <input type="text" id="teacherSearch" placeholder="Search name or email" value="${escapeHtml(state.teacherQuery || "")}">
+      ${students.length === 0 ? `<p class="empty-note">No results yet.</p>` : `
+        <div style="overflow-x:auto;">
+          <table class="results-table">
+            <thead><tr><th>Student</th><th>Attempts</th><th>Best Pre</th><th>Best Post</th><th>Last Attempt</th></tr></thead>
+            <tbody>
+              ${students.map(s=>`
+                <tr class="teacher-row" data-email="${escapeHtml(s.email)}">
+                  <td>${escapeHtml(s.name || s.email)}<br><span class="fine-print">${escapeHtml(s.email)}</span></td>
+                  <td>${s.attempts.length}</td>
+                  <td>${s.bestPre === null ? "&mdash;" : s.bestPre + "%"}</td>
+                  <td>${s.bestPost === null ? "&mdash;" : s.bestPost + "%"}</td>
+                  <td>${fmtDate(s.lastAt)}</td>
+                </tr>
+                ${state.teacherExpanded === s.email ? `
+                  <tr><td colspan="5">
+                    <div class="fine-print" style="text-align:left;">
+                      ${TERM_WEEKS.map(w=>{
+                        const v = s.weeks[w.key];
+                        const pct = v && v.total ? Math.round(v.correct/v.total*100) : null;
+                        return `<b>${w.label}:</b> ${pct === null ? "no data" : pct + "% (" + v.correct + "/" + v.total + ")"}`;
+                      }).join(" &middot; ")}
+                    </div>
+                    ${s.attempts.map(a=>`<div class="fine-print" style="text-align:left;">${a.testType === "pretest" ? "PRE" : "POST"} &middot; ${(a.weeks && a.weeks.length) ? weekLabels(a.weeks) : "All weeks"} &middot; ${a.correct}/${a.total} (${a.pct}%) &middot; ${fmtDate(a.timestamp)}${a.id ? ` &middot; <a href="#" class="delete-attempt" data-id="${escapeHtml(a.id)}">delete</a>` : ``}</div>`).join("")}
+                  </td></tr>
+                ` : ``}
+              `).join("")}
+            </tbody>
+          </table>
+          <p class="fine-print" style="text-align:left;">Tap a student to see their weekly breakdown.</p>
+        </div>
+      `}
+      <button class="primary-btn ghost" id="exportBtn" style="margin-top:6px;">Download CSV</button>
+      <button class="primary-btn ghost" id="refreshBtn" style="margin-top:10px;">Refresh</button>
+      <button class="primary-btn ghost" id="lockBtn" style="margin-top:10px;">Lock Teacher View</button>
+    </div>
+  `;
+
+  document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen = "home"; route(); });
+  document.getElementById("refreshBtn").addEventListener("click", ()=>route());
+  document.getElementById("lockBtn").addEventListener("click", ()=>{
+    try{ sessionStorage.removeItem("tq_teacher"); }catch(e){}
+    state.screen = "home"; route();
+  });
+  document.getElementById("exportBtn").addEventListener("click", ()=>{
+    const blob = new Blob([teacherCsv(rows)], {type:"text/csv"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "tap-quiz-results.csv";
+    link.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  });
+  const search = document.getElementById("teacherSearch");
+  if(search){
+    search.addEventListener("input", ()=>{
+      state.teacherQuery = search.value;
+      clearTimeout(state.teacherSearchTimer);
+      state.teacherSearchTimer = setTimeout(()=>route(), 300);
+    });
+  }
+  document.querySelectorAll(".delete-attempt").forEach(link=>{
+    link.addEventListener("click", async (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(!confirm("Delete this attempt permanently?")) return;
+      try{
+        await db.collection("attempts").doc(link.dataset.id).delete();
+      }catch(err){
+        console.error(err);
+        alert("Couldn't delete. Your Firestore rules may not allow deletes.");
+      }
+      route();
+    });
+  });
+  document.querySelectorAll(".teacher-row").forEach(row=>{
+    row.style.cursor = "pointer";
+    row.addEventListener("click", ()=>{
+      const email = row.dataset.email;
+      state.teacherExpanded = state.teacherExpanded === email ? null : email;
+      route();
+    });
+  });
+}
+
 initTheme();
+registerTeacherUnlock();
 route();
 </script>
 </body>
