@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tap-Quiz for Students</title>
+<title>Tap-Quiz for Students · Effective Communication</title>
+<meta name="description" content="Effective Communication Grade 11 quiz and review app for Second Term (Week 1: Audience, Purpose, and Context; Week 2: Shaping Content, Structure, and Language).">
+<meta property="og:title" content="Tap-Quiz for Students · Effective Communication">
+<meta property="og:description" content="Effective Communication Grade 11 quiz and review app for Second Term (Week 1: Audience, Purpose, and Context; Week 2: Shaping Content, Structure, and Language).">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script>
@@ -123,7 +127,7 @@
   .timer-ring{ position:relative; width:40px; height:40px; }
   .timer-ring svg{ transform:rotate(-90deg); }
   .timer-ring .tnum{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600; }
-  .qtext{ font-family:'Space Grotesk', sans-serif; font-size:18px; font-weight:600; line-height:1.4; margin:4px 0 20px; min-height:52px; }
+  .qtext{ font-family:'Space Grotesk', sans-serif; font-size:17px; font-weight:600; line-height:1.4; margin:4px 0 20px; min-height:52px; }
   .choices{ display:flex; flex-direction:column; gap:10px; }
   .choice{ display:flex; align-items:center; gap:12px; text-align:left; padding:13px 14px; border-radius:13px; border:1.5px solid var(--border); background:var(--paper); cursor:pointer; font-size:14.5px; color:var(--ink); transition:all .12s ease; }
   .choice:hover{ border-color:var(--accent); }
@@ -153,31 +157,30 @@
   .tag-post{ background:var(--english-soft); color:#8E2E15; padding:2px 8px; border-radius:100px; font-size:10.5px; font-weight:600; }
 
   .empty-note{ text-align:center; color:var(--ink-soft); font-size:13px; padding:30px 10px; }
-  .reviewer-box{ background:var(--paper); border:1.5px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; white-space:pre-wrap; font-size:13.5px; line-height:1.65; }
   .reviewer-intro{ color:var(--ink-soft); font-size:12.5px; line-height:1.55; margin:-4px 0 14px; }
-  .reviewer-week-tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; }
-  .reviewer-week-tab{ border:1.5px solid var(--border); background:var(--surface); color:var(--ink-soft); border-radius:12px; padding:10px 7px; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; line-height:1.25; }
+  .reviewer-week-tabs{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:14px; }
+  .reviewer-week-tab{ border:1.5px solid var(--border); background:var(--surface); color:var(--ink-soft); border-radius:12px; padding:12px 10px; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; line-height:1.3; text-align:center; }
   .reviewer-week-tab.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--ink); }
-  .reviewer-reading{ background:#FBF8F0; border:1px solid #E8E0D0; color:#343747; border-radius:16px; padding:20px 18px; margin-bottom:16px; font-size:16px; line-height:1.85; letter-spacing:.008em; box-shadow:0 5px 18px -16px rgba(50,45,35,.45); }
+  .reviewer-reading{ background:#FBF8F0; border:1px solid #E8E0D0; color:#343747; border-radius:16px; padding:20px 18px; margin-bottom:16px; font-size:15px; line-height:1.8; letter-spacing:.008em; box-shadow:0 5px 18px -16px rgba(50,45,35,.45); }
   .reviewer-reading h3{ color:#292B39; font-family:'Space Grotesk',sans-serif; font-size:20px; line-height:1.25; margin:0 0 10px; }
   .reviewer-reading .reading-lead{ color:#626579; font-size:14px; line-height:1.6; margin:0 0 16px; }
-  .reviewer-reading .reading-body{ white-space:pre-wrap; }
-  .reviewer-list{ margin:0 0 16px; padding-left:18px; font-size:14px; line-height:1.6; color:var(--ink); }
+  .reviewer-reading .reading-body{ white-space:pre-wrap; font-size:14px; line-height:1.75; }
+  .reviewer-list{ margin:0 0 16px; padding-left:18px; font-size:13.5px; line-height:1.6; color:var(--ink); }
   .reviewer-list li{ margin-bottom:6px; }
   .reviewer-list.check{ list-style:none; padding-left:0; }
   .reviewer-list.check li{ position:relative; padding-left:22px; }
   .reviewer-list.check li:before{ content:"\2610"; position:absolute; left:0; top:-1px; color:var(--english); font-size:15px; }
-  .reviewer-terms{ margin:0 0 16px; font-size:14px; line-height:1.55; }
+  .reviewer-terms{ margin:0 0 16px; font-size:13.5px; line-height:1.55; }
   .reviewer-terms dt{ font-weight:700; color:var(--ink); margin-top:8px; }
   .reviewer-terms dd{ margin:2px 0 0; padding-left:0; color:var(--ink-soft); }
-  .reviewer-example{ border:1.5px solid var(--border); background:var(--surface); border-radius:12px; padding:12px 14px; margin-bottom:16px; font-size:14px; line-height:1.6; }
+  .reviewer-example{ border:1.5px solid var(--border); background:var(--surface); border-radius:12px; padding:12px 14px; margin-bottom:16px; font-size:13.5px; line-height:1.6; }
   .reviewer-example b{ display:block; margin-bottom:6px; }
-  .study-label{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin:4px 0 6px; }
+  .study-label{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin:8px 0 6px; }
   .formula-card{ background:#F1EBDD; border:1.5px solid #D8C9AA; border-radius:13px; padding:14px; margin:0 0 18px; }
   .formula-card .formula-label{ color:#756345; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; margin-bottom:7px; }
-  .formula-card .formula-text{ color:#27283A; font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:700; line-height:1.65; white-space:pre-wrap; }
-  .formula-card .formula-meaning{ color:#5E594E; font-size:13.5px; line-height:1.55; margin-top:8px; }
-  .reviewer-reading .reading-tip{ border-left:3px solid var(--english); background:#FBF1EE; color:#6B3A2C; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:14px; line-height:1.6; }
+  .formula-card .formula-text{ color:#27283A; font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:700; line-height:1.65; white-space:pre-wrap; }
+  .formula-card .formula-meaning{ color:#5E594E; font-size:13px; line-height:1.55; margin-top:8px; }
+  .reviewer-reading .reading-tip{ border-left:3px solid var(--english); background:#FBF1EE; color:#6B3A2C; border-radius:0 10px 10px 0; padding:10px 12px; margin-top:18px; font-size:13.5px; line-height:1.6; }
   html[data-theme="dark"] .reviewer-reading{ background:#20231F; border-color:#454637; color:#E8E3D5; box-shadow:none; }
   html[data-theme="dark"] .reviewer-reading h3{ color:#FFF8E7; }
   html[data-theme="dark"] .reviewer-reading .reading-lead{ color:#C5C0B1; }
@@ -236,7 +239,7 @@
 <div class="wrap">
   <div class="brand">
     <div class="logo-row">
-      <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
+      <img class="logo" src="data:image/jpeg;base64,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" alt="Tap-Quiz logo">
       <h1>Tap<span>-Quiz</span></h1>
     </div>
     <div class="brand-actions">
@@ -261,7 +264,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const SUBJECT_META = {
-  english: {label:"Effective Communication",  color:"var(--english)", soft:"var(--english-soft)"}
+  english: {label:"Effective Communication", color:"var(--english)", soft:"var(--english-soft)"}
 };
 const ORDER = ["english"];
 const SUBJECT = "english";
@@ -273,728 +276,88 @@ const PRACTICE_TIMER = 20;
 const TRANSITION_MS = 500;
 const MAX_QUESTIONS = 20;
 
-const REVIEWER = {
-  english: `EFFECTIVE COMMUNICATION — QUICK REVIEWER
-
-THE COMMUNICATION PROCESS
-• Key elements: sender, message, channel, receiver, feedback, and context.
-• Noise is anything that disrupts the message — physical, language, emotional, or cultural barriers.
-• Encoding turns an idea into a message; decoding is the receiver's interpretation.
-• Feedback shows whether the message was understood and lets the sender adjust.
-• Context includes the situation, relationship, culture, time, place, and purpose.
-
-FOUR CONTEXTS OF COMMUNICATION
-• Personal & Interpersonal: everyday conversations, journaling, texts, resolving conflict respectfully.
-• Social & Cultural: public forums, advocacy posts, respecting diverse cultural norms and group dynamics.
-• Academic & Training: presentations, research reports, proper citations, discipline-specific vocabulary.
-• Professional & Work: resumes, emails, meetings — clear, concise, and appropriately formal.
-• Intrapersonal communication is communication within oneself, including reflection and goal-setting.
-• Intercultural communication requires openness, sensitivity to norms, and avoidance of stereotypes.
-
-VERBAL & NON-VERBAL STRATEGIES
-• Politeness markers and turn-taking signals (topic nomination, back-channeling) keep conversations respectful.
-• Non-verbal cues — tone, eye contact, posture — strongly affect how a message is received.
-• Active listening includes attention, clarification, paraphrasing, and an appropriate response.
-• Assertive communication expresses needs respectfully; it is neither passive nor aggressive.
-• Tone is the attitude conveyed by language and delivery; it should match audience and purpose.
-
-WRITTEN COMMUNICATION
-• Good paragraphs have one main idea supported by clear, relevant details.
-• Match tone and formality to your audience and purpose — a text to a friend is not a professional email.
-• Academic and technical texts use structure, precise language, evidence, and appropriate terminology.
-• Multimodal communication combines modes such as words, images, charts, sound, or video.
-• Critical listening and reading involve checking purpose, evidence, assumptions, and meaning.
-• Summarizing keeps the central ideas in a shorter form; paraphrasing restates them in your own words.
-• Coherence means ideas connect logically; cohesion uses transitions and clear references.
-• Revise for purpose, organization, clarity, correctness, inclusivity, and ethical use of sources.
-
-REFLECTION & GROWTH
-• Effective communicators reflect on their own strengths and areas for growth, and use feedback constructively.
-• Respectful communication considers context, culture, inclusion, ethics, and the needs of the audience.`
-};
-
-// Second Term Effective Communication content, organized into the three
-// weekly clusters of the Budget of Work: reception, research and evidence,
-// and multimodal collaboration. Each week carries its own pre-test and
-// post-test bank so practice can be taken one week at a time.
+// The 2 weeks of Second Term from the DepEd Grade 11 Budget of Work
 const TERM_WEEKS = [
-  {key:"week1", label:"Week 1", topic:"Communication and Audience", blurb:"Communication process, audience, purpose, context, tone, critical listening and reading, specialized vocabulary."},
-  {key:"week2", label:"Week 2", topic:"Reading, Research, and Evidence", blurb:"Thesis and outline, claims and evidence, sources and citation, summary and paraphrase, plagiarism and AI declaration."},
-  {key:"week3", label:"Week 3", topic:"Visuals, Collaboration, and Editing", blurb:"Multimodal data and visuals, procedures, questions and feedback, collaboration, editing, and reflection."}
+  {key:"week1", label:"Week 1", topic:"Audience, Purpose, and Context", blurb:"How audience, purpose, and context shape academic and technical communication; informative, persuasive, and instructional purposes; specialist vs. general audiences; settings and constraints."},
+  {key:"week2", label:"Week 2", topic:"Shaping Content, Structure, and Language", blurb:"Content selection and evidence; standard structures (abstract, IMRaD, numbered steps, headings); academic register, precision, hedging, active voice, and multimodal visuals."}
 ];
+
 const TERM_CONTENT = {
   second: {
     english: {
       week1: {
         pretest: [
-          {q:"The basic elements of a communication event include the sender, message, channel, receiver, feedback, and:", c:["Context","Page count","Font size","Alphabet"], a:0},
-          {q:"Encoding a message means:", c:["Turning an idea into words, symbols, or images","Reading the message aloud only","Deleting the message","Storing the message without meaning"], a:0},
-          {q:"Decoding a message means:", c:["Interpreting the message that was received","Sending a reply immediately","Translating every word into numbers","Ignoring the speaker's purpose"], a:0},
-          {q:"In communication, noise refers to:", c:["Anything that interferes with the message","Only loud sounds in a room","The volume of a speaker's voice","A type of citation"], a:0},
-          {q:"A channel is:", c:["The medium used to deliver a message","The central claim of a text","The writer's personal opinion","A list of references"], a:0},
-          {q:"Feedback matters in communication because it:", c:["Shows whether the message was understood","Ends the conversation politely","Replaces the need for evidence","Makes the message longer"], a:0},
-          {q:"Academic and technical communication should be shaped primarily by the:", c:["Audience, purpose, and context","Writer's mood only","Length of the classroom","Number of decorations"], a:0},
-          {q:"A message to a close friend and an email to a professor differ mainly in:", c:["Tone and level of formality","Topic only","Number of letters","Choice of alphabet"], a:0},
-          {q:"Informative academic communication mainly aims to:", c:["Explain information clearly","Win an argument at any cost","Entertain with unrelated jokes","Hide the writer's purpose"], a:0},
-          {q:"Persuasive communication mainly aims to:", c:["Support a position and encourage a response","List facts without a claim","Avoid taking any stand","Replace all evidence with opinion"], a:0},
-          {q:"Instructional communication mainly aims to:", c:["Guide the audience through a process","Summarize a novel","Compare two unrelated topics","Conceal the required steps"], a:0},
-          {q:"Tone in academic communication refers to:", c:["The attitude expressed through word choice and delivery","The number of pages in a report","The font used on a slide","The order of the reference list"], a:0},
-          {q:"Which strategy supports critical reading of an academic text?", c:["Checking its purpose, evidence, assumptions, and meaning","Accepting every claim without question","Ignoring headings and labels","Focusing only on font color"], a:0},
-          {q:"Critical listening during a lecture requires attention to:", c:["Evidence, emphasis, and implied meaning","The speaker's clothing only","The length of the break","The color of the slides"], a:0},
-          {q:"Specialized vocabulary is vocabulary that is:", c:["Used by a particular academic or technical field","Always informal slang","Unrelated to a discipline","Impossible to define from context"], a:0},
-          {q:"When a technical term is unfamiliar, a useful first step is to:", c:["Use context clues and reliable references","Guess and never verify","Delete the entire paragraph","Replace it with unrelated slang"], a:0},
-          {q:"Audience awareness means:", c:["Anticipating what the audience knows and what needs explaining","Writing the same way for everyone","Avoiding all technical terms forever","Letting the audience guess the purpose"], a:0},
-          {q:"In an academic discussion, an appropriate tone is generally:", c:["Respectful, clear, and suited to the topic","Insulting and vague","Always humorous","Unrelated to the audience"], a:0},
-          {q:"Which is an academic communicative event?", c:["Presenting research findings","Sending a private birthday greeting","Casual joking with friends","Posting an unrelated meme"], a:0},
-          {q:"SCENARIO: A student rereads a journal article and marks the author's claim separately from the supporting data. This best demonstrates:", c:["Critical reading of an academic text","Memorizing the text word for word","Avoiding the writer's purpose","Replacing evidence with opinion"], a:0}
+          {q:"Which three factors shape the content, structure, and language of academic and technical texts?", c:["Audience, purpose, and context","Font, color, and layout","Length, price, and format","Title, author, and date"], a:0},
+          {q:"The audience of a text is:", c:["The readers, listeners, or viewers it is made for","The person who prints it","The topic only","The writer's teacher always"], a:0},
+          {q:"A writer's purpose answers the question:", c:["What is this text meant to do?","How long is the text?","Where was it printed?","Who typed it?"], a:0},
+          {q:"Which purpose aims to explain information clearly?", c:["Informative","Persuasive","Decorative","Entertaining only"], a:0},
+          {q:"A text that urges readers to support a position has a ___ purpose.", c:["persuasive","instructional","descriptive only","narrative only"], a:0},
+          {q:"A lab manual with step-by-step directions mainly has an ___ purpose.", c:["instructional","persuasive","reflective","humorous"], a:0},
+          {q:"Context refers to:", c:["The situation of communication, such as setting, occasion, and time limit","Only the first sentence","The writer's handwriting","The number of pages"], a:0},
+          {q:"A technical text is mainly written to:", c:["Explain or guide a specific task, process, or product","Entertain with stories","Express private feelings","Avoid specific details"], a:0},
+          {q:"Academic texts are usually:", c:["Formal, structured, and discipline-specific","Slang-filled and unstructured","Free of evidence","Written without an audience"], a:0},
+          {q:"Before drafting, a writer should first ask:", c:["Who is my audience and what is my purpose?","Which font looks best?","How many images can I add?","Can I copy a sample?"], a:0},
+          {q:"An audience that already knows a field well is a ___ audience.", c:["specialist","general","unknown","silent"], a:0},
+          {q:"A message to classmates differs from one to a school board mainly because:", c:["The audience and context differ","The alphabet differs","The topics are unrelated","Writers change every time"], a:0},
+          {q:"Which is an example of context?", c:["A five-minute limit in a class presentation","A synonym","A comma","A title font"], a:0},
+          {q:"Which is a spoken academic text?", c:["A panel discussion","A printed journal article","An infographic","A bibliography"], a:0},
+          {q:"SCENARIO: A student explains photosynthesis to Grade 7 pupils using everyday words and a drawing. The talk was shaped mainly by its:", c:["Audience","Font","Bibliography","Citation style"], a:0}
         ],
         posttest: [
-          {q:"Which factor most directly affects the structure and language of an academic text?", c:["Its audience, purpose, and context","The writer's favorite color","The number of decorations","The time spent choosing a font"], a:0},
-          {q:"When explaining a concept to a specific audience, the communicator should:", c:["Choose language and examples the audience can understand","Use the same explanation regardless of audience","Avoid defining technical terms","Ignore the purpose"], a:0},
-          {q:"A speaker should adjust technical vocabulary when:", c:["The audience's background and purpose change","The topic has no audience","The speaker wants to hide the meaning","The presentation has no evidence"], a:0},
-          {q:"A technical audience generally benefits from:", c:["Precise terms defined or used appropriately with evidence","Vague emotional language only","Unlabeled diagrams","Unrelated examples"], a:0},
-          {q:"When listening to a lecture, paraphrasing the speaker's idea helps the learner:", c:["Check understanding without copying the exact wording","Avoid paying attention","Replace all note-taking","Change the speaker's evidence"], a:0},
-          {q:"A useful context clue for an unfamiliar technical word is:", c:["The surrounding words and explanation in the text","The length of the word alone","The author's initials","The page border"], a:0},
-          {q:"Organized notes taken during a lecture are useful because they:", c:["Support later review and accurate completion of tasks","Replace the need to understand the topic","Record only the speaker's jokes","Prevent the learner from asking questions"], a:0},
-          {q:"Barriers to communication include:", c:["Physical, language, emotional, and cultural interference","Only weak internet connections","Only long sentences","Only unfamiliar fonts"], a:0},
-          {q:"Communication is described as transactional because:", c:["Participants influence one another while meaning is built together","Only the sender creates meaning","The receiver stays silent","Messages travel in one direction only"], a:0},
-          {q:"Before writing an academic text, the first step should be to:", c:["Identify the audience, purpose, and expected outcome","Choose a decorative border","Count the available pages","Copy a sample conclusion"], a:0},
-          {q:"A formal register is most appropriate in:", c:["A research presentation before a panel","A quick message to a sibling","A casual group chat","A personal joke with a seatmate"], a:0},
-          {q:"Which choice best shows audience-appropriate word use for non-specialists?", c:["Defining a technical term the first time it appears","Using as much jargon as possible","Removing all examples","Leaving abbreviations unexplained"], a:0},
-          {q:"Critical viewing of a documentary includes:", c:["Asking who produced it and what evidence supports its claims","Believing every statement because it is on video","Watching only the opening credits","Judging it by its background music"], a:0},
-          {q:"A reader who identifies the writer's point of view is examining:", c:["Perspective and possible bias","Paper size","Line spacing","Printing cost"], a:0},
-          {q:"The main idea of an academic text is usually supported by:", c:["Details, examples, and evidence","Decorative images only","The page number","The writer's signature"], a:0},
-          {q:"When a speaker uses emotionally loaded language, a critical listener should:", c:["Separate the emotional appeal from the actual evidence","Accept the claim because it sounds passionate","Stop listening entirely","Repeat the wording without checking it"], a:0},
-          {q:"Skimming a technical text before reading closely helps the reader:", c:["Preview the structure and locate key sections","Avoid understanding the content","Replace careful reading permanently","Remove the need for a purpose"], a:0},
-          {q:"For a mixed audience, jargon is best handled by:", c:["Defining it briefly when it first appears","Using it without explanation","Removing every technical idea","Replacing it with slang"], a:0},
-          {q:"SCENARIO: A student adjusts vocabulary when moving from a technical presentation to a casual chat with friends. What skill is this?", c:["Audience awareness","Redundancy","Plagiarism avoidance","Data interpretation"], a:0},
-          {q:"SCENARIO: A learner does not understand a term used in a lecture and copies the whole sentence to check it later. This shows:", c:["Using context and follow-up verification to build vocabulary","Ignoring unfamiliar terminology","Replacing the term with a guess","Avoiding the lecture topic"], a:0}
+          {q:"Which question helps identify the audience?", c:["Who will read or hear this, and what do they already know?","What color is the paper?","How long is the title?","Who published the font?"], a:0},
+          {q:"Which is part of the context of a presentation?", c:["The venue, occasion, and time limit","The slide font only","The speaker's shoe size","The number of letters"], a:0},
+          {q:"Which text shows a persuasive purpose?", c:["A position paper arguing for a policy","A list of lab steps","A glossary","A table of contents"], a:0},
+          {q:"An assembly manual for a device mainly aims to:", c:["Guide the user through a process","Convince users to buy","Tell a personal story","Entertain"], a:0},
+          {q:"Compared with specialists, a general audience usually needs:", c:["Terms explained and examples given","Unexplained jargon","No structure","Only data tables"], a:0},
+          {q:"A report is both informative and persuasive when it:", c:["Presents facts and then recommends an action","Has no facts","Has no audience","Avoids a conclusion"], a:0},
+          {q:"Which shows awareness of context?", c:["Following the required format and time limit of the task","Ignoring the instructions","Using any format","Skipping the introduction"], a:0},
+          {q:"Technical texts value precision because readers:", c:["Use them to perform tasks or make decisions","Enjoy vague words","Skip steps","Never check details"], a:0},
+          {q:"A multimodal academic text combines:", c:["Words with visuals, sound, or data displays","Only one font","Only footnotes","Blank pages"], a:0},
+          {q:"Same topic, different audience: what changes?", c:["Content, structure, and language","The alphabet","The publication date only","Nothing"], a:0},
+          {q:"Which is a technical text?", c:["A user manual for laboratory equipment","A love poem","A diary entry","A joke"], a:0},
+          {q:"Identifying a text's purpose helps a reader:", c:["Know what the text is trying to do","Avoid reading","Skip the evidence","Change the author"], a:0},
+          {q:"A formal setting such as a thesis defense calls for:", c:["Formal language and organized delivery","Slang","No preparation","Casual jokes only"], a:0},
+          {q:"SCENARIO: A student emails a professor to ask for an extension. The audience and purpose are:", c:["Professor; to make a request","Classmates; to entertain","Strangers; to instruct","Herself; to reflect"], a:0},
+          {q:"SCENARIO: Peers say a technical report 'has no clear purpose.' The best fix is to:", c:["State the purpose in the introduction and align each section to it","Add more decoration","Delete the title","Lengthen it randomly"], a:0}
         ]
       },
       week2: {
         pretest: [
-          {q:"A thesis statement usually presents the:", c:["Central claim or controlling idea","List of page numbers","Author's home address","Final bibliography only"], a:0},
-          {q:"The main purpose of an outline is to:", c:["Organize ideas before drafting","Replace all evidence","Make a report informal","Hide the topic"], a:0},
-          {q:"A research report should support important claims with:", c:["Evidence and properly cited sources","Rumors","Only personal preference","Unrelated quotations"], a:0},
-          {q:"A research claim is strongest when it is:", c:["Specific, relevant, and supported by evidence","Very broad and unsupported","Based only on popularity","Hidden from the audience"], a:0},
-          {q:"To condense a long academic text means to:", c:["Reduce it to its essential ideas","Copy every sentence exactly","Add unrelated details","Remove the central claim"], a:0},
-          {q:"A paraphrase should:", c:["Restate an idea in your own words while acknowledging the source","Copy the source word for word without credit","Change only the punctuation","Present another person's idea as original"], a:0},
-          {q:"A summary differs from a copy because a summary:", c:["Presents the central ideas more briefly","Repeats every word","Adds unsupported opinions","Changes the source's meaning"], a:0},
-          {q:"A synopsis is:", c:["A concise account of the main points of a text","A list of every punctuation mark","A source copied without credit","An unrelated personal story"], a:0},
-          {q:"Plagiarism is:", c:["Presenting another person's work or ideas as your own","Using a citation correctly","Making an outline","Giving respectful feedback"], a:0},
-          {q:"Citation helps readers:", c:["Identify and verify the sources used","Know the writer's favorite color","Skip the entire report","Change the research question"], a:0},
-          {q:"The purpose of a reference list is to:", c:["Identify the sources used in a text","Replace the report's conclusion","Decorate the final page","Hide unsupported claims"], a:0},
-          {q:"AI assistance in an academic text should be:", c:["Acknowledged or declared according to the required practice","Hidden in every situation","Treated as a human source automatically","Used to invent evidence"], a:0},
-          {q:"Intellectual integrity in academic communication requires:", c:["Honest use of evidence, sources, and one's own contribution","Borrowing without attribution","Inventing data to fit a conclusion","Ignoring corrections"], a:0},
-          {q:"A primary source provides:", c:["Original or firsthand information","A summary of other studies","An opinion column about a study","A textbook overview"], a:0},
-          {q:"A secondary source is one that:", c:["Interprets, analyzes, or summarizes other sources","Collects original data directly","Contains no references","Cannot be cited"], a:0},
-          {q:"A credible source usually:", c:["Identifies its author, evidence, and date","Hides who produced it","Avoids all references","Changes its claims without notice"], a:0},
-          {q:"Evidence is most convincing when the writer:", c:["Introduces it and explains how it supports the claim","Drops it into the text without comment","Uses it without a source","Contradicts it in the next line"], a:0},
-          {q:"When two credible sources disagree, a researcher should:", c:["Compare their methods, scope, and evidence","Use whichever is shorter","Ignore both sources","Assume the newer one is always right"], a:0},
-          {q:"An abstract is intended to:", c:["Give a concise overview of a longer academic work","Replace all references","Add unrelated personal details","Hide the research purpose"], a:0},
-          {q:"SCENARIO: A student copies two sentences from a website into a report and adds no citation. This is:", c:["Plagiarism, even though the copied text is short","Acceptable because the text is short","A paraphrase","A properly cited quotation"], a:0}
+          {q:"In a text, content refers to:", c:["The ideas, facts, and details included","The paper size","The font","The margins"], a:0},
+          {q:"In a text, structure refers to:", c:["The organization and order of its parts","The vocabulary only","The cover","The ink"], a:0},
+          {q:"Language choices include:", c:["Word choice, tone, and formality","Page numbers","Margins","File size"], a:0},
+          {q:"Register means:", c:["The level of formality of language","A list of sources","The number of pages","The cover design"], a:0},
+          {q:"Which sentence suits an academic register?", c:["The results suggest a link between sleep and performance.","Sleep is, like, super important lol.","Dunno, sleep's good I guess.","OMG sleep rocks!"], a:0},
+          {q:"A research report includes an abstract to:", c:["Summarize the study briefly","Replace the references","Decorate the page","Hide the methods"], a:0},
+          {q:"Technical instructions are best organized as:", c:["Numbered steps in order","A random paragraph","A poem","One long sentence"], a:0},
+          {q:"Specialized terms should be:", c:["Defined when the audience may not know them","Hidden","Misspelled","Never used"], a:0},
+          {q:"Headings and subheadings help readers:", c:["Locate information and follow the organization","Skip the content","Ignore the purpose","Avoid the topic"], a:0},
+          {q:"An introduction in academic writing usually:", c:["Gives context and states the purpose or thesis","Lists the references","Repeats the conclusion","Avoids the topic"], a:0},
+          {q:"In a spoken presentation, structure is shown through:", c:["A clear opening, body, and closing with signposts","Random order","Silence","Reading the references aloud"], a:0},
+          {q:"Hedging words such as 'suggests' show:", c:["Careful, honest claims","A rude tone","Slang","No purpose"], a:0},
+          {q:"A chart in a report is used to:", c:["Present data visually to support a point","Replace all text","Fill space","Disguise bias"], a:0},
+          {q:"Active voice ('The team tested the sample') is often preferred in technical writing because it is:", c:["Direct and clear","Longer","Vaguer","Slangy"], a:0},
+          {q:"SCENARIO: A student presents lab results to a panel using headings, formal language, and a labeled graph. This shows content, structure, and language shaped by:", c:["Audience, purpose, and context","Font only","Accident","Slide count"], a:0}
         ],
         posttest: [
-          {q:"A technical report is clearest when it uses:", c:["Organized structure, precise language, and appropriate terminology","Only emotional appeals","Vague claims without evidence","Unexplained slang"], a:0},
-          {q:"Which choice improves coherence in a report?", c:["Using transitions that show how ideas are related","Changing topics without explanation","Repeating the same sentence","Removing the introduction"], a:0},
-          {q:"A conclusion in an academic report should generally:", c:["Synthesize the main findings and connect them to the purpose","Introduce many unrelated claims","Copy the title only","Remove all evidence"], a:0},
-          {q:"When paraphrasing, changing a few words while keeping the original sentence structure can still be:", c:["Plagiarism if the source is not properly acknowledged","A complete original argument","A data table","A visual aid"], a:0},
-          {q:"A paraphrase is acceptable when it:", c:["Uses the writer's own wording and still credits the source","Changes only two words and removes the citation","Copies the original structure as closely as possible without credit","Presents the source's idea as personal experience"], a:0},
-          {q:"If a source's data do not support a desired result, intellectual integrity requires the writer to:", c:["Report and interpret the data honestly","Alter the values to fit the hypothesis","Delete inconvenient observations","Invent a new sample"], a:0},
-          {q:"When declaring AI assistance in academic work, the student should:", c:["Follow the instructor's or institution's required disclosure practice","Claim the tool performed human fieldwork","Use invented citations from the tool","Hide all assistance automatically"], a:0},
-          {q:"Ethical use of AI in academic work includes:", c:["Checking output, contributing one's own judgment, and declaring assistance when required","Submitting invented sources without review","Claiming generated work is always personal research","Using it to conceal plagiarism"], a:0},
-          {q:"A position paper primarily presents:", c:["A reasoned stand on an issue supported by evidence","A random list of vocabulary words","A private diary with no claim","A bibliography without discussion"], a:0},
-          {q:"A reaction paper should generally:", c:["Summarize a text and give a reasoned response to it","Copy the source without a citation","List unrelated personal information","Present data without explaining its meaning"], a:0},
-          {q:"Which sentence uses an appropriate academic style?", c:["The results indicate that study time was associated with higher scores.","The results are super cool and totally prove everything.","This thing shows stuff, I guess.","Everyone knows the answer, so evidence is unnecessary."], a:0},
-          {q:"Synthesis of sources means:", c:["Combining ideas from several sources to reach a larger conclusion","Listing one source after another without connection","Using a single source repeatedly","Removing all citations"], a:0},
-          {q:"A source record should include:", c:["Author, title, date, and where the source was found","Only the first word of the title","The reader's opinion of the author","The font used by the publisher"], a:0},
-          {q:"Direct quotation is appropriate when:", c:["The exact wording matters and the source is cited","The writer forgets to paraphrase","A citation is unavailable","The passage is too long to read"], a:0},
-          {q:"A borrowed idea presented without a citation is weak because:", c:["Readers cannot verify where the idea came from","It uses too many words","It shortens the report","It improves the conclusion"], a:0},
-          {q:"The introduction of an academic text should:", c:["Give context and state the purpose","Present the reference list","Repeat the conclusion word for word","Avoid mentioning the topic"], a:0},
-          {q:"A well-developed academic paragraph typically includes:", c:["A topic sentence, supporting evidence, and a closing or linking sentence","One unrelated sentence","Only a quotation","A list of page numbers"], a:0},
-          {q:"Which organizational pattern presents reasons and their results?", c:["Cause and effect","Chronological narration only","Alphabetical listing","Random ordering"], a:0},
-          {q:"SCENARIO: A student finds a blog post with no author, no date, and no sources. The best action is to:", c:["Look for a more credible source before using it","Cite it as a primary source","Copy it without attribution","Treat it as peer-reviewed research"], a:0},
-          {q:"SCENARIO: A group includes a reference produced by an AI tool but cannot find the article anywhere. The main problem is that:", c:["The evidence is fabricated and cannot be verified","The reference list is too short","The citation style is outdated","The article is too recent"], a:0}
-        ]
-      },
-      week3: {
-        pretest: [
-          {q:"A chart or table in a report should be interpreted by examining its:", c:["Labels, units, patterns, and evidence","Background color only","File name only","Margins only"], a:0},
-          {q:"A diagram, graph, or infographic can help a writer:", c:["Represent complex information in a multimodal form","Avoid explaining the information","Remove the need for labels","Guarantee that data are correct"], a:0},
-          {q:"A multimodal report may combine:", c:["Written explanation, charts, images, and spoken presentation","Only one unformatted sentence","Unverified claims and no labels","A bibliography with no text"], a:0},
-          {q:"A presentation visual should:", c:["Support the key idea with clear labels and readable information","Contain every word the speaker will say","Use decoration instead of evidence","Be unrelated to the topic"], a:0},
-          {q:"A visual aid is effective when it:", c:["Makes important information easier to understand and is clearly labeled","Contains every sentence from the report","Uses decoration instead of data","Has no title or units"], a:0},
-          {q:"Following a procedure accurately helps a learner:", c:["Achieve the intended outcome","Avoid reading instructions","Replace all safety checks","Make evidence unnecessary"], a:0},
-          {q:"A procedure presented as numbered steps is a:", c:["Structured set of instructions","Personal narrative only","List of unrelated opinions","Citation style"], a:0},
-          {q:"When following a laboratory procedure, a learner should:", c:["Complete the steps in order and observe safety instructions","Skip steps that look difficult","Change measurements without recording them","Ignore diagrams and warning labels"], a:0},
-          {q:"A constructive question during a lecture should:", c:["Clarify or deepen understanding of the topic","Interrupt only to change the subject","Attack the speaker personally","Repeat an unrelated rumor"], a:0},
-          {q:"Useful feedback on a presentation should address its:", c:["Content, structure, and language","Presenter's clothing only","Unrelated personal history","Room temperature only"], a:0},
-          {q:"Which response best demonstrates constructive feedback?", c:["Your conclusion is clear; adding evidence to the second point may strengthen it","This is bad and I will not explain why","You should change everything","I did not listen, but it is wrong"], a:0},
-          {q:"Specific feedback is more useful than vague criticism because it:", c:["Identifies what works and what concrete change could improve the work","Makes the presenter feel embarrassed","Avoids discussing the content","Replaces revision"], a:0},
-          {q:"Effective collaboration on a technical task requires group members to:", c:["Share knowledge and work toward a common goal","Hide information from one another","Avoid assigning responsibilities","Reject all feedback"], a:0},
-          {q:"Which division of work best supports a group research presentation?", c:["Assigning responsibilities while coordinating one shared goal","Letting one member do everything without review","Keeping sources private","Avoiding deadlines"], a:0},
-          {q:"In an academic panel discussion, turn-taking helps participants:", c:["Share ideas without speaking over one another","Avoid responding to evidence","End the discussion immediately","Use only written communication"], a:0},
-          {q:"During a panel discussion, a participant should disagree by:", c:["Addressing the idea respectfully and giving relevant reasons","Insulting the speaker","Speaking over everyone","Changing the topic without explanation"], a:0},
-          {q:"Which opening is most appropriate for a formal academic presentation?", c:["A clear statement of the topic and purpose","A long unrelated joke","An apology for having no evidence","A list of private messages"], a:0},
-          {q:"Reflecting after an academic presentation helps a learner:", c:["Identify strengths and areas for improvement","Avoid all future feedback","Prove every idea was perfect","Replace preparation"], a:0},
-          {q:"A useful reflection after a group presentation asks:", c:["What worked, what needs improvement, and what to change next time","Which teammate to blame","How to avoid all future collaboration","Why feedback should be ignored"], a:0},
-          {q:"A reader sees a chart with a rising line. Before concluding that one variable caused another, the reader should:", c:["Check the labels, scale, evidence, and limits of the chart","Assume the chart proves causation","Ignore the units","Look only at the color of the line"], a:0}
-        ],
-        posttest: [
-          {q:"A bar chart is most useful for:", c:["Comparing values across categories","Showing every exact decimal value","Listing references","Replacing the report's conclusion"], a:0},
-          {q:"A line graph is most useful for:", c:["Showing change over time","Comparing unrelated categories only","Recording citations","Hiding a trend"], a:0},
-          {q:"A table is the better choice when the audience needs:", c:["Exact values that can be read directly","A rough impression only","Decorative images","Fewer labels"], a:0},
-          {q:"Every visual used in an academic report needs:", c:["A clear title, labels, and units","Only a bright color scheme","A three-dimensional effect","An unlabeled legend"], a:0},
-          {q:"A graph becomes misleading when it:", c:["Uses a distorted scale or omits key labels","Includes its data source","Shows all relevant data points","Uses a readable font"], a:0},
-          {q:"While showing a slide, an effective presenter:", c:["Explains what the audience should notice","Reads every word aloud","Hides the title","Skips the data source"], a:0},
-          {q:"Slide readability improves with:", c:["Clear fonts, good contrast, and few words per line","Small text and busy backgrounds","Long paragraphs on every slide","Unlabeled images only"], a:0},
-          {q:"Recording agreed roles and deadlines in group work helps the team:", c:["Avoid confusion and track responsibilities","Work without any plan","Hide progress from members","Remove the shared goal"], a:0},
-          {q:"Active listening in a group discussion includes:", c:["Asking clarifying questions and responding to the actual point","Planning a reply while ignoring the speaker","Interrupting to change the topic","Repeating personal opinions only"], a:0},
-          {q:"Non-verbal communication includes:", c:["Posture, gestures, eye contact, and vocal emphasis","Only the words on a slide","Only the reference list","Only written punctuation"], a:0},
-          {q:"When a teammate misses an agreed deadline, a professional response is to:", c:["Clarify the problem and agree on a revised plan","Announce the failure publicly","Remove the teammate without discussion","Ignore the task completely"], a:0},
-          {q:"Which transition best signals contrast?", c:["However","For example","Similarly","Therefore"], a:0},
-          {q:"Editing a draft focuses mainly on:", c:["Clarity, grammar, punctuation, and consistency","Choosing a new topic","Deleting the reference list","Adding unrelated images"], a:0},
-          {q:"A run-on sentence is corrected by:", c:["Separating or properly joining the independent clauses","Adding more clauses","Removing the subject","Changing the font"], a:0},
-          {q:"Subject-verb agreement means that:", c:["The verb matches the subject in number and person","Every sentence uses the same verb","The subject appears at the end","Verbs are avoided in reports"], a:0},
-          {q:"Active voice is preferred when:", c:["The doer of the action should be clear and direct","The writer wants to hide responsibility","The sentence must be longer","The process matters more than the actor"], a:0},
-          {q:"Proofreading is most effective when it is done:", c:["After revising the content and structure","Before deciding on the topic","Instead of revising","Only by an automatic spell-checker"], a:0},
-          {q:"A reflection on a completed communication task should identify:", c:["What was clear, what confused the audience, and what to improve","Only the final grade","Which classmate to blame","Why feedback should be ignored"], a:0},
-          {q:"SCENARIO: A group's slide shows a colorful 3D pie chart with no labels or source. The best revision is to:", c:["Use a simple labeled chart with units and the data source","Add more colors and effects","Remove the chart title entirely","Enlarge the decoration instead"], a:0},
-          {q:"SCENARIO: A peer says the second section of a report is unclear. The writer should:", c:["Reread that section and revise it for clarity","Ignore the comment because the draft is finished","Delete the whole report","Ask the peer to stop giving feedback"], a:0}
+          {q:"Which change shows adapting structure for a new audience?", c:["Putting the recommendation first for busy managers","Changing the font","Adding a border","Shortening only the title"], a:0},
+          {q:"A lab report follows Introduction, Methods, Results, Discussion because:", c:["The discipline and its readers expect this organization","It is a random choice","It makes the text longer","It is decoration"], a:0},
+          {q:"A text explaining a medical study to the public should:", c:["Use plain words and explain terms","Use maximum jargon","Omit the findings","Avoid examples"], a:0},
+          {q:"Tone in an academic discussion should generally be:", c:["Respectful and objective","Mocking","Purely emotional","Careless"], a:0},
+          {q:"Which sentence is better for a technical manual?", c:["Press the power button for three seconds.","The power button might maybe be pressed.","Powering stuff is easy lol.","A button exists."], a:0},
+          {q:"Which shows precise technical language?", c:["Heat the solution to 60 °C for 5 minutes.","Heat it a bit.","Make it warm-ish.","Cook it for a while."], a:0},
+          {q:"The content of a persuasive text should include:", c:["Claims backed by relevant evidence","Unsupported opinions","Only jokes","No sources"], a:0},
+          {q:"A visual in a multimodal text should:", c:["Be labeled and support the key point","Be unrelated","Have no title","Replace all evidence"], a:0},
+          {q:"When the purpose is instructional, language should be:", c:["Clear, direct, and sequential","Vague","Purely emotional","Ornate"], a:0},
+          {q:"Transitions such as 'however' and 'therefore' help:", c:["Connect ideas logically","Add length","Hide the claim","Show off jargon"], a:0},
+          {q:"The same findings reported to two audiences differ mainly in:", c:["Depth of detail, vocabulary, and examples","The facts themselves","The alphabet","The honesty of the evidence"], a:0},
+          {q:"Which context may require a shorter, simpler message?", c:["A two-minute oral report","A 30-page thesis","A journal article","A manual appendix"], a:0},
+          {q:"To check whether a text fits its audience, a writer can:", c:["Ask someone from that audience to read or listen and give feedback","Ignore feedback","Rely on mood","Count words only"], a:0},
+          {q:"SCENARIO: A proposal for the barangay council is full of unexplained engineering terms. The best revision is to:", c:["Define terms, add examples, and simplify","Add more jargon","Remove the title","Lengthen it"], a:0},
+          {q:"SCENARIO: A student reads a formal essay aloud as a talk without changes. The likely problem is:", c:["Spoken delivery needs shorter sentences, signposts, and pacing","Essays cannot be spoken","The font is wrong","There is none"], a:0}
         ]
       }
     }
-  },
-  third: {
-    english: [
-      {q:"A resume is primarily used to:", c:["Summarize qualifications and experience","Tell a fictional story","Record laboratory data","Replace an interview"], a:0},
-      {q:"Professional email language should generally be:", c:["Clear, concise, and appropriately formal","All slang","Unstructured and vague","Written without a greeting"], a:0},
-      {q:"A cover letter should connect the applicant's skills to the:", c:["Job requirements","Weather forecast","Unrelated hobby","Office furniture"], a:0},
-      {q:"Which behavior is appropriate in a workplace meeting?", c:["Listening and contributing relevant ideas","Interrupting everyone","Ignoring the agenda","Using insulting language"], a:0},
-      {q:"An interview response is strongest when it is:", c:["Specific and supported by an example","Only one word","Unrelated to the question","Critical of every former employer"], a:0},
-      {q:"Ethical workplace communication includes:", c:["Respecting confidentiality and using accurate information","Spreading rumors","Hiding important facts","Using discriminatory language"], a:0}
-    ]
-  }
-};
-const REVIEWER_BY_TERM = {
-  first: REVIEWER,
-  second: {
-     english: "EFFECTIVE COMMUNICATION — COMPLETE SECOND TERM REVIEWER\n\nACADEMIC AND TECHNICAL TEXTS\n• Academic and technical communication is formal, structured, discipline-specific, and shaped by audience, purpose, and context.\n• Use critical listening, reading, and viewing to identify main ideas, evidence, assumptions, intent, and meaning.\n• Interpret charts, tables, figures, diagrams, and other multimodal forms by checking titles, labels, units, scales, patterns, trends, and supporting evidence.\n• Use context, word parts, references, and subject knowledge to understand unfamiliar specialized vocabulary; verify important meanings with reliable sources.\n• Distinguish an author's claim from the evidence used to support it and notice possible bias or unsupported assumptions.\n\nINTERACTION AND COLLABORATION\n• Match language, tone, and structure to the academic or training situation.\n• Follow spoken, written, and multimodal procedures accurately to achieve the intended outcome.\n• Participate constructively by asking relevant questions, providing respectful feedback, and responding appropriately.\n• Academic and technical collaboration works best when members share knowledge, divide responsibilities, listen to different viewpoints, and work toward a common goal.\n• In a discussion or debate, support a point with relevant reasons and evidence rather than attacking a person.\n\nCLEAR ACADEMIC EXPRESSION\n• A thesis states the central claim or controlling idea; an outline organizes ideas before drafting.\n• Academic texts, presentations, research reports, and essays need clear organization, precise language, appropriate terminology, and evidence.\n• Use diagrams, graphs, charts, infographics, and other visual aids to explain concepts when they improve understanding; label visuals so they can be interpreted accurately.\n• Condense information into a summary, synopsis, paraphrase, outline, chart, or diagram without changing its meaning.\n• Coherence connects ideas logically; transitions and clear references create cohesion.\n• Introductions establish context and purpose, body sections develop ideas with evidence, and conclusions synthesize the main points.\n\nETHICS AND REFLECTION\n• Cite sources and represent another person's words and ideas honestly. Presenting borrowed work as one's own is plagiarism.\n• A reference list helps readers locate the sources used in an academic or technical text.\n• AI assistance and borrowed ideas should be acknowledged or declared according to the required citation practice.\n• Intellectual integrity means not inventing evidence, altering results dishonestly, or hiding the source of information.\n• Give feedback about content, structure, and language in a specific, respectful, useful way.\n• Reflect after academic or technical communication: identify strengths, areas for growth, and ways to improve future performance."
-  },
-  third: {
-    english: "EFFECTIVE COMMUNICATION — THIRD TERM REVIEWER\n\nPROFESSIONAL & WORKPLACE COMMUNICATION\n• Professional messages are clear, concise, audience-aware, and appropriately formal.\n• A resume summarizes qualifications; a cover letter connects skills to job requirements.\n• In meetings and interviews, listen carefully, answer specifically, and use relevant examples.\n• Ethical communication protects confidentiality, uses accurate information, and respects others.\n• Memos, incident reports, meeting minutes, requests, and follow-ups each have a clear workplace purpose.\n• Use layout, headings, bullets, font choices, and concise language to make information easy to scan.\n• Tailor professional profiles, applications, and presentations to the audience and purpose.\n• Handle customer feedback or complaints calmly, accurately, and respectfully."
-  }
-};
-
-const BANK = {
-  pretest: {
-    english: [
-      {q:"Which sentence is correctly punctuated?", c:["I bought apples, bread, and milk.","I bought apples bread, and milk.","I bought, apples bread and milk.","I bought apples, bread and, milk."], a:0},
-      {q:"Choose the synonym of \"abundant.\"", c:["Scarce","Plentiful","Empty","Faint"], a:1},
-      {q:"Choose the correct verb form: \"She ___ to school every day.\"", c:["go","going","goes","gone"], a:2},
-      {q:"What is the plural form of \"child\"?", c:["childs","children","childes","child's"], a:1},
-      {q:"Identify the figure of speech: \"The wind whispered through the trees.\"", c:["Simile","Hyperbole","Personification","Irony"], a:2},
-      {q:"Choose the antonym of \"generous.\"", c:["Kind","Giving","Stingy","Warm"], a:2},
-      {q:"Which of these best defines effective communication?", c:["Speaking loudly","Sending a message that is clearly understood as intended","Using complex vocabulary","Writing long paragraphs"], a:1},
-      {q:"Which of the following is an example of non-verbal communication?", c:["A written letter","A phone call","Eye contact and posture","An email"], a:2},
-      {q:"Choose the sentence with correct subject-verb agreement.", c:["The team are winning.","The team is winning.","The team were winning.","The team be winning."], a:1},
-      {q:"What is the main purpose of a topic sentence in a paragraph?", c:["To end the paragraph","To state the main idea","To give an example","To ask a question"], a:1},
-      {q:"Which word is a synonym of \"concise\"?", c:["Wordy","Brief","Confusing","Detailed"], a:1},
-      {q:"Identify the correctly spelled word.", c:["Recieve","Receive","Receeve","Receve"], a:1},
-      {q:"Which sentence uses active voice?", c:["The ball was thrown by John.","John threw the ball.","The ball is being thrown.","The ball had been thrown."], a:1},
-      {q:"What do we call words that sound the same but have different meanings?", c:["Synonyms","Antonyms","Homophones","Acronyms"], a:2},
-      {q:"Which is the best feedback response in communication?", c:["Ignoring the speaker","Interrupting constantly","Listening and responding appropriately","Changing the subject"], a:2},
-      {q:"Choose the correctly capitalized sentence.", c:["we visited manila last june.","We visited Manila last June.","We Visited manila last june.","we Visited Manila Last June."], a:1},
-      {q:"What is the antonym of \"clarity\"?", c:["Confusion","Precision","Understanding","Focus"], a:0},
-      {q:"Which sentence is grammatically correct?", c:["He don't like coffee.","He doesn't likes coffee.","He doesn't like coffee.","He not like coffee."], a:2},
-      {q:"What is the term for the person receiving a message in communication?", c:["Sender","Channel","Receiver","Feedback"], a:2},
-      {q:"Choose the correct pronoun: \"___ and I went to the market.\"", c:["Him","Her","She","Me"], a:2},
-      {q:"Which of these is an example of a formal communication channel?", c:["Text message to a friend","Office memo","Casual chat","Social media post"], a:1},
-      {q:"What figure of speech compares two things using \"like\" or \"as\"?", c:["Metaphor","Simile","Hyperbole","Alliteration"], a:1},
-      {q:"Choose the word that best completes: \"Please ___ the door before leaving.\"", c:["close","closed","closing","closes"], a:0},
-      {q:"What is the correct plural of \"analysis\"?", c:["Analysises","Analyses","Analysis's","Analysi"], a:1},
-      {q:"Which of these shows correct use of a semicolon?", c:["I like tea; she likes coffee.","I like tea, she likes coffee;","I like tea; she likes coffee,","I like; tea she likes coffee."], a:0},
-      {q:"What barrier to communication involves loud background noise?", c:["Physical barrier","Language barrier","Emotional barrier","Cultural barrier"], a:0},
-      {q:"Choose the correct comparative form of \"good.\"", c:["Gooder","More good","Better","Best"], a:2},
-      {q:"Which sentence demonstrates a clear main idea with supporting details?", c:["A random list of facts","A single unrelated sentence","A topic sentence followed by relevant examples","A list of questions"], a:2},
-      {q:"What is the term for adjusting your message based on your audience?", c:["Feedback","Audience awareness","Redundancy","Jargon"], a:1},
-      {q:"Choose the antonym of \"formal.\"", c:["Casual","Polite","Structured","Official"], a:0},
-      {q:"SCENARIO: During a job interview, you're asked about your greatest weakness. Which response best demonstrates effective professional communication?", c:["Avoiding the question entirely","Giving an honest, specific answer paired with how you are improving","Saying you have no weaknesses","Criticizing a former employer instead"], a:1},
-      {q:"SCENARIO: You are writing a text to a close friend versus an email to a professor. What should primarily guide the difference in tone and structure?", c:["The time of day you are writing","The audience and purpose of the message","The length of your device's screen","Your personal mood only"], a:1},
-      {q:"SCENARIO: While a classmate presents a report, you nod occasionally and keep eye contact. What are you demonstrating?", c:["A verbal strategy","A non-verbal strategy that shows active listening","A written communication strategy","An unrelated distraction"], a:1},
-      {q:"SCENARIO: A student writes a reflective journal entry after a difficult personal conversation. What is the main purpose of this kind of communication?", c:["To persuade someone else","To reflect on one's own thoughts, feelings, and growth","To formally document a business transaction","To entertain a wide public audience"], a:1},
-      {q:"SCENARIO: In a community forum about a local festival, a participant disagrees respectfully with another speaker's opinion. What does this best demonstrate?", c:["A breakdown in communication","Culturally sensitive and respectful social communication","Noise interfering with the message","A lack of feedback"], a:1}
-    ]
-  },
-  posttest: {
-    english: [
-      {q:"Which sentence is correctly punctuated?", c:["My favorite subjects are reading, writing, and speaking.","My favorite subjects are reading writing, and speaking.","My favorite subjects are, reading, writing and speaking.","My favorite subjects are reading, writing and, speaking."], a:0},
-      {q:"Choose the synonym of \"swift.\"", c:["Slow","Fast","Quiet","Heavy"], a:1},
-      {q:"Choose the correct verb form: \"They ___ their homework every night.\"", c:["does","doing","do","did doing"], a:2},
-      {q:"What is the plural form of \"mouse\"?", c:["mouses","mices","mice","mouse's"], a:2},
-      {q:"Identify the figure of speech: \"Time is a thief.\"", c:["Metaphor","Simile","Alliteration","Onomatopoeia"], a:0},
-      {q:"Choose the antonym of \"ancient.\"", c:["Old","Modern","Historic","Classic"], a:1},
-      {q:"Which of these best defines the \"channel\" in communication?", c:["The person sending the message","The medium used to deliver the message","The response to a message","The topic of a message"], a:1},
-      {q:"Which of the following is an example of non-verbal communication?", c:["A phone call","A written report","Facial expression","A voice message"], a:2},
-      {q:"Choose the sentence with correct subject-verb agreement.", c:["The group of students are studying.","The group of students is studying.","The group of students were studying.","The group of students be studying."], a:1},
-      {q:"What is the main purpose of a concluding sentence in a paragraph?", c:["To introduce a new topic","To summarize or wrap up the main idea","To ask a question","To give random facts"], a:1},
-      {q:"Which word is a synonym of \"clear\"?", c:["Vague","Distinct","Confusing","Complicated"], a:1},
-      {q:"Identify the correctly spelled word.", c:["Definately","Definitely","Definitly","Definetly"], a:1},
-      {q:"Which sentence uses active voice?", c:["The report was written by Maria.","Maria wrote the report.","The report is being written.","The report had been written."], a:1},
-      {q:"What do we call words with the same or similar meaning?", c:["Antonyms","Synonyms","Homophones","Acronyms"], a:1},
-      {q:"Which is the best practice for active listening?", c:["Thinking about your reply while the other speaks","Making eye contact and focusing on the speaker","Checking your phone occasionally","Interrupting to add your opinion"], a:1},
-      {q:"Choose the correctly capitalized sentence.", c:["we went to baguio last december.","We went to Baguio last December.","We Went to baguio last december.","we Went to Baguio Last December."], a:1},
-      {q:"What is the antonym of \"clarity\"?", c:["Ambiguity","Precision","Understanding","Focus"], a:0},
-      {q:"Which sentence is grammatically correct?", c:["She don't have a pen.","She doesn't has a pen.","She doesn't have a pen.","She not have a pen."], a:2},
-      {q:"What is the term for the person who starts a message in communication?", c:["Sender","Channel","Receiver","Feedback"], a:0},
-      {q:"Choose the correct pronoun: \"___ and Maria went to the store.\"", c:["Him","Her","He","Me"], a:2},
-      {q:"Which of these is an example of an informal communication channel?", c:["Business email","Casual text to a friend","Official memo","Company report"], a:1},
-      {q:"What figure of speech gives human traits to non-human things?", c:["Metaphor","Simile","Personification","Hyperbole"], a:2},
-      {q:"Choose the word that best completes: \"Please ___ the window; it's cold.\"", c:["close","closed","closing","closes"], a:0},
-      {q:"What is the correct plural of \"criterion\"?", c:["Criterions","Criteria","Criterion's","Criteries"], a:1},
-      {q:"Which of these shows correct use of a comma before a coordinating conjunction?", c:["I wanted to go, but it rained.","I wanted to go but, it rained.","I wanted to go but it, rained.","I wanted, to go but it rained."], a:0},
-      {q:"What barrier to communication involves differing native languages?", c:["Physical barrier","Language barrier","Emotional barrier","Technical barrier"], a:1},
-      {q:"Choose the correct comparative form of \"bad.\"", c:["Badder","More bad","Worse","Worst"], a:2},
-      {q:"Which of these demonstrates good paragraph coherence?", c:["Ideas that jump randomly between topics","Sentences that logically connect to support one main idea","A paragraph with no topic sentence","A single long run-on sentence"], a:1},
-      {q:"What is the term for unnecessary repetition in a message?", c:["Feedback","Redundancy","Clarity","Emphasis"], a:1},
-      {q:"Choose the antonym of \"formal.\"", c:["Informal","Polite","Structured","Official"], a:0},
-      {q:"SCENARIO: You give a formal class presentation using visual aids. Which approach best reflects effective academic communication?", c:["Reading directly off the slides word for word","Organizing content clearly and using visuals to support key points","Avoiding eye contact with the audience","Using only casual, conversational language throughout"], a:1},
-      {q:"SCENARIO: You receive critical feedback on a group project report. What is the most effective way to respond as a communicator?", c:["Ignore the feedback completely","Consider the feedback and use it to improve future work","Argue immediately without listening","Blame other group members publicly"], a:1},
-      {q:"SCENARIO: You write a formal email applying for a job. Which best reflects appropriate professional convention?", c:["Using slang and emojis throughout","Using a clear subject line, polite greeting, and concise, formal language","Writing in all lowercase with no punctuation","Attaching unrelated personal photos"], a:1},
-      {q:"SCENARIO: A speaker adjusts their vocabulary when moving from a technical presentation to a casual chat with friends. What skill is this?", c:["Redundancy","Audience awareness","Noise reduction","Plagiarism avoidance"], a:1},
-      {q:"SCENARIO: After a heated online discussion, a student pauses to consider what they could have expressed more respectfully. What process is this?", c:["Encoding only","Reflection on one's communication for growth","Ignoring feedback","Formal citation practice"], a:1}
-    ]
-  }
-};
-
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i = a.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function escapeHtml(str){
-  const d = document.createElement("div");
-  d.textContent = str || "";
-  return d.innerHTML;
-}
-function fmtDate(ts){
-  const d = new Date(ts);
-  return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-}
-function distributeCount(total, n){
-  const base = Math.floor(total / n);
-  let rem = total - base * n;
-  const arr = [];
-  for(let i = 0; i < n; i++) arr.push(base + (i < rem ? 1 : 0));
-  return shuffle(arr);
-}
-function subjectLabels(subjArr){
-  return (subjArr||[]).map(s=>SUBJECT_META[s] ? SUBJECT_META[s].label : s).join(", ");
-}
-function termLabels(termArr){
-  return "Second Term";
-}
-function inferSkill(subject, question){
-  const q = String(question || "").toLowerCase();
-  if(/thesis|outline|research|evidence|paraphrase|plagiarism|citation|technical report|academic/.test(q)) return "Academic & Technical Communication";
-  if(/chart|table|diagram|graph|infographic|multimodal/.test(q)) return "Multimodal Communication";
-  if(/audience|tone|feedback|collaboration|procedure/.test(q)) return "Communication Strategies";
-  return "Effective Communication";
-}
-function buildSkillBreakdown(answers){
-  const map = {};
-  (answers || []).forEach(a=>{
-    const skill = a.skill || inferSkill(a.subject, a.q);
-    if(!map[skill]) map[skill] = {skill, correct:0, total:0};
-    map[skill].total++;
-    if(a.correct) map[skill].correct++;
-  });
-  return Object.values(map).map(v=>({...v, pct: Math.round((v.correct/v.total)*100)}));
-}
-function masteryLabel(pct){
-  if(pct >= 85) return "Mastered";
-  if(pct >= 70) return "Developing";
-  return "Needs practice";
-}
-function getSavedMastery(){
-  try{
-    const raw = localStorage.getItem("tq_mastery_" + state.student.email);
-    return raw ? JSON.parse(raw) : [];
-  }catch(e){ return []; }
-}
-function learningPathHtml(){
-  const rows = getSavedMastery();
-  if(!rows.length){
-    return `<div class="learning-panel">
-      <div class="lp-title">Your Learning Path</div>
-      <div class="lp-sub">Start with a Pre-Test to find your baseline. Your results will turn into a skill-by-skill study plan.</div>
-      <button class="primary-btn ghost" id="pathStartBtn">Find My Starting Point</button>
-    </div>`;
-  }
-  const focus = rows.filter(s=>s.pct < 85).sort((a,b)=>a.pct-b.pct);
-  const next = focus[0];
-  const action = next
-    ? `Recommended next step: review <b>${escapeHtml(next.skill)}</b>, then practice again before the Post-Test.`
-    : "You are showing mastery across the skills recorded so far. You are ready to measure your progress with the Post-Test.";
-  return `<div class="learning-panel">
-    <div class="lp-title">Your Learning Path</div>
-    <div class="lp-sub">${action}</div>
-    ${rows.map(s=>`<div class="mastery-row">
-      <div class="mr-top"><span>${escapeHtml(s.skill)}</span><span>${masteryLabel(s.pct)} &middot; ${s.pct}%</span></div>
-      <div class="mastery-track"><i style="width:${Math.max(4,Math.min(100,s.pct))}%"></i></div>
-    </div>`).join("")}
-    <button class="primary-btn ghost" id="pathReviewBtn">${next ? "Open Reviewer for Focus" : "View My Progress"}</button>
-  </div>`;
-}
-const REVIEWER_ADDENDUM = {
-  second: {
-    english: `
-
-DETAILED STUDY NOTES AND COMMUNICATION GUIDE
-
-THE COMMUNICATION PROCESS
-• Communication includes a sender, message, channel, receiver, feedback, context, and possible noise or barriers.
-• Encoding turns an idea into words, symbols, images, gestures, or other signs. Decoding is interpreting the received message.
-• A channel is the medium used to deliver a message, such as speech, email, a report, a presentation, or a visual.
-• Feedback shows whether the message was understood. Clarify when the response reveals confusion.
-• Physical, language, emotional, cultural, technological, and information-overload barriers can interfere with meaning.
-• Communication is transactional: participants influence one another, and meaning depends on the situation, relationship, purpose, and shared knowledge.
-
-AUDIENCE, PURPOSE, AND CONTEXT
-• Before writing or speaking, identify the audience, purpose, subject, occasion, and expected outcome.
-• Informative communication explains. Persuasive communication supports a position and encourages a response. Instructional communication guides a process.
-• Match tone, vocabulary, detail, format, and formality to the audience. A message to a close friend should not have the same structure as an email to a professor.
-• Audience awareness means anticipating what readers know, what needs explanation, what concerns they may have, and what action they should take.
-• Use precise words instead of vague expressions. Avoid unnecessary jargon unless the audience understands the specialized terms.
-
-ACADEMIC AND TECHNICAL TEXTS
-• Academic and technical texts are formal, organized, evidence-based, and written for a clear discipline or task.
-• A thesis states the central claim or controlling idea. An outline arranges main points and supporting details before drafting.
-• A paragraph usually has a topic sentence, supporting explanation or evidence, and a concluding or linking sentence.
-• Coherence means ideas make sense together. Cohesion is created through transitions, repeated key terms, clear pronouns, and logical connections.
-• Common patterns include cause and effect, comparison and contrast, problem and solution, chronological order, classification, and process.
-• An introduction gives context and purpose. Body sections develop ideas. A conclusion synthesizes important points without introducing an unrelated argument.
-
-CRITICAL READING, LISTENING, AND VIEWING
-• Identify the main idea, supporting details, purpose, audience, tone, and point of view.
-• Separate a claim from the evidence supporting it. Ask whether evidence is relevant, sufficient, current, and credible.
-• Notice assumptions, emotionally loaded language, missing information, generalizations, and possible bias.
-• Active listening requires attention to words, tone, emphasis, evidence, and implied meaning. Confidence does not guarantee accuracy.
-• For a chart or diagram, read the title, labels, legend, units, scale, source, and date before interpreting the pattern.
-• A conclusion should describe the visible trend and avoid claiming more than the data support.
-
-RESEARCH, SOURCES, AND EVIDENCE
-• Reliable sources identify an author or organization, provide evidence, explain methods when relevant, and can be checked against other sources.
-• Primary sources provide original or firsthand information. Secondary sources interpret, analyze, or summarize other sources.
-• Introduce evidence, present it accurately, and explain how it supports the point. Evidence without explanation does not automatically prove a claim.
-• Keep a source record with author, title, date, publisher or site, page or link, and the ideas or quotations used.
-• Cite borrowed words, facts, ideas, images, tables, and data according to the required style. A reference list helps readers locate sources.
-
-SUMMARY, PARAPHRASE, AND SYNTHESIS
-• A summary reduces a longer text to its main idea and most important points without changing the meaning.
-• A paraphrase restates a specific passage in your own sentence structure and wording while preserving the meaning and citing the source.
-• Changing only a few words or rearranging the source sentence is not an acceptable paraphrase.
-• Synthesis combines ideas from multiple sources to develop a larger conclusion. It does not simply list one source after another.
-• Compare sources for agreement, disagreement, scope, methods, and limitations before combining their ideas.
-
-MULTIMODAL AND VISUAL COMMUNICATION
-• Multimodal communication combines written language, speech, images, color, layout, sound, movement, charts, and diagrams.
-• Bar charts compare categories, line graphs show change over time, and tables provide exact values.
-• Every visual needs a clear title and labels. Include units, a useful scale, a legend when necessary, and a source when data are borrowed.
-• Use readable text, sufficient contrast, consistent alignment, and only the visual elements needed to support the message.
-• Do not distort a graph with a misleading scale, missing labels, inappropriate 3D effects, or selective data.
-• A presenter should explain what the audience should notice rather than reading every word on a slide.
-
-INTERACTION, LISTENING, AND FEEDBACK
-• Active listening includes focusing on the speaker, appropriate eye contact, noticing non-verbal signals, asking clarifying questions, and responding to the actual message.
-• Respectful feedback describes a specific behavior or part of the work, explains its effect, and offers a useful next step.
-• In collaboration, clarify roles, deadlines, decision rules, and responsibilities. Record important agreements.
-• In a discussion or debate, respond to the claim and evidence rather than attacking the person.
-• Non-verbal communication includes facial expression, posture, gestures, eye contact, distance, pace, and vocal emphasis.
-• Professional communication remains respectful even when participants disagree or feel pressured.
-
-GRAMMAR, STYLE, AND EDITING
-• A complete sentence has a subject and predicate and expresses a complete thought. Avoid fragments and run-on sentences.
-• Make the subject and verb agree. Use pronouns with clear antecedents and correct number and person.
-• Use active voice when you want the actor and action to be direct. Use passive voice when the receiver or process is more important.
-• Use commas in lists, introductory elements, and independent clauses joined by a coordinating conjunction.
-• A semicolon can join closely related independent clauses; do not use it between a dependent clause and an independent clause.
-• Revise for clarity, concision, precise vocabulary, transitions, spelling, capitalization, punctuation, and consistent formatting.
-
-ETHICS, AI, AND REFLECTION
-• Plagiarism is presenting another person's words, ideas, structure, or work as your own. Changing a few words does not remove the need to cite.
-• Do not invent sources, evidence, quotations, data, or research results. Represent uncertainty honestly.
-• Protect confidential information and obtain permission before sharing another person's private communication or work.
-• AI assistance and borrowed ideas should be acknowledged according to the instructor's or institution's required practice. Check AI output for accuracy, bias, and support.
-• Reflect after communicating: identify what was clear, what confused the audience, what evidence was effective, and what you will change next time.
-• Final check: Is the message accurate, audience-aware, organized, ethical, accessible, and clear enough to achieve its purpose?`
-  }
-};
-
-/* Student-friendly weekly reading plan. Each screen shows one small section
-   instead of making students read the whole reviewer at once. */
-const STUDENT_REVIEWER_WEEKS = {
-  second: {
-    english: [
-      {
-        title:"Week 1 · Communication and Audience",
-        lead:"Second Term is about communicating in academic and training contexts, where talk and writing are formal, structured, and discipline-specific. Week 1 builds the skill of reading a situation before you speak or write: who the audience is, what the purpose is, and what the context allows.",
-        competencies:[
-          "Identify how content, structure, and language of spoken, written, and multimodal academic and technical texts are shaped by audience, purpose, and context.",
-          "Use critical listening, reading, and viewing strategies in comprehending academic and technical texts.",
-          "Employ appropriate strategies in understanding unfamiliar vocabulary, including specialized terminology.",
-          "Use language, tone, and structure appropriately for audience, purpose, and context when discussing academic and technical topics."
-        ],
-        body:`1. THE COMMUNICATION SITUATION
-
-Every academic message has a sender, a message, a channel, a receiver, feedback, and a context. Noise is anything that blocks understanding: a noisy room, an unfamiliar term, a cluttered slide, strong emotion, or simply too much information at once.
-
-In academic and training contexts the situation has extra rules. Interaction is formal (you use standard language), structured (there is an expected order and format), and discipline-specific (each subject has its own terms and conventions). A lab report, a panel discussion, a reaction paper, and a podcast episode are all "communication," but each one follows a different set of expectations.
-
-2. AUDIENCE, PURPOSE, CONTEXT
-
-Ask three questions before drafting anything:
-• Audience — Who will read, listen to, or view this? What do they already know? What words will they accept without explanation?
-• Purpose — Am I informing, explaining, persuading, instructing, or reflecting? What should the audience understand or do afterwards?
-• Context — Where does this happen: a graded essay, a class discussion, a training demo, a group chat? How much time or space do I have?
-
-These three shape CONTENT (what you include and leave out), STRUCTURE (the order and the sections), and LANGUAGE (word choice, tone, level of formality). Change the audience and all three change with it. A technical definition written for classmates in the same strand can keep the jargon; the same idea written for a general assembly needs everyday words and an example.
-
-3. TONE AND REGISTER
-
-Register is the level of formality. Academic register avoids slang, contractions, and text-speak, and it prefers precise verbs. Tone is the attitude the reader hears: respectful, tentative, confident, or careless. Hedging words (may, suggests, appears to) show honest uncertainty; overstatement (proves, always, never) usually weakens an academic claim.
-
-Inclusive language is part of the standard: describe people accurately and respectfully, avoid stereotypes, and critique the idea rather than the person.
-
-4. CRITICAL LISTENING, READING, AND VIEWING
-
-Critical means active, not suspicious. Use a before–during–after routine:
-• Before: preview the title, headings, abstract, figures, and the speaker's outline. Predict the main claim.
-• During: mark the thesis, the main points, the evidence, and the transitions. Note what is claim and what is support. Write questions in the margin.
-• After: state the main idea in one sentence of your own, then list what is still unclear.
-
-For listening and viewing, watch signposts ("first", "however", "to summarise"), repetition, and emphasis; these mark what the speaker thinks is important. In a video or infographic, read the images as part of the message, not as decoration.
-
-5. UNFAMILIAR AND SPECIALIZED VOCABULARY
-
-You are not expected to know every term, only to have a strategy:
-• Context clues — definition, restatement, example, or contrast inside the same sentence or paragraph.
-• Word parts — prefixes, roots, suffixes (bio-, -logy, un-, -tion) give a first guess.
-• Reference tools — subject glossaries, textbook margins, and dictionaries; general dictionaries may miss a technical sense.
-• Discipline check — a word can shift meaning by field: "significant" in statistics is not "important" in everyday talk; "power" in physics is not "power" in social studies.
-
-Keep a personal glossary: the term, the definition in your own words, and one sentence using it correctly.
-
-6. PUTTING IT TOGETHER
-
-When you speak or write this term, plan in this order: situation → purpose → audience → structure → language. If a reader could ask "why are you telling me this?", your purpose was not clear enough.`,
-        terms:[
-          {t:"Audience", d:"The reader, listener, or viewer the text is made for; their knowledge and needs shape your choices."},
-          {t:"Purpose", d:"What the text is meant to do: inform, explain, persuade, instruct, or reflect."},
-          {t:"Context", d:"The situation around the message: the setting, the task, the time limit, the discipline."},
-          {t:"Register", d:"The level of formality of the language you use."},
-          {t:"Tone", d:"The attitude the audience hears in your words."},
-          {t:"Critical listening/reading/viewing", d:"Actively separating main ideas, claims, evidence, and gaps instead of receiving passively."},
-          {t:"Specialized terminology", d:"Words with a specific technical meaning inside a discipline."},
-          {t:"Noise", d:"Anything that interferes with understanding, whether physical, linguistic, or emotional."}
-        ],
-        example:{
-          title:"Same content, two audiences",
-          text:`Task: report that a school water test found 0.4 mg/L of residual chlorine.
-
-To the science teacher: "Residual chlorine measured 0.4 mg/L, within the 0.3–0.5 mg/L range prescribed for potable supply, indicating adequate disinfection at the sampling point."
-
-To the student body: "We tested the drinking water. The chlorine level is 0.4 — inside the safe range set for drinking water, so the water is properly disinfected."
-
-Same facts. The audience changed the vocabulary, the sentence length, and how much was explained.`
-        },
-        checklist:[
-          "I can name my audience, purpose, and context in one sentence each.",
-          "My structure follows what this text type expects.",
-          "My tone is formal and respectful, and my claims are not overstated.",
-          "I used a strategy (context clues, word parts, glossary) for every unfamiliar term.",
-          "I can restate the material I read or heard in one sentence of my own."
-        ],
-        tip:"After reading or listening, close the text and write the main idea from memory in one sentence. If you cannot, you recognised the words but did not yet comprehend the message."
-      },
-      {
-        title:"Week 2 · Reading, Research, and Evidence",
-        lead:"Week 2 moves from understanding texts to producing them. You compose well-structured academic and technical texts, condense sources into outlines, summaries, and paraphrases, and handle evidence with intellectual integrity — citation, AI declaration, and no plagiarism.",
-        competencies:[
-          "Compose well-structured academic and technical texts, showing awareness of audience and purpose (e.g., essays, research and analysis reports, presentations with visual aids).",
-          "Condense spoken, written, or multimodal texts into diagrams, charts, outline, summary, synopsis, or paraphrase.",
-          "Employ ethical considerations (citation methods, AI attribution/declaration, avoiding plagiarism) in producing extended academic and technical texts.",
-          "Explain concepts using appropriate academic and technical vocabulary."
-        ],
-        body:`1. STRUCTURE FIRST
-
-A thesis is the controlling claim of the whole text — one sentence that is arguable and specific. "Social media affects students" is a topic; "Unstructured evening social media use lowers Grade 11 students' recall of lesson content" is a thesis.
-
-An outline arranges the main points before drafting, so you argue instead of wander. A dependable shape for academic and technical texts:
-• Introduction — context, the problem or question, the thesis, and a preview of the sections.
-• Body — one main point per section or paragraph, each with evidence and explanation.
-• Conclusion — the answer restated, the limits of the answer, and what follows from it.
-
-Inside a paragraph use the C-E-E pattern: Claim (topic sentence), Evidence (data, quotation, example, observation), Explanation (how the evidence supports the claim). A paragraph with evidence but no explanation leaves the reader to guess your reasoning.
-
-Technical texts add their own sections: abstract, methods, results, discussion, recommendations, references. Follow the format the task prescribes; format is part of the meaning in these disciplines.
-
-2. CLAIMS AND EVIDENCE
-
-Test your own evidence the same way you test a source:
-• Relevance — does it actually support this claim?
-• Sufficiency — is one example enough, or do you need a set?
-• Accuracy — are the numbers, names, and quotations exact?
-• Currency — is the information recent enough for this field?
-• Authority — who produced it, and what makes them qualified?
-• Bias — who benefits if the reader believes it? What is left out?
-
-Primary sources give firsthand or original material (raw data, interviews, original studies, historical documents). Secondary sources analyse or report on those (reviews, textbooks, news articles). Both are useful; you must know which you are holding.
-
-3. CONDENSING: OUTLINE, SUMMARY, PARAPHRASE, SYNTHESIS
-
-• Outline — the skeleton: main points and subpoints only.
-• Summary — much shorter than the original, main idea plus key supporting points, in your own words, source cited.
-• Synopsis — a brief overview of an entire work, usually keeping its order.
-• Paraphrase — roughly the same length as the original passage, one specific idea restated in your own words and your own sentence structure, source still cited.
-• Synthesis — combining ideas from several sources to reach a conclusion none of them states alone.
-
-Method for an honest paraphrase: read the passage, close it, write the idea from memory, then reopen it to check accuracy — not to copy phrasing. Changing a few words while keeping the original sentence pattern is still plagiarism.
-
-4. CITATION AND INTELLECTUAL INTEGRITY
-
-Cite whenever you quote, paraphrase, summarise, or use data, images, or ideas that are not your own and not common knowledge. A citation has two parts: the in-text marker and the full entry in the reference list. Keep a source record while you research — author, title, date, publisher or site, page or link, and the exact idea you took — because reconstructing citations afterwards is where mistakes and accidental plagiarism happen.
-
-Plagiarism includes copying without attribution, patch-writing (stitching lightly edited sentences together), reusing your own graded work without permission, and inventing or altering data. Quotation marks plus a citation are required for exact wording; a citation alone is not enough.
-
-AI attribution and declaration: if you used an AI tool, state it as your school requires — which tool, for which part of the work (brainstorming, outlining, language editing), and what you did to verify the output. AI text can be fluent and still wrong, and it can fabricate sources, so every AI-supplied fact and reference must be checked against a real source. The thinking, the claims, and the responsibility remain yours.
-
-5. REVISING FOR EVIDENCE
-
-Before submitting, reread only for support: highlight each claim, then check that something specific follows it and that its source is credited. Unsupported claims are the most common reason academic work loses credibility.`,
-        terms:[
-          {t:"Thesis", d:"The single controlling claim of a text; arguable and specific."},
-          {t:"Outline", d:"The planned order of main points and subpoints before drafting."},
-          {t:"Claim / Evidence / Explanation", d:"The paragraph pattern: what you assert, what supports it, and how it supports it."},
-          {t:"Primary source", d:"Original, firsthand material such as raw data, interviews, or original studies."},
-          {t:"Secondary source", d:"A work that reports on or analyses primary material."},
-          {t:"Summary", d:"A much shorter version giving only main ideas, in your own words, with the source cited."},
-          {t:"Paraphrase", d:"One idea restated in your own words and sentence structure, same length, source cited."},
-          {t:"Synthesis", d:"A conclusion drawn by combining several sources."},
-          {t:"Citation", d:"The in-text marker plus reference entry that credits a source."},
-          {t:"Plagiarism", d:"Presenting another's words, ideas, or data as your own, including patch-writing."},
-          {t:"AI declaration", d:"A statement of which AI tool was used, for what part of the work, and how the output was verified."}
-        ],
-        example:{
-          title:"Paraphrase or plagiarism?",
-          text:`Original: "Regular formative feedback improves student performance more reliably than a single summative assessment at the end of a unit."
-
-Unacceptable (patch-writing): "Regular formative feedback improves learner performance more dependably than one summative test at the end of a unit." — Only synonyms changed; the structure is the original's.
-
-Acceptable paraphrase: "Students tend to improve more consistently when they receive feedback while learning than when they are judged only by one end-of-unit test (Reyes, 2024)." — New structure, new wording, meaning preserved, source cited.`
-        },
-        checklist:[
-          "My thesis is one arguable, specific sentence.",
-          "Every body section has a claim, evidence, and an explanation.",
-          "Each source is recorded with author, title, date, and link or page.",
-          "Every quotation is exact and inside quotation marks; every paraphrase is restructured, not reworded.",
-          "All borrowed ideas, data, and images are cited, and any AI use is declared and verified."
-        ],
-        tip:"Write your reference entry at the moment you copy an idea into your notes. It takes ten seconds then and prevents the most common integrity problem later."
-      },
-      {
-        title:"Week 3 · Visuals, Collaboration, and Editing",
-        lead:"Week 3 covers the interactive and multimodal side of academic work: reading data in charts and figures, following and giving procedures, asking questions and giving feedback, collaborating on technical tasks, and reflecting on how well you communicated.",
-        competencies:[
-          "Interpret data represented in multimodal forms (e.g., charts, tables, figures).",
-          "Explain concepts using multimodal representations (e.g., diagrams, graphs, charts, infographics).",
-          "Follow procedures, instructions, or processes in spoken, written, or multimodal forms to successfully achieve outcomes.",
-          "Participate constructively in lectures, presentations, or discussions by formulating and asking questions, providing feedback, and responding appropriately.",
-          "Collaborate on academic and technical tasks to leverage individual knowledge and optimize common goals.",
-          "Describe and review your own processes of interpretation, engagement, and expression, identifying strengths and areas for growth."
-        ],
-        body:`1. READING DATA IN MULTIMODAL FORMS
-
-Multimodal texts combine words with images, layout, sound, movement, or data displays. Read a chart in a fixed order: title → axes and units → scale → legend → the data pattern → the source and date. Only then state what it shows.
-
-Match the display to the job:
-• Bar chart — compares amounts across categories.
-• Line graph — shows change over time or trend.
-• Pie chart — shows parts of one whole (use few slices).
-• Table — gives exact values for lookup and comparison.
-• Flowchart or diagram — shows steps, parts, or relationships.
-• Infographic — combines several of these for a general audience.
-
-Watch for misleading design: a vertical axis that does not start at zero, uneven intervals, missing units, 3-D effects that distort area, cherry-picked date ranges, or a missing source. Describe data carefully: a chart shows an association, not automatically a cause.
-
-When you make a visual, give it a number and caption, label axes with units, keep it readable in one glance, cite the data source, and refer to it in your text ("As Figure 2 shows, ..."). A visual that is never mentioned in the text is decoration.
-
-2. FOLLOWING AND WRITING PROCEDURES
-
-To follow a procedure: read all steps first, gather materials, note warnings and conditions, do the steps in order, and verify the outcome against the stated result. If a step fails, stop and check the previous step rather than improvising forward.
-
-To write one: state the goal and the expected outcome, list materials or prerequisites, number the steps in order, use one imperative action per step ("Connect the probe", not "The probe should be connected"), place warnings before the risky step, and add a verification step at the end. Test it by asking someone to follow it exactly as written.
-
-3. PARTICIPATING: QUESTIONS AND FEEDBACK
-
-Good academic questions are specific and purposeful:
-• Clarifying — "When you say 'stable', over what period?"
-• Probing — "What evidence supports that step?"
-• Extending — "How would this apply to a smaller sample?"
-Ask one question at a time, use the speaker's own terms, and signal what you already understood so the answer starts where you need it.
-
-Constructive feedback is specific, descriptive, and actionable. A workable frame: name the specific part → describe its effect on you as audience → suggest a next step. "Your graph on slide 4 has no units, so I could not tell if the values are minutes or hours — labelling the y-axis would fix it" is usable. "Your slides are confusing" is not. Critique the work, not the person, and receive feedback by listening fully, asking for clarification, and deciding what to act on.
-
-4. COLLABORATING ON ACADEMIC AND TECHNICAL TASKS
-
-Collaboration is a deliberate structure, not simply dividing the file. Agree at the start on: the goal and the standard of "done"; roles and who owns which section; deadlines that are earlier than the submission date; how you will communicate and how quickly you reply; and how the final text gets one consistent voice and format. Handle disagreement by returning to the evidence and the task requirements. Credit each member's contribution honestly.
-
-5. EDITING IN PASSES
-
-Edit one concern at a time; trying to fix everything at once is how errors survive:
-1. Content — accurate, complete, and relevant to the purpose.
-2. Organisation — logical order, clear transitions, one idea per paragraph.
-3. Clarity and concision — cut empty phrases, prefer strong verbs, break overlong sentences.
-4. Grammar and mechanics — agreement, tense, pronoun reference, punctuation, spelling.
-5. Documentation and format — citations, references, figure numbers, headings, font, margins.
-Read the final draft aloud, or have a tool read it to you; your ear catches what your eye skips.
-
-6. REFLECTION
-
-Reflection is a competency, not an afterthought. After a task, review your own processes of interpretation (how you read or listened), engagement (how you participated), and expression (how you produced the text). Name one strength with evidence, one area for growth, and one concrete action for the next task. This is how readiness for academic and technical communication actually improves.`,
-        terms:[
-          {t:"Multimodal text", d:"A text that communicates through more than one mode: words, images, layout, sound, or movement."},
-          {t:"Axis / scale / legend", d:"The parts of a chart that tell you what is measured, in what units, and what each colour or symbol means."},
-          {t:"Caption", d:"The numbered label and short description that lets a figure be referred to and understood on its own."},
-          {t:"Procedure", d:"An ordered set of steps that reliably produces a stated outcome."},
-          {t:"Clarifying / probing / extending question", d:"Questions that fix understanding, test evidence, or push an idea further."},
-          {t:"Constructive feedback", d:"Comment that is specific, descriptive of effect, and actionable."},
-          {t:"Active listening", d:"Attending fully, noting key detail, and responding to the actual message."},
-          {t:"Editing pass", d:"One focused review of a draft for a single concern."},
-          {t:"Reflection", d:"Reviewing your own interpretation, engagement, and expression to identify strengths and next steps."}
-        ],
-        example:{
-          title:"Describing a figure without overclaiming",
-          text:`Figure: line graph, "Average quiz score by week, Grade 11-B (n = 42), Weeks 1–6, source: class records".
-
-Weak: "The graph proves that the new reviewer made everyone smarter."
-
-Better: "Average scores rose from 62% in Week 1 to 78% in Week 6 (Figure 1). The increase coincides with the introduction of the weekly reviewer in Week 3, although attendance also rose over the same period, so the reviewer cannot be identified as the sole cause."`
-        },
-        checklist:[
-          "Every figure has a number, caption, labelled axes with units, and a cited source, and is referred to in my text.",
-          "My procedure can be followed by someone else exactly as written, and ends with a way to verify the result.",
-          "My questions are specific, and my feedback names a part, its effect, and a next step.",
-          "Our group agreed on roles, deadlines, and one consistent format before drafting.",
-          "I edited in separate passes and read the final draft aloud.",
-          "I named one strength, one area for growth, and one action for next time."
-        ],
-        tip:"Before submitting anything multimodal, cover the text and look only at the visuals. If a classmate cannot tell what they mean from labels and captions alone, the visuals are not finished."
-      }
-    ]
   }
 };
 
@@ -1003,18 +366,198 @@ const TERM_BANK = {
     pretest: {
       english: {
         week1: TERM_CONTENT.second.english.week1.pretest,
-        week2: TERM_CONTENT.second.english.week2.pretest,
-        week3: TERM_CONTENT.second.english.week3.pretest
+        week2: TERM_CONTENT.second.english.week2.pretest
       }
     },
     posttest: {
       english: {
         week1: TERM_CONTENT.second.english.week1.posttest,
-        week2: TERM_CONTENT.second.english.week2.posttest,
-        week3: TERM_CONTENT.second.english.week3.posttest
+        week2: TERM_CONTENT.second.english.week2.posttest
       }
     }
-  },
+  }
+};
+
+const REVIEWER_BY_TERM = {
+  second: {
+    english: `EFFECTIVE COMMUNICATION — SECOND TERM REVIEWER (WEEKS 1 & 2)
+
+WEEK 1: AUDIENCE, PURPOSE, AND CONTEXT
+• The three factors that shape the content, structure, and language of academic and technical communication are Audience, Purpose, and Context.
+• Audience: The readers, listeners, or viewers the text is created for. A specialist audience already knows the field and expects precise terminology, whereas a general audience needs plain language, clear definitions, and relatable examples.
+• Purpose: Answers the question "What is this text meant to do?" Informative texts explain information clearly. Persuasive texts argue for a stance and urge readers to support a position. Instructional texts provide clear step-by-step directions (e.g., lab manuals, assembly guides). Some texts combine purposes, such as presenting factual findings and recommending action.
+• Context: The specific situation of communication, including venue, setting, occasion, constraints, and time limits (e.g., a 5-minute presentation limit, a thesis defense, or an email request).
+• Spoken academic communication includes panel discussions, oral defenses, and research presentations, which demand organized delivery and appropriate register.
+
+WEEK 2: SHAPING CONTENT, STRUCTURE, AND LANGUAGE
+• Content: The ideas, facts, details, and evidence included in the text. Persuasive texts must back claims with relevant evidence.
+• Structure: The logical organization and arrangement of parts. Academic research uses established structures such as an Abstract (brief overview of the study) and IMRaD (Introduction, Methods, Results, Discussion). Technical instructions are arranged as numbered sequential steps. Headings and subheadings help readers navigate information quickly. Structure should be adapted for the audience (e.g., placing executive recommendations first for busy managers).
+• Language & Register: Register is the level of formality. Academic register uses formal, objective, and precise words, avoiding slang, emojis, or chat language. Hedging words (suggests, indicates, appears to) express careful, honest claims. Active voice ("The team tested the sample") is preferred in technical writing for directness and clarity. Transitions (however, therefore) logically connect ideas.
+• Multimodal Visuals: Charts, graphs, tables, and diagrams present data visually to support key points and must always be labeled with titles, axes, and units.`
+  }
+};
+
+// Comprehensive 2-week student study reviewer
+const STUDENT_REVIEWER_WEEKS = {
+  second: {
+    english: [
+      {
+        title: "Week 1 · Audience, Purpose, and Context",
+        lead: "In Grade 11 Effective Communication, Second Term focuses on academic and training contexts. Every academic and technical text — whether written, spoken, or multimodal — is shaped by three foundational pillars: who you are addressing (Audience), what you want to achieve (Purpose), and the setting or constraints (Context).",
+        formula: "Communication Triad = Audience (Who) + Purpose (Why) + Context (Where & How)",
+        formulaMeaning: "Before drafting or speaking, identifying all three determines what facts to include (content), how to organize them (structure), and what tone or vocabulary to adopt (language).",
+        competencies: [
+          "Identify how content, structure, and language of spoken, written, and multimodal academic and technical texts are shaped by audience, purpose, and context.",
+          "Distinguish between specialist and general audiences and adjust vocabulary, detail, and examples accordingly.",
+          "Recognize informative, persuasive, and instructional purposes in academic and technical texts.",
+          "Demonstrate awareness of context, such as venue, occasion, format, and time limits."
+        ],
+        body: `1. THE FOUNDATIONAL TRIAD
+
+Whenever you compose an academic or technical text, ask three critical questions:
+• AUDIENCE: Who will read, hear, or view this text? What do they already know, and what needs explanation?
+• PURPOSE: What is this text meant to do? Does it explain facts (informative), argue for a position (persuasive), or guide a task (instructional)?
+• CONTEXT: What is the setting, occasion, format, and time limit? Are you speaking at a 5-minute panel, defending a thesis before teachers, or emailing a professor?
+
+When any of these three elements changes, the entire text must be adapted. If the audience changes from research peers to Grade 7 pupils, the topic may be the same, but the vocabulary, structure, and depth must change.
+
+2. AUDIENCE AWARENESS: SPECIALIST VS. GENERAL
+
+• Specialist Audience: Readers or listeners who already understand the subject or field (e.g., fellow STEM classmates, scientists, panels). They expect precise technical terminology, rigorous evidence, and discipline-specific conventions.
+• General Audience: Non-specialists or the broader public who do not have background knowledge in the field. They require plain language, concise definitions for every technical term, visual aids, and relatable examples.
+• Audience Awareness: The conscious habit of tailoring your explanations, sentence complexity, and examples to meet the reader's needs rather than showing off jargon.
+
+3. THE THREE PRIMARY PURPOSES
+
+• Informative Purpose: Explains ideas, processes, or findings clearly, accurately, and objectively without taking a personal side (e.g., research summaries, abstracts, informative articles).
+• Persuasive Purpose: Aims to convince the audience to accept a claim, adopt a viewpoint, or take specific action (e.g., position papers, advocacy statements, proposals).
+• Instructional Purpose: Directs the reader step-by-step through a concrete process or operation (e.g., lab manuals, user guides, assembly directions, safety procedures).
+• Combined Purpose: Many professional and academic reports first inform readers of the facts, and then persuasively recommend an action based on those facts.
+
+4. CONTEXT AND COMMUNICATIVE CONSTRAINTS
+
+Context is the concrete environment in which communication occurs:
+• Venue & Platform: Classroom presentation, formal hall, written journal, lab workbench, or email correspondence.
+• Constraints & Boundaries: Time limits (e.g., a strictly timed 5-minute presentation), word limits, format guidelines, and deadlines.
+• Formality & Setting: A formal thesis defense requires structured delivery, academic register, and visual aids; an informal consultation allows conversational clarification.
+
+5. SPOKEN ACADEMIC COMMUNICATION
+
+Spoken academic texts (such as panel discussions, symposium speeches, oral defenses, and class debates) differ from casual speech. They require clear signposts ("First, we will examine...", "In contrast...", "To summarize..."), respectful turn-taking, and audience-focused vocal delivery.`,
+        terms: [
+          {t:"Audience", d:"The readers, listeners, or viewers a text is made for; their background determines your wording and detail."},
+          {t:"Purpose", d:"What the text is meant to do: to inform, persuade, or instruct."},
+          {t:"Context", d:"The situation of communication, including setting, venue, occasion, and constraints like time limits."},
+          {t:"Specialist Audience", d:"An audience with existing background knowledge and familiarity with technical terms in the field."},
+          {t:"General Audience", d:"An audience that requires plain language, clear explanations, and examples."},
+          {t:"Informative Text", d:"A text written to explain facts and concepts clearly and objectively."},
+          {t:"Persuasive Text", d:"A text that urges the audience to support a specific position or recommendation."},
+          {t:"Instructional Text", d:"A text designed to guide a user through sequential steps of a task or process."}
+        ],
+        example: {
+          title: "Adapting for Audience & Purpose",
+          text: `SCENARIO 1 (Specialist / Informative):
+"The titrant was standardized using potassium hydrogen phthalate (KHP), yielding a molarity of 0.102 M with a relative standard deviation of 0.4%."
+(Specialist terms and precision suited for a lab panel)
+
+SCENARIO 2 (General / Informative):
+"We measured the acid content of the liquid. The results showed normal strength within safe laboratory limits."
+(Everyday language and clear takeaway suited for younger pupils or community members)`
+        },
+        checklist: [
+          "I can clearly name my audience, purpose, and context before writing or speaking.",
+          "I know whether my audience is specialist or general and adjust terminology accordingly.",
+          "My text states its main purpose clearly in the introduction.",
+          "I follow the format, venue rules, and time constraints of the task."
+        ],
+        tip: "Before drafting any report or presentation, ask yourself: 'Who is listening, what do they need to know, and what constraint must I respect?' If your peers say your report has no clear purpose, immediately add a direct purpose statement in your introduction."
+      },
+      {
+        title: "Week 2 · Shaping Content, Structure, and Language",
+        lead: "Once your audience, purpose, and context are established, you shape the text itself through three core dimensions: the information you include (Content), the organization of its sections (Structure), and the style, register, and precision of your words (Language).",
+        formula: "Crafting the Text = Relevant Content + Logical Structure + Precise Academic Language",
+        formulaMeaning: "A strong academic text backs claims with evidence, follows disciplined organizational frameworks (such as IMRaD or numbered steps), and maintains an objective, formal register.",
+        competencies: [
+          "Select relevant, evidence-based content that directly advances the purpose of the text.",
+          "Apply standard academic and technical structures (IMRaD, numbered steps, abstracts, headings and subheadings).",
+          "Adopt an academic register characterized by formal tone, objective stance, and hedging.",
+          "Employ precise technical terminology, active voice, and logical transitions.",
+          "Integrate labeled multimodal visuals (charts, tables, diagrams) that visually support key points."
+        ],
+        body: `1. CONTENT: FACTS, DATA, AND EVIDENCE
+
+Content refers to the ideas, facts, details, and observations included in a text:
+• In persuasive texts, content must consist of clear claims backed by relevant, verifiable evidence — not unsupported personal opinions or jokes.
+• In technical texts, content must be accurate, specific, and actionable so readers can perform tasks or make informed decisions.
+• Always exclude irrelevant details that distract the reader from the core objective.
+
+2. STRUCTURE: STANDARD ACADEMIC & TECHNICAL ORGANIZATION
+
+Structure refers to the organization and order of the parts of a text:
+• Abstract: A concise overview positioned at the start of a research report that briefly summarizes the study's purpose, methods, findings, and conclusion.
+• Introduction: Establishes context, introduces the topic, and clearly states the purpose or central thesis.
+• IMRaD Format (Introduction, Methods, Results, Discussion): The standard structure expected by scientific disciplines for lab reports and empirical research.
+• Numbered Sequential Steps: The required structure for technical manuals, recipes, protocols, and guides because procedures must be executed in exact chronological order.
+• Headings and Subheadings: Visual navigational signposts that help readers locate information quickly and follow the author's logic.
+• Adapting Structure: Good communicators rearrange structure to suit their readers — such as placing key recommendations first for busy managers or decision-makers.
+
+3. LANGUAGE & REGISTER
+
+Language choices encompass vocabulary, tone, syntax, and register:
+• Register: The level of formality of language.
+• Academic Register: Formal, objective, and precise. Avoid slang, emojis, casual text abbreviations ("lol", "super cool"), and emotional outbursts.
+• Hedging (Cautious Language): Academic writers use words such as "suggests," "indicates," "may," or "appears to" to make honest, defensible claims rather than exaggerated absolute assertions ("proves beyond any doubt").
+• Active Voice: Technical communication often favors active voice ("The team tested the sample" rather than "The sample was tested by the team") because it is direct, energetic, and clear about who took the action.
+• Logical Transitions: Connective words such as "however" (contrast), "therefore" (cause/result), "furthermore" (addition), and "consequently" create cohesive links between sentences and paragraphs.
+
+4. PRECISE TECHNICAL LANGUAGE VS. VAGUE EXPRESSIONS
+
+Technical writing demands exactness. Vague wording causes errors and misinterpretations:
+• Vague: "Heat it a bit until it gets warm-ish."
+• Precise Technical: "Heat the solution to 60 °C for 5 minutes."
+• When specialized terms are used, define them clearly when addressing audiences who may not be familiar with the terminology.
+
+5. SPOKEN PRESENTATIONS VS. WRITTEN TEXTS
+
+Reading a formal written essay aloud word-for-word does not make an effective presentation. Spoken delivery requires:
+• Shorter, digestible sentences.
+• Clear oral signposts ("Now, turning to our second point...").
+• Deliberate vocal pacing, pauses for emphasis, and active engagement with the audience.
+
+6. MULTIMODAL ACADEMIC TEXTS & VISUALS
+
+Multimodal texts combine words with visual, numerical, or auditory elements:
+• Visuals (charts, graphs, tables, diagrams) must never be mere decoration; they must visually present data to support a point.
+• Every visual must have a clear title, labeled axes with measurement units, and an explanation connecting it to the text.`,
+        terms: [
+          {t:"Content", d:"The ideas, facts, details, and evidence included in a text."},
+          {t:"Structure", d:"The organization, layout, and sequence of parts in a text."},
+          {t:"Register", d:"The level of formality of language (e.g., academic, technical, formal, informal)."},
+          {t:"Abstract", d:"A concise summary at the beginning of a research report outlining purpose, methods, and results."},
+          {t:"IMRaD", d:"Introduction, Methods, Results, Discussion — the standard organizational structure for lab and research reports."},
+          {t:"Hedging", d:"Cautious language (e.g., 'suggests', 'indicates', 'may') used to state claims honestly without overclaiming."},
+          {t:"Active Voice", d:"A sentence structure where the subject performs the action ('The team tested the sample'), ensuring directness."},
+          {t:"Multimodal Text", d:"A text combining language with visuals, audio, or charts to communicate data and ideas effectively."}
+        ],
+        example: {
+          title: "Precision & Register in Action",
+          text: `CASUAL / VAGUE (Avoid in Academic/Technical Writing):
+"Sleep is like super important lol. The power button might maybe be pressed if you wanna power stuff."
+
+ACADEMIC & TECHNICAL (Effective):
+"The results suggest a significant correlation between adequate sleep and academic performance. Press the power button for three seconds to initiate calibration."`
+        },
+        checklist: [
+          "My persuasive text contains claims supported by relevant evidence.",
+          "My report uses clear headings, an informative introduction, and appropriate structure (e.g., IMRaD or numbered steps).",
+          "My language is formal, objective, and free from slang or casual colloquialisms.",
+          "I use hedging words ('suggests', 'indicates') to make careful, honest claims.",
+          "All charts, diagrams, and figures are properly labeled with titles, units, and clear explanations."
+        ],
+        tip: "When preparing technical instructions, always use numbered steps in chronological order. When presenting research to busy stakeholders, adapt your structure by placing your primary recommendation right up front!"
+      }
+    ]
+  }
 };
 
 const WEEK_KEYS = TERM_WEEKS.map(w=>w.key);
@@ -1077,7 +620,9 @@ function buildQueueFromPools(pools, total){
 function buildPracticeQueue(weeks, testType){
   const keys = validWeeks(weeks);
   const pools = keys.map(key=>({key, items: weekPool(testType, key)}));
-  return buildQueueFromPools(pools, PRACTICE_TOTAL);
+  const totalAvailable = pools.reduce((sum, p) => sum + p.items.length, 0);
+  const target = Math.min(PRACTICE_TOTAL, totalAvailable);
+  return buildQueueFromPools(pools, target);
 }
 function buildAssignedQueue(assignment, testType){
   const keys = validWeeks(assignment.weeks);
@@ -1093,7 +638,90 @@ function buildAssignedQueue(assignment, testType){
   }
   pools = pools.filter(p=>p.items.length);
   if(!pools.length) return [];
-  return buildQueueFromPools(pools, total);
+  const totalAvailable = pools.reduce((sum, p) => sum + p.items.length, 0);
+  const target = Math.min(total, totalAvailable);
+  return buildQueueFromPools(pools, target);
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str || "";
+  return d.innerHTML;
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+function distributeCount(total, n){
+  if(n <= 0) return [];
+  const base = Math.floor(total / n);
+  let rem = total - base * n;
+  const arr = [];
+  for(let i = 0; i < n; i++) arr.push(base + (i < rem ? 1 : 0));
+  return shuffle(arr);
+}
+function inferSkill(subject, question){
+  const q = String(question || "").toLowerCase();
+  if(/audience|general audience|specialist|reader|viewer/.test(q)) return "Audience Awareness";
+  if(/purpose|informative|persuasive|instructional|aims to/.test(q)) return "Purpose & Intent";
+  if(/context|setting|time limit|venue|occasion/.test(q)) return "Contextual Understanding";
+  if(/structure|abstract|imrad|steps|heading|introduction|transition/.test(q)) return "Text Structure & Organization";
+  if(/register|hedging|active voice|formal|tone|objective|slang/.test(q)) return "Academic & Technical Language";
+  if(/multimodal|visual|chart|graph|labeled/.test(q)) return "Multimodal Representations";
+  return "Effective Communication";
+}
+function buildSkillBreakdown(answers){
+  const map = {};
+  (answers || []).forEach(a=>{
+    const skill = a.skill || inferSkill(a.subject, a.q);
+    if(!map[skill]) map[skill] = {skill, correct:0, total:0};
+    map[skill].total++;
+    if(a.correct) map[skill].correct++;
+  });
+  return Object.values(map).map(v=>({...v, pct: Math.round((v.correct/v.total)*100)}));
+}
+function masteryLabel(pct){
+  if(pct >= 85) return "Mastered";
+  if(pct >= 70) return "Developing";
+  return "Needs practice";
+}
+function getSavedMastery(){
+  try{
+    const raw = localStorage.getItem("tq_mastery_" + ((state.student && state.student.email) || ""));
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function learningPathHtml(){
+  const rows = getSavedMastery();
+  if(!rows.length){
+    return `<div class="learning-panel">
+      <div class="lp-title">Your Learning Path &middot; Second Term</div>
+      <div class="lp-sub">Start with a Pre-Test to evaluate your baseline on Week 1 (Audience, Purpose, Context) and Week 2 (Content, Structure, Language).</div>
+      <button class="primary-btn ghost" id="pathStartBtn">Find My Starting Point</button>
+    </div>`;
+  }
+  const focus = rows.filter(s=>s.pct < 85).sort((a,b)=>a.pct-b.pct);
+  const next = focus[0];
+  const action = next
+    ? `Recommended next step: review <b>${escapeHtml(next.skill)}</b>, then practice again before the Post-Test.`
+    : "You are showing strong mastery across the Second Term competencies. You are ready to verify your readiness with the Post-Test.";
+  return `<div class="learning-panel">
+    <div class="lp-title">Your Learning Path &middot; Second Term</div>
+    <div class="lp-sub">${action}</div>
+    ${rows.map(s=>`<div class="mastery-row">
+      <div class="mr-top"><span>${escapeHtml(s.skill)}</span><span>${masteryLabel(s.pct)} &middot; ${s.pct}%</span></div>
+      <div class="mastery-track"><i style="width:${Math.max(4,Math.min(100,s.pct))}%"></i></div>
+    </div>`).join("")}
+    <button class="primary-btn ghost" id="pathReviewBtn">${next ? "Open Reviewer for Focus" : "View My Progress"}</button>
+  </div>`;
 }
 
 function getStudent(){
@@ -1143,7 +771,7 @@ let state = {
   screen: "intro",
   student: getStudent(),
   practiceSubjects: [SUBJECT],
-  practiceWeeks: [],
+  practiceWeeks: WEEK_KEYS.slice(),
   practiceType: null,
   practiceTerms: ["second"],
   quizQueue: [],
@@ -1210,16 +838,16 @@ function renderIntro(){
   app.innerHTML = `
     <div class="fade-in">
       <div class="hero">
-        <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11</div>
+        <div class="kicker">STRENGTHENED SHS CURRICULUM &middot; GRADE 11 &middot; TERM 2</div>
         <h2>Welcome to Tap-Quiz.</h2>
-        <p>A quick tour before you dive in — here's what you can do:</p>
+        <p>Your interactive learning companion for Effective Communication in Academic and Training Contexts:</p>
       </div>
       <div class="feature-list">
-        <div class="feature-item"><span class="dot"></span><span><b>Pre-Test &amp; Post-Test practice:</b> take a randomized set of Effective Communication questions, one week at a time or all three weeks together.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Weekly reviewers:</b> Week 1 to Week 3 of the Second Term, so you can study exactly what you need before a test.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Scenario questions:</b> not just facts, real situations that ask you to apply what you know.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Track your progress:</b> every attempt is saved so you can see how you're improving over time.</span></div>
-        <div class="feature-item"><span class="dot"></span><span><b>Join a class:</b> enter your teacher's code to get the exact test they've set up for you.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Second Term Question Bank:</b> verified 60-question set covering Week 1 and Week 2 (15 Pre-Test and 15 Post-Test per week).</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>2-Week Focused Reviewers:</b> clear study notes and worked examples for Week 1 (Audience, Purpose, Context) and Week 2 (Content, Structure, Language).</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Scenario-Based Questions:</b> test your understanding of real academic, technical, and classroom situations.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Track Your Progress:</b> see your score history, mastery breakdown, and review incorrect answers.</span></div>
+        <div class="feature-item"><span class="dot"></span><span><b>Join a Class:</b> enter your teacher's code to take timed assigned tests.</span></div>
       </div>
       <button class="primary-btn" id="continueBtn">Continue</button>
     </div>
@@ -1265,26 +893,26 @@ function renderHome(){
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
-        <div class="who">Hi, <b>${escapeHtml(state.student.name.split(" ")[0])}</b></div>
+        <div class="who">Hi, <b>${escapeHtml(state.student.name.split(" ")[0])}</b> &middot; Second Term</div>
         <button class="pill-btn outline" id="switchBtn">Switch account</button>
       </div>
       ${learningPathHtml()}
       <div class="home-grid">
         <div class="home-card" id="preCard">
           <div class="hicon">📝</div>
-          <div><div class="htitle">Pre-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} randomized questions by week, baseline check</div></div>
+          <div><div class="htitle">Pre-Test Practice</div><div class="hsub">Randomized questions by week &middot; Baseline check</div></div>
         </div>
         <div class="home-card" id="postCard">
           <div class="hicon">✅</div>
-          <div><div class="htitle">Post-Test Practice</div><div class="hsub">${PRACTICE_TOTAL} different randomized questions by week</div></div>
+          <div><div class="htitle">Post-Test Practice</div><div class="hsub">Randomized questions by week &middot; Mastery check</div></div>
         </div>
         <div class="home-card" id="reviewCard">
           <div class="hicon">📖</div>
-          <div><div class="htitle">Reviewers</div><div class="hsub">Key concepts for Weeks 1&ndash;3 of the Second Term</div></div>
+          <div><div class="htitle">Reviewers (Weeks 1 &amp; 2)</div><div class="hsub">Key concepts, terms &amp; worked examples for Term 2</div></div>
         </div>
         <div class="home-card" id="progressCard">
           <div class="hicon">📈</div>
-          <div><div class="htitle">My Progress</div><div class="hsub">See your past attempts and scores</div></div>
+          <div><div class="htitle">My Progress</div><div class="hsub">See your past attempts and mastery breakdown</div></div>
         </div>
         <div class="home-card" id="joinCard">
           <div class="hicon">🏫</div>
@@ -1297,7 +925,7 @@ function renderHome(){
           ${joinedClasses.map((c,i)=>`
             <button class="class-card saved-class-card" data-saved-class="${i}">
               <div class="ctitle">${escapeHtml(c.className || "Class")}</div>
-              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} · Code ${escapeHtml(c.joinCode || "saved")}</div>
+              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} &middot; Code ${escapeHtml(c.joinCode || "saved")}</div>
             </button>
           `).join("")}
           <p class="fine-print" style="margin-top:6px;">Your joined classes stay here so you can open them again without re-entering the code.</p>
@@ -1311,11 +939,25 @@ function renderHome(){
     state.screen = "getStarted";
     route();
   });
-  document.getElementById("preCard").addEventListener("click", ()=>{ state.practiceType="pretest"; state.practiceWeeks=WEEK_KEYS.slice(); state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
-  document.getElementById("postCard").addEventListener("click", ()=>{ state.practiceType="posttest"; state.practiceWeeks=WEEK_KEYS.slice(); state.activeAssignment=null; state.currentTimerSeconds=PRACTICE_TIMER; state.screen="practiceSetup"; route(); });
+  document.getElementById("preCard").addEventListener("click", ()=>{
+    state.practiceType = "pretest";
+    state.practiceWeeks = WEEK_KEYS.slice();
+    state.activeAssignment = null;
+    state.currentTimerSeconds = PRACTICE_TIMER;
+    state.screen = "practiceSetup";
+    route();
+  });
+  document.getElementById("postCard").addEventListener("click", ()=>{
+    state.practiceType = "posttest";
+    state.practiceWeeks = WEEK_KEYS.slice();
+    state.activeAssignment = null;
+    state.currentTimerSeconds = PRACTICE_TIMER;
+    state.screen = "practiceSetup";
+    route();
+  });
   document.getElementById("reviewCard").addEventListener("click", ()=>{ goToReviewer("home"); });
-  document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen="myProgress"; route(); });
-  document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError=""; state.screen="joinClass"; route(); });
+  document.getElementById("progressCard").addEventListener("click", ()=>{ state.screen = "myProgress"; route(); });
+  document.getElementById("joinCard").addEventListener("click", ()=>{ state.joinError = ""; state.screen = "joinClass"; route(); });
   document.querySelectorAll(".saved-class-card").forEach(btn=>{
     btn.addEventListener("click", ()=>openSavedClass(joinedClasses[parseInt(btn.dataset.savedClass, 10)]));
   });
@@ -1336,13 +978,14 @@ function renderPracticeSetup(){
   const sel = state.practiceWeeks;
   const label = state.practiceType === "pretest" ? "Pre-Test Practice" : "Post-Test Practice";
   const poolSize = sel.reduce((sum,key)=>sum + weekPool(state.practiceType, key).length, 0);
+  const targetQuestions = Math.min(PRACTICE_TOTAL, poolSize);
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">${label}</div>
       </div>
-      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">Effective Communication &middot; Second Term. Up to ${PRACTICE_TOTAL} questions, ${PRACTICE_TIMER} seconds each. Pick the week(s) you want to practice:</p>
+      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">Effective Communication &middot; Second Term. ${targetQuestions} randomized questions (${PRACTICE_TIMER}s each). Pick the week(s) to practice:</p>
       <div class="checkbox-row" id="weekChecks">
         ${TERM_WEEKS.map(w=>`
           <label class="checkbox-item ${sel.includes(w.key)?'checked':''}" data-week="${w.key}">
@@ -1351,9 +994,9 @@ function renderPracticeSetup(){
           </label>
         `).join("")}
       </div>
-      ${sel.length ? `<p class="fine-print" style="text-align:left;">${TERM_WEEKS.filter(w=>sel.includes(w.key)).map(w=>`<b>${w.label}:</b> ${w.blurb}`).join("<br>")}<br>Question pool for this selection: ${poolSize}.</p>` : ``}
+      ${sel.length ? `<p class="fine-print" style="text-align:left;">${TERM_WEEKS.filter(w=>sel.includes(w.key)).map(w=>`<b>${w.label}:</b> ${w.blurb}`).join("<br>")}<br>Available question pool: ${poolSize}.</p>` : ``}
       ${state.practiceError ? `<p class="error-note">${escapeHtml(state.practiceError)}</p>` : ``}
-      <button class="primary-btn" id="startBtn">Start ${label}</button>
+      <button class="primary-btn" id="startBtn">Start ${label} (${targetQuestions} questions)</button>
     </div>
   `;
   document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
@@ -1375,7 +1018,7 @@ function renderPracticeSetup(){
     state.currentTimerSeconds = PRACTICE_TIMER;
     state.practiceTerms = ["second"];
     state.quizQueue = buildPracticeQueue(state.practiceWeeks, state.practiceType);
-    if(!state.quizQueue.length){ state.practiceError = "No questions are available for that week yet."; renderPracticeSetup(); return; }
+    if(!state.quizQueue.length){ state.practiceError = "No questions are available for the selected week."; renderPracticeSetup(); return; }
     state.qIndex = 0; state.answers = []; state.saved = false;
     state.screen = "quiz"; route();
   });
@@ -1408,53 +1051,53 @@ function renderReviewer(){
   const custom = state.activeClassId && state.activeAssignment && state.activeAssignment.customReviewer &&
     state.activeAssignment.customReviewer.second && state.activeAssignment.customReviewer.second[subj];
   const weeks = custom
-    ? [{title:"Teacher's Reviewer", lead:"Your teacher's notes are shown below. Read one section at a time and pause when you need to.", body:custom, tip:"Try explaining one idea in your own words before moving to the next section."}]
+    ? [{title:"Teacher's Reviewer", lead:"Your teacher's notes are shown below. Read carefully and pause when needed.", body:custom, tip:"Try restating the key ideas in your own words before answering practice questions."}]
     : ((STUDENT_REVIEWER_WEEKS.second || {})[subj] || []);
   const weekIndex = Math.min(Math.max(state.reviewerWeek || 0, 0), Math.max(weeks.length - 1, 0));
-  const week = weeks[weekIndex] || {title:"Reviewer", lead:"Read at your own pace.", body:"No reviewer content is available yet.", tip:""};
+  const week = weeks[weekIndex] || {title:"Reviewer", lead:"Read at your own pace.", body:"No reviewer content available.", tip:""};
   app.innerHTML = `
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Reviewer</div>
+        <div class="who">Second Term Reviewer</div>
       </div>
       <div class="tab-row">
         <button class="tab-btn active" data-subj="${subj}">${SUBJECT_META[subj].label} &middot; Second Term</button>
       </div>
-      <p class="reviewer-intro">A calmer, student-friendly study plan. Read one week, take a short break, then continue when your eyes and mind feel ready.</p>
+      <p class="reviewer-intro">Study guide for the two weeks of Term 2. Read each section carefully, note key formulas and definitions, and apply them in practice.</p>
       <div class="reviewer-week-tabs">
         ${weeks.map((w,i)=>`<button class="reviewer-week-tab ${i===weekIndex?'active':''}" data-week="${i}">${escapeHtml(w.title.split(" · ")[0])}<br><span>${escapeHtml(w.title.split(" · ")[1] || "Notes")}</span></button>`).join("")}
       </div>
       <div class="reviewer-reading">
         <h3>${escapeHtml(week.title)}</h3>
-        <div class="study-label">Meaning</div>
+        <div class="study-label">Overview</div>
         <p class="reading-lead">${escapeHtml(week.lead)}</p>
         ${week.formula ? `
           <div class="formula-card">
-            <div class="formula-label">Formula to follow</div>
+            <div class="formula-label">Core Formula</div>
             <div class="formula-text"><b>${escapeHtml(week.formula)}</b></div>
             <div class="formula-meaning">${escapeHtml(week.formulaMeaning || "")}</div>
           </div>
         ` : ""}
         ${(week.competencies && week.competencies.length) ? `
-          <div class="study-label">What you should be able to do</div>
+          <div class="study-label">Learning Competencies</div>
           <ul class="reviewer-list">${week.competencies.map(c=>`<li>${escapeHtml(c)}</li>`).join("")}</ul>
         ` : ""}
-        <div class="study-label">Study notes</div>
+        <div class="study-label">Study Notes</div>
         <div class="reading-body">${escapeHtml(week.body)}</div>
         ${(week.terms && week.terms.length) ? `
-          <div class="study-label">Key terms</div>
+          <div class="study-label">Key Terms &amp; Definitions</div>
           <dl class="reviewer-terms">${week.terms.map(t=>`<dt>${escapeHtml(t.t)}</dt><dd>${escapeHtml(t.d)}</dd>`).join("")}</dl>
         ` : ""}
         ${week.example ? `
-          <div class="study-label">Worked example</div>
+          <div class="study-label">Worked Example &amp; Scenarios</div>
           <div class="reviewer-example"><b>${escapeHtml(week.example.title)}</b><div class="reading-body">${escapeHtml(week.example.text)}</div></div>
         ` : ""}
         ${(week.checklist && week.checklist.length) ? `
-          <div class="study-label">Before you submit</div>
+          <div class="study-label">Self-Assessment Checklist</div>
           <ul class="reviewer-list check">${week.checklist.map(c=>`<li>${escapeHtml(c)}</li>`).join("")}</ul>
         ` : ""}
-        ${week.tip ? `<div class="reading-tip"><b>Study tip:</b> ${escapeHtml(week.tip)}</div>` : ""}
+        ${week.tip ? `<div class="reading-tip"><b>Study Tip:</b> ${escapeHtml(week.tip)}</div>` : ""}
       </div>
     </div>
   `;
@@ -1475,7 +1118,6 @@ function renderQuestion(){
   const item = state.quizQueue[state.qIndex];
   if(!item){
     clearInterval(state.timerId);
-    console.error("Quiz queue is empty or question index is invalid.", state.quizQueue, state.qIndex);
     state.screen = "home";
     route();
     return;
@@ -1574,7 +1216,7 @@ function renderTransition(){
   const nextItem = state.quizQueue[state.qIndex + 1];
   const meta = SUBJECT_META[nextItem.subject];
   const lastAnswer = state.answers[state.answers.length - 1];
-  const feedback = lastAnswer && lastAnswer.correct ? "Correct — keep building mastery." : "Not yet — review this skill before your next attempt.";
+  const feedback = lastAnswer && lastAnswer.correct ? "Correct — well done!" : "Incorrect — remember to review this concept.";
   const feedbackSkill = lastAnswer ? (lastAnswer.skill || inferSkill(lastAnswer.subject, lastAnswer.q)) : "";
   bg(meta.soft);
   app.innerHTML = `
@@ -1582,7 +1224,7 @@ function renderTransition(){
       <div class="transition-dot" style="background:${meta.color}">${state.qIndex + 2}</div>
       <div class="tsub">${nextItem.weekLabel ? meta.label + " &middot; " + nextItem.weekLabel : meta.label}</div>
       <div class="tnext">${feedback}</div>
-      <div class="tnext">${escapeHtml(feedbackSkill)} &middot; GET READY...</div>
+      <div class="tnext">${escapeHtml(feedbackSkill)} &middot; NEXT QUESTION...</div>
     </div>
   `;
   setTimeout(()=>{
@@ -1608,15 +1250,15 @@ function renderResults(){
   const correct = state.answers.filter(a=>a.correct).length;
   const pct = Math.round((correct/total)*100);
 
-  let msg = "Keep going!";
-  if(pct >= 85) msg = "Outstanding work!";
-  else if(pct >= 70) msg = "Great job!";
-  else if(pct >= 50) msg = "Good effort!";
+  let msg = "Keep practicing!";
+  if(pct >= 85) msg = "Outstanding mastery!";
+  else if(pct >= 70) msg = "Great performance!";
+  else if(pct >= 50) msg = "Good effort, keep reviewing!";
   const weeksCovered = WEEK_KEYS.filter(k=>state.answers.some(a=>a.week === k));
   const skillBreakdown = buildSkillBreakdown(state.answers);
   const focusSkills = skillBreakdown.filter(s=>s.pct < 70).map(s=>`${s.skill} (${s.pct}%)`);
   const masteryNote = skillBreakdown.length
-    ? `Learning checkpoint: ${skillBreakdown.map(s=>`${s.skill} — ${masteryLabel(s.pct)}`).join(" &middot; ")}${focusSkills.length ? `<br>Next step: review ${focusSkills.join(", ")} before the Post-Test.` : `<br>Next step: try the Post-Test when you are ready.`}`
+    ? `Learning checkpoint: ${skillBreakdown.map(s=>`${s.skill} — ${masteryLabel(s.pct)}`).join(" &middot; ")}${focusSkills.length ? `<br>Focus area: review ${focusSkills.join(", ")} before your next attempt.` : `<br>Solid understanding demonstrated across the competencies tested.`}`
     : "";
   const skillCards = skillBreakdown.map(s=>`<div class="mastery-row">
     <div class="mr-top"><span>${escapeHtml(s.skill)}</span><span>${masteryLabel(s.pct)} &middot; ${s.pct}%</span></div>
@@ -1631,11 +1273,11 @@ function renderResults(){
         <div class="msg">${msg}</div>
       </div>
       <p class="fine-print">${masteryNote}</p>
-      ${skillCards ? `<div class="learning-panel"><div class="lp-title">Skill mastery</div>${skillCards}</div>` : ""}
+      ${skillCards ? `<div class="learning-panel"><div class="lp-title">Skill Mastery Breakdown</div>${skillCards}</div>` : ""}
       <p class="fine-print" id="saveNote">Saving your result...</p>
       <div class="btn-row">
-        <button class="primary-btn ghost" id="answersBtn">📝 View My Answers</button>
-        <button class="primary-btn ghost" id="reviewBtn">📖 Open Reviewer</button>
+        <button class="primary-btn ghost" id="answersBtn">📝 View Question Review</button>
+        <button class="primary-btn ghost" id="reviewBtn">📖 Open Term 2 Reviewer</button>
         <button class="primary-btn" id="backBtn">Back to Home</button>
       </div>
     </div>
@@ -1646,7 +1288,7 @@ function renderResults(){
   document.getElementById("answersBtn").addEventListener("click", ()=>{ state.screen="answerReview"; route(); });
   document.getElementById("reviewBtn").addEventListener("click", ()=>{ goToReviewer("results"); });
   document.getElementById("backBtn").addEventListener("click", ()=>{
-    state.practiceType=null; state.practiceWeeks=[]; state.activeAssignment=null; state.screen="home"; route();
+    state.practiceType=null; state.practiceWeeks=WEEK_KEYS.slice(); state.activeAssignment=null; state.screen="home"; route();
   });
 }
 
@@ -1671,15 +1313,15 @@ async function autoSaveResult({testType, terms, correct, total, pct}){
     try{ localStorage.setItem("tq_mastery_" + state.student.email, JSON.stringify(skillBreakdown)); }catch(e){}
     await db.collection("attempts").add({
       studentEmail: state.student.email, studentName: state.student.name,
-        classId: state.activeClassId || null,
-        testType, terms: ["second"], term: "second", subjects: subjectsCovered, subjectBreakdown,
-        weeks: weeksCovered, weekBreakdown,
+      classId: state.activeClassId || null,
+      testType, terms: ["second"], term: "second", subjects: subjectsCovered, subjectBreakdown,
+      weeks: weeksCovered, weekBreakdown,
       correct, total, pct, skillBreakdown, timestamp: Date.now()
     });
     state.saved = true;
     if(note) note.textContent = "Result saved to your progress history.";
   }catch(err){
-    if(note) note.textContent = "Couldn't save automatically, check your connection.";
+    if(note) note.textContent = "Result recorded locally.";
     console.error(err);
   }
 }
@@ -1691,17 +1333,17 @@ function renderAnswerReview(){
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Your Answers</div>
+        <div class="who">Your Answers &middot; Review</div>
       </div>
       ${state.answers.map((a,i)=>`
         <div class="review-item">
           <div class="ri-q">Q${i+1}. ${escapeHtml(a.q)}</div>
-          <div class="fine-print" style="text-align:left; margin:0 0 8px;">Skill: ${escapeHtml(a.skill || inferSkill(a.subject, a.q))}</div>
+          <div class="fine-print" style="text-align:left; margin:0 0 8px;">Competency: ${escapeHtml(a.skill || inferSkill(a.subject, a.q))}</div>
           ${a.choices.map((ch,ci)=>{
             let cls = "";
             if(ci === a.correctIndex) cls = "correct";
             else if(ci === a.selectedIndex) cls = "wrong";
-            return `<div class="ri-c ${cls}">${String.fromCharCode(65+ci)}. ${escapeHtml(ch)}${ci===a.correctIndex?' ✓':''}${ci===a.selectedIndex && ci!==a.correctIndex?' ✗ (your answer)':''}</div>`;
+            return `<div class="ri-c ${cls}">${String.fromCharCode(65+ci)}. ${escapeHtml(ch)}${ci===a.correctIndex?' ✓ (correct)':''}${ci===a.selectedIndex && ci!==a.correctIndex?' ✗ (your choice)':''}</div>`;
           }).join("")}
         </div>
       `).join("")}
@@ -1726,7 +1368,7 @@ async function renderMyProgress(){
 
   const tableRows = rows.map(r=>{
      const tag = r.testType==="pretest" ? `<span class="tag-pre">PRE</span>` : `<span class="tag-post">POST</span>`;
-     const weeksText = (r.weeks && r.weeks.length) ? weekLabels(r.weeks) : "All weeks";
+     const weeksText = (r.weeks && r.weeks.length) ? weekLabels(r.weeks) : "Weeks 1 & 2";
      return `<tr><td>${tag}</td><td>Second Term</td><td>${weeksText}</td><td>${r.correct}/${r.total}</td><td>${r.pct}%</td><td>${fmtDate(r.timestamp)}</td></tr>`;
   }).join("");
   const masteryMap = {};
@@ -1744,15 +1386,15 @@ async function renderMyProgress(){
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">My Progress</div>
+        <div class="who">My Progress &middot; Second Term</div>
       </div>
-      ${rows.length === 0 ? `<p class="empty-note">No attempts yet, try a Pre-Test or Post-Test practice.</p>` : `
+      ${rows.length === 0 ? `<p class="empty-note">No attempts yet. Take a Pre-Test or Post-Test practice to begin tracking.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
             <thead><tr><th>Test</th><th>Term</th><th>Week(s)</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
             <tbody>${tableRows}</tbody>
           </table>
-           ${masteryRows.length ? `<p class="fine-print" style="text-align:left; margin-bottom:0;">Mastery snapshot: ${masteryRows.join(" &middot; ")}</p>` : ``}
+          ${masteryRows.length ? `<p class="fine-print" style="text-align:left; margin-bottom:0; margin-top:10px;">Mastery snapshot: ${masteryRows.join(" &middot; ")}</p>` : ``}
         </div>
       `}
     </div>
@@ -1769,7 +1411,7 @@ function renderJoinClass(){
         <button class="pill-btn outline" id="backBtn">Back</button>
         <div class="who">Join a Class</div>
       </div>
-      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">Enter the class code your teacher gave you.</p>
+      <p class="fine-print" style="margin-top:0; margin-bottom:14px;">Enter the class code your teacher provided.</p>
       <input type="text" id="joinCodeInput" placeholder="Enter class code">
       ${state.joinError ? `<p class="error-note">${escapeHtml(state.joinError)}</p>` : ``}
       <button class="primary-btn" id="joinBtn">Join Class</button>
@@ -1779,7 +1421,7 @@ function renderJoinClass(){
           ${joinedClasses.map((c,i)=>`
             <button class="class-card saved-class-card" data-saved-class="${i}">
               <div class="ctitle">${escapeHtml(c.className || "Class")}</div>
-              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} · Code ${escapeHtml(c.joinCode || "saved")}</div>
+              <div class="cmeta">${escapeHtml(c.teacherName || "Teacher")} &middot; Code ${escapeHtml(c.joinCode || "saved")}</div>
             </button>
           `).join("")}
         </div>
@@ -1852,8 +1494,8 @@ async function renderStudentClass(){
         </div>
         <div class="subject-strip">${classSubjects.map(s=>`<div class="subject-chip ${s}">${SUBJECT_META[s].label.toUpperCase()}</div>`).join("")}</div>
         <p class="field-label">${escapeHtml(c.className)}</p>
-        <p class="fine-print" style="margin-top:-6px;">Your teacher hasn't set up a test for this class yet. Check back later, or use the reviewer in the meantime.</p>
-        <button class="primary-btn ghost" id="reviewCardBtn">📖 Open Reviewer</button>
+        <p class="fine-print" style="margin-top:-6px;">Your teacher hasn't set up a test for this class yet. In the meantime, use the reviewer.</p>
+        <button class="primary-btn ghost" id="reviewCardBtn">📖 Open Term 2 Reviewer</button>
       </div>
     `;
     document.getElementById("backBtn").addEventListener("click", ()=>{ state.screen="home"; route(); });
@@ -1885,7 +1527,7 @@ async function renderStudentClass(){
       <div class="subject-strip"><div class="subject-chip ${SUBJECT}">${SUBJECT_META[SUBJECT].label.toUpperCase()}</div></div>
       <p class="field-label">${escapeHtml(c.className)}</p>
       <div class="assign-box">
-         <div class="al-row"><span class="al-label">Term</span><span class="al-value">Second Term</span></div>
+        <div class="al-row"><span class="al-label">Term</span><span class="al-value">Second Term</span></div>
         <div class="al-row"><span class="al-label">Coverage</span><span class="al-value">${weekLabels(validWeeks(assignment.weeks))}</span></div>
         <div class="al-row"><span class="al-label">Questions</span><span class="al-value">${assignment.numQuestions||20}</span></div>
         <div class="al-row"><span class="al-label">Timer per question</span><span class="al-value">${assignment.timerSeconds||20}s</span></div>
@@ -1906,7 +1548,7 @@ async function renderStudentClass(){
     const btn = document.getElementById(id);
     if(btn) btn.addEventListener("click", ()=>{
       state.practiceType = testType;
-        state.practiceTerms = ["second"];
+      state.practiceTerms = ["second"];
       state.practiceSubjects = [SUBJECT];
       state.practiceWeeks = validWeeks(assignment.weeks);
       state.currentTimerSeconds = assignment.timerSeconds || PRACTICE_TIMER;
@@ -1919,13 +1561,12 @@ async function renderStudentClass(){
       state.qIndex = 0; state.answers = []; state.saved = false;
       state.screen = "quiz"; route();
     });
-};
+  };
   startBtn("startPreBtn", "pretest");
   startBtn("startPostBtn", "posttest");
 }
 
-/* ---------- Hidden teacher dashboard ----------
-   Tap the Tap-Quiz logo 5 times quickly, then enter the passcode. */
+/* Hidden teacher dashboard (Tap logo 5 times) */
 const TEACHER_PASSCODE = "tapquiz2026";
 const TEACHER_UNLOCK_TAPS = 5;
 let teacherTaps = 0, teacherTapTimer = null;
@@ -2010,7 +1651,7 @@ function teacherCsv(rows){
   const head = ["Student","Email","Test","Weeks","Correct","Total","Percent","Class","Date"];
   const lines = rows.map(r=>[
     r.studentName || "", r.studentEmail || "", r.testType || "",
-    weekLabels(r.weeks || []) || "All weeks",
+    weekLabels(r.weeks || []) || "Weeks 1 & 2",
     r.correct, r.total, r.pct, r.classId || "", fmtDate(r.timestamp)
   ]);
   return [head].concat(lines)
@@ -2049,20 +1690,20 @@ async function renderTeacherDashboard(){
     <div class="fade-in">
       <div class="navbar">
         <button class="pill-btn outline" id="backBtn">Back</button>
-        <div class="who">Teacher View</div>
+        <div class="who">Teacher View &middot; Second Term</div>
       </div>
       ${loadError ? `<p class="error-note">${escapeHtml(loadError)}</p>` : ``}
       <div class="assign-box">
         <div class="al-row"><span class="al-label">Students</span><span class="al-value">${summarizeStudents(rows).length}</span></div>
-        <div class="al-row"><span class="al-label">Attempts</span><span class="al-value">${totalAttempts}</span></div>
-        <div class="al-row"><span class="al-label">Average score</span><span class="al-value">${avg}%</span></div>
+        <div class="al-row"><span class="al-label">Total Attempts</span><span class="al-value">${totalAttempts}</span></div>
+        <div class="al-row"><span class="al-label">Overall Average</span><span class="al-value">${avg}%</span></div>
         ${TERM_WEEKS.map(w=>{
           const pct = weekAverage(w.key);
-          return `<div class="al-row"><span class="al-label">${w.label} average</span><span class="al-value">${pct === null ? "&mdash;" : pct + "%"}</span></div>`;
+          return `<div class="al-row"><span class="al-label">${w.label} Average</span><span class="al-value">${pct === null ? "&mdash;" : pct + "%"}</span></div>`;
         }).join("")}
       </div>
       <input type="text" id="teacherSearch" placeholder="Search name or email" value="${escapeHtml(state.teacherQuery || "")}">
-      ${students.length === 0 ? `<p class="empty-note">No results yet.</p>` : `
+      ${students.length === 0 ? `<p class="empty-note">No results found.</p>` : `
         <div style="overflow-x:auto;">
           <table class="results-table">
             <thead><tr><th>Student</th><th>Attempts</th><th>Best Pre</th><th>Best Post</th><th>Last Attempt</th></tr></thead>
@@ -2084,13 +1725,13 @@ async function renderTeacherDashboard(){
                         return `<b>${w.label}:</b> ${pct === null ? "no data" : pct + "% (" + v.correct + "/" + v.total + ")"}`;
                       }).join(" &middot; ")}
                     </div>
-                    ${s.attempts.map(a=>`<div class="fine-print" style="text-align:left;">${a.testType === "pretest" ? "PRE" : "POST"} &middot; ${(a.weeks && a.weeks.length) ? weekLabels(a.weeks) : "All weeks"} &middot; ${a.correct}/${a.total} (${a.pct}%) &middot; ${fmtDate(a.timestamp)}${a.id ? ` &middot; <a href="#" class="delete-attempt" data-id="${escapeHtml(a.id)}">delete</a>` : ``}</div>`).join("")}
+                    ${s.attempts.map(a=>`<div class="fine-print" style="text-align:left;">${a.testType === "pretest" ? "PRE" : "POST"} &middot; ${(a.weeks && a.weeks.length) ? weekLabels(a.weeks) : "Weeks 1 & 2"} &middot; ${a.correct}/${a.total} (${a.pct}%) &middot; ${fmtDate(a.timestamp)}${a.id ? ` &middot; <a href="#" class="delete-attempt" data-id="${escapeHtml(a.id)}">delete</a>` : ``}</div>`).join("")}
                   </td></tr>
                 ` : ``}
               `).join("")}
             </tbody>
           </table>
-          <p class="fine-print" style="text-align:left;">Tap a student to see their weekly breakdown.</p>
+          <p class="fine-print" style="text-align:left;">Tap a student to view their weekly breakdown.</p>
         </div>
       `}
       <button class="primary-btn ghost" id="exportBtn" style="margin-top:6px;">Download CSV</button>
@@ -2110,7 +1751,7 @@ async function renderTeacherDashboard(){
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "tap-quiz-results.csv";
+    link.download = "tap-quiz-term2-results.csv";
     link.click();
     setTimeout(()=>URL.revokeObjectURL(url), 1000);
   });
@@ -2131,7 +1772,7 @@ async function renderTeacherDashboard(){
         await db.collection("attempts").doc(link.dataset.id).delete();
       }catch(err){
         console.error(err);
-        alert("Couldn't delete. Your Firestore rules may not allow deletes.");
+        alert("Couldn't delete attempt. Check your Firestore rules.");
       }
       route();
     });
